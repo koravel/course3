@@ -136,6 +136,12 @@ namespace WpfApplication1 {
             return;
             case 2:
             this.comboBoxProduct = ((System.Windows.Controls.ComboBox)(target));
+            
+            #line 10 "..\..\..\EditValueWindows\DiscountEditWindow.xaml"
+            this.comboBoxProduct.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(this.comboBoxProduct_SelectionChanged);
+            
+            #line default
+            #line hidden
             return;
             case 3:
             this.textBoxPrice = ((System.Windows.Controls.TextBox)(target));

@@ -690,6 +690,41 @@ namespace WpfApplication1
             }
         }
 
+        public static List<Waybill> GetWaybill(string _queryString, string[] _valuesText, string[] _values)
+        {
+            List<Waybill> waybills = new List<Waybill>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        waybills.Add(new Waybill()
+                        {
+                            ID = dr.GetInt32("W_ID"),
+                            DATE = dr.GetDateTime("W_DATE"),
+                            EMPLOYEE = dr.GetString("E_NAME"),
+                            AGENT = dr.GetString("W_AGENT_NAME")
+                        });
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return waybills;
+            }
+        }
+
         public static List<WaybillList> GetWaybillList(string _curid)
         {
             List<WaybillList> waybillLists = new List<WaybillList>();
@@ -698,13 +733,14 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT product.P_NAME,waybill_list.WL_VALUE,waybill_list.WL_TRADE_PRICE,waybill_list.WL_BDATE,waybill_list.WL_EDATE FROM `waybill`,`waybill_list`,`product` WHERE `waybill_list`.`W_ID`=`waybill`.`W_ID` AND `waybill_list`.`P_ID`=`product`.`P_ID` AND waybill_list.W_ID=@_curid;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT product.P_ID,product.P_NAME,waybill_list.WL_VALUE,waybill_list.WL_TRADE_PRICE,waybill_list.WL_BDATE,waybill_list.WL_EDATE FROM `waybill`,`waybill_list`,`product` WHERE `waybill_list`.`W_ID`=`waybill`.`W_ID` AND `waybill_list`.`P_ID`=`product`.`P_ID` AND waybill_list.W_ID=@_curid;", con);
                     com.Parameters.AddWithValue("@_curid", _curid);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
                         waybillLists.Add(new WaybillList()
                         {
+                            ID = dr.GetInt32("P_ID"),
                             PRODUCT = dr.GetString("P_NAME"),
                             VALUE = dr.GetInt32("WL_VALUE"),
                             TRADEPRICE = dr.GetFloat("WL_TRADE_PRICE"),
@@ -812,6 +848,40 @@ namespace WpfApplication1
                 }
                 con.Close();
                 return discountInfo;
+            }
+        }
+
+        public static List<WaybillInfo> GetWaybillInfoList(string[] _valuesText, string[] _values, string _queryString)
+        {
+            List<WaybillInfo> waybillInfo = new List<WaybillInfo>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        waybillInfo.Add(new WaybillInfo()
+                        {
+                            OVERDUE = dr.GetString("OVERDUE"),
+                            NOTOVERDUE = dr.GetString("NOTOVERDUE"),
+                            SOLD = dr.GetString("PS_COUNT")
+                        });
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return waybillInfo;
             }
         }
     }

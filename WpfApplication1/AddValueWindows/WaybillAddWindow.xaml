@@ -4,18 +4,18 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:WpfApplication1" x:Name="window" x:Class="WpfApplication1.WaybillAddWindow"
-        Title="WaybillAddWindow" Height="175" Width="932" KeyDown="Window_KeyDown">
+        Title="WaybillAddWindow" Height="194" Width="986" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="373"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DatePicker x:Name="datePickerToday" Margin="87,14,3,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxAgent" Height="23" Margin="87,71,3,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <Label Content="Дата" Margin="47,12,196,0" VerticalAlignment="Top"/>
-        <Label Content="Принял" Margin="30,42,196,0" VerticalAlignment="Top"/>
-        <Label Content="Контрагент" Margin="10,68,196,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,116,10" VerticalAlignment="Bottom" Width="75" Click="buttonSave_Click"/>
+        <DatePicker x:Name="datePickerToday" Margin="140,14,3,0" VerticalAlignment="Top" Height="24"/>
+        <TextBox x:Name="textBoxAgent" Height="23" Margin="140,71,3,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Label Content="Дата" Margin="100,12,196,0" VerticalAlignment="Top" Height="26"/>
+        <Label Content="Принял" Margin="83,42,196,0" VerticalAlignment="Top" Height="26"/>
+        <Label Content="Контрагент" Margin="63,68,196,0" VerticalAlignment="Top" Height="26"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,116,10" VerticalAlignment="Bottom" Width="75" Click="buttonSave_Click" Height="22"/>
         <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Right" Margin="0,0,3,10" Width="75" Click="buttonBack_Click" Height="22" VerticalAlignment="Bottom"/>
         <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False">
 
@@ -82,6 +82,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="comboBoxEployees" Margin="87,44,3,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxEployees" Margin="140,44,3,0" VerticalAlignment="Top" Height="22"/>
+        <Button Content="Добавить новый товар" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Width="141" Height="22" Click="Button_Click"/>
     </Grid>
 </Window>

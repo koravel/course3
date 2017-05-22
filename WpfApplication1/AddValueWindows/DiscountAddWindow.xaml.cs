@@ -24,6 +24,7 @@ namespace WpfApplication1
             {
                 comboBoxProduct.Items.Add(products[i].NAME + "(#"+products[i].ID+")");
             }
+            comboBoxProduct.Items.Add("Добавить новый...");
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -77,6 +78,15 @@ namespace WpfApplication1
             {
                 this.Close();
             }
+        }
+
+        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(comboBoxProduct.SelectedIndex == comboBoxProduct.Items.Count)
+            {
+                new ProductAddWindow().ShowDialog();
+            }
+            comboBoxProduct.SelectedIndex = -1;
         }
     }
 }

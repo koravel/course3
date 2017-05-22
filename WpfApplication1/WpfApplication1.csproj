@@ -167,6 +167,7 @@
     <Compile Include="Settings\ViewSettingsWindow.xaml.cs">
       <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tables\WaybillInfo.cs" />
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

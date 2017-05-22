@@ -38,6 +38,7 @@ namespace WpfApplication1
             datePickerBeginDate.Text = data[2];
             datePickerEndDate.Text = data[3];
             textBoxDescription.Text = data[4];
+            comboBoxProduct.Items.Add("Добавить новый...");
         }
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
@@ -94,5 +95,12 @@ namespace WpfApplication1
             }
         }
 
+        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxProduct.SelectedIndex == comboBoxProduct.Items.Count)
+            {
+                new ProductAddWindow().ShowDialog();
+            }
+        }
     }
 }

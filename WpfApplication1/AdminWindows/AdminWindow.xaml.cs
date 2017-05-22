@@ -21,6 +21,7 @@ namespace WpfApplication1
     {
         static string idText;
         List<CheckList> checkList = new List<CheckList> { };
+        List<WaybillList> waybillList = new List<WaybillList> { };
         public AdminWindow(string _idText)
         {
             InitializeComponent();
@@ -167,13 +168,26 @@ namespace WpfApplication1
             }
 
         }
+
         private void dataGridWaybillOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 if (dataGridWaybillOut.SelectedIndex != -1)
                 {
-                    dataGridWaybillListOut.ItemsSource = DataBase.GetWaybillList(Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut));
+                    string waybillId = Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut);
+                    waybillList = DataBase.GetWaybillList(waybillId);
+                    dataGridWaybillListOut.ItemsSource = waybillList;
+                    string totalTradePrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { waybillId }, "SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=@_curid;");
+                    totalWaybillPriceTextBlock.Text = "Общая цена:";
+                    if(totalTradePrice == null)
+                    {
+                        totalWaybillPriceTextBlock.Text += "0";
+                    }
+                    else
+                    {
+                        totalWaybillPriceTextBlock.Text += totalTradePrice;
+                    }
                 }
             }
             catch (Exception ex)
@@ -418,7 +432,7 @@ namespace WpfApplication1
                                     }
                                 case 1:
                                     {
-                                        temp += " AND (`check`.C_DATE>@edate OR `check`.C_DATE<@edate)";
+                                        temp += " AND (`check`.C_DATE>@edate OR `check`.C_DATE<@bdate)";
                                         break;
                                     }
                             }
@@ -1088,10 +1102,326 @@ namespace WpfApplication1
                     }
                 case 5:
                     {
-                        //!!!!!!!!!!!
+                        string temp = null,
+                        query = "SELECT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e WHERE w.`E_ID`=e.`E_ID` ",
+                        redefineQuery = "SELECT DISTINCT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e,waybill_list wl,product p WHERE w.`E_ID`=e.`E_ID` AND wl.W_ID=w.W_ID AND p.P_ID=wl.P_ID ";
+                        bool flag = false;
+                        List<string> valuesText = new List<string>(), values = new List<string>();
+                        if (checkBoxSearchBDateWaybill.IsChecked == true && checkBoxSearchEDateWaybill.IsChecked == true && datePickerSearchBDateWaybill.Text != "" && datePickerSearchEDateWaybill.Text != "")
+                        {
+                            switch (comboBoxSearchDateRangeTypeWaybill.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND w.W_DATE BETWEEN @bdate AND @edate";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (w.W_DATE>@edate OR w.W_DATE<@bdate)";
+                                        break;
+                                    }
+                            }
+                            valuesText.Add("@bdate");
+                            values.Add(Converter.DateConvert(datePickerSearchBDateWaybill.Text));
+                            valuesText.Add("@edate");
+                            values.Add(Converter.DateConvert(datePickerSearchEDateWaybill.Text));
+                        }
+                        else
+                        {
+                            if (checkBoxSearchBDateWaybill.IsChecked == true && datePickerSearchBDateWaybill.Text != "")
+                            {
+                                temp += "AND w.W_DATE>=@bdate";
+                                valuesText.Add("@bdate");
+                                values.Add(Converter.DateConvert(datePickerSearchBDateWaybill.Text));
+                            }
+                            else
+                            {
+                                if (checkBoxSearchEDateWaybill.IsChecked == true && datePickerSearchEDateWaybill.Text != "")
+                                {
+                                    temp += "AND w.W_DATE<=@edate";
+                                    valuesText.Add("@edate");
+                                    values.Add(Converter.DateConvert(datePickerSearchEDateWaybill.Text));
+                                }
+                            }
+                        }
+                        if (checkBoxSearchEmployeeWaybill.IsChecked == true && textBoxSearchEmployeeWaybill.Text != "")
+                        {
+                            temp += " AND e.E_NAME=@_name";
+                            valuesText.Add("@_name");
+                            values.Add(textBoxSearchEmployeeWaybill.Text);
+                        }
+                        if (checkBoxSearchAgentWaybill.IsChecked == true && textBoxSearchAgentWaybill.Text != "")
+                        {
+                            temp += " AND w.W_AGENT_NAME=@_agent";
+                            valuesText.Add("@_agent");
+                            values.Add(textBoxSearchAgentWaybill.Text);
+                        }
+                        if (checkBoxSearchPriceWaybill.IsChecked == true && upDownSearchPriceWaybill.Text != "")
+                        {
+                            temp += " AND (SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=w.W_ID)";
+                            switch (comboBoxDirectionSearchPriceWaybill.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += Converter.CurrencyConvert(upDownSearchPriceWaybill.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchCodeWaybill.IsChecked == true && textBoxSearchCodeWaybill.Text != "")
+                        {
+                            temp += " AND w.W_ID=@_id";
+                            valuesText.Add("@_id");
+                            values.Add(textBoxSearchCodeWaybill.Text);
+                        }
+                        if (checkBoxSearchProductWaybill.IsChecked == true && textBoxSearchProductWaybill.Text != "")
+                        {
+                            temp += " AND p.P_NAME=@_pname";
+                            valuesText.Add("@_pname");
+                            values.Add(textBoxSearchProductWaybill.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchProductIdWaybill.IsChecked == true && textBoxSearchProductIdWaybill.Text != "")
+                        {
+                            temp += " AND wl.P_ID=@_id";
+                            valuesText.Add("@_id");
+                            values.Add(textBoxSearchProductIdWaybill.Text);
+                        }
+                        if (checkBoxSearchValueProductWaybill.IsChecked == true && upDownSearchValueProductWaybill.Text != "")
+                        {
+                            switch (comboBoxSearchTypeCountProductWaybill.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND wl.WL_VALUE";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (SELECT COUNT(waybill_list.WL_ID) FROM product_overdue,waybill_list WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.WL_ID=wl.WL_ID)>0 AND wl.WL_VALUE";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += " AND (SELECT COUNT(waybill_list.WL_ID) FROM product_overdue,waybill_list where product_overdue.PP_IS_OVERDUE='Не просрочено' and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.WL_ID=wl.WL_ID)>0 AND (SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)";
+                                        break;
+                                    }
+
+                            }
+                            switch (comboBoxDirectionSearchValueProduct.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += "@value";
+                            valuesText.Add("@value");
+                            values.Add(comboBoxDirectionSearchValueProduct.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchPriceProductWaybill.IsChecked == true && upDownSearchPriceProductWaybill.Text != "")
+                        {
+                            temp += " AND wl.WL_TRADE_PRICE";
+                            switch (comboBoxSearchPriceRangeProduct.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += Converter.CurrencyConvert(upDownSearchPriceProductWaybill.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchBDateProductWaybillOut.IsChecked == true && checkBoxSearchEDateProductWaybillOut.IsChecked == true && datePickerSearchBDateProductWaybillOut.Text != "" && datePickerSearchEDateProductWaybillOut.Text != "")
+                        {
+                            switch (comboBoxSearchDateRangeTypeProductWaybillOut.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND wl.WL_BDATE BETWEEN @bbdate AND @bedate";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (wl.WL_BDATE>@bedate OR wl.WL_BDATE<@bbdate)";
+                                        break;
+                                    }
+                            }
+                            valuesText.Add("@bbdate");
+                            values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillOut.Text));
+                            valuesText.Add("@bedate");
+                            values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillOut.Text));
+                        }
+                        else
+                        {
+                            if (checkBoxSearchBDateProductWaybillOut.IsChecked == true && datePickerSearchBDateProductWaybillOut.Text != "")
+                            {
+                                temp += "AND wl.WL_BDATE>=@bbdate";
+                                valuesText.Add("@bbdate");
+                                values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillOut.Text));
+                            }
+                            else
+                            {
+                                if (checkBoxSearchEDateProductWaybillOut.IsChecked == true && datePickerSearchEDateProductWaybillOut.Text != "")
+                                {
+                                    temp += "AND wl.WL_BDATE<=@bedate";
+                                    valuesText.Add("@bedate");
+                                    values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillOut.Text));
+                                }
+                            }
+                        }
+                        if (checkBoxSearchBDateProductWaybillIn.IsChecked == true && checkBoxSearchEDateProductWaybillIn.IsChecked == true && datePickerSearchBDateProductWaybillIn.Text != "" && datePickerSearchEDateProductWaybillIn.Text != "")
+                        {
+                            switch (comboBoxSearchDateRangeTypeProductWaybillIn.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND wl.WL_EDATE BETWEEN @ebdate AND @eedate";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (wl.WL_EDATE>@eedate OR wl.WL_EDATE<@ebdate)";
+                                        break;
+                                    }
+                            }
+                            valuesText.Add("@ebdate");
+                            values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text));
+                            valuesText.Add("@eedate");
+                            values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text));
+                        }
+                        else
+                        {
+                            if (checkBoxSearchBDateProductWaybillOut.IsChecked == true && datePickerSearchBDateProductWaybillIn.Text != "")
+                            {
+                                temp += "AND wl.WL_EDATE>=@ebdate";
+                                valuesText.Add("@ebdate");
+                                values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text));
+                            }
+                            else
+                            {
+                                if (checkBoxSearchEDateProductWaybillIn.IsChecked == true && datePickerSearchEDateProductWaybillIn.Text != "")
+                                {
+                                    temp += "AND wl.WL_EDATE<=@eedate";
+                                    valuesText.Add("@eedate");
+                                    values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text));
+                                }
+                            }
+                        }
                         break;
                     }
+            }
+        }
 
+        private void menuItemPriceSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new PriceSettingsWindow().ShowDialog();
+        }
+
+        private void dataGridProductDiscountsDisplay_Initialized(object sender, EventArgs e)
+        {
+            if (dataGridCheckListOut.SelectedIndex != -1)
+            {
+                List<DiscountInfo> dataList = DataBase.GetDiscountInfoList(
+                    new string[] { "@_id", "@_cid" },
+                    new string[] { checkList[dataGridCheckListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridCheckOut.SelectedIndex, 0, dataGridCheckOut) },
+                    "SELECT CONCAT('#',D_ID) AS 'D_ID',CONCAT(D_PRICE,'%') AS 'D_PRICE' FROM discounts,check_list,`check` WHERE discounts.P_ID=check_list.P_ID AND `check`.C_ID=@_cid AND check_list.P_ID=@_id AND check_list.C_ID=`check`.C_ID AND `check`.C_DATE>=discounts.D_BDATE AND `check`.C_DATE<=discounts.D_EDATE;");
+                if (dataList.Count != 0)
+                {
+                    (sender as DataGrid).ItemsSource = dataList;
+                }
+                else
+                {
+                    (sender as DataGrid).Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void dataGridWaybillOverdueDisplay_Initialized(object sender, EventArgs e)
+        {
+            if (dataGridWaybillListOut.SelectedIndex != -1)
+            {
+                List<WaybillInfo> dataList = DataBase.GetWaybillInfoList(
+                    new string[] { "@_id", "@_wid" },
+                    new string[] { waybillList[dataGridWaybillListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut) },
+                    "SELECT IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'OVERDUE',IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Не просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'NOTOVERDUE',ps.PS_COUNT FROM waybill_list wl,product_sold ps,product_overdue po WHERE ps.WL_ID=wl.WL_ID AND po.WL_ID=wl.WL_ID AND wl.W_ID=@_wid AND wl.P_ID=@_id;");
+                if (dataList.Count != 0)
+                {
+                    (sender as DataGrid).ItemsSource = dataList;
+                }
+                else
+                {
+                    (sender as DataGrid).Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -1249,6 +1579,7 @@ namespace WpfApplication1
                 textBoxSearchProductCheck.IsEnabled = false;
             }
         }
+
         private void checkBoxSearchProductIdCheck_Click(object sender, RoutedEventArgs e)
         {
             if (checkBoxSearchProductIdCheck.IsChecked == true)
@@ -1343,30 +1674,6 @@ namespace WpfApplication1
             comboBoxDirectionSearchPrice.SelectedIndex = 0;
             comboBoxDirectionSearchValue.SelectedIndex = 0;
 
-        }
-
-        private void menuItemPriceSettings_Click(object sender, RoutedEventArgs e)
-        {
-            new PriceSettingsWindow().ShowDialog();
-        }
-
-        private void dataGridProductDiscountsDisplay_Initialized(object sender, EventArgs e)
-        {
-            if (dataGridCheckListOut.SelectedIndex != -1)
-            {
-                List<DiscountInfo> dataList = DataBase.GetDiscountInfoList(
-                    new string[] { "@_id", "@_cid" },
-                    new string[] { checkList[dataGridCheckListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridCheckOut.SelectedIndex, 0, dataGridCheckOut) },
-                    "SELECT CONCAT('#',D_ID) AS 'D_ID',CONCAT(D_PRICE,'%') AS 'D_PRICE' FROM discounts,check_list,`check` WHERE discounts.P_ID=check_list.P_ID AND `check`.C_ID=@_cid AND check_list.P_ID=@_id AND check_list.C_ID=`check`.C_ID AND `check`.C_DATE>=discounts.D_BDATE AND `check`.C_DATE<=discounts.D_EDATE;");
-                if(dataList.Count != 0)
-                {
-                    (sender as DataGrid).ItemsSource = dataList;
-                }
-                else
-                {
-                    (sender as DataGrid).Visibility = Visibility.Collapsed;
-                }
-            }
         }
 
         private void buttonResetSearchDiscount_Click(object sender, RoutedEventArgs e)
@@ -1827,10 +2134,287 @@ namespace WpfApplication1
 
         private void buttonResetSearchWaybill_Click(object sender, RoutedEventArgs e)
         {
-
+            checkBoxSearchBDateWaybill.IsChecked = false;
+            datePickerSearchBDateWaybill.Text = null;
+            datePickerSearchBDateWaybill.IsEnabled = false;
+            comboBoxSearchDateRangeTypeWaybill.SelectedIndex = 0;
+            comboBoxSearchDateRangeTypeWaybill.IsEnabled = false;
+            checkBoxSearchEDateWaybill.IsChecked = false;
+            datePickerSearchEDateWaybill.Text = null;
+            datePickerSearchEDateWaybill.IsEnabled = false;
+            checkBoxSearchEmployeeWaybill.IsChecked = false;
+            textBoxSearchEmployeeWaybill.Text = null;
+            textBoxSearchEmployeeWaybill.IsEnabled = false;
+            checkBoxSearchAgentWaybill.IsChecked = false;
+            textBoxSearchAgentWaybill.Text = null;
+            textBoxSearchAgentWaybill.IsEnabled = false;
+            checkBoxSearchPriceWaybill.IsChecked = false;
+            upDownSearchPriceWaybill.Text = null;
+            upDownSearchPriceWaybill.IsEnabled = false;
+            comboBoxDirectionSearchPriceWaybill.SelectedIndex = 0;
+            checkBoxSearchCodeWaybill.IsChecked = false;
+            textBoxSearchCodeWaybill.Text = null;
+            textBoxSearchCodeWaybill.IsEnabled = false;
+            checkBoxSearchBDateProductWaybillIn.IsChecked = false;
+            datePickerSearchBDateProductWaybillIn.Text = null;
+            datePickerSearchBDateProductWaybillIn.IsEnabled = false;
+            comboBoxSearchDateRangeTypeProductWaybillIn.SelectedIndex = 0;
+            comboBoxSearchDateRangeTypeProductWaybillIn.IsEnabled = false;
+            checkBoxSearchEDateProductWaybillIn.IsChecked = false;
+            datePickerSearchEDateProductWaybillIn.Text = null;
+            datePickerSearchEDateProductWaybillIn.IsEnabled = false;
+            checkBoxSearchProductWaybill.IsChecked = false;
+            checkBoxSearchProductWaybill.IsEnabled = true;
+            textBoxSearchProductWaybill.Text = null;
+            textBoxSearchProductWaybill.IsEnabled = false;
+            checkBoxSearchProductIdWaybill.IsChecked = false;
+            checkBoxSearchProductIdWaybill.IsEnabled = true;
+            textBoxSearchProductIdWaybill.Text = null;
+            textBoxSearchProductIdWaybill.IsEnabled = false;
+            checkBoxSearchValueProductWaybill.IsChecked = false;
+            upDownSearchValueProductWaybill.Text = null;
+            upDownSearchValueProductWaybill.IsEnabled = false;
+            comboBoxDirectionSearchValueProductWaybill.SelectedIndex = 0;
+            comboBoxSearchTypeCountProductWaybill.SelectedIndex = 0;
+            checkBoxSearchPriceProductWaybill.IsChecked = false;
+            upDownSearchPriceProductWaybill.Text = null;
+            upDownSearchPriceProductWaybill.IsEnabled = false;
+            comboBoxDirectionSearchPriceProductWaybill.SelectedIndex = 0;
+            checkBoxSearchBDateProductWaybillOut.IsChecked = false;
+            datePickerSearchBDateProductWaybillOut.Text = null;
+            datePickerSearchBDateProductWaybillOut.IsEnabled = false;
+            comboBoxSearchDateRangeTypeProductWaybillOut.SelectedIndex = 0;
+            comboBoxSearchDateRangeTypeProductWaybillOut.IsEnabled = false;
+            checkBoxSearchEDateProductWaybillOut.IsChecked = false;
+            datePickerSearchEDateProductWaybillOut.Text = null;
+            datePickerSearchEDateProductWaybillOut.IsEnabled = false;
         }
 
-        
+        private void checkBoxSearchBDateWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBDateWaybill.IsChecked == true)
+            {
+                datePickerSearchBDateWaybill.IsEnabled = true;
+                if (checkBoxSearchEDateWaybill.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeWaybill.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchBDateWaybill.Text = null;
+                datePickerSearchBDateWaybill.IsEnabled = false;
+                comboBoxSearchDateRangeTypeWaybill.IsEnabled = false;
+            }
+        }
 
+        private void checkBoxSearchEDateWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEDateWaybill.IsChecked == true)
+            {
+                datePickerSearchEDateWaybill.IsEnabled = true;
+                if (checkBoxSearchBDateWaybill.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeWaybill.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchEDateWaybill.Text = null;
+                datePickerSearchEDateWaybill.IsEnabled = false;
+                comboBoxSearchDateRangeTypeWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEmployeeWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEmployeeWaybill.IsChecked == true)
+            {
+                textBoxSearchEmployeeWaybill.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchEmployeeWaybill.Text = null;
+                textBoxSearchEmployeeWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchAgentWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchAgentWaybill.IsChecked == true)
+            {
+                textBoxSearchAgentWaybill.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchAgentWaybill.Text = null;
+                textBoxSearchAgentWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchPriceWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchPriceWaybill.IsChecked == true)
+            {
+                upDownSearchPriceWaybill.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchPriceWaybill.Text = null;
+                upDownSearchPriceWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchCodeWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchCodeWaybill.IsChecked == true)
+            {
+                textBoxSearchCodeWaybill.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchCodeWaybill.Text = null;
+                textBoxSearchCodeWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBDateProductWaybillIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBDateProductWaybillIn.IsChecked == true)
+            {
+                datePickerSearchBDateProductWaybillIn.IsEnabled = true;
+                if (checkBoxSearchEDateProductWaybillIn.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeProductWaybillIn.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchBDateProductWaybillIn.Text = null;
+                datePickerSearchBDateProductWaybillIn.IsEnabled = false;
+                comboBoxSearchDateRangeTypeProductWaybillIn.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEDateProductWaybillIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEDateProductWaybillIn.IsChecked == true)
+            {
+                datePickerSearchEDateProductWaybillIn.IsEnabled = true;
+                if (checkBoxSearchBDateProductWaybillIn.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeProductWaybillIn.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchEDateProductWaybillIn.Text = null;
+                datePickerSearchEDateProductWaybillIn.IsEnabled = false;
+                comboBoxSearchDateRangeTypeProductWaybillIn.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchProductWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchProductWaybill.IsChecked == true)
+            {
+                textBoxSearchProductWaybill.IsEnabled = true;
+                textBoxSearchProductIdWaybill.IsEnabled = false;
+                checkBoxSearchProductIdWaybill.IsEnabled = false;
+            }
+            else
+            {
+                checkBoxSearchProductIdWaybill.IsEnabled = true;
+                textBoxSearchProductWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchProductIdWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchProductIdWaybill.IsChecked == true)
+            {
+                textBoxSearchProductIdWaybill.IsEnabled = true;
+                textBoxSearchProductWaybill.IsEnabled = false;
+                checkBoxSearchProductWaybill.IsEnabled = false;
+            }
+            else
+            {
+                checkBoxSearchProductWaybill.IsEnabled = true;
+                textBoxSearchProductIdWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchValueProductWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchValueProductWaybill.IsChecked == true)
+            {
+                upDownSearchValueProductWaybill.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchValueProductWaybill.Text = null;
+                upDownSearchValueProductWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchPriceProductWaybill_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchPriceProductWaybill.IsChecked == true)
+            {
+                upDownSearchPriceProductWaybill.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchPriceProductWaybill.Text = null;
+                upDownSearchPriceProductWaybill.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBDateProductWaybillOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBDateProductWaybillOut.IsChecked == true)
+            {
+                datePickerSearchBDateProductWaybillOut.IsEnabled = true;
+                if (checkBoxSearchEDateProductWaybillOut.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeProductWaybillOut.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchBDateProductWaybillOut.Text = null;
+                datePickerSearchBDateProductWaybillOut.IsEnabled = false;
+                comboBoxSearchDateRangeTypeProductWaybillOut.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEDateProductWaybillOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEDateProductWaybillOut.IsChecked == true)
+            {
+                datePickerSearchEDateProductWaybillOut.IsEnabled = true;
+                if (checkBoxSearchBDateProductWaybillOut.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeProductWaybillOut.IsEnabled = true;
+                }
+            }
+            else
+            {
+                datePickerSearchEDateProductWaybillOut.Text = null;
+                datePickerSearchEDateProductWaybillOut.IsEnabled = false;
+                comboBoxSearchDateRangeTypeProductWaybillOut.IsEnabled = false;
+            }
+        }
+
+        private void buttonResetSearch_Click(object sender, RoutedEventArgs e)
+        {
+            buttonResetSearchCheck_Click(null,null);
+            buttonResetSearchDiscount_Click(null, null);
+            buttonResetSearchEmployee_Click(null, null);
+            buttonResetSearchManufacturer_Click(null, null);
+            buttonResetSearchProduct_Click(null, null);
+            buttonResetSearchWaybill_Click(null, null);
+        }
     }
+
 }
