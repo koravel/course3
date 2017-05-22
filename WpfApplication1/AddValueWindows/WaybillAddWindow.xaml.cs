@@ -86,9 +86,14 @@ namespace WpfApplication1
             }
         }
 
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void textBlockProduct_GotFocus(object sender, RoutedEventArgs e)
         {
-            //dataGridInfo.Items[i].
+            
+        }
+
+        private void comboBoxProduct_LostFocus(object sender, RoutedEventArgs e)
+        {
+
         }
 
        
