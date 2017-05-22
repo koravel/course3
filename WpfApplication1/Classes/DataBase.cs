@@ -73,11 +73,12 @@ namespace WpfApplication1
             return hash;
         }
 
-        public static void Query(string[] _changeParametersText,string[] _changeParameters, string _queryString)
+        public static void Query(string[] _changeParametersText, string[] _changeParameters, string _queryString)
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     if (_changeParameters != null)
@@ -88,8 +89,13 @@ namespace WpfApplication1
                             com.Parameters.AddWithValue(_changeParametersText[i], _changeParameters[i]);
                         }
                     }
-                        com.ExecuteNonQuery();
-        
+                    com.ExecuteNonQuery();
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
             }
 
@@ -99,7 +105,8 @@ namespace WpfApplication1
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     if (_changeParameters != null)
@@ -110,25 +117,33 @@ namespace WpfApplication1
                             com.Parameters.AddWithValue(_changeParametersText[i], _changeParameters[i]);
                         }
                     }
-                        MySqlDataReader dr = com.ExecuteReader();
-                        if (dr.HasRows)
-                        {
-                            dr.Read();
-                            con.Close();
-                            return dr.GetString(0);
-                        }
-     
+                    MySqlDataReader dr = com.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        con.Close();
+                        return dr.GetString(0);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return null;
             }
 
         }
 
+
         public static string[] QueryRetColumn(string[] _changeParametersText, string[] _changeParameters, string _queryString)
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-        con.Open();
+                try
+                {
+                    con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     if (_changeParameters != null)
                     {
@@ -142,16 +157,23 @@ namespace WpfApplication1
                     List<string> retArr = new List<string> { };
                     while (dr.Read())
                     {
-                            retArr.Add(dr.GetString(0));
+                        retArr.Add(dr.GetString(0));
                     }
                     con.Close();
                     string[] StrArrRet = new string[retArr.Count];
-                    for (int i = 0; i < retArr.Count;i++ )
+                    for (int i = 0; i < retArr.Count; i++)
                     {
                         StrArrRet[i] = retArr[i];
                     }
-                 con.Close();
-                 return StrArrRet;
+                    return StrArrRet;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                con.Close();
+                return null;
             }
         }
 
@@ -159,7 +181,8 @@ namespace WpfApplication1
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     if (_changeParameters != null)
@@ -182,12 +205,18 @@ namespace WpfApplication1
                         con.Close();
                         return StrArrRet;
                     }
-                
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return null;
             }
 
         }
+
 
 
         public static bool ConCheck(string[] database_settings)
@@ -213,21 +242,28 @@ namespace WpfApplication1
             List<Employee> employees=new List<Employee>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                 con.Open();
+                try
+                {
+                    con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT E_ID,E_NAME,E_TEL,E_POSITION,E_CONTRACT,E_INN FROM `employee`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
-                        employees.Add(new Employee() 
+                        employees.Add(new Employee()
                         {
-                            ID=dr.GetInt32("E_ID"),
-                            NAME=dr.GetString("E_NAME"),
-                            TEL=dr.GetString("E_TEL"),
-                            POSITION=dr.GetString("E_POSITION"),
-                            CONTRACT=dr.GetInt32("E_CONTRACT"),
+                            ID = dr.GetInt32("E_ID"),
+                            NAME = dr.GetString("E_NAME"),
+                            TEL = dr.GetString("E_TEL"),
+                            POSITION = dr.GetString("E_POSITION"),
+                            CONTRACT = dr.GetInt32("E_CONTRACT"),
                             INN = dr.GetInt32("E_INN")
                         });
                     }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
                     con.Close();
                     return employees;
                 }
@@ -241,7 +277,8 @@ namespace WpfApplication1
             List<Employee> employees = new List<Employee>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-              
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -261,7 +298,11 @@ namespace WpfApplication1
                             INN = dr.GetInt32("E_INN")
                         });
                     }
-          
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
                 con.Close();
                 return employees;
             }
@@ -272,7 +313,8 @@ namespace WpfApplication1
             List<Check> checks = new List<Check>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-              
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -286,7 +328,11 @@ namespace WpfApplication1
                             NAME = dr.GetString("E_NAME")
                         });
                     }
-       
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
                 con.Close();
                 return checks;
             }
@@ -297,11 +343,13 @@ namespace WpfApplication1
             List<Check> checks = new List<Check>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                  con.Open();
+                try
+                {
+                    con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
-                    for(int i = 0; i < _values.Length; i++)
+                    for (int i = 0; i < _values.Length; i++)
                     {
-                        com.Parameters.AddWithValue(_valuesText[i],_values[i]);
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
                     }
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
@@ -311,12 +359,14 @@ namespace WpfApplication1
                             ID = dr.GetInt32("C_ID"),
                             DATE = dr.GetString("C_DATE"),
                             PAYTYPE = dr.GetString("C_PAYTYPE"),
-                            NAME = dr.GetString(3),
-                            SUM = dr.GetString("C_SUM"),
-                            PREPAYMENT = dr.GetString("C_PREPAYMENT")
+                            NAME = dr.GetString("E_NAME")
                         });
                     }
-            
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
                 con.Close();
                 return checks;
             }
@@ -327,6 +377,9 @@ namespace WpfApplication1
             List<Check> checks = new List<Check>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
+                try
+                {
+
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -346,7 +399,11 @@ namespace WpfApplication1
                             PREPAYMENT = dr.GetString(5)
                         });
                     }
-                
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return checks;
             }
@@ -357,7 +414,9 @@ namespace WpfApplication1
             List<CheckList> checklists = new List<CheckList>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
+
                     con.Open();
                     MySqlCommand com = new MySqlCommand(query, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -375,36 +434,46 @@ namespace WpfApplication1
                             PRICE = dr.GetFloat("PAP_PRICE")
                         });
                     }
-     
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return checklists;
             }
         }
+
         public static List<CheckPrint> GetCheckPrint(string query, string[] _valuesText, string[] _values)
         {
             List<CheckPrint> checklists = new List<CheckPrint>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-
-                con.Open();
-                MySqlCommand com = new MySqlCommand(query, con);
-                for (int i = 0; i < _values.Length; i++)
+                try
                 {
-                    com.Parameters.AddWithValue(_valuesText[i], _values[i]);
-                }
-                MySqlDataReader dr = com.ExecuteReader();
-                while (dr.Read())
-                {
-                    checklists.Add(new CheckPrint()
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(query, con);
+                    for (int i = 0; i < _values.Length; i++)
                     {
-                        ID = dr.GetInt32(0),
-                        PRODUCT = dr.GetString(1),
-                        VALUE = dr.GetInt32(2),
-                        PRICE = dr.GetFloat(3),
-                        DISCOUNT = dr.GetInt32(4)
-                    });
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        checklists.Add(new CheckPrint()
+                        {
+                            ID = dr.GetInt32(0),
+                            PRODUCT = dr.GetString(1),
+                            VALUE = dr.GetInt32(2),
+                            PRICE = dr.GetFloat(3),
+                            DISCOUNT = dr.GetInt32(4)
+                        });
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return checklists;
             }
@@ -415,7 +484,8 @@ namespace WpfApplication1
             List<Discount> discounts = new List<Discount>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT discounts.D_ID,product.P_NAME,discounts.D_PRICE,discounts.D_BDATE,discounts.D_EDATE,discounts.D_TEXT FROM `discounts`,`product` WHERE `discounts`.`P_ID`=`product`.`P_ID`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -431,7 +501,11 @@ namespace WpfApplication1
                             TEXT = dr.GetString("D_TEXT")
                         });
                     }
-         
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return discounts;
             }
@@ -442,7 +516,8 @@ namespace WpfApplication1
             List<Discount> discounts = new List<Discount>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -462,11 +537,15 @@ namespace WpfApplication1
                             TEXT = dr.GetString("D_TEXT")
                         });
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                     con.Close();
                     return discounts;
                 }
-           
-               
+
             }
         
 
@@ -475,7 +554,8 @@ namespace WpfApplication1
             List<Manufacturer> manufacturers = new List<Manufacturer>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT M_ID,M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer;", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -491,7 +571,11 @@ namespace WpfApplication1
                             TEL = dr.GetString("M_TEL")
                         });
                     }
-         
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return manufacturers;
             }
@@ -502,7 +586,8 @@ namespace WpfApplication1
             List<Manufacturer> manufacturers = new List<Manufacturer>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -522,11 +607,14 @@ namespace WpfApplication1
                             TEL = dr.GetString("M_TEL")
                         });
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                     con.Close();
                     return manufacturers;
                 }
-            
-                
         }
             
         
@@ -536,7 +624,8 @@ namespace WpfApplication1
             List<Product> products = new List<Product>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT product.P_ID,product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product.P_INSTR,product.P_CODE FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -555,7 +644,11 @@ namespace WpfApplication1
                             CODE = dr.GetString("P_CODE")
                         });
                     }
-          
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return products;
             }
@@ -566,7 +659,8 @@ namespace WpfApplication1
             List<Product> products = new List<Product>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -589,7 +683,11 @@ namespace WpfApplication1
                             CODE = dr.GetString("P_CODE")
                         });
                     }
-     
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return products;
             }
@@ -600,7 +698,8 @@ namespace WpfApplication1
             List<ProductActualPrice> productActualPrices = new List<ProductActualPrice>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-              
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT product_actual_price.PAP_PRICE,product_actual_price.PAP_DATE,PAP_ID FROM `product`,`product_actual_price` WHERE `product_actual_price`.`P_ID`=`product`.`P_ID` AND `product_actual_price`.`P_ID`=@_curid;", con);
                     com.Parameters.AddWithValue("@_curid", _curid);
@@ -615,7 +714,11 @@ namespace WpfApplication1
                            
                         });
                     }
-         
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return productActualPrices;
             }
@@ -626,7 +729,8 @@ namespace WpfApplication1
             List<Waybill> waybills = new List<Waybill>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-              
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT waybill.W_ID,waybill.W_DATE,employee.E_NAME,waybill.W_AGENT_NAME FROM `waybill`,`employee` WHERE `waybill`.`E_ID`=`employee`.`E_ID`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -641,7 +745,11 @@ namespace WpfApplication1
                         });
 
                     }
-                
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return waybills;
             }
@@ -652,7 +760,8 @@ namespace WpfApplication1
             List<Waybill> waybills = new List<Waybill>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -671,7 +780,11 @@ namespace WpfApplication1
                         });
 
                     }
-             
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return waybills;
             }
@@ -682,7 +795,8 @@ namespace WpfApplication1
             List<WaybillList> waybillLists = new List<WaybillList>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-                
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(query, con);
                     for (int i = 0; i < value.Length;i++ )
@@ -703,7 +817,11 @@ namespace WpfApplication1
                             
                         });
                     }
-                            
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }       
                 con.Close();
                 return waybillLists;
             }
@@ -714,7 +832,8 @@ namespace WpfApplication1
             List<WaybillPrint> waybillLists = new List<WaybillPrint>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-
+                try
+                {
                 con.Open();
                 MySqlCommand com = new MySqlCommand(query, con);
                 for (int i = 0; i < value.Length; i++)
@@ -735,7 +854,11 @@ namespace WpfApplication1
                         MATERIAL = dr.GetString("P_MATERIAL"),
                     });
                 }
-
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return waybillLists;
             }
@@ -746,7 +869,8 @@ namespace WpfApplication1
             List<User> users = new List<User>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT U_TYPE,U_NAME,U_PASS FROM `user` WHERE U_TYPE<>'Директор';", con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -760,8 +884,12 @@ namespace WpfApplication1
                         });
 
                     }
-                
-               
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return users;
             }
@@ -772,7 +900,8 @@ namespace WpfApplication1
             List<NameIdList> products = new List<NameIdList>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-               
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -785,7 +914,11 @@ namespace WpfApplication1
                         });
 
                     }
-         
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return products;
             }
@@ -796,6 +929,8 @@ namespace WpfApplication1
             List<DiscountInfo> discountInfo = new List<DiscountInfo>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -812,6 +947,11 @@ namespace WpfApplication1
                         });
 
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return discountInfo;
             }
@@ -822,7 +962,8 @@ namespace WpfApplication1
             List<WaybillInfo> waybillInfo = new List<WaybillInfo>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-            
+                try
+                {
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     for (int i = 0; i < _values.Length; i++)
@@ -839,7 +980,11 @@ namespace WpfApplication1
                             SOLD = dr.GetString(2)
                         });
                     }
-                
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 con.Close();
                 return waybillInfo;
             }
@@ -902,8 +1047,9 @@ namespace WpfApplication1
             List<ProductInCheck> product = new List<ProductInCheck>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-         
-                    con.Open();
+                try
+                {
+                   con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,ifnull((select pap.PAP_PRICE from product_actual_price pap,waybill w where pap.P_ID=p.P_ID and pap.PAP_DATE<=w.W_DATE  order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1),(select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=p.P_ID order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1)),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE<=NOW() AND d.D_EDATE>=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,wl.WL_ID,p.P_CODE FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
@@ -926,6 +1072,11 @@ namespace WpfApplication1
                         });
 
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                     con.Close();
                     return product;
             }
@@ -936,7 +1087,8 @@ namespace WpfApplication1
             List<string> waybillId = new List<string>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
-
+                try
+                {
                 con.Open();
                 string query = "SELECT wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0" + queryPart + ";";
                 MySqlCommand com = new MySqlCommand(query, con);
@@ -948,6 +1100,11 @@ namespace WpfApplication1
                 while (dr.Read())
                 {
                     waybillId.Add(dr.GetString(0));
+                }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
                 con.Close();
                 return waybillId;

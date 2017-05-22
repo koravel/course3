@@ -56,7 +56,7 @@ namespace WpfApplication1
             string[] data = new string[9];
             curMan = -1;
             bool flag = false;
-            data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product_actual_price.PAP_PRICE,product_actual_price.PAP_DATE,product.P_INSTR FROM product,manufacturer,product_actual_price WHERE product.M_ID=manufacturer.M_ID AND product.P_ID=product_actual_price.P_ID AND product.P_ID=@curid ORDER BY product_actual_price.PAP_DATE DESC LIMIT 1;");
+            data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product_actual_price.PAP_PRICE,product_actual_price.PAP_DATE,product.P_INSTR,product.P_CODE FROM product,manufacturer,product_actual_price WHERE product.M_ID=manufacturer.M_ID AND product.P_ID=product_actual_price.P_ID AND product.P_ID=@curid ORDER BY product_actual_price.PAP_DATE DESC LIMIT 1;");
             textBoxName.Text = data[0];
             for (int i = 0; i < comboBoxValues.Count; i++)
             {
@@ -75,6 +75,7 @@ namespace WpfApplication1
             upDownPrice.Text = data[6];
             datePickerToday.Text = data[7];
             textBoxInstruction.Text = data[8];
+            textBoxCode.Text = data[9];
             count = comboBoxManufacturer.Items.Count;
         }
 
@@ -84,10 +85,12 @@ namespace WpfApplication1
             {
                 objout.NAME = textBoxName.Text;
                 objout.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].NAME.ToString();
+                MessageBox.Show(objout.MANUFACTURER);
                 objout.GROUP = comboBoxGroup.SelectedItem.ToString();
                 objout.PACK = comboBoxPack.SelectedItem.ToString();
                 objout.FORM = comboBoxForm.SelectedItem.ToString();
                 objout.INSTR = textBoxInstruction.Text;
+                objout.CODE = textBoxCode.Text;
                 DataBase.Query(
                 new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr","@_code" },
                 new string[] { curId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text,textBoxCode.Text },

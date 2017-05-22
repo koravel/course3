@@ -23,7 +23,7 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if(ErrorCheck.EmployeeEnterCheck(comboBoxPos,textBoxName,textBoxContract,textBoxEmployeeINN,textBoxTel))
+            if(ErrorCheck.EmployeeEnterCheck(comboBoxPos,textBoxName,textBoxContract,textBoxEmployeeINN,textBoxTel,true))
             {
                 DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract","@_inn" }, new string[] { textBoxName.Text, textBoxTel.Text, comboBoxPos.SelectedItem.ToString(), textBoxContract.Text,textBoxEmployeeINN.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`,E_INN)VALUES(@_name,@_tel,@_pos,@_contract,@_inn);");
                 DataBase.SetLog(idText, 1, 2, "Создание работника,параметры:|имя:" + textBoxName.Text + "|должность:" + comboBoxPos.SelectedItem.ToString() + "|");

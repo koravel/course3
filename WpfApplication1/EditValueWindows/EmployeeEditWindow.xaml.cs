@@ -33,7 +33,7 @@ namespace WpfApplication1
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
 
-            if (ErrorCheck.EmployeeEnterCheck(comboBoxPos, textBoxName, textBoxContract, textBoxEmployeeINN, textBoxTel))
+            if (ErrorCheck.EmployeeEnterCheck(comboBoxPos, textBoxName, textBoxContract, textBoxEmployeeINN, textBoxTel,false))
             {
                 DataBase.Query(
                     new string[] { "@_name", "@_tel", "@_pos", "@_contract", "@_curid", "@_inn" },

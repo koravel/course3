@@ -298,9 +298,6 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Tran
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.g.cs
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.baml
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.exe.config
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.exe
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.pdb
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\DiscountAddWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\EmployeeAddWindow.baml
@@ -310,11 +307,9 @@ h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Main
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\AdminWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.baml
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ManufacturerEditWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ProductEditWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.baml
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ManagerWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlAddWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\DBSettingsWindow.baml
@@ -328,11 +323,9 @@ h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Main
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\AdminWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.g.cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ManufacturerEditWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ProductEditWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.g.cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ManagerWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlAddWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\DBSettingsWindow.g.cs
@@ -340,10 +333,6 @@ h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Admi
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\WaybillAddWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\App.g.cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1_MarkupCompile.cache
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1_MarkupCompile.lref
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.exe
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.pdb
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\MySql.Data.DLL
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Xceed.Wpf.AvalonDock.dll
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll
@@ -362,7 +351,6 @@ h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\ru\X
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\sv\Xceed.Wpf.AvalonDock.resources.dll
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\WaybillAddWindow.baml
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.g.resources
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.Properties.Resources.resources
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csproj.GenerateResource.Cache
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelEmployeeBindsWindow.baml
@@ -572,3 +560,11 @@ d:\Downloads\WpfApplication1[v34]RELEASEDELMANAGER\WpfApplication1\obj\Release\P
 d:\Downloads\WpfApplication1[v34]RELEASEDELMANAGER\WpfApplication1\obj\Release\Pharmacy DataBase.g.resources
 d:\Downloads\WpfApplication1[v34]RELEASEDELMANAGER\WpfApplication1\obj\Release\Pharmacy DataBase.exe
 d:\Downloads\WpfApplication1[v34]RELEASEDELMANAGER\WpfApplication1\obj\Release\Pharmacy DataBase.pdb
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.exe.config
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.exe
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.pdb
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.exe
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.pdb
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.cache
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.lref
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.g.resources

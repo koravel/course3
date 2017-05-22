@@ -50,12 +50,13 @@ namespace WpfApplication1
                 DataBase.SetLog(idText, 1, 2, "Создание товара,параметры:|код:" + maxId + "|название:" + textBoxName.Text + "|производитель код:" + comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString() + "|цена:" + upDownPrice.Text + "|");
                 obj.ID = int.Parse(maxId);
                 obj.NAME = textBoxName.Text;
-                obj.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString();
+                obj.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].NAME.ToString();
                 obj.GROUP = comboBoxGroup.SelectedItem.ToString();
                 obj.PACK = comboBoxPack.SelectedItem.ToString();
                 obj.MATERIAL = comboBoxMaterial.SelectedItem.ToString();
                 obj.FORM = comboBoxForm.SelectedItem.ToString();
                 obj.INSTR = textBoxInstruction.Text;
+                obj.CODE = textBoxCode.Text;
                 flag = true;
                 this.Close();
             }

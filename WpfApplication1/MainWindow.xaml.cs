@@ -49,6 +49,7 @@ namespace WpfApplication1
             }
             if (LoginField.Text != "" && PasswordField.Password != "")
             {
+                DataBase.Query(null, null, "USE " + Properties.Settings.Default.Database + ";");
                 string loginType = DataBase.UserAuthorization(LoginField.Text, DataBase.computeMD5(PasswordField.Password));
                 if (loginType == null)
                 {

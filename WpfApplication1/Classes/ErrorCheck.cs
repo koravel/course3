@@ -356,7 +356,7 @@ namespace WpfApplication1
             }
         }
 
-        public static bool EmployeeEnterCheck(ComboBox position,TextBox name,TextBox contract,TextBox inn,TextBox tel)
+        public static bool EmployeeEnterCheck(ComboBox position,TextBox name,TextBox contract,TextBox inn,TextBox tel,bool mode)
         {
             int dataCorrect = 0;
             name.BorderBrush = TextCheck(name.Text, ref dataCorrect, 0, Brushes.Red);
@@ -366,10 +366,17 @@ namespace WpfApplication1
             tel.BorderBrush = TextCheck(tel.Text, 1, Brushes.Yellow);
             if(dataCorrect == 4)
             {
-                if (int.Parse(DataBase.QueryRetCell(new string[] { "@_contract", "@_inn" }, new string[] { contract.Text, inn.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_CONTRACT=@_contract OR E_INN=@_inn;")) > 0)
+                if(mode)
                 {
-                    System.Windows.MessageBox.Show("Такой ИНН или контракт уже существуют!");
-                    return false;
+                    if (int.Parse(DataBase.QueryRetCell(new string[] { "@_contract", "@_inn" }, new string[] { contract.Text, inn.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_CONTRACT=@_contract OR E_INN=@_inn;")) > 0)
+                    {
+                        System.Windows.MessageBox.Show("Такой ИНН или контракт уже существуют!");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
