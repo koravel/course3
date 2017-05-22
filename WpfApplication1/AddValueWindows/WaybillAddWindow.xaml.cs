@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using Xceed.Wpf.Toolkit;
 
 namespace WpfApplication1
 {
@@ -26,17 +27,7 @@ namespace WpfApplication1
             {
                 comboBoxEployees.Items.Add(employees[i].NAME+"(#"+employees[i].ID+")");
             }
-            List<WaybillOutput> temp = new List<WaybillOutput>();
-            temp.Add(new WaybillOutput()
-            {
-                ID = " ",
-                PRODUCT = " ",
-                VALUE = " ",
-                TRADEPRICE = " ",
-                BDATE = DateTime.Today,
-                EDATE = DateTime.Today
-            });
-            dataGridInfo.ItemsSource = temp;
+            dataGridInfo.ItemsSource = new List<WaybillOutput> { new WaybillOutput() };
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
