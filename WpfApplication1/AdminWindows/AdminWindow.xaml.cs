@@ -139,8 +139,10 @@ namespace WpfApplication1
                     var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
                     var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(content.Text);
-                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT PQ_QUANTITY FROM product_quantity WHERE P_ID=@_id;"),
-                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "select waybill_list.WL_VALUE-product_sold.PS_COUNT from waybill_list,product_sold,product_overdue where product_overdue.PP_IS_OVERDUE='Просрочено' and product_sold.WL_ID=waybill_list.WL_ID and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.P_ID=@_id;");
+                    DataBase.Query(new string[] { "@_id" }, new string[] { content.Text }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
+                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID  AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "select waybill_list.WL_VALUE-product_sold.PS_COUNT from waybill_list,product_sold,product_overdue where product_overdue.PP_IS_OVERDUE='Просрочено' and product_sold.WL_ID=waybill_list.WL_ID and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.P_ID=@_id;"),
+                    actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
                     textBlockProductCount.Text = "Всего на складе:";
                     if(quantity == null)
                     {
@@ -158,6 +160,15 @@ namespace WpfApplication1
                     else
                     {
                         textBlockProductCount.Text += overdueValue;
+                    }
+                    textBlockProductCount.Text += "\nНе просрочено:";
+                    if (actualValue == null)
+                    {
+                        textBlockProductCount.Text += "0";
+                    }
+                    else
+                    {
+                        textBlockProductCount.Text += actualValue;
                     }
                 }
             }
@@ -901,6 +912,11 @@ namespace WpfApplication1
             upDownSearchValueCheck.IsEnabled = false;
             checkBoxSearchPaytypeCard.IsChecked = false;
             checkBoxSearchPaytypeCash.IsChecked = false;
+        }
+
+        private void menuItemPriceSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new PriceSettingsWindow().ShowDialog();
         }
     }
 }

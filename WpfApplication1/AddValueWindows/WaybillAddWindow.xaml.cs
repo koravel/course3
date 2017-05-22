@@ -66,6 +66,7 @@ namespace WpfApplication1
             if(flag == true)
             {
                 string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
+                string[][] quantityData = new string[list.Count][];
                 DataBase.Query(
                 new string[] { "@_id", "@_date", "@_employee", "@_agent" },
                 new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
@@ -73,6 +74,7 @@ namespace WpfApplication1
                 string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
                 for (int i = 0; i < list.Count; i++)
                 {
+                    quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE };
                     list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
                     queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
                     if(i != list.Count-1)
@@ -82,6 +84,25 @@ namespace WpfApplication1
                 }
                 queryString += ";";
                 DataBase.Query(null, null, queryString);
+                string[] waybillListIds = DataBase.QueryRetRow(new string[] { "@_id" }, new string[] { lastId }, "SELECT WL_ID FROM waybill,waybill_list WHERE waybill.W_ID=waybill_list.W_ID AND waybill.W_ID=@_id;");
+                queryString = "(WL_ID)VALUES ";
+                for (int i = 0; i < waybillListIds.Length; i++)
+                {
+                    queryString += "(" + waybillListIds[i] + ")";
+                    if (i != waybillListIds.Length - 1)
+                    {
+                        queryString += ",";
+                    }
+                }
+                queryString += ";";
+                for (int i = 0; i < quantityData.Length; ++i)
+                {
+
+                    DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], (float.Parse(quantityData[i][1]) * float.Parse(Properties.Settings.Default.PriceProcent)).ToString() }, "INSERT INTO product_quantity(PQ_IN)VALUES(@_value) WHERE P_ID=@_id;");
+                    DataBase.Query(new string[] { "@_id", "@_price" }, new string[] { quantityData[i][0], quantityData[i][2] }, "CALL insert_price(@_id,@_price);");
+                }
+                DataBase.Query(null, null, "INSERT INTO product_sold" + queryString);
+                DataBase.Query(null, null, "INSERT INTO product_overdue" + queryString);
                 this.Close();
             }
         }

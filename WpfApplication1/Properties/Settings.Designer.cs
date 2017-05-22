@@ -154,5 +154,17 @@ namespace WpfApplication1.Properties {
                 this["ShowCode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public string PriceProcent {
+            get {
+                return ((string)(this["PriceProcent"]));
+            }
+            set {
+                this["PriceProcent"] = value;
+            }
+        }
     }
 }

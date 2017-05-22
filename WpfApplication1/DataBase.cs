@@ -634,22 +634,5 @@ namespace WpfApplication1
                 return products;
             }
         }
-
-        //public static List<string> q()
-        //{
-        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-        //    {
-        //        try
-        //        {
-        //            con.Open();
-
-        //        }
-        //        catch(Exception e)
-        //        {
-        //            MessageBox.Show(e.Message);
-        //        }
-        //        con.Close();
-        //    }
-        //}
     }
 }

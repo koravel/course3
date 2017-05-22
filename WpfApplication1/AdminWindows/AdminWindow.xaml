@@ -14,6 +14,7 @@
             <MenuItem x:Name="reportsMenuItem" Header="Отчеты" Click="reportsMenuItem_Click"/>
             <MenuItem x:Name="menuItemSettings" Header="Настройки">
                 <MenuItem x:Name="menuItemViewSettings" Header="Отображение" Click="menuItemViewSettings_Click"/>
+                <MenuItem x:Name="menuItemPriceSettings" Header="Цена" Click="menuItemPriceSettings_Click"/>
             </MenuItem>
             <MenuItem x:Name="exitMenuItem" Header="Выход" Click="Logout_Click"/>
         </Menu>
@@ -25,26 +26,38 @@
             <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="286*"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dataGridCheckOut" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridCheckOut" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Время" Binding="{Binding DATE}"/>
                                 <DataGridTextColumn Header="Кассир" Binding="{Binding NAME}"/>
                                 <DataGridTextColumn Header="Оплата" Binding="{Binding PAYTYPE}"/>
                             </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                    <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                    <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                    <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
                         </DataGrid>
-                        <DataGrid x:Name="dataGridCheckListOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,26" Grid.Column="1">
+                        <DataGrid x:Name="dataGridCheckListOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Товар" Binding="{Binding PRODUCT}"/>
                                 <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
                                 <DataGridTextColumn Header="Цена" Binding="{Binding PRICE}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBlock x:Name="totalPriceTextBlock" TextWrapping="Wrap" Height="26" VerticalAlignment="Bottom" Grid.Column="1"><Run Language="ru-ru" Text="Общая цена : "/></TextBlock>
+                        <TextBlock x:Name="totalPriceTextBlock" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="0,2,0,0"><Run Language="ru-ru" Text="Общая цена : "/></TextBlock>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -59,14 +72,22 @@
                             <DataGridTextColumn Header="Конец" Binding="{Binding EDATE, StringFormat=\{0:dd.MM.yy\}}"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding TEXT}"/>
                         </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemEmployee" Header="Работники" Height="20" VerticalAlignment="Top" Margin="20,0,-20,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="32*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="286*"/>
+                        <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -79,6 +100,14 @@
                             <DataGridTextColumn Header="Должность" Binding="{Binding POSITION}"/>
                             <DataGridTextColumn Header="№ контракта" Binding="{Binding CONTRACT}"/>
                         </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                     </DataGrid>
                     <TextBlock x:Name="textBlockTypeCount" TextWrapping="Wrap" Grid.Row="1" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="153"/>
                 </Grid>
@@ -94,6 +123,14 @@
                             <DataGridTextColumn Header="Адрес" Binding="{Binding ADDR}"/>
                             <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
                         </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                     </DataGrid>
 
                 </Grid>
@@ -102,8 +139,8 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid Margin="0,0,0,-6">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="9*"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="286*"/>
+                            <RowDefinition Height="50"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="256*"/>
@@ -118,8 +155,16 @@
                                 <DataGridTextColumn Header="Упаковка" Binding="{Binding PACK}"/>
                                 <DataGridTextColumn Header="Материал" Binding="{Binding MATERIAL}"/>
                                 <DataGridTextColumn Header="Отпуск" Binding="{Binding FORM}"/>
-                                <DataGridTextColumn Header="Инструкция" Binding="{Binding INSTRUCTION}"/>
+                                <DataGridTextColumn Header="Инструкция" Binding="{Binding INSTR}"/>
                             </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                    <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                    <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                    <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
                         </DataGrid>
                         <DataGrid x:Name="dataGridProductActPriceOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.RowSpan="2">
                             <DataGrid.Columns>
@@ -127,7 +172,7 @@
                                 <DataGridTextColumn Header="Цена" Binding="{Binding PRICE}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBlock x:Name="textBlockProductCount" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="32" Width="140" Grid.Row="1"/>
+                        <TextBlock x:Name="textBlockProductCount" TextWrapping="Wrap" Grid.Row="1"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -145,6 +190,14 @@
                                 <DataGridTextColumn Header="Принял" Binding="{Binding EMPLOYEE}"/>
                                 <DataGridTextColumn Header="Контрагент" Binding="{Binding AGENT}"/>
                             </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Изменить" Click="buttonEdit_Click"/>
+                                    <MenuItem Header="Удалить" Click="buttonDelete_Click"/>
+                                    <MenuItem Header="Добавить" Click="buttonAdd_Click"/>
+                                    <MenuItem Header="Обновить" Click="UpdateData_Click"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
                         </DataGrid>
                         <DataGrid x:Name="dataGridWaybillListOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1">
                             <DataGrid.Columns>

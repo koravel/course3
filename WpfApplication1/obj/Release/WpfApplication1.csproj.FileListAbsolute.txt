@@ -213,3 +213,5 @@ e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Mana
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ViewSettingsWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ViewSettingsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\PriceSettingsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\PriceSettingsWindow.g.cs

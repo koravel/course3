@@ -114,6 +114,9 @@
     <Compile Include="EditValueWindows\ProductEditWindow.xaml.cs">
       <DependentUpon>ProductEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PriceSettingsWindow.xaml.cs">
+      <DependentUpon>PriceSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\NameIdList.cs" />
     <Compile Include="Tables\Check.cs" />
     <Compile Include="DataBase.cs" />
@@ -212,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditValueWindows\ProductEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PriceSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
