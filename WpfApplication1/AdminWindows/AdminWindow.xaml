@@ -56,11 +56,14 @@
             </TabItem>
             <TabItem x:Name="tabItemEmployee" Header="Работники" Height="20" VerticalAlignment="Top" Margin="20,0,-20,0" MouseDoubleClick="tabItemEmployee_MouseDoubleClick">
                 <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="3*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="422*"/>
-                        <ColumnDefinition Width="145*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="dataGridEmployeeOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6" SelectionChanged="dataGridEmployeeOut_SelectionChanged">
+                    <DataGrid x:Name="dataGridEmployeeOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,1" SelectionChanged="dataGridEmployeeOut_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Ф.И.О." Binding="{Binding NAME}"/>
@@ -69,7 +72,7 @@
                             <DataGridTextColumn Header="№ контракта" Binding="{Binding CONTRACT}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBlock x:Name="textBlockTypeCount" Margin="0,0,-8,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Grid.Column="1"/>
+                    <TextBlock x:Name="textBlockTypeCount" TextWrapping="Wrap" Grid.Row="1" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="153"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemManufacturer" Header="Производители" Height="20" VerticalAlignment="Top" Margin="18,0,-18,0" MouseDoubleClick="tabItemManufacturer_MouseDoubleClick">
@@ -90,6 +93,10 @@
             <TabItem x:Name="tabItemProduct" Header="Товары" Height="20" VerticalAlignment="Top" Margin="16,0,-16,0" MouseDoubleClick="tabItemProduct_MouseDoubleClick">
                 <Grid Background="#FFE5E5E5">
                     <Grid Margin="0,0,0,-6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="9*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
@@ -106,12 +113,13 @@
                                 <DataGridTextColumn Header="Инструкция" Binding="{Binding INSTRUCTION}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid x:Name="dataGridProductActPriceOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1">
+                        <DataGrid x:Name="dataGridProductActPriceOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.RowSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Дата" Binding="{Binding DATE, StringFormat=\{0:dd.MM.yy\}}"/>
                                 <DataGridTextColumn Header="Цена" Binding="{Binding PRICE}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <TextBlock x:Name="textBlockProductCount" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="32" Width="140" Grid.Row="1"/>
                     </Grid>
                 </Grid>
             </TabItem>

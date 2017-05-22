@@ -1,5 +1,4 @@
-﻿//http://www.24xxx.tv/video/paren-trahaet-tolstuyu-42208.html
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -154,6 +153,14 @@ namespace WpfApplication1
                     var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
                     var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(content.Text);
+                    //if(DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT COUNT(WL_VALUE) FROM waybill_list WHERE waybill_list.P_ID=@_id;") != "0")
+                    //{
+                    //    textBlockProductCount.Text = "Всего на складе:" + DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT SUM(WL_VALUE) FROM waybill_list WHERE waybill_list.P_ID=@_id;");
+                    //}
+                    //else
+                    //{
+                    //    textBlockProductCount.Text = "Всего на складе:0";
+                    //}
                 }
             }
             catch (Exception ex)
@@ -406,10 +413,20 @@ namespace WpfApplication1
 
         private void dataGridEmployeeOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //foreach (var item in dataGridEmployeeOut.SelectedItems)
-            //{
-            //    MessageBox.Show(((Employee)item).NAME);
-            //}
+            if(dataGridEmployeeOut.SelectedIndex != -1)
+            {
+                var cellInfo = new DataGridCellInfo(dataGridEmployeeOut.Items[dataGridEmployeeOut.SelectedIndex], dataGridEmployeeOut.Columns[3]);
+                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                if(content.Text != "Уборщик")
+                {
+                    textBlockTypeCount.Text = content.Text + "ы:" + DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { content.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
+                }
+                else
+                {
+                    textBlockTypeCount.Text = content.Text + "и:" + DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { content.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
+                }
+                
+            }
         }
     }
 }
