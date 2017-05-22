@@ -22,7 +22,7 @@
         <Button x:Name="buttonDelete" Content="Удалить" Margin="0,0,165,12" Click="buttonDelete_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74"/>
         <Button x:Name="buttonSearch" Margin="0,0,324,12" Content="Найти..." Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" Click="buttonSearch_Click"/>
         <TabControl x:Name="tabControlTables" Margin="548,22,5,44">
-            <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0" MouseDoubleClick="tabItemCheck_MouseDoubleClick">
+            <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -48,7 +48,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemDiscount" Header="Акции" Margin="21,0,-21,0" MouseDoubleClick="tabItemDiscount_MouseDoubleClick">
+            <TabItem x:Name="tabItemDiscount" Header="Акции" Margin="21,0,-21,0">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dataGridDiscountOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6">
                         <DataGrid.Columns>
@@ -62,7 +62,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemEmployee" Header="Работники" Height="20" VerticalAlignment="Top" Margin="20,0,-20,0" MouseDoubleClick="tabItemEmployee_MouseDoubleClick">
+            <TabItem x:Name="tabItemEmployee" Header="Работники" Height="20" VerticalAlignment="Top" Margin="20,0,-20,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="32*"/>
@@ -83,7 +83,7 @@
                     <TextBlock x:Name="textBlockTypeCount" TextWrapping="Wrap" Grid.Row="1" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="153"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemManufacturer" Header="Производители" Height="20" VerticalAlignment="Top" Margin="18,0,-18,0" MouseDoubleClick="tabItemManufacturer_MouseDoubleClick">
+            <TabItem x:Name="tabItemManufacturer" Header="Производители" Height="20" VerticalAlignment="Top" Margin="18,0,-18,0">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="dataGridManufacturersOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6">
                         <DataGrid.Columns>
@@ -98,7 +98,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemProduct" Header="Товары" Height="20" VerticalAlignment="Top" Margin="16,0,-16,0" MouseDoubleClick="tabItemProduct_MouseDoubleClick">
+            <TabItem x:Name="tabItemProduct" Header="Товары" Height="20" VerticalAlignment="Top" Margin="16,0,-16,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid Margin="0,0,0,-6">
                         <Grid.RowDefinitions>
@@ -131,7 +131,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemWaybill" Header="Накладные" Height="20" VerticalAlignment="Top" Margin="15,0,-15,0" MouseDoubleClick="tabItemWaybill_MouseDoubleClick">
+            <TabItem x:Name="tabItemWaybill" Header="Накладные" Height="20" VerticalAlignment="Top" Margin="15,0,-15,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid Margin="0,0,0,-6">
                         <Grid.ColumnDefinitions>

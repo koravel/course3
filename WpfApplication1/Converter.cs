@@ -13,15 +13,36 @@ namespace WpfApplication1
         
         public static string DateConvert(string value)
         {
-            string[] date = value.Split('.');
-            string q = date[2] + "-" + date[1] + "-" + date[0];
-            return q;
+            if(value != null)
+            {
+                string[] date = value.Split('.');
+                if(date.Length>2)
+                {
+                    string result = date[2] + "-" + date[1] + "-" + date[0];
+                    return result;
+                }
+                else
+                {
+                    return "0";
+                }
+            }
+            else
+            {
+                return "0";
+            }
         }
         public static string CurrencyConvert(string value)
         {
-            value = value.Remove(value.Length - 2);
-            value = value.Replace(",", ".");
-            return value;
+            if(value != null)
+            {
+                value = value.Remove(value.Length - 2);
+                value = value.Replace(",", ".");
+                return value;
+            }
+            else
+            {
+                return "0";
+            }
         }
     }
 }

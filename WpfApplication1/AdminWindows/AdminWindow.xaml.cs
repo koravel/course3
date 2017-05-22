@@ -426,7 +426,7 @@ namespace WpfApplication1
             {
                 case 0:
                     {
-                        if (checkBoxSearchEmployeeCheck.IsChecked == true)
+                        if (checkBoxSearchEmployeeCheck.IsChecked == true && textBoxSearchEmployeeCheck.Text != "")
                         {
                             temp += "AND employee.E_NAME=@employee";
                             valuesText.Add("@employee");
@@ -442,7 +442,7 @@ namespace WpfApplication1
                         }
                         else
                         {
-                            if (checkBoxSearchBDateCheck.IsChecked == true)
+                            if (checkBoxSearchBDateCheck.IsChecked == true && datePickerSearchBDateCheck.Text != "")
                             {
                                 temp += "AND `check`.C_DATE>=@bdate";
                                 valuesText.Add("@bdate");
@@ -450,7 +450,7 @@ namespace WpfApplication1
                             }
                             else
                             {
-                                if (checkBoxSearchEDateCheck.IsChecked == true)
+                                if (checkBoxSearchEDateCheck.IsChecked == true && datePickerSearchEDateCheck.Text != "")
                                 {
                                     temp += "AND `check`.C_DATE<=@edate";
                                     valuesText.Add("@edate");
@@ -458,7 +458,7 @@ namespace WpfApplication1
                                 }
                             }
                         }
-                        if (checkBoxSearchBHours.IsChecked == true && checkBoxSearchEHours.IsChecked == true)
+                        if (checkBoxSearchBHours.IsChecked == true && checkBoxSearchEHours.IsChecked == true && upDownSearchBHours.Text != "" && upDownSearchEHours.Text != "")
                         {
                             temp += " AND HOUR(`check`.C_DATE) BETWEEN @bhour AND @ehour";
                             valuesText.Add("@bhour");
@@ -468,7 +468,7 @@ namespace WpfApplication1
                         }
                         else
                         {
-                            if(checkBoxSearchBHours.IsChecked == true)
+                            if (checkBoxSearchBHours.IsChecked == true && upDownSearchBHours.Text != "")
                             {
                                 temp += " AND HOUR(`check`.C_DATE)>=@bhour";
                                 valuesText.Add("@bhour");
@@ -476,7 +476,7 @@ namespace WpfApplication1
                             }
                             else
                             {
-                                if(checkBoxSearchEHours.IsChecked == true)
+                                if (checkBoxSearchEHours.IsChecked == true && upDownSearchEHours.Text != "")
                                 {
                                     temp += " AND HOUR(`check`.C_DATE)<=@ehour";
                                     valuesText.Add("@ehour");
@@ -484,7 +484,7 @@ namespace WpfApplication1
                                 }
                             }
                         }
-                        if (checkBoxSearchBMinutes.IsChecked == true && checkBoxSearchEMinutes.IsChecked == true)
+                        if (checkBoxSearchBMinutes.IsChecked == true && checkBoxSearchEMinutes.IsChecked == true && upDownSearchBMinutes.Text != "" && upDownSearchEMinutes.Text != "")
                         {
                             temp += " AND MINUTE(`check`.C_DATE) BETWEEN @bminute AND @eminute";
                             valuesText.Add("@bminute");
@@ -494,7 +494,7 @@ namespace WpfApplication1
                         }
                         else
                         {
-                            if(checkBoxSearchBMinutes.IsChecked == true)
+                            if (checkBoxSearchBMinutes.IsChecked == true && upDownSearchBMinutes.Text != "")
                             {
                                 temp += " AND MINUTE(`check`.C_DATE)>=@bminute";
                                 valuesText.Add("@bminute");
@@ -502,7 +502,7 @@ namespace WpfApplication1
                             }
                             else
                             {
-                                if(checkBoxSearchEMinutes.IsChecked == true)
+                                if (checkBoxSearchEMinutes.IsChecked == true && upDownSearchEMinutes.Text != "")
                                 {
                                     temp += " AND MINUTE(`check`.C_DATE)<=@eminute";
                                     valuesText.Add("@eminute");
@@ -511,7 +511,7 @@ namespace WpfApplication1
                             }
                         }
 
-                        if (checkBoxSearchBSeconds.IsChecked == true && checkBoxSearchESeconds.IsChecked == true)
+                        if (checkBoxSearchBSeconds.IsChecked == true && checkBoxSearchESeconds.IsChecked == true && upDownSearchBSeconds.Text != "" && upDownSearchESeconds.Text != "")
                         {
                             temp += " AND SECOND(`check`.C_DATE) BETWEEN @bsecond AND @esecond";
                             valuesText.Add("@bsecond");
@@ -521,7 +521,7 @@ namespace WpfApplication1
                         }
                         else
                         {
-                            if (checkBoxSearchBSeconds.IsChecked == true)
+                            if (checkBoxSearchBSeconds.IsChecked == true && upDownSearchBSeconds.Text != "")
                             {
                                 temp += " AND SECOND(`check`.C_DATE)>=@bsecond";
                                 valuesText.Add("@bsecond");
@@ -529,7 +529,7 @@ namespace WpfApplication1
                             }
                             else
                             {
-                                if (checkBoxSearchESeconds.IsChecked == true)
+                                if (checkBoxSearchESeconds.IsChecked == true && upDownSearchESeconds.Text != "")
                                 {
                                     temp += " AND SECOND(`check`.C_DATE)<=@esecond";
                                     valuesText.Add("@esecond");
@@ -557,14 +557,14 @@ namespace WpfApplication1
                                 }
                             }
                         }
-                        if (checkBoxSearchProductCheck.IsChecked == true)
+                        if (checkBoxSearchProductCheck.IsChecked == true && textBoxSearchProductCheck.Text != "")
                         {
                             temp += " AND product.P_NAME=@product";
                             valuesText.Add("@product");
                             values.Add(textBoxSearchProductCheck.Text);
                             flag = true;
                         }
-                        if (checkBoxSearchPriceCheck.IsChecked == true)
+                        if (checkBoxSearchPriceCheck.IsChecked == true && upDownSearchPriceCheck.Text != "")
                         {
                             temp += " AND product_actual_price.PAP_PRICE";
                             switch(comboBoxDirectionSearchPrice.SelectedIndex)
@@ -599,9 +599,9 @@ namespace WpfApplication1
                             temp += Converter.CurrencyConvert(upDownSearchPriceCheck.Text);
                             flag = true;
                         }
-                        if (checkBoxSearchValueCheck.IsChecked == true)
+                        if (checkBoxSearchValueCheck.IsChecked == true && upDownSearchValueCheck.Text != "")
                         {
-                            temp += " AND check_list.C_VALUE";
+                            temp += " AND check_list.CL_VALUE";
                             switch (comboBoxDirectionSearchPrice.SelectedIndex)
                             {
                                 case 0:
@@ -636,13 +636,11 @@ namespace WpfApplication1
                             values.Add(upDownSearchValueCheck.Text);
                             flag = true;
                         }
-                        if (checkBoxSearchCheckCode.IsChecked == true)
+                        if (checkBoxSearchCheckCode.IsChecked == true && textBoxSearchCheckCode.Text != "")
                         {
 
                             query = "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=@code;";
-                            valuesText = null;
-                            values = null;
-                            dataGridCheckOut.ItemsSource = DataBase.GetCheck(redefineQuery, new string[] { "@code" }, new string[] { textBoxSearchCheckCode.Text });
+                            dataGridCheckOut.ItemsSource = DataBase.GetCheck(query, new string[] { "@code" }, new string[] { textBoxSearchCheckCode.Text });
                             valuesText.Clear();
                             values.Clear();
                         }
