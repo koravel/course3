@@ -18,13 +18,13 @@ namespace WpfApplication1
 
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 1, Brushes.Red);
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 2, Brushes.Red);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int dataCorrect = 0;
-            textBoxSumm.BorderBrush = ErrorCheck.TextCheck(textBoxSumm.Text,ref dataCorrect,1,Brushes.Red);
+            textBoxSumm.BorderBrush = ErrorCheck.TextCheck(textBoxSumm.Text,ref dataCorrect,2,Brushes.Red);
             if(dataCorrect == 1)
             {
                 if (summ <= float.Parse(textBoxSumm.Text))

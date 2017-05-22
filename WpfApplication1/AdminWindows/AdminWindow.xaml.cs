@@ -112,10 +112,11 @@ namespace WpfApplication1
 
         private void CalculateProductCount(string curid)
         {
-            DataBase.Query(new string[] { "@_id" }, new string[] { curid }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
+            DataBase.Query(new string[] { "@_id" }, new string[] { curid }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF(DATE_SUB(wl.WL_EDATE,INTERVAL 14 DAY)>DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
             string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
             overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(sum(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
-            actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(sum(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Не просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
+            actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(sum(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Не просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+            util = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid },"SELECT PS_UTIL FROM product_sold WHERE WL_ID=@_id;");
             textBlockProductCount.Text = "Всего на складе:";
             if (quantity == null)
             {
@@ -134,7 +135,7 @@ namespace WpfApplication1
             {
                 textBlockProductCount.Text += overdueValue;
             }
-            textBlockProductCount.Text += "   Не просрочено:";
+            textBlockProductCount.Text += "\nНе просрочено:";
             if (actualValue == null)
             {
                 textBlockProductCount.Text += "0";
@@ -142,6 +143,15 @@ namespace WpfApplication1
             else
             {
                 textBlockProductCount.Text += actualValue;
+            }
+            textBlockProductCount.Text += "   Утилизировано:";
+            if (util == null)
+            {
+                textBlockProductCount.Text += "0";
+            }
+            else
+            {
+                textBlockProductCount.Text += util;
             }
         }
 
@@ -158,6 +168,7 @@ namespace WpfApplication1
                         totalWaybillPriceTextBlock.Text += totalTradePrice;
                     }
         }
+
 
         private void CalculateEmployeesCount(int curid)
         {
@@ -902,11 +913,11 @@ namespace WpfApplication1
         {
             temp = null;
             flag = false;
-            switch(tabControlSearch.SelectedIndex)
+            switch (tabControlSearch.SelectedIndex)
             {
                 case 0:
                     {
-                          SQLParameterAdd(checkBoxSearchEmployeeCheck.IsChecked.Value, new string[] { " AND employee.E_NAME=@_employee", "@_employee", textBoxSearchEmployeeCheck.Text }, ref temp, ref flag, new bool[] { false, false });
+                        SQLParameterAdd(checkBoxSearchEmployeeCheck.IsChecked.Value, new string[] { " AND employee.E_NAME=@_employee", "@_employee", textBoxSearchEmployeeCheck.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         RangeComparsionGet(new bool[] { checkBoxSearchBDateCheck.IsChecked.Value, checkBoxSearchEDateCheck.IsChecked.Value }, comboBoxSearchDateRangeTypeCheck.SelectedIndex, new string[] { 
                                 "AND `check`.C_DATE>=@_bdate","AND `check`.C_DATE<=@_edate"," AND `check`.C_DATE BETWEEN @_bdate AND @_edate"," AND (`check`.C_DATE>@_edate OR `check`.C_DATE<@_bdate)"},
@@ -1021,7 +1032,7 @@ namespace WpfApplication1
                         SQLParameterAdd(checkBoxSearchCodeManufacturer.IsChecked.Value, new string[] { " M_ID=@_code", "@_code", textBoxSearchCodeManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
 
                         MakeSearch(dataGridManufacturersOut, DataBase.GetManufacturer, new string[] { "SELECT M_ID,M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer ", null }, temp, true);
-                    break;
+                        break;
                     }
                 case 4:
                     {
@@ -1049,7 +1060,7 @@ namespace WpfApplication1
                         {
                             SQLParameterAdd(checkBoxSearchProductStatus.IsChecked.Value, new string[] { " AND po.PP_IS_OVERDUE=@_status", "@_status", ProductStatus(comboBoxSearchProductStatus.SelectedIndex) }, ref temp, ref flag, new bool[] { true, false });
                         }
-                        
+
                         ComparsionGet(checkBoxSearchPriceProduct.IsChecked.Value, new int[] { comboBoxSearchPriceRangeProduct.SelectedIndex, 0 },
                               new string[] { " AND product_actual_price.PAP_PRICE" },
                               new string[] { null, Converter.CurrencyConvert(upDownSearchPriceProduct.Text) }, ref temp, ref flag);
@@ -1065,7 +1076,7 @@ namespace WpfApplication1
                         SQLParameterAdd(checkBoxSearchBarcode.IsChecked.Value, new string[] { " AND p.P_CODE=@_barcode", "@_barcode", textBoxSearchBarcode.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         MakeSearch(
-                            dataGridProductOut, DataBase.GetProduct, 
+                            dataGridProductOut, DataBase.GetProduct,
                             new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR,p.P_CODE FROM `product` p,`manufacturer`,product_actual_price,waybill_list wl,product_overdue po WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID AND wl.P_ID=p.P_ID AND wl.WL_ID=po.WL_ID ",
                                 "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR,p.P_CODE FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " },
                                 temp, flag);
@@ -1102,7 +1113,7 @@ namespace WpfApplication1
                         ComparsionGet(checkBoxSearchPriceProductWaybill.IsChecked.Value, new int[] { comboBoxDirectionSearchPriceProductWaybill.SelectedIndex, 0 },
                               new string[] { " AND wl.WL_TRADE_PRICE" },
                               new string[] { null, Converter.CurrencyConvert(upDownSearchPriceProductWaybill.Text) }, ref temp, ref flag);
-                       
+
                         RangeComparsionGet(new bool[] { checkBoxSearchBDateProductWaybillOut.IsChecked.Value, checkBoxSearchEDateProductWaybillOut.IsChecked.Value },
                             comboBoxSearchDateRangeTypeProductWaybillOut.SelectedIndex,
                             new string[] { " AND wl.WL_EDATE>=@bbdate", " AND wl.WL_EDATE<=@bedate", " AND wl.WL_EDATE BETWEEN @bbdate AND @bedate", " AND (wl.WL_EDATE>@bedate OR wl.WL_EDATE<@bbdate)" },
@@ -1113,14 +1124,14 @@ namespace WpfApplication1
                             comboBoxSearchDateRangeTypeProductWaybillIn.SelectedIndex,
                             new string[] { " AND wl.WL_BDATE>=@ebdate", " AND wl.WL_BDATE<=@eedate", " AND wl.WL_BDATE BETWEEN @ebdate AND @eedate", " AND (wl.WL_BDATE>@eedate OR wl.WL_BDATE<@ebdate)" },
                             new string[] { Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text), Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text) },
-                            new string[] { "@ebdate", "@eedate" }, ref temp,ref flag);
+                            new string[] { "@ebdate", "@eedate" }, ref temp, ref flag);
 
                         if (comboBoxSearchProductStatusWaybill.SelectedItem != null && comboBoxSearchProductStatusWaybill.SelectedIndex != 0)
                         {
                             SQLParameterAdd(checkBoxSearchProductStatusWaybill.IsChecked.Value, new string[] { " AND po.PP_IS_OVERDUE=@_status", "@_status", ProductStatus(comboBoxSearchProductStatusWaybill.SelectedIndex) }, ref temp, ref flag, new bool[] { true, false });
                         }
 
-                        MakeSearch(dataGridWaybillOut, DataBase.GetWaybill, 
+                        MakeSearch(dataGridWaybillOut, DataBase.GetWaybill,
                             new string[] { "SELECT DISTINCT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e,waybill_list wl,product p,product_overdue po WHERE w.`E_ID`=e.`E_ID` AND wl.W_ID=w.W_ID AND p.P_ID=wl.P_ID AND po.WL_ID=wl.WL_ID ",
                                 "SELECT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e WHERE w.`E_ID`=e.`E_ID` " }
                                 , temp, flag);
@@ -1134,7 +1145,7 @@ namespace WpfApplication1
 
         private string ProductStatus(int selectedVal)
         {
-            switch(selectedVal)
+            switch (selectedVal)
             {
                 case 1:
                     {
@@ -1370,7 +1381,7 @@ namespace WpfApplication1
                     List<WaybillInfo> dataList = DataBase.GetWaybillInfoList(
                         new string[] { "@_id", "@_wid" },
                         new string[] { waybillList[dataGridWaybillListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 3, dataGridWaybillOut) },
-                        "SELECT IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0),IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Не просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0),ps.PS_COUNT FROM waybill_list wl,product_sold ps,product_overdue po WHERE ps.WL_ID=wl.WL_ID AND po.WL_ID=wl.WL_ID AND wl.W_ID=@_wid AND wl.P_ID=@_id;");
+                        "SELECT IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0),IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Не просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0),ps.PS_COUNT,ps.PS_UTIL FROM waybill_list wl,product_sold ps,product_overdue po WHERE ps.WL_ID=wl.WL_ID AND po.WL_ID=wl.WL_ID AND wl.W_ID=@_wid AND wl.P_ID=@_id;");
                     if (dataList.Count != 0)
                     {
                         (sender as DataGrid).ItemsSource = dataList;
@@ -2142,6 +2153,19 @@ namespace WpfApplication1
         private void buttonDropProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductDropWindow(idText).ShowDialog();
+            dataGridWaybillListOut.Items.Refresh();
+            if(dataGridProductOut.SelectedIndex != -1)
+            {
+                CalculateProductCount(((Product)(dataGridProductOut.SelectedItem)).ID.ToString());
+            }
+        }
+
+        private void tabControlTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(tabControlTables.SelectedIndex != -1)
+            {
+                tabControlSearch.SelectedIndex = tabControlTables.SelectedIndex;
+            }
         }
 
 

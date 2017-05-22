@@ -6,5 +6,6 @@ namespace WpfApplication1
         public string OVERDUE { set; get; }
         public string NOTOVERDUE { set; get; }
         public string SOLD { set; get; }
+        public string UTIL { set; get; }
     }
 }

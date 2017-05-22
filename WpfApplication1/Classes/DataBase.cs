@@ -136,7 +136,6 @@ namespace WpfApplication1
 
         }
 
-
         public static string[] QueryRetColumn(string[] _changeParametersText, string[] _changeParameters, string _queryString)
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
@@ -971,7 +970,8 @@ namespace WpfApplication1
                         {
                             OVERDUE = dr.GetString(0),
                             NOTOVERDUE = dr.GetString(1),
-                            SOLD = dr.GetString(2)
+                            SOLD = dr.GetString(2),
+                            UTIL = dr.GetString(3)
                         });
                     }
                 }
@@ -1087,7 +1087,7 @@ namespace WpfApplication1
                 try
                 {
                 con.Open();
-                string query = "SELECT wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0" + queryPart + ";";
+                string query = "SELECT wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0 " + queryPart + ";";
                 MySqlCommand com = new MySqlCommand(query, con);
                 for (int i = 0; i < _values.Length; i++)
                 {
@@ -1136,6 +1136,38 @@ namespace WpfApplication1
                 }
                 con.Close();
                 return productDrop;
+            }
+        }
+
+        public static List<LogOut> GetLogOut()
+        {
+            List<LogOut> logs = new List<LogOut>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand("SELECT `user`.U_NAME,user_action.UA_TYPE,user_action.UA_DATETIME,user_action.UA_DESCRIPTION FROM user_action,`user` WHERE user_action.U_ID=`user`.U_ID;", con);
+
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        logs.Add(new LogOut()
+                        {
+                            LOGIN = dr.GetString("U_NAME"),
+                            TYPE = dr.GetString("UA_TYPE"),
+                            TIME = dr.GetDateTime("UA_DATETIME"),
+                            TEXT = dr.GetString("UA_DESCRIPTION")
+                        });
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                con.Close();
+                return logs;
             }
         }
     }

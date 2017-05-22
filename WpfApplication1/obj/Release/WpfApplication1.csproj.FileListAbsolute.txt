@@ -274,7 +274,6 @@ G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfA
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.baml
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\DiscountAddWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\EmployeeAddWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\DiscountEditWindow.baml
@@ -588,5 +587,10 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Sell
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.cache
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.lref
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.g.resources
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckConWindow.baml
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckConWindow.g.cs
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\CheckConWindow.baml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\CheckConWindow.g.cs
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\CanselSellWindow.baml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\CanselSellWindow.g.cs
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\LogWindow.baml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\LogWindow.g.cs

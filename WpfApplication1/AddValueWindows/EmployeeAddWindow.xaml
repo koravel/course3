@@ -8,10 +8,10 @@
         <TextBox x:Name="textBoxTel" HorizontalAlignment="Left" Height="23" Margin="23,98,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="176" KeyUp="textBox_KeyUp" MaxLength="15" FontSize="14"/>
         <ComboBox x:Name="comboBoxPos" HorizontalAlignment="Left" Margin="23,157,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="comboBoxPos_SelectionChanged" FontSize="14">
             <System:String>Кассир</System:String>
-            <System:String>Фармацевт</System:String>
             <System:String>Уборщик</System:String>
             <System:String>Менеджер</System:String>
             <System:String>Администратор</System:String>
+            <System:String>Фармацевт</System:String>
         </ComboBox>
         <TextBox x:Name="textBoxContract" HorizontalAlignment="Left" Height="23" Margin="23,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="176" KeyUp="textBox_KeyUp" MaxLength="11" FontSize="14"/>
         <Label Content="Ф.И.О." HorizontalAlignment="Left" Margin="23,8,0,0" VerticalAlignment="Top" FontSize="14"/>

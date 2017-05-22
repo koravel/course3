@@ -19,7 +19,7 @@
         <Button x:Name="buttonAdd" Content="Добавить" Margin="0,0,85,9" Click="buttonAdd_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="14"/>
         <Button x:Name="buttonDelete" Content="Удалить" Margin="0,0,165,9" Click="buttonDelete_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" FontSize="14"/>
         <Button x:Name="buttonSearch" Margin="0,0,324,9" Content="Найти..." Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74" Click="buttonSearch_Click" FontSize="14"/>
-        <TabControl x:Name="tabControlTables" Margin="597,22,5,44" FontSize="14">
+        <TabControl x:Name="tabControlTables" Margin="597,22,5,44" FontSize="14" SelectionChanged="tabControlTables_SelectionChanged">
             <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
                     <Grid>
@@ -265,6 +265,9 @@
                                             <DataGridTextColumn
                                         Header="Продано"                                                                                  
                                         Binding="{Binding SOLD}"/>
+                                            <DataGridTextColumn
+                                        Header="Утилизировано"                                                                                  
+                                        Binding="{Binding UTIL}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </DataTemplate>
@@ -391,10 +394,10 @@
                     <TextBox x:Name="textBoxSearchContractEmployee" HorizontalAlignment="Left" Height="23" Margin="410,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" IsEnabled="False"/>
                     <ComboBox x:Name="comboBoxSearchPosEmployee" HorizontalAlignment="Left" Margin="410,59,0,0" VerticalAlignment="Top" Width="136" IsEnabled="False">
                         <System:String>Кассир</System:String>
-                        <System:String>Фармацевт</System:String>
                         <System:String>Уборщик</System:String>
                         <System:String>Менеджер</System:String>
                         <System:String>Администратор</System:String>
+                        <System:String>Фармацевт</System:String>
                     </ComboBox>
                     <TextBox x:Name="textBoxSearchTelEmployee" HorizontalAlignment="Left" Height="23" Margin="410,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" IsEnabled="False"/>
                     <TextBox x:Name="textBoxSearchCodeEmployee" HorizontalAlignment="Left" Height="23" Margin="410,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" IsEnabled="False"/>
@@ -500,8 +503,8 @@
                         <System:String>Паста</System:String>
                     </ComboBox>
                     <ComboBox x:Name="comboBoxSearchFormProduct" HorizontalAlignment="Left" Margin="397,87,0,0" VerticalAlignment="Top" Width="158" IsEnabled="False">
-                        <System:String>без рецепта</System:String>
                         <System:String>с рецептом</System:String>
+                        <System:String>без рецепта</System:String>
                         <System:String>строгого учета</System:String>
                     </ComboBox>
                     <xctk:DecimalUpDown x:Name="upDownSearchPriceProduct" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153" Margin="0,0,295,183" IsEnabled="False"/>

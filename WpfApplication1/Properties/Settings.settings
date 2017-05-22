@@ -3,28 +3,28 @@
   <Profiles />
   <Settings>
     <Setting Name="Address" Type="System.String" Scope="User">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Database" Type="System.String" Scope="User">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Login" Type="System.String" Scope="User">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Address_default" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">qew</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Database_default" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">wqe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Login_default" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Password_default" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">qwe</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DelBindingToEmployee" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

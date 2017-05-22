@@ -31,5 +31,10 @@ namespace WpfApplication1
         {
             new DirectorSettingsWindow().ShowDialog();
         }
+
+        private void buttonDirectorLogs_Click(object sender, RoutedEventArgs e)
+        {
+            new LogWindow().Show();
+        }
     }
 }

@@ -85,7 +85,6 @@ namespace WpfApplication1
             {
                 objout.NAME = textBoxName.Text;
                 objout.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].NAME.ToString();
-                MessageBox.Show(objout.MANUFACTURER);
                 objout.GROUP = comboBoxGroup.SelectedItem.ToString();
                 objout.PACK = comboBoxPack.SelectedItem.ToString();
                 objout.FORM = comboBoxForm.SelectedItem.ToString();

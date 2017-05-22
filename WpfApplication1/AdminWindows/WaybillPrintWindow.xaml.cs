@@ -26,7 +26,6 @@ namespace WpfApplication1
             using (FileStream stream = new FileStream(string.Format("{0}.png", fileName), FileMode.Create))
             {
                 SaveToPNG(frameworkElement, size, stream);
-                stream.Close();
             }
             
         }

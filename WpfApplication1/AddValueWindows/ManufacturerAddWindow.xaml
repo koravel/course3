@@ -4,10 +4,10 @@
         Title="Добавление производителя" Height="215" Width="326" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Pharmacy DataBase;component/icone.ico">
     <Grid>
         <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="23" Margin="88,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="50" FontSize="14"/>
-        <TextBox x:Name="textBoxCountry" HorizontalAlignment="Left" Height="23" Margin="88,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="15" FontSize="14"/>
-        <TextBox x:Name="textBoxCity" HorizontalAlignment="Left" Height="23" Margin="88,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="15" FontSize="14"/>
-        <TextBox x:Name="textBoxAddress" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="20" FontSize="14"/>
-        <TextBox x:Name="textBoxTel" HorizontalAlignment="Left" Height="23" Margin="88,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="15" FontSize="14"/>
+        <TextBox x:Name="textBoxCountry" HorizontalAlignment="Left" Height="23" Margin="88,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="50" FontSize="14"/>
+        <TextBox x:Name="textBoxCity" HorizontalAlignment="Left" Height="23" Margin="88,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="50" FontSize="14"/>
+        <TextBox x:Name="textBoxAddress" HorizontalAlignment="Left" Height="23" Margin="88,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="50" FontSize="14"/>
+        <TextBox x:Name="textBoxTel" HorizontalAlignment="Left" Height="23" Margin="88,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" TextChanged="textBox_TextChanged" MaxLength="20" FontSize="14"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="4,8,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Страна" HorizontalAlignment="Left" Margin="18,37,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Город" HorizontalAlignment="Left" Margin="24,68,0,0" VerticalAlignment="Top" FontSize="14"/>

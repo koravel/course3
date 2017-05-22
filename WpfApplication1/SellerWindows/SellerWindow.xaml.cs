@@ -12,10 +12,10 @@ namespace WpfApplication1
         List<ProductInCheck> list = new List<ProductInCheck>();
         List<ProductInCheck> listToCheck = new List<ProductInCheck>();
         List<ProductInCheck> listSearch = new List<ProductInCheck>();
-        List<int> indexes = new List<int>(),buffList = new List<int>();
+        List<int> indexes = new List<int>(), buffList = new List<int>();
         List<NameIdList> employees = new List<NameIdList>();
         string idText;
-        float summ = 0,prepayment = 0;
+        float summ = 0, prepayment = 0;
         public SellerWindow(string id)
         {
             InitializeComponent();
@@ -29,11 +29,11 @@ namespace WpfApplication1
 
         private void buttonSell_Click(object sender, RoutedEventArgs e)
         {
-            if(dataGridProductOut.SelectedIndex != -1)
+            if (dataGridProductOut.SelectedIndex != -1)
             {
                 if (upDownValue.Text != "" && upDownValue.Value.Value <= ((ProductInCheck)(dataGridProductOut.Items[dataGridProductOut.SelectedIndex])).VALUE)
                 {
-                    if(dataGridProductOut.ItemsSource == list)
+                    if (dataGridProductOut.ItemsSource == list)
                     {
                         ProductToCheckAdd(list, dataGridProductOut.SelectedIndex);
                     }
@@ -45,7 +45,7 @@ namespace WpfApplication1
             }
         }
 
-        private void ProductToCheckAdd(List<ProductInCheck> curList,int curIndex)
+        private void ProductToCheckAdd(List<ProductInCheck> curList, int curIndex)
         {
             bool flag = true;
             int index = -1;
@@ -108,7 +108,7 @@ namespace WpfApplication1
 
         private void dataGridProductToCheckOut_KeyUp(object sender, KeyEventArgs e)
         {
-            if(dataGridProductToCheckOut.SelectedIndex != -1 && e.Key == Key.Delete)
+            if (dataGridProductToCheckOut.SelectedIndex != -1 && e.Key == Key.Delete)
             {
                 SecurityPassWindow window = new SecurityPassWindow();
                 window.ShowDialog();
@@ -123,9 +123,9 @@ namespace WpfApplication1
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.Key)
+            switch (e.Key)
             {
-                case(Key.F2):
+                case (Key.F2):
                     {
                         buttonPrepayment_Click(null, null);
                         break;
@@ -161,17 +161,17 @@ namespace WpfApplication1
         {
             AddPrepaymentWindow window = new AddPrepaymentWindow(summ);
             window.ShowDialog();
-            if(window.flag)
+            if (window.flag)
             {
                 textBlockPrePayment.Text = "аванс:" + window.prePayment.ToString();
                 prepayment = window.prePayment;
-                textBlockDelivery.Text = "сдача:" + Math.Round((window.prePayment - summ),2).ToString();
+                textBlockDelivery.Text = "сдача:" + Math.Round((window.prePayment - summ), 2).ToString();
             }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            if(dataGridProductToCheckOut.Items.Count > 0)
+            if (dataGridProductToCheckOut.Items.Count > 0)
             {
                 SecurityPassWindow window = new SecurityPassWindow();
                 window.ShowDialog();
@@ -180,6 +180,9 @@ namespace WpfApplication1
                     while (listToCheck.Count > 0)
                     {
                         BackupAddtion(0);
+                        textBlockDelivery.Text = "сдача:0";
+                        textBlockPrePayment.Text = "аванс:0";
+                        prepayment = 0;
                     }
                 }
             }
@@ -188,8 +191,15 @@ namespace WpfApplication1
         private void BackupAddtion(int index)
         {
             list[indexes[index]].VALUE += listToCheck[index].VALUE;
+            textBlockDelivery.Text = "сдача:" + (prepayment - summ).ToString();
             summ -= float.Parse(listToCheck[index].SUMM);
-            textBlockSumm.Text = "сумма:" + Math.Round(summ,2).ToString();
+            textBlockSumm.Text = "сумма:" + Math.Round(summ, 2).ToString();
+            if(summ == 0)
+            {
+                textBlockDelivery.Text = "сдача:0";
+                textBlockPrePayment.Text = "аванс:0";
+                prepayment = 0;
+            }
             listToCheck.RemoveAt(index);
             indexes.RemoveAt(index);
             dataGridProductToCheckOut.Items.Refresh();
@@ -201,7 +211,7 @@ namespace WpfApplication1
             string temp = null;
             List<string> param = new List<string>(), paramText = new List<string>();
             List<string> searchResult = new List<string>();
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && textBoxSearch.Text != "")
             {
                 switch (comboBoxSearch.SelectedIndex)
                 {
@@ -229,7 +239,7 @@ namespace WpfApplication1
                         {
                             listSearch.Clear();
                             buffList.Clear();
-                            switch(comboBoxDirectionSearchValue.SelectedIndex)
+                            switch (comboBoxDirectionSearchValue.SelectedIndex)
                             {
                                 case 0:
                                     {
@@ -292,7 +302,6 @@ namespace WpfApplication1
                                         break;
                                     }
                             }
-                            
                             break;
                         }
                     case 5:
@@ -322,7 +331,7 @@ namespace WpfApplication1
                         }
                     case 10:
                         {
-                            ParamsAdd(param, paramText, "@_form", textBoxSearch.Text, " AND p.P_FORM=@_form", ref temp,false);
+                            ParamsAdd(param, paramText, "@_form", textBoxSearch.Text, " AND p.P_FORM=@_form", ref temp, false);
                             break;
                         }
                 }
@@ -337,40 +346,29 @@ namespace WpfApplication1
                     listSearch.Clear();
                     buffList.Clear();
                     searchResult = DataBase.GetProductForSeller(paramTextStr, paramStr, temp);
-                    if(searchResult.Count < list.Count)
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        for (int i = 0; i < list.Count; i++)
+                        for (int j = 0; j < searchResult.Count; j++)
                         {
-                            for (int j = 0; j < searchResult.Count; j++)
+                            if (list[i].WAYBILLID.ToString() == searchResult[j])
                             {
-                                if (list[i].WAYBILLID.ToString() == searchResult[j])
-                                {
-                                    listSearch.Add(list[i]);
-                                    buffList.Add(i);
-                                    searchResult.RemoveAt(j);
-                                    j = searchResult.Count + 1;
-                                }
+                                listSearch.Add(list[i]);
+                                buffList.Add(i);
+                                searchResult.RemoveAt(j);
+                                j = searchResult.Count + 1;
                             }
                         }
-                        dataGridProductOut.ItemsSource = null;
-                        dataGridProductOut.ItemsSource = listSearch;
                     }
-                }
-                else
-                {
-                    if (listSearch.Count > 0 && searchResult.Count < list.Count)
-                    {
-                        dataGridProductOut.ItemsSource = null;
-                        dataGridProductOut.ItemsSource = listSearch;
-                    }
+                    dataGridProductOut.ItemsSource = null;
+                    dataGridProductOut.ItemsSource = listSearch;
                 }
             }
         }
 
-        private void ParamsAdd(List<string> values,List<string> Textvalues,string text,string value,string queryPart,ref string query,bool mode)
+        private void ParamsAdd(List<string> values, List<string> Textvalues, string text, string value, string queryPart, ref string query, bool mode)
         {
             query += queryPart;
-            if(mode)
+            if (mode)
             {
                 query += CompareType(comboBoxDirectionSearchValue.SelectedIndex) + text;
             }
@@ -380,7 +378,7 @@ namespace WpfApplication1
 
         private void buttonSearchEscape_Click(object sender, RoutedEventArgs e)
         {
-            if(dataGridProductOut.ItemsSource != list)
+            if (dataGridProductOut.ItemsSource != list)
             {
                 dataGridProductOut.ItemsSource = null;
                 dataGridProductOut.ItemsSource = list;
@@ -424,16 +422,21 @@ namespace WpfApplication1
         {
             if (dataGridProductToCheckOut.SelectedIndex != -1)
             {
-                BackupAddtion(dataGridProductToCheckOut.SelectedIndex);
-                dataGridProductToCheckOut.Items.Refresh();
-                dataGridProductOut.Items.Refresh();
+                SecurityPassWindow window = new SecurityPassWindow();
+                window.ShowDialog();
+                if (window.flag)
+                {
+                    BackupAddtion(dataGridProductToCheckOut.SelectedIndex);
+                    dataGridProductToCheckOut.Items.Refresh();
+                    dataGridProductOut.Items.Refresh();
+                }
             }
         }
 
         private void buttonSellToCheck_Click(object sender, RoutedEventArgs e)
         {
             string maxId = "";
-            if(comboBoxEmployeeName.SelectedIndex != -1)
+            if (comboBoxEmployeeName.SelectedIndex != -1)
             {
                 comboBoxEmployeeName.BorderBrush = Brushes.Gray;
                 if (listToCheck.Count > 0)
@@ -480,15 +483,38 @@ namespace WpfApplication1
                             {
                                 DataBase.Query(new string[] { "@_pid", "@_value" }, new string[] { productId[i], productValue[i] }, "UPDATE product_quantity SET PQ_OUT=PQ_OUT+@_value WHERE P_ID=@_pid");
                             }
+                            listToCheck.Clear();
+                            summ = 0;
+                            prepayment = 0;
+                            textBlockDelivery.Text = "Сдача:0";
+                            textBlockPrePayment.Text = "Аванс:0";
+                            textBlockSumm.Text = "Сумма:0";
+                            dataGridProductToCheckOut.Items.Refresh();
+                            new WindowCheckPrint(maxId).Show();
                         }
-                        listToCheck.Clear();
-                        summ = 0;
-                        prepayment = 0;
-                        textBlockDelivery.Text = "Сдача:0";
-                        textBlockPrePayment.Text = "Аванс:0";
-                        textBlockSumm.Text = "Сумма:0";
-                        dataGridProductToCheckOut.Items.Refresh();
-                        new WindowCheckPrint(maxId).Show();
+                        else
+                        {
+                            CanselSellWindow windowCancel = new CanselSellWindow();
+                            windowCancel.ShowDialog();
+                            if (windowCancel.flag)
+                            {
+                                SecurityPassWindow windowConfirm = new SecurityPassWindow();
+                                if(windowConfirm.flag)
+                                {
+                                    BackupAddtion(dataGridProductToCheckOut.SelectedIndex);
+                                    dataGridProductToCheckOut.Items.Refresh();
+                                    dataGridProductOut.Items.Refresh();
+                                    listToCheck.Clear();
+                                    summ = 0;
+                                    prepayment = 0;
+                                    textBlockDelivery.Text = "Сдача:0";
+                                    textBlockPrePayment.Text = "Аванс:0";
+                                    textBlockSumm.Text = "Сумма:0";
+                                    dataGridProductToCheckOut.Items.Refresh();
+                                    new WindowCheckPrint(maxId).Show();
+                                }
+                            }
+                        }
                     }
                     else
                     {

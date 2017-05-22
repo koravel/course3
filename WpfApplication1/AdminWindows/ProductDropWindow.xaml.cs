@@ -34,8 +34,11 @@ namespace WpfApplication1
         {
             if(dataGridProductDrop.SelectedIndex != -1)
             {
-                DataBase.Query(null,null,"UPDATE product_overdue SET PP_IS_OVERDUE='Продано';");
+                DataBase.Query(new string[] { "@_id" }, new string[] { ((ProductDrop)(dataGridProductDrop.SelectedItem)).ID.ToString() }, "UPDATE product_overdue SET PP_IS_OVERDUE='Продано' WHERE WL_ID=@_id;");
+                DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { ((ProductDrop)(dataGridProductDrop.SelectedItem)).ID.ToString(), ((ProductDrop)(dataGridProductDrop.SelectedItem)).VALUE.ToString() }, "UPDATE product_sold SET PS_UTIL=PS_UTIL+@_value WHERE WL_ID=@_id;");
                 DataBase.SetLog(idText,1,1,"Утилизация просроченного товара, код накладной="+((ProductDrop)dataGridProductDrop.SelectedItem).ID.ToString());
+                list.RemoveAt(dataGridProductDrop.SelectedIndex);
+                dataGridProductDrop.Items.Refresh();
             }
         }
 
