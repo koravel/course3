@@ -32,17 +32,17 @@ namespace WpfApplication1
             idText = id;
             InitializeComponent();
             dataGridCheckOut.ItemsSource = DataBase.GetCheck();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы чеков...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы чеков...");
             dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы скидок...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы скидок...");
             dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы производителей...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы производителей...");
             dataGridProductOut.ItemsSource = DataBase.GetProduct();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы товаров...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы товаров...");
             dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы работников...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы работников...");
             dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
-            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы накладных...");
+            DataBase.SetLog(idText, 0, 0, "Заполнение таблицы накладных...");
             valuesText.Clear();
             values.Clear();
         }
@@ -143,8 +143,8 @@ namespace WpfApplication1
                     string productId = Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut);
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(productId);
                     DataBase.Query(new string[] { "@_id" }, new string[] { productId }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
-                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
-                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT waybill_list.WL_VALUE-product_sold.PS_COUNT FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IFNULL(SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IFNULL(waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
                     actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
                     textBlockProductCount.Text = "Всего на складе:";
                     if(quantity == null)
@@ -221,27 +221,27 @@ namespace WpfApplication1
                     }
                 case 1:
                     {
-                        new DiscountAddWindow().ShowDialog();
+                        new DiscountAddWindow(idText).ShowDialog();
                         break;
                     }
                 case 2:
                     {
-                        new EmployeeAddWindow().ShowDialog();
+                        new EmployeeAddWindow(idText).ShowDialog();
                         break;
                     }
                 case 3:
                     {
-                        new ManufacturerAddWindow().ShowDialog();
+                        new ManufacturerAddWindow(idText).ShowDialog();
                         break;
                     }
                 case 4:
                     {
-                        new ProductAddWindow().ShowDialog();
+                        new ProductAddWindow(idText).ShowDialog();
                         break;
                     }
                 case 5:
                     {
-                        new WaybillAddWindow().ShowDialog();
+                        new WaybillAddWindow(idText).ShowDialog();
                         break;
                     }
             }
@@ -265,7 +265,7 @@ namespace WpfApplication1
                             {
                                 string discountId = Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut);
                                 DataBase.Query(new string[] { "@_curid" }, new string[] { discountId }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
-                                DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление акции,код=" + discountId);
+                                DataBase.SetLog(idText, 1, 3, "Удаление акции,код=" + discountId);
                             }
                         }
                         catch (Exception ex)
@@ -288,7 +288,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { employeeId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
-                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление работника,код=" + employeeId);
+                                    DataBase.SetLog(idText, 1, 3, "Удаление работника,код=" + employeeId);
                                 }
                             }
                         }
@@ -312,7 +312,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { maufacturerId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
-                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление производителя,код=" + maufacturerId);
+                                    DataBase.SetLog(idText, 1, 3, "Удаление производителя,код=" + maufacturerId);
                                 }
                             }
                         }
@@ -336,7 +336,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { productId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
-                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление товара,код=" + productId);
+                                    DataBase.SetLog(idText, 1, 3, "Удаление товара,код=" + productId);
                                 }
                             }
                         }

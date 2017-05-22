@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.SellerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SellerWindow" Height="300" Width="300">
+        Title="SellerWindow" Height="1920" Width="1080">
     <Grid>
         
     </Grid>

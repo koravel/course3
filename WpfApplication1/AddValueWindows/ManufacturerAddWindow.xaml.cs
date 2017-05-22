@@ -16,9 +16,11 @@ namespace WpfApplication1
 {
     public partial class ManufacturerAddWindow : Window
     {
-        public ManufacturerAddWindow()
+        string idText;
+        public ManufacturerAddWindow(string id)
         {
             InitializeComponent();
+            idText = id;
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -56,6 +58,7 @@ namespace WpfApplication1
             if(dataCorrect == 3)
             {
                 DataBase.Query(new string[] { "@_name", "@_country", "@_city", "@_addr", "@_tel" }, new string[] { textBoxName.Text, textBoxCountry.Text, textBoxCity.Text, textBoxAddress.Text, textBoxTel.Text }, "INSERT INTO `manufacturer`(`M_NAME`,`M_COUNTRY`,`M_CITY`,`M_ADDR`,`M_TEL`)VALUES(@_name,@_country,@_city,@_addr,@_tel);");
+                DataBase.SetLog(idText, 1, 2, "Создание производителя,параметры:|название:" + textBoxName.Text + "|страна:" + textBoxCountry.Text + "|адрес:" + textBoxAddress.Text + "|");
                 this.Close();
             }
         }

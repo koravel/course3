@@ -18,24 +18,18 @@ namespace WpfApplication1
 {
     public partial class WaybillAddWindow : Window
     {
-        List<NameIdList> employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
+        List<NameIdList> employees = new List<NameIdList>();
         List<WaybillOutput> list = new List<WaybillOutput>();
-        List<NameIdList> products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
-        public WaybillAddWindow()
+        List<NameIdList> products = new List<NameIdList>();
+        string[] tempMas;
+        string idText;
+        public WaybillAddWindow(string id)
         {
             InitializeComponent();
             datePickerToday.Text = DateTime.Today.ToString();
-            string[] tempMas = new string[products.Count];
-            for (int i = 0; i < employees.Count; i++)
-            {
-                comboBoxEployees.Items.Add(employees[i].NAME+"(#"+employees[i].ID+")");
-            }
-            for (int i = 0; i < products.Count; i++ )
-            {
-                tempMas[i] = products[i].NAME + "(#" + products[i].ID + ")";
-            }
-                dataGridInfo.ItemsSource = list;
-            dataGridInfo.DataContext = tempMas;
+            ProductListUpdate();
+            dataGridInfo.ItemsSource = list;
+            idText = id;
         }
         
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -71,11 +65,13 @@ namespace WpfApplication1
                 new string[] { "@_id", "@_date", "@_employee", "@_agent" },
                 new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
                 "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
-                string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
+                string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ",
+                    logList = null;
                 for (int i = 0; i < list.Count; i++)
                 {
                     quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE, Converter.DateConvert(list[i].BDATE.ToShortDateString()) };
                     list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
+                    logList += "{код:" + list[i].ID + "|кол-во:" + list[i].VALUE + "|опт.цена:" + list[i].TRADEPRICE + "}";
                     queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
                     if(i != list.Count-1)
                     {
@@ -103,6 +99,7 @@ namespace WpfApplication1
                     DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], quantityData[i][1] }, "UPDATE product_quantity SET PQ_IN=PQ_IN+@_value WHERE P_ID=@_id;");
                     DataBase.Query(new string[] { "@_id", "@_price","@_dat" }, new string[] { quantityData[i][0], Converter.FloatToCurrencyConvert((Converter.CurrencyToFloatConvert(quantityData[i][2]) * (float.Parse(Properties.Settings.Default.PriceProcent)*0.01)).ToString()), quantityData[i][3] }, "CALL insert_price(@_id,@_price,@_dat);");
                 }
+                DataBase.SetLog(idText, 1, 2, "Создание накладной,параметры:|код:" + lastId + "|дата:" + Converter.DateConvert(datePickerToday.Text) + "|список товара:" + logList + "|");
                 this.Close();
             }
         }
@@ -123,9 +120,39 @@ namespace WpfApplication1
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void EmployeeListUpdate()
         {
-            new ProductAddWindow().ShowDialog();
+            employees.Clear();
+            employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
+            comboBoxEployees.Items.Clear();
+            for (int i = 0; i < employees.Count; i++)
+            {
+                comboBoxEployees.Items.Add(employees[i].NAME + "(#" + employees[i].ID + ")");
+            }
+        }
+
+        private void ProductListUpdate()
+        {
+            products.Clear();
+            products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
+            tempMas = new string[products.Count];
+            for (int i = 0; i < products.Count; i++)
+            {
+                tempMas[i] = products[i].NAME + "(#" + products[i].ID + ")";
+            }
+            dataGridInfo.DataContext = tempMas;
+        }
+
+        private void ProductAdd_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductAddWindow(idText).ShowDialog();
+            ProductListUpdate();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            new EmployeeAddWindow(idText).ShowDialog();
+            EmployeeListUpdate();
         }
 
     }

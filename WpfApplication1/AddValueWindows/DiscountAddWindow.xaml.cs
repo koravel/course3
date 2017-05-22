@@ -16,14 +16,14 @@ namespace WpfApplication1
 {
     public partial class DiscountAddWindow : Window
     {
-        List<NameIdList> products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" },"SELECT P_ID,P_NAME FROM product;");
-        public DiscountAddWindow()
+        List<NameIdList> products = new List<NameIdList>();
+        string idText;
+
+        public DiscountAddWindow(string id)
         {
             InitializeComponent();
-            for (int i = 0; i < products.Count; i++ )
-            {
-                comboBoxProduct.Items.Add(products[i].NAME + "(#"+products[i].ID+")");
-            }
+            ProductListUpdate();
+            idText = id;
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace WpfApplication1
                         new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text"},
                         new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
                         "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
-                        //DataBase.SetLog(idText, 1, 3, DateTime.Now, "Создание акции,параметры: ");
+                        DataBase.SetLog(idText, 1, 2, "Создание акции,параметры:|код товара:" + products[comboBoxProduct.SelectedIndex].ID.ToString() + "|сроки:" + Converter.DateConvert(datePickerBeginDate.Text) + "-" + Converter.DateConvert(datePickerEndDate.Text)+"|");
                         this.Close();
                     }
             }
@@ -77,6 +77,23 @@ namespace WpfApplication1
             if(e.Key == Key.Escape)
             {
                 this.Close();
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductAddWindow(idText).ShowDialog();
+            ProductListUpdate();
+        }
+
+        private void ProductListUpdate()
+        {
+            products.Clear();
+            products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
+            comboBoxProduct.Items.Clear();
+            for (int i = 0; i < products.Count; i++)
+            {
+                comboBoxProduct.Items.Add(products[i].NAME + "(#" + products[i].ID + ")");
             }
         }
     }

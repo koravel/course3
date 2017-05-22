@@ -16,9 +16,11 @@ namespace WpfApplication1
 {
     public partial class EmployeeAddWindow : Window
     {
-        public EmployeeAddWindow()
+        string idText;
+        public EmployeeAddWindow(string id)
         {
             InitializeComponent();
+            idText = id;
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -73,6 +75,7 @@ namespace WpfApplication1
             if(dataCorrect == 3)
             {
                 DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract","@_inn" }, new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text,textBoxEmployeeINN.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`,E_INN)VALUES(@_name,@_tel,@_pos,@_contract,@_inn);");
+                DataBase.SetLog(idText, 1, 2, "Создание работника,параметры:|имя:" + textBoxName.Text + "|должность:" + selectedPosition.ToString() + "|");
                 this.Close();
             }
         }

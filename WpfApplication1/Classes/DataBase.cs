@@ -859,9 +859,10 @@ namespace WpfApplication1
             }
         }
 
-        public static void SetLog(string id,int actor, int type, DateTime time, string description)
+        public static void SetLog(string id,int actor, int type, string description)
         {
-            string logOutput = time.ToString()+"|",typeOut = null;
+            string time = DataBase.QueryRetCell(null, null, "SELECT now();");
+            string logOutput = time+"|",typeOut = null;
             switch (actor)
             {
                 case 0:
@@ -904,9 +905,10 @@ namespace WpfApplication1
                     }
             }
             logOutput += "{" + description + "}";
+            string[] dateTime= time.Split(' ');
             DataBase.Query(
                 new string[] { "@_id", "@_type", "@_time", "@_text" },
-                new string[] { id, typeOut, Converter.DateConvert(time.ToShortDateString()) + " " + time.ToLongTimeString(), logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
+                new string[] { id, typeOut, Converter.DateConvert(dateTime[0]) + " " + dateTime[1], logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
         }
     }
 }
