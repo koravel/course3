@@ -1,19 +1,22 @@
 ﻿<Window x:Name="adminWindow" x:Class="WpfApplication1.AdminWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AdminWindow" Height="441.788" Width="720.953" Closing="adminLogout_Closing">
+        Title="AdminWindow" Height="441.788" Width="763.953" Closing="adminLogout_Closing" Margin="0">
     <Grid>
         <Menu Height="22" VerticalAlignment="Top">
             <MenuItem x:Name="userControlMenuiItem" Header="Управление уч. записями" Click="UsersControl_Click"/>
             <MenuItem x:Name="reportsMenuItem" Header="Отчеты" Click="reportsMenuItem_Click"/>
+            <MenuItem Header="Настройки">
+                <MenuItem x:Name="menuItemSearchSettings" Header="Поиск" Margin="0,0,22,0" Click="menuItemSearchSettings_Click"/>
+                <MenuItem x:Name="menuItemViewSettings" Header="Отображение" Click="menuItemViewSettings_Click"/>
+            </MenuItem>
             <MenuItem x:Name="exitMenuItem" Header="Выход" Click="Logout_Click"/>
         </Menu>
         <Button x:Name="buttonUpdate" Content="Обновить" Margin="0,0,5,12" Click="UpdateData_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74"/>
         <Button x:Name="buttonAdd" Content="Добавить" Margin="0,0,85,12" Click="buttonAdd_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74"/>
         <Button x:Name="buttonDelete" Content="Удалить" Margin="0,0,165,12" Click="buttonDelete_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="74"/>
         <TextBox x:Name="textBoxSearch" Margin="0,0,324,12" TextWrapping="Wrap" Text="Найти..." Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="191"/>
-        <ComboBox x:Name="comboBoxSelectiveSearch" HorizontalAlignment="Left" Margin="5,27,0,0" VerticalAlignment="Top" Width="120"/>
-        <TabControl x:Name="tabControlTables" Margin="130,22,6,44">
+        <TabControl x:Name="tabControlTables" Margin="0,22,5,44" HorizontalAlignment="Right" Width="751">
             <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0" MouseDoubleClick="tabItemCheck_MouseDoubleClick">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
                     <Grid>

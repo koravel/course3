@@ -425,14 +425,24 @@ namespace WpfApplication1
                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                 if(content.Text != "Уборщик")
                 {
-                    textBlockTypeCount.Text = content.Text + "ы:" + DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { content.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
+                    textBlockTypeCount.Text = content.Text + "ы:";
                 }
                 else
                 {
-                    textBlockTypeCount.Text = content.Text + "и:" + DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { content.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
+                    textBlockTypeCount.Text = content.Text + "и:";
                 }
-                
+                textBlockTypeCount.Text += DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { content.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
             }
+        }
+
+        private void menuItemSearchSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new SearchSettingsWindow().ShowDialog();
+        }
+
+        private void menuItemViewSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new ViewSettingsWindow().ShowDialog();
         }
     }
 }

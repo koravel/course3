@@ -114,6 +114,9 @@
     <Compile Include="EditValueWindows\ProductEditWindow.xaml.cs">
       <DependentUpon>ProductEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchSettingsWindow.xaml.cs">
+      <DependentUpon>SearchSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\NameIdList.cs" />
     <Compile Include="Tables\Check.cs" />
     <Compile Include="DataBase.cs" />
@@ -160,6 +163,9 @@
       <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillOutput.cs" />
+    <Compile Include="ViewSettingsWindow.xaml.cs">
+      <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +218,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SearchSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SellerWindows\SellerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -249,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DelValueWindows\WarningDelProductBindsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

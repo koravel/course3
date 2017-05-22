@@ -142,5 +142,17 @@ namespace WpfApplication1.Properties {
                 this["DelBindingToProduct"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowCode {
+            get {
+                return ((bool)(this["ShowCode"]));
+            }
+            set {
+                this["ShowCode"] = value;
+            }
+        }
     }
 }
