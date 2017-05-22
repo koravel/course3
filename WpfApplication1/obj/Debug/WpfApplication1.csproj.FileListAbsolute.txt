@@ -130,3 +130,4 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\ro\Xce
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref

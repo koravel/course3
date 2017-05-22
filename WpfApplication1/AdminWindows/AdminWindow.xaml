@@ -139,5 +139,6 @@
             </TabItem>
         </TabControl>
         <Button x:Name="buttonEdit" Content="Изменить" Margin="0,0,244,12" Click="buttonEdit_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <GridSplitter HorizontalAlignment="Left" Height="316" Margin="418,39,0,0" VerticalAlignment="Top" Width="4"/>
     </Grid>
 </Window>

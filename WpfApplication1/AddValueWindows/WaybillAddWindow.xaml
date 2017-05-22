@@ -1,8 +1,9 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Class="WpfApplication1.WaybillAddWindow"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:WpfApplication1" x:Name="window" x:Class="WpfApplication1.WaybillAddWindow"
         Title="WaybillAddWindow" Height="175" Width="932" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,61 +18,59 @@
         <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,116,10" VerticalAlignment="Bottom" Width="75" Click="buttonSave_Click"/>
         <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Right" Margin="0,0,3,10" Width="75" Click="buttonBack_Click" Height="22" VerticalAlignment="Bottom"/>
         <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False">
-            
+
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Код товара" x:Name="idColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Path= ID}" />
+                            <TextBox Text="{Binding ID}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Наименование" x:Name="nameColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Text="{Binding Path= PRODUCT}" />
+                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Количество" x:Name="valueColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <xctk:DecimalUpDown FormatString="C2" Value="0.00" Increment=".5" Maximum="99999.99" Minimum="0.00" Text="{Binding Path= VALUE}"/>
+                            <xctk:IntegerUpDown FormatString="" Value="0" Increment="1" Maximum="99999" Minimum="0" Text="{Binding VALUE}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Опт.цена" x:Name="tpriceColumn" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Path= TRADEPRICE}" />
+                            <xctk:DecimalUpDown FormatString="C" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Text="{Binding TRADEPRICE}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Дата поступления" x:Name="bdateColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path= BDATE, StringFormat=\{0:dd.MM.yy\}}" />
+                            <TextBlock Text="{Binding BDATE, StringFormat=\{0:dd.MM.yy\}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path= BDATE, Mode=TwoWay,
-                  ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                            <DatePicker SelectedDate="{Binding BDATE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Годен до" x:Name="edateColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path= EDATE, StringFormat=\{0:dd.MM.yy\}}" />
+                            <TextBlock Text="{Binding EDATE, StringFormat=\{0:dd.MM.yy\}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path=EDATE, Mode=TwoWay,
-                  ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                            <DatePicker SelectedDate="{Binding EDATE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                         </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>

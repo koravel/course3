@@ -19,6 +19,8 @@ namespace WpfApplication1
     public partial class WaybillAddWindow : Window
     {
         List<NameIdList> employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
+        //public List<string> products = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
+        public List<string> pr { get; set; }
         public WaybillAddWindow()
         {
             InitializeComponent();
@@ -28,8 +30,10 @@ namespace WpfApplication1
                 comboBoxEployees.Items.Add(employees[i].NAME+"(#"+employees[i].ID+")");
             }
             dataGridInfo.ItemsSource = new List<WaybillOutput> { new WaybillOutput() };
+            //pr = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
+            dataGridInfo.DataContext = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
         }
-
+        
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

@@ -223,7 +223,7 @@ namespace WpfApplication1
                 {
 
                     con.Open();
-                    MySqlCommand com = new MySqlCommand(@"SELECT "+_columnName+" FROM "+_tableName+";", con);
+                    MySqlCommand com = new MySqlCommand("SELECT "+_columnName+" FROM "+_tableName+";", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
