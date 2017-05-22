@@ -5,7 +5,7 @@
         Title="ManagerWindow" Height="1080" Width="1920">
     <Grid>
 
-        <TabControl x:Name="tabControlTables" Margin="606,148,556,534">
+        <!--<TabControl x:Name="tabControlTables" Margin="606,148,556,534">
             <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
                     <Grid>
@@ -62,14 +62,14 @@
                                     </DataGrid>
                                 </DataTemplate>
                             </DataGrid.RowDetailsTemplate>
-                            <!--<DataGrid.ToolTip>
+                            --><!--<DataGrid.ToolTip>
                                 <ToolTip Background="#90004455" StaysOpen="True">
                                     <StackPanel>
                                         <TextBlock Margin="3" Foreground="White">Всем привет, я подсказка!</TextBlock>
                                         <TextBlock Margin="3">Это кнопка</TextBlock>
                                     </StackPanel>
                                 </ToolTip>
-                            </DataGrid.ToolTip>-->
+                            </DataGrid.ToolTip>--><!--
                         </DataGrid>
                         <TextBlock x:Name="totalPriceTextBlock" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="0,2,0,0"><Run Language="ru-ru" Text="Общая цена : "/></TextBlock>
                     </Grid>
@@ -578,7 +578,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Menu HorizontalAlignment="Left" Height="31" Margin="203,44,0,0" VerticalAlignment="Top" Width="1169"/>
+        <Menu HorizontalAlignment="Left" Height="31" Margin="203,44,0,0" VerticalAlignment="Top" Width="1169"/>-->
 
     </Grid>
 </Window>

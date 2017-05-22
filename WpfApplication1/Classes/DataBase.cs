@@ -910,5 +910,37 @@ namespace WpfApplication1
                 new string[] { "@_id", "@_type", "@_time", "@_text" },
                 new string[] { id, typeOut, Converter.DateConvert(dateTime[0]) + " " + dateTime[1], logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
         }
+
+        public static List<ProductInCheck> GetProductForSeller()
+        {
+            List<ProductInCheck> product = new List<ProductInCheck>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+         
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,(SELECT pap.PAP_PRICE FROM product_actual_price pap WHERE pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1) AND pap.P_ID=p.P_ID),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE>=NOW() AND d.D_EDATE<=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        product.Add(new ProductInCheck(dr.GetString(2), dr.GetInt32(4))
+                        {
+                            ID = dr.GetInt32(0),
+                            NAME = dr.GetString(1),
+                            PRICE = dr.GetString(2),
+                            TRADEPRICE = dr.GetString(3),
+                            VALUE = dr.GetInt32(4),
+                            DISCOUNT = dr.GetInt32(5),
+                            MANUFACTURER = dr.GetString(6),
+                            GROUP = dr.GetString(7),
+                            PACK = dr.GetString(8),
+                            MATERIAL = dr.GetString(9),
+                            FORM = dr.GetString(10)
+                        });
+
+                    }
+                    con.Close();
+                    return product;
+            }
+        }
     }
 }

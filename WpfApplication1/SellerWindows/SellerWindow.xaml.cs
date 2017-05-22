@@ -19,6 +19,12 @@ namespace WpfApplication1
         public SellerWindow()
         {
             InitializeComponent();
+            dataGridProductOut.ItemsSource = DataBase.GetProductForSeller();
+        }
+
+        private void buttonSell_Click(object sender, RoutedEventArgs e)
+        {
+            dataGridProductToCheckOut.ItemsSource = DataBase.GetProductForSeller();
         }
     }
 }
