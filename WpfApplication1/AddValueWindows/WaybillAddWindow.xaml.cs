@@ -24,9 +24,10 @@ namespace WpfApplication1
         string[] tempMas;
         string idText;
         int selIndexEmployee = -1, countEmployee = 0;
-        List<int> comboBoxSelIndex = new List<int>();
+        List<int[]> comboBoxSelIndex = new List<int[]>();
         List<bool[]> errorInCell = new List<bool[]>();
         public bool flag1 = false;
+        List<bool> rowFirstEdting = new List<bool>();
         public WaybillAddWindow(string id)
         {
             InitializeComponent();
@@ -46,8 +47,25 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
+            bool errors = true;
+            for (int i = 0; i < errorInCell.Count-1;i++ )
+            {
+                for(int j = 0; j<5;j++)
+                {
+                    if(!errorInCell[i][j])
+                    {
+                        System.Windows.MessageBox.Show(i.ToString() + "|" + j.ToString());
+                        errors = false;
+                    }
+                }
+            }
+            if(!errors)
+            {
+                List<string[]> temp = new List<string[]>();
+
+                dataGridInfo.Items.Refresh();
+            }
             bool flag = false;
-            dataGridInfo.Items.Refresh();
             if(comboBoxEployees.SelectedIndex != -1)
             {
                 flag = true;
@@ -125,7 +143,14 @@ namespace WpfApplication1
             {
                 list[dataGridInfo.SelectedIndex].ID = products[(sender as ComboBox).SelectedIndex].ID.ToString();
             }
-            comboBoxSelIndex[dataGridInfo.SelectedIndex] = (sender as ComboBox).SelectedIndex;
+            for (int i = 0; i < comboBoxSelIndex.Count; i++ )
+            {
+                if(comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
+                {
+                    comboBoxSelIndex[dataGridInfo.SelectedIndex][1] =
+                        (sender as ComboBox).SelectedIndex;
+                }
+            }
             errorInCell[dataGridInfo.SelectedIndex][0] = true;
             (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
         }
@@ -177,29 +202,28 @@ namespace WpfApplication1
 
         private void comboBoxProduct_Loaded(object sender, RoutedEventArgs e)
         {
+            if (comboBoxSelIndex.Count - 1 < dataGridInfo.SelectedIndex)
+            {
+                comboBoxSelIndex.Add(new int[]{dataGridInfo.SelectedIndex, -1});
+            }
             if ((sender as ComboBox).Items.Count > 0)
             {
-                (sender as ComboBox).SelectedIndex = comboBoxSelIndex[dataGridInfo.SelectedIndex];
+                for(int i = 0; i< comboBoxSelIndex.Count; i++) 
+                {
+                    if(comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
+                    {
+                        (sender as ComboBox).SelectedIndex = comboBoxSelIndex[i][1];
+                    }
+                }
             }
             (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
         }
 
-        private void comboBoxProduct_Initialized(object sender, EventArgs e)
-        {
-            if(comboBoxSelIndex.Count-1 < dataGridInfo.SelectedIndex)
-            {
-                comboBoxSelIndex.Add(-1);
-            }
-        }
 
-        private void dataGridInfo_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
-            errorInCell.Add(new bool[] { false, true, true, true, true });
-        }
 
         private void textBlock_Loaded(object sender, RoutedEventArgs e)
         {
-            if (dataGridInfo.SelectedIndex != -1)
+            if (dataGridInfo.SelectedIndex != -1 && (sender as TextBlock) != null)
             {
                 int j = 0;
                 switch ((sender as TextBlock).Name)
@@ -230,10 +254,18 @@ namespace WpfApplication1
                             break;
                         }
                 }
+                if (errorInCell.Count - 1 < dataGridInfo.SelectedIndex)
+                {
+                    errorInCell.Add(new bool[] { false, true, true, true, true });
+                }
                 if ((sender as TextBlock).Text == "")
                 {
                     errorInCell[dataGridInfo.SelectedIndex][j] = false;
-                    list[dataGridInfo.SelectedIndex].COLOR = Brushes.Red;
+                    if (list.Count - 1 >= dataGridInfo.SelectedIndex)
+                    {
+                        (sender as TextBlock).Foreground = Brushes.Red;
+                        list[dataGridInfo.SelectedIndex].COLOR = Brushes.Red;
+                    }
                 }
                 else
                 {
@@ -249,10 +281,24 @@ namespace WpfApplication1
                     }
                     if (flagtemp)
                     {
-                        list[dataGridInfo.SelectedIndex].COLOR = Brushes.Green;
+                        if (list.Count - 1 >= dataGridInfo.SelectedIndex)
+                        {
+                            (sender as TextBlock).Foreground = Brushes.Green;
+                            list[dataGridInfo.SelectedIndex].COLOR = Brushes.Green;
+                        }
                     }
                 }
             }
+        }
+
+        private void dataGridInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //rowFirstEdting.Add(false);
+        }
+
+        private void dataGridInfo_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            errorInCell.Add(new bool[] { false, true, true, true, true });
         }
     }
 }

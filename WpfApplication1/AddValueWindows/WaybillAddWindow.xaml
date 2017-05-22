@@ -17,7 +17,7 @@
         <Label Content="Контрагент" Margin="51,71,208,0" VerticalAlignment="Top" Height="30" FontSize="14"/>
         <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,111,10" VerticalAlignment="Bottom" Width="80" Click="buttonSave_Click" Height="25" FontSize="14"/>
         <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Right" Margin="0,0,3,10" Width="75" Click="buttonBack_Click" Height="25" VerticalAlignment="Bottom" FontSize="14"/>
-        <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False" FontSize="14" AddingNewItem="dataGridInfo_AddingNewItem">
+        <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False" FontSize="14" SelectionMode="Single" LoadingRow="dataGridInfo_LoadingRow">
 
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Наименование" x:Name="nameColumn">
@@ -28,7 +28,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedItem="{Binding NAME,NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="comboBoxProduct_SelectionChanged" Loaded="comboBoxProduct_Loaded" SelectedIndex="0" Initialized="comboBoxProduct_Initialized" >
+                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedItem="{Binding NAME,NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="comboBoxProduct_SelectionChanged" Loaded="comboBoxProduct_Loaded" SelectedIndex="0" >
                                 <ComboBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Добавить новый..." Click="ProductAdd_Click"/>
