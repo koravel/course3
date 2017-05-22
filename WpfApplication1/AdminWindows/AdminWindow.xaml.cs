@@ -20,7 +20,8 @@ namespace WpfApplication1
 
     public partial class AdminWindow : Window
     {
-        static string idText;
+        static string idText,temp;
+        bool flag;
         List<CheckList> checkList = new List<CheckList> { };
         List<WaybillList> waybillList = new List<WaybillList> { };
         List<string> valuesText = new List<string>(), values = new List<string>();
@@ -692,83 +693,21 @@ namespace WpfApplication1
                     {
                         valuesText.Clear();
                         values.Clear();
-                        string temp = null;
-                        if (checkBoxSearchNameEmployee.IsChecked == true && textBoxSearchNameEmployee.Text != "")
-                        {
-                            temp += "WHERE E_NAME=@_name";
-                            valuesText.Add("@_name");
-                            values.Add(textBoxSearchNameEmployee.Text);
-                        }
-                        if(checkBoxSearchPosEmployee.IsChecked == true && comboBoxSearchPosEmployee.SelectedIndex != -1)
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " E_POSITION=@_pos";
-                            valuesText.Add("@_pos");
-                            values.Add(comboBoxSearchPosEmployee.SelectedItem.ToString());
-                        }
-                        if(checkBoxSearchContractEmployee.IsChecked == true && textBoxSearchContractEmployee.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " E_CONTRACT=@_contr";
-                            valuesText.Add("@_contr");
-                            values.Add(textBoxSearchContractEmployee.Text);
-                        }
-                        if(checkBoxSearchTelEmployee.IsChecked == true && textBoxSearchTelEmployee.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " E_TEL=@_tel";
-                            valuesText.Add("@_tel");
-                            values.Add(textBoxSearchTelEmployee.Text);
-                        }
-                        if(checkBoxSearchCodeEmployee.IsChecked == true && textBoxSearchCodeEmployee.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " E_ID=@_code";
-                            valuesText.Add("@_code");
-                            values.Add(textBoxSearchCodeEmployee.Text);
-                        }
-                        if (checkBoxSearchINNEmployee.IsChecked == true && textBoxSearchINNEmployee.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " E_INN=@_inncode";
-                            valuesText.Add("@_inncode");
-                            values.Add(textBoxSearchINNEmployee.Text);
-                        }
+                        temp = null;
+                        flag = false;
+
+                        SQLParameterAdd(checkBoxSearchPosEmployee.IsChecked.Value, new string[] { "WHERE E_NAME=@_name", "@_name", textBoxSearchNameEmployee.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchPosEmployee.IsChecked.Value, new string[] { " E_POSITION=@_pos", "@_pos", comboBoxSearchPosEmployee.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchContractEmployee.IsChecked.Value, new string[] { " E_CONTRACT=@_contr", "@_contr", textBoxSearchContractEmployee.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchTelEmployee.IsChecked.Value, new string[] { " E_TEL=@_tel", "@_tel", textBoxSearchTelEmployee.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchCodeEmployee.IsChecked.Value, new string[] { " E_ID=@_code", "@_code", textBoxSearchCodeEmployee.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchINNEmployee.IsChecked.Value, new string[] { " E_INN=@_inncode", "@_inncode", textBoxSearchINNEmployee.Text }, ref temp, ref flag, new bool[] { false, true });
+
                         MakeSearch(dataGridEmployeeOut, DataBase.GetEmployee, new string[] { "SELECT E_ID,E_NAME,E_TEL,E_POSITION,E_CONTRACT,E_INN FROM `employee` ", null }, temp, true);
                         break;
                     }
@@ -776,85 +715,21 @@ namespace WpfApplication1
                     {
                         valuesText.Clear();
                         values.Clear();
-                        string temp = null;
-                        if (checkBoxSearchNameManufacturer.IsChecked == true && textBoxSearchNameManufacturer.Text != "")
-                        {
-                            temp += "WHERE M_NAME=@_name";
-                            valuesText.Add("@_name");
-                            values.Add(textBoxSearchNameManufacturer.Text);
-                        }
-                        if (checkBoxSearchCountryManufacturer.IsChecked == true && textBoxSearchCountryManufacturer.Text != "")
-                        {
-                            if(temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " M_COUNTRY=@_country";
-                            valuesText.Add("@_country");
-                            values.Add(textBoxSearchCountryManufacturer.Text);
+                        temp = null;
+                        flag = false;
 
-                        }
-                        if (checkBoxSearchCityManufacturer.IsChecked == true && textBoxSearchCityManufacturer.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " M_CITY=@_city";
-                            valuesText.Add("@_city");
-                            values.Add(textBoxSearchCityManufacturer.Text);
+                        SQLParameterAdd(checkBoxSearchNameManufacturer.IsChecked.Value, new string[] { "WHERE M_NAME=@_name", "@_name", textBoxSearchNameManufacturer.Text }, ref temp, ref flag, new bool[] { false, false });
 
-                        }
-                        if (checkBoxSearchAddressManufacturer.IsChecked == true && textBoxSearchAddressManufacturer.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " M_ADDR=@_address";
-                            valuesText.Add("@_address");
-                            values.Add(textBoxSearchAddressManufacturer.Text);
-                        }
-                        if (checkBoxSearchTelManufacturer.IsChecked == true && textBoxSearchTelManufacturer.Text != "")
-                        {
-                            if(temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " M_TEL=@_tel";
-                            valuesText.Add("@_tel");
-                            values.Add(textBoxSearchTelManufacturer.Text);
-                        }
-                        if (checkBoxSearchCodeManufacturer.IsChecked == true && textBoxSearchCodeManufacturer.Text != "")
-                        {
-                            if (temp == null)
-                            {
-                                temp = "WHERE";
-                            }
-                            else
-                            {
-                                temp += " AND";
-                            }
-                            temp += " M_ID=@_code";
-                            valuesText.Add("@_code");
-                            values.Add(textBoxSearchCodeManufacturer.Text);
-                        }
+                        SQLParameterAdd(checkBoxSearchCountryManufacturer.IsChecked.Value, new string[] { " M_COUNTRY=@_country", "@_country", textBoxSearchCountryManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchAddressManufacturer.IsChecked.Value, new string[] { " M_CITY=@_city", "@_city", textBoxSearchCityManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchAddressManufacturer.IsChecked.Value, new string[] { " M_ADDR=@_address", "@_address", textBoxSearchAddressManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchTelManufacturer.IsChecked.Value, new string[] { " M_TEL=@_tel", "@_tel", textBoxSearchTelManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
+
+                        SQLParameterAdd(checkBoxSearchCodeManufacturer.IsChecked.Value, new string[] { " M_ID=@_code", "@_code", textBoxSearchCodeManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
+
                         MakeSearch(dataGridManufacturersOut, DataBase.GetManufacturer, new string[] { "SELECT M_ID,M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer ", null }, temp, true);
                     break;
                     }
@@ -862,155 +737,88 @@ namespace WpfApplication1
                     {
                         valuesText.Clear();
                         values.Clear();
-                        string temp = null;
-                        bool flag = false;
-                        if (checkBoxSearchNameProduct.IsChecked == true && textBoxSearchNameProduct.Text != "")
-                        {
-                            temp += " AND p.P_NAME=@_name";
-                            valuesText.Add("@_name");
-                            values.Add(textBoxSearchNameProduct.Text);
-                        }
-                        if (checkBoxSearchManufacturerProduct.IsChecked == true && textBoxSearchManufacturerProduct.Text != "")
-                        {
-                            temp += " AND manufacturer.M_NAME=@_mname";
-                            valuesText.Add("@_mname");
-                            values.Add(textBoxSearchManufacturerProduct.Text);
-                        }
-                        if (checkBoxSearchGroupProduct.IsChecked == true && comboBoxSearchGroupProduct.SelectedIndex != -1)
-                        {
-                            temp += " AND p.P_GROUP=@_group";
-                            valuesText.Add("@_group");
-                            values.Add(comboBoxSearchGroupProduct.SelectedItem.ToString());
-                        }
-                        if (checkBoxSearchPackProduct.IsChecked == true && comboBoxSearchPackProduct.SelectedIndex != -1)
-                        {
-                            temp += " AND p.P_PACK=@_pack";
-                            valuesText.Add("@_pack");
-                            values.Add(comboBoxSearchPackProduct.SelectedItem.ToString());
-                        }
-                        if (checkBoxSearchMaterialProduct.IsChecked == true && comboBoxSearchMaterialProduct.SelectedIndex != -1)
-                        {
-                            temp += " AND p.P_MATERIAL=@_material";
-                            valuesText.Add("@_material");
-                            values.Add(comboBoxSearchMaterialProduct.SelectedItem.ToString());
-                        }
-                        if (checkBoxSearchFormProduct.IsChecked == true && comboBoxSearchFormProduct.SelectedIndex != -1)
-                        {
-                            temp += " AND p.P_FORM=@_form";
-                            valuesText.Add("@_form");
-                            values.Add(comboBoxSearchFormProduct.SelectedItem.ToString());
-                        }
-                        if (checkBoxSearchPriceProduct.IsChecked == true && upDownSearchPriceProduct.Text != "")
-                        {
-                            temp += " AND product_actual_price.PAP_PRICE";
-                            temp += ComparsionGet(comboBoxSearchPriceRangeProduct.SelectedIndex);
-                            temp += Converter.CurrencyConvert(upDownSearchPriceProduct.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchValueProduct.IsChecked == true && upDownSearchValueProduct.Text != "")
-                        {
-                            switch(comboBoxSearchTypeCountProduct.SelectedIndex)
-                            {
-                                case 0:
-                                    {
-                                        temp += " AND (SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM waybill_list,product_sold WHERE waybill_list.P_ID=p.P_ID AND waybill_list.WL_ID=product_sold.WL_ID)";
-                                        break;
-                                    }
-                                case 1:
-                                    {
-                                        temp += " AND (SELECT waybill_list.WL_VALUE-product_sold.PS_COUNT FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)";
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        temp += " AND (SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)";
-                                        break;
-                                    }
+                        temp = null;
+                        flag = false;
 
-                            }
-                            temp += ComparsionGet(comboBoxDirectionSearchValueProduct.SelectedIndex);
-                            temp += "@value";
-                            valuesText.Add("@value");
-                            values.Add(upDownSearchValueProduct.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchCodeProduct.IsChecked == true && textBoxSearchCodeProduct.Text != "")
-                        {
+                        SQLParameterAdd(checkBoxSearchNameProduct.IsChecked.Value, new string[] { " AND p.P_NAME=@_name", "@_name", textBoxSearchNameProduct.Text }, ref temp, ref flag, new bool[] { false, false });
 
-                            dataGridProductOut.ItemsSource = DataBase.GetProduct(
-                                "SELECT product.P_ID,product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product.P_INSTR FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID AND product.P_ID=@_code`;",
-                                new string[] { "@code" },
-                                new string[] { textBoxSearchCodeProduct.Text });
-                            valuesText.Clear();
-                            values.Clear();
-                        }
-                        else
-                        {
-                            MakeSearch(dataGridProductOut, DataBase.GetProduct, new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ", "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " }, temp, flag);
-                        }
+                        SQLParameterAdd(checkBoxSearchManufacturerProduct.IsChecked.Value, new string[] { " AND manufacturer.M_NAME=@_mname", "@_mname", textBoxSearchManufacturerProduct.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchGroupProduct.IsChecked.Value, new string[] { " AND p.P_GROUP=@_group", "@_group", comboBoxSearchGroupProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchPackProduct.IsChecked.Value, new string[] { " AND p.P_PACK=@_pack", "@_pack", comboBoxSearchPackProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchMaterialProduct.IsChecked.Value, new string[] { " AND p.P_MATERIAL=@_material", "@_material", comboBoxSearchMaterialProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchFormProduct.IsChecked.Value, new string[] { " AND p.P_FORM=@_form", "@_form", comboBoxSearchFormProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+
+                        ComparsionGet(checkBoxSearchPriceProduct.IsChecked.Value, new int[] { comboBoxSearchPriceRangeProduct.SelectedIndex, 0 },
+                              new string[] { " AND product_actual_price.PAP_PRICE" },
+                              new string[] { null, Converter.CurrencyConvert(upDownSearchPriceProduct.Text) }, ref temp, ref flag);
+
+                        ComparsionGet(checkBoxSearchValueProduct.IsChecked.Value, new int[] { comboBoxDirectionSearchValueProduct.SelectedIndex, comboBoxSearchTypeCountProduct.SelectedIndex },
+                            new string[] { " AND (SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM waybill_list,product_sold WHERE waybill_list.P_ID=p.P_ID AND waybill_list.WL_ID=product_sold.WL_ID)",
+                            " AND (SELECT waybill_list.WL_VALUE-product_sold.PS_COUNT FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)",
+                            " AND (SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)" },
+                            new string[] { "@valueq", upDownSearchValueProduct.Text }, ref temp, ref flag);
+
+                        SQLParameterAdd(checkBoxSearchCodeProduct.IsChecked.Value, new string[] { " AND product.P_ID=@_code", "@_code", textBoxSearchCodeProduct.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        MakeSearch(
+                            dataGridProductOut, DataBase.GetProduct, 
+                            new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ",
+                                "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " },
+                                temp, flag);
                         break;
                     }
                 case 5:
                     {
                         valuesText.Clear();
                         values.Clear();
-                        string temp = null;
-                        bool flag = false;
+                        temp = null;
+                        flag = false;
 
                         RangeComparsionGet(new bool[] { checkBoxSearchBDateWaybill.IsChecked.Value, checkBoxSearchEDateWaybill.IsChecked.Value },
                             comboBoxSearchDateRangeTypeWaybill.SelectedIndex,
                             new string[] { " AND w.W_DATE>=@bdate", " AND w.W_DATE<=@edate", " AND w.W_DATE BETWEEN @bdate AND @edate", " AND (w.W_DATE>@edate OR w.W_DATE<@bdate)" },
                             new string[] { Converter.DateConvert(datePickerSearchBDateWaybill.Text), Converter.DateConvert(datePickerSearchEDateWaybill.Text) },
-                            new string[] { "@bdate", "@edate" }, ref temp);
-                        if (checkBoxSearchEmployeeWaybill.IsChecked == true && textBoxSearchEmployeeWaybill.Text != "")
-                        {
-                            SQLParameterAdd(ref temp, new string[] { " AND e.E_NAME=@_name", "@_name", textBoxSearchEmployeeWaybill.Text });
-                        }
-                        if (checkBoxSearchAgentWaybill.IsChecked == true && textBoxSearchAgentWaybill.Text != "")
-                        {
-                            SQLParameterAdd(ref temp, new string[] { " AND w.W_AGENT_NAME=@_agent", "@_agent", textBoxSearchAgentWaybill.Text });
-                        }
-                        if (checkBoxSearchPriceWaybill.IsChecked == true && upDownSearchPriceWaybill.Text != "")
-                        {
-                            temp += " AND (SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=w.W_ID)";
-                            temp += ComparsionGet(comboBoxDirectionSearchPriceWaybill.SelectedIndex);
-                            temp += Converter.CurrencyConvert(upDownSearchPriceWaybill.Text);
-                        }
-                        if (checkBoxSearchCodeWaybill.IsChecked == true && textBoxSearchCodeWaybill.Text != "")
-                        {
-                            SQLParameterAdd(ref temp, new string[] { " AND w.W_ID=@_id", "@_id", textBoxSearchCodeWaybill.Text });
-                        }
-                        if (checkBoxSearchProductWaybill.IsChecked == true && textBoxSearchProductWaybill.Text != "")
-                        {
-                            SQLParameterAdd(ref temp, new string[] { " AND p.P_NAME=@_pname", "@_pname", textBoxSearchProductWaybill.Text });
-                            flag = true;
-                        }
-                        if (checkBoxSearchProductIdWaybill.IsChecked == true && textBoxSearchProductIdWaybill.Text != "")
-                        {
-                            SQLParameterAdd(ref temp, new string[] { " AND wl.P_ID=@_id", "@_id", textBoxSearchProductIdWaybill.Text });
-                            flag = true;
-                        }
-                        flag = ComparsionGet(checkBoxSearchValueProductWaybill.IsChecked.Value, new int[] { comboBoxDirectionSearchValueProductWaybill.SelectedIndex, comboBoxSearchTypeCountProductWaybill.SelectedIndex },
+                            new string[] { "@bdate", "@edate" }, ref temp, ref flag);
+
+                        SQLParameterAdd(checkBoxSearchEmployeeWaybill.IsChecked.Value, new string[] { " AND e.E_NAME=@_name", "@_name", textBoxSearchEmployeeWaybill.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchAgentWaybill.IsChecked.Value, new string[] { " AND w.W_AGENT_NAME=@_agent", "@_agent", textBoxSearchAgentWaybill.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        ComparsionGet(checkBoxSearchPriceWaybill.IsChecked.Value, new int[] { comboBoxDirectionSearchPriceWaybill.SelectedIndex, 0 },
+                            new string[] { " AND (SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=w.W_ID)" },
+                            new string[] { null, Converter.CurrencyConvert(upDownSearchPriceWaybill.Text) }, ref temp, ref flag);
+
+                        SQLParameterAdd(checkBoxSearchCodeWaybill.IsChecked.Value, new string[] { " AND w.W_ID=@_id", "@_id", textBoxSearchCodeWaybill.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchProductWaybill.IsChecked.Value, new string[] { " AND p.P_NAME=@_pname", "@_pname", textBoxSearchProductWaybill.Text }, ref temp, ref flag, new bool[] { true, false });
+
+                        SQLParameterAdd(checkBoxSearchProductIdWaybill.IsChecked.Value, new string[] { " AND wl.P_ID=@_id", "@_id", textBoxSearchProductIdWaybill.Text }, ref temp, ref flag, new bool[] { true, false });
+
+                        ComparsionGet(checkBoxSearchValueProductWaybill.IsChecked.Value, new int[] { comboBoxDirectionSearchValueProductWaybill.SelectedIndex, comboBoxSearchTypeCountProductWaybill.SelectedIndex },
                             new string[] { " AND wl.WL_VALUE", " AND (SELECT COUNT(waybill_list.WL_ID) FROM product_overdue,waybill_list WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.WL_ID=wl.WL_ID)>0 AND (SELECT wl.WL_VALUE-PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)",
                                 " AND (SELECT COUNT(waybill_list.WL_ID) FROM product_overdue,waybill_list where product_overdue.PP_IS_OVERDUE='Не просрочено' and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.WL_ID=wl.WL_ID)>0 AND (SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)"," AND (SELECT PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)" },
-                            new string[] { "@valueq", upDownSearchValueProductWaybill.Text },ref temp);
-                        if (checkBoxSearchPriceProductWaybill.IsChecked == true && upDownSearchPriceProductWaybill.Text != "")
-                        {
-                            temp += " AND wl.WL_TRADE_PRICE";
-                            temp += ComparsionGet(comboBoxDirectionSearchPriceProductWaybill.SelectedIndex);
-                            temp += Converter.CurrencyConvert(upDownSearchPriceProductWaybill.Text);
-                            flag = true;
-                        }
-                        flag = RangeComparsionGet(new bool[] { checkBoxSearchBDateProductWaybillOut.IsChecked.Value, checkBoxSearchEDateProductWaybillOut.IsChecked.Value },
+                            new string[] { "@valueq", upDownSearchValueProductWaybill.Text }, ref temp, ref flag);
+
+                        ComparsionGet(checkBoxSearchPriceProductWaybill.IsChecked.Value, new int[] { comboBoxDirectionSearchPriceProductWaybill.SelectedIndex, 0 },
+                              new string[] { " AND wl.WL_TRADE_PRICE" },
+                              new string[] { null, Converter.CurrencyConvert(upDownSearchPriceProductWaybill.Text) }, ref temp, ref flag);
+                       
+                        RangeComparsionGet(new bool[] { checkBoxSearchBDateProductWaybillOut.IsChecked.Value, checkBoxSearchEDateProductWaybillOut.IsChecked.Value },
                             comboBoxSearchDateRangeTypeProductWaybillOut.SelectedIndex,
                             new string[] { " AND wl.WL_EDATE>=@bbdate", " AND wl.WL_EDATE<=@bedate", " AND wl.WL_EDATE BETWEEN @bbdate AND @bedate", " AND (wl.WL_EDATE>@bedate OR wl.WL_EDATE<@bbdate)" },
                             new string[] { Converter.DateConvert(datePickerSearchBDateProductWaybillOut.Text), Converter.DateConvert(datePickerSearchEDateProductWaybillOut.Text) },
-                            new string[] { "@bbdate", "@bedate" },ref temp);
-                        flag = RangeComparsionGet(new bool[] { checkBoxSearchBDateProductWaybillIn.IsChecked.Value, checkBoxSearchEDateProductWaybillIn.IsChecked.Value },
+                            new string[] { "@bbdate", "@bedate" }, ref temp, ref flag);
+
+                        RangeComparsionGet(new bool[] { checkBoxSearchBDateProductWaybillIn.IsChecked.Value, checkBoxSearchEDateProductWaybillIn.IsChecked.Value },
                             comboBoxSearchDateRangeTypeProductWaybillIn.SelectedIndex,
                             new string[] { " AND wl.WL_BDATE>=@ebdate", " AND wl.WL_BDATE<=@eedate", " AND wl.WL_BDATE BETWEEN @ebdate AND @eedate", " AND (wl.WL_BDATE>@eedate OR wl.WL_BDATE<@ebdate)" },
                             new string[] { Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text), Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text) },
-                            new string[] { "@ebdate", "@eedate" }, ref temp);
+                            new string[] { "@ebdate", "@eedate" }, ref temp,ref flag);
+
                         MakeSearch(dataGridWaybillOut, DataBase.GetWaybill, 
                             new string[] { "SELECT DISTINCT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e,waybill_list wl,product p WHERE w.`E_ID`=e.`E_ID` AND wl.W_ID=w.W_ID AND p.P_ID=wl.P_ID ",
                                 "SELECT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e WHERE w.`E_ID`=e.`E_ID` " }
@@ -1041,10 +849,12 @@ namespace WpfApplication1
                 }
                 dataGrid.ItemsSource = data(SQLQuery, valuesTextStr, valuesStr);
                 txt.Text = SQLQuery;
+                valuesText.Clear();
+                values.Clear();
             }
         }
 
-        private bool ComparsionGet(bool toggleValue, int[] numberToggleValue, string[] sqlQueryPart, string[] sqlAddParam, ref string query)
+        private void ComparsionGet(bool toggleValue, int[] numberToggleValue, string[] sqlQueryPart, string[] sqlAddParam, ref string query, ref bool flag)
         {
             if (toggleValue == true && sqlAddParam[1] != "")
             {
@@ -1095,18 +905,21 @@ namespace WpfApplication1
                             break;
                         }
                 }
-                query += sqlAddParam[0];
-                valuesText.Add(sqlAddParam[0]);
-                values.Add(sqlAddParam[1]);
-                return true;
-            }
-            else
-            {
-                return false;
+                if (sqlAddParam[0] != null)
+                {
+                    query += sqlAddParam[0];
+                    valuesText.Add(sqlAddParam[0]);
+                    values.Add(sqlAddParam[1]);
+                }
+                else
+                {
+                    query += sqlAddParam[1];
+                }
+                flag = true;
             }
         }
 
-        private bool RangeComparsionGet(bool[] toggleValue,int rangeType, string[] sqlQueryPart, string[] sqlValue, string[] sqlAddParam, ref string query)
+        private void RangeComparsionGet(bool[] toggleValue,int rangeType, string[] sqlQueryPart, string[] sqlValue, string[] sqlAddParam, ref string query,ref bool flag)
         {
             if (toggleValue[0] == true && toggleValue[1] == true && sqlValue[0] != "" && sqlValue[1] != "")
             {
@@ -1144,7 +957,7 @@ namespace WpfApplication1
                 values.Add(sqlValue[0]);
                 valuesText.Add(sqlAddParam[1]);
                 values.Add(sqlValue[1]);
-                return true;
+                flag = true;
             }
             else
             {
@@ -1153,7 +966,7 @@ namespace WpfApplication1
                     query += sqlQueryPart[0];
                     valuesText.Add(sqlAddParam[0]);
                     values.Add(sqlValue[0]);
-                    return true;
+                    flag = true;
                 }
                 else
                 {
@@ -1162,10 +975,9 @@ namespace WpfApplication1
                         query += sqlQueryPart[1];
                         valuesText.Add(sqlAddParam[1]);
                         values.Add(sqlValue[1]);
-                        return true;
+                        flag = true;
                     }
                 }
-                return true;
             }
         }
 
@@ -1200,13 +1012,28 @@ namespace WpfApplication1
             }
         }
 
-        private void SQLParameterAdd(ref string query, string[] addParam)
+        private void SQLParameterAdd(bool toggleValue,string[] addParam,ref string query,ref bool flag,bool[] modeKey)
         {
-            query += addParam[0];
-            for (int i = 1; i < addParam.Length; i=i+2)
+            if(toggleValue == true && addParam[2] != "")
             {
-                valuesText.Add(addParam[i]);
-                values.Add(addParam[i+1]);
+                if (modeKey[1] == true)
+                {
+                    if (query == null)
+                    {
+                        query = "WHERE";
+                    }
+                    else
+                    {
+                        query += " AND";
+                    }
+                }
+                query += addParam[0];
+                valuesText.Add(addParam[1]);
+                values.Add(addParam[2]);
+                if (modeKey[0] == true)
+                {
+                    flag = true;
+                }
             }
         }
 
@@ -1314,6 +1141,7 @@ namespace WpfApplication1
                         if (checkBox.IsChecked == true)
                         {
                             (obj as ComboBox).IsEnabled = true;
+                            (obj as ComboBox).SelectedIndex = 0;
                         }
                         else
                         {
@@ -1870,5 +1698,4 @@ namespace WpfApplication1
             buttonResetSearchWaybill_Click(null, null);
         }
     }
-
 }
