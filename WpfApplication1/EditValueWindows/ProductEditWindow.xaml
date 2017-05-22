@@ -4,7 +4,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.ProductEditWindow"
-        Title="ProductEditWindow" Height="569.399" Width="458.984">
+        Title="ProductEditWindow" Height="569.399" Width="458.984" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="113*"/>

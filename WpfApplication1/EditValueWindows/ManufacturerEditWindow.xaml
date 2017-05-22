@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.ManufacturerEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ManufacturerEditWindow" Height="215" Width="362" ResizeMode="CanMinimize">
+        Title="ManufacturerEditWindow" Height="215" Width="362" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="23" Margin="96,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TextChanged="textBox_TextChanged" MaxLength="50" FontSize="14"/>
         <TextBox x:Name="textBoxCountry" HorizontalAlignment="Left" Height="23" Margin="96,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" TextChanged="textBox_TextChanged" MaxLength="15" FontSize="14"/>

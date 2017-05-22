@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.DiscountAddWindow"
-        Title="DiscountAddWindow" Height="300" Width="300" ResizeMode="CanMinimize">
+        Title="DiscountAddWindow" Height="300" Width="300" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Color x:Key="Color1">#FF617584</Color>
     </Window.Resources>

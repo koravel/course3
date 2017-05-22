@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.UsersControlEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="UsersControlEditWindow" Height="182" Width="271" ResizeMode="CanMinimize">
+        Title="UsersControlEditWindow" Height="182" Width="271" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Height="152" VerticalAlignment="Bottom">
         <TextBox x:Name="textBoxLogin" HorizontalAlignment="Left" Height="23" Margin="10,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14" MaxLength="20" KeyUp="textBox_KeyUp"/>
         <TextBox x:Name="textBoxPassword" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14" KeyUp="textBox_KeyUp"/>

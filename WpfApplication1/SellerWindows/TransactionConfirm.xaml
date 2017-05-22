@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.TransactionConfirm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="TransactionConfirm" Height="139" Width="300">
+        Title="TransactionConfirm" Height="139" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="buttonConfirm" Content="Да" HorizontalAlignment="Left" Margin="55,54,0,0" VerticalAlignment="Top" Width="75" FontSize="14" IsDefault="True" Click="buttonConfirm_Click"/>
         <Button x:Name="buttonCancel" Content="Нет" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="166,54,0,0" FontSize="14" IsCancel="True" Click="buttonCancel_Click"/>

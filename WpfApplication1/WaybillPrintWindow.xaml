@@ -1,0 +1,23 @@
+﻿<Window x:Class="WpfApplication1.WaybillPrintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WaybillPrintWindow" Height="1009.429" Width="20cm" KeyUp="Window_KeyUp" ResizeMode="NoResize" FontSize="14" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DataGrid x:Name="dataGridWaybillPrint" HorizontalAlignment="Left" Margin="0,110,0,85" Width="748" IsReadOnly="False" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Товар" Binding="{Binding PRODUCT}"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
+                <DataGridTextColumn Header="Упаковка" Binding="{Binding PACK}"/>
+                <DataGridTextColumn Header="Материал" Binding="{Binding MATERIAL}"/>
+                <DataGridTextColumn Header="Опт.цена" Binding="{Binding TRADEPRICE}"/>
+                <DataGridTextColumn Header="ПДВ" Binding="{Binding PDV}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding SUMM}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="LabelText" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="LabelSumm" Content="Общая сумма:" HorizontalAlignment="Left" Margin="516,0,0,51" Height="29" VerticalAlignment="Bottom"/>
+        <Label x:Name="LabelAgent" Content="Товар отпустил:" HorizontalAlignment="Left" Margin="10,0,0,43" Height="29" VerticalAlignment="Bottom"/>
+        <Label x:Name="LabelEmployee" Content="Товар принял:" HorizontalAlignment="Left" Margin="10,0,0,17" Height="29" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>

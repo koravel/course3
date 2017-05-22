@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using System.Windows.Forms;
 
 namespace WpfApplication1
@@ -23,10 +11,16 @@ namespace WpfApplication1
             InitializeComponent();
 
             textBoxPath.Text = Properties.Settings.Default.SaveArchive;
+            checkBoxDiscountsDel.IsChecked = Properties.Settings.Default.DuplDiscount;
+            checkBoxEmployeesDel.IsChecked = Properties.Settings.Default.DelBindingToEmployee;
+            checkBoxManufacturersDel.IsChecked = Properties.Settings.Default.DelBindingToManufacturer;
+            checkBoxProductsDel.IsChecked = Properties.Settings.Default.DelBindingToProduct1;
+            checkBoxWaybillsDel.IsChecked = Properties.Settings.Default.DelBindingToWaybill;
         }
 
         private void buttonSettingsBack_Click(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.Save();
             this.Close();
         }
 

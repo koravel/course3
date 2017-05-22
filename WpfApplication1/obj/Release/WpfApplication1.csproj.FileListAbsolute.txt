@@ -389,5 +389,8 @@ H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Dire
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorWindow.baml
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorSettingsWindow.g.cs
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorWindow.g.cs
-H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckWindow.baml
-H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WaybillPrintWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WaybillPrintWindow.g.cs
+d:\Kor\тех\Project versions\WpfApplication1[v34]RELEASE\WpfApplication1\bin\Release\WpfApplication1.exe.config
+d:\Kor\тех\Project versions\WpfApplication1[v34]RELEASE\WpfApplication1\obj\Release\WpfApplication1.exe
+d:\Kor\тех\Project versions\WpfApplication1[v34]RELEASE\WpfApplication1\obj\Release\WpfApplication1.pdb

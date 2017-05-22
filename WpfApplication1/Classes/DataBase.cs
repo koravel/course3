@@ -1,20 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
-using System.IO;
 using System.Security.Cryptography;
-using System.Data;
 
 
 namespace WpfApplication1
@@ -199,32 +189,6 @@ namespace WpfApplication1
 
         }
 
-        //public static List<string> QueryGetColumn(string _columnName,string _tableName)
-        //{
-        //    List<string> rows = new List<string>();
-        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-        //    {
-        //        try
-        //        {
-
-        //            con.Open();
-        //            MySqlCommand com = new MySqlCommand("SELECT "+_columnName+" FROM "+_tableName+";", con);
-        //            MySqlDataReader dr = com.ExecuteReader();
-        //            while (dr.Read())
-        //            {
-        //                rows.Add(dr.GetString(_columnName));
-        //            }
-        //            con.Close();
-        //            return rows;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            MessageBox.Show(e.Message);
-        //        }
-        //        con.Close();
-        //        return null;
-        //    }
-        //}
 
         public static bool ConCheck(string[] database_settings)
         {
@@ -740,6 +704,38 @@ namespace WpfApplication1
                         });
                     }
                             
+                con.Close();
+                return waybillLists;
+            }
+        }
+
+        public static List<WaybillPrint> GetWaybillPrint(string[] valueText, string[] value, string query)
+        {
+            List<WaybillPrint> waybillLists = new List<WaybillPrint>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+
+                con.Open();
+                MySqlCommand com = new MySqlCommand(query, con);
+                for (int i = 0; i < value.Length; i++)
+                {
+                    com.Parameters.AddWithValue(valueText[i], value[i]);
+                }
+                MySqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    waybillLists.Add(new WaybillPrint(dr.GetInt32("WL_VALUE"), dr.GetFloat("WL_TRADE_PRICE"))
+                    {
+                        PRODUCT = dr.GetString("P_NAME"),
+                        VALUE = dr.GetInt32("WL_VALUE"),
+                        TRADEPRICE = dr.GetFloat("WL_TRADE_PRICE"),
+                        BDATE = dr.GetDateTime("WL_BDATE"),
+                        EDATE = dr.GetDateTime("WL_EDATE"),
+                        PACK = dr.GetString("P_PACK"),
+                        MATERIAL = dr.GetString("P_MATERIAL"),
+                    });
+                }
+
                 con.Close();
                 return waybillLists;
             }

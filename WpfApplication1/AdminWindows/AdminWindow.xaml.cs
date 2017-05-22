@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MySql.Data.MySqlClient;
-using System.Data;
 using Xceed.Wpf.Toolkit;
 using System.ComponentModel;
-using System.IO;
 
 namespace WpfApplication1
 {
@@ -2081,9 +2072,8 @@ namespace WpfApplication1
                             Check obj = ((Check)(dataGridCheckOut.SelectedItem));
                             string[] tempMas = DataBase.QueryRetRow(new string[]{"@_id"},new string[]{obj.ID.ToString()},"SELECT C_PREPAYMENT,C_SUM FROM `check` WHERE C_ID=@_id");
                             List<CheckPrint> tempList = DataBase.GetCheckPrint("SELECT distinct product.P_ID,product.P_NAME,cl.CL_VALUE,round(ifnull((select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID and pap.PAP_DATE<=c.C_DATE  order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1),(select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1))*cl.CL_VALUE*(select if((select count(d.D_ID))>0,exp(sum(log(1-d.D_PRICE*0.01))),1) from discounts d where d.P_ID=cl.P_ID and d.D_BDATE<=c.C_DATE and d.D_EDATE>=c.C_DATE),2),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) from discounts d where d.P_ID=cl.P_ID) FROM check_list cl,product,`check` c,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=c.C_ID AND product_actual_price.PAP_PRICE=ifnull((select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID and pap.PAP_DATE<=c.C_DATE  order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1),(select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1))  AND c.C_ID=@_curid;", new string[] { "@_curid" }, new string[] { obj.ID.ToString() });
-                            PrintDialog p = new PrintDialog();
-                            System.Windows.Forms.PrintPreviewDialog q = new System.Windows.Forms.PrintPreviewDialog();
-                            System.Drawing.Printing.PrintDocument d = new System.Drawing.Printing.PrintDocument();
+                            System.Windows.Forms.PrintPreviewDialog printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+                            System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
                             text = "\tЧП “АптекаТрейд”\n\tг. Харьков, ул.Сумская, 25\n\tтел. (057)741-56-89\nКАССИР	" + obj.NAME + 
                                 "\n-------------------------------------------------------\n";
                             if(tempList.Count > 0)
@@ -2095,48 +2085,47 @@ namespace WpfApplication1
                             }
                             text += "СУММА\t\t\t" + tempMas[1] + "\nПДВ А = 20,00%\n-------------------------------------------------------\nАВАНС[" + obj.PAYTYPE + "]\t\t" + tempMas[0] + "\n" +
                                 "СДАЧА\t\t\t" + (Math.Round(float.Parse(tempMas[0]) - float.Parse(tempMas[1]), 2)).ToString() + "\n\t" + obj.DATE + "\n\tБлагодарим за покупку!\n\tФИСКАЛЬНЫЙ ЧЕК";
-                            d.PrintPage += (sender1, args) =>
+                            printDocument.PrintPage += (sender1, args) =>
                             {
-                                args.Graphics.DrawString(text, new System.Drawing.Font("Times New Roman", 14), new System.Drawing.SolidBrush(System.Drawing.Color.Black), new System.Drawing.PointF(150.0F, 150.0F));
+                                args.Graphics.DrawString(text, new System.Drawing.Font("Times New Roman", 14), new System.Drawing.SolidBrush(System.Drawing.Color.Black), new System.Drawing.PointF(15.0F, 15.0F));
+                                
                             };
-                            q.Document = d;
-                            q.PrintPreviewControl.Zoom = 1;
-                            q.ShowDialog();
+                            printPreviewDialog.Document = printDocument;
+                            printPreviewDialog.PrintPreviewControl.Zoom = 1;
+                            printPreviewDialog.ShowDialog();
                         }
                         break;
                     }
+                    
                 case 5:
                     {
+                        if (dataGridWaybillOut.SelectedIndex != -1)
+                        {
+                            Waybill obj = ((Waybill)(dataGridWaybillOut.SelectedItem));
+                            List<WaybillPrint> tempList = DataBase.GetWaybillPrint(new string[] { "@_curid" }, new string[] { obj.ID.ToString() }, "SELECT product.P_NAME,waybill_list.WL_VALUE,waybill_list.WL_TRADE_PRICE,waybill_list.WL_BDATE,waybill_list.WL_EDATE,product.P_PACK,product.P_MATERIAL FROM `waybill`,`waybill_list`,`product` WHERE `waybill_list`.`W_ID`=`waybill`.`W_ID` AND `waybill_list`.`P_ID`=`product`.`P_ID` AND waybill_list.W_ID=@_curid;");
+                            System.Windows.Forms.PrintPreviewDialog printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+                            System.Drawing.Printing.PrintDocument printDocument = new System.Drawing.Printing.PrintDocument();
+                            text = "\t\t\t\t\tНАКЛАДНАЯ №" + obj.ID + "\n\t\t\t\tДата составления:" + obj.DATE + "\nПоставщик:__________________________________________________\nПлательщик:__________________________________________________\n";
+                            float summ = 0;
+                            for (int i = 0; i < tempList.Count; i++)
+                            {
+                                summ += float.Parse(tempList[i].SUMM);
+                            }
+                                if (tempList.Count > 0)
+                                {
+                                    new WaybillPrintWindow(text, obj.EMPLOYEE, obj.AGENT, summ.ToString(), tempList).ShowDialog();
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("Накладная пуста!");
+                                }
+                        }
                         break;
                     }
             }
             
         }
 
-        //public static void SaveToPNG(FrameworkElement frameworkElement, Size size, string fileName)
-        //{
-        //    using (FileStream stream = new FileStream(string.Format("{0}.png", fileName), FileMode.Create))
-        //    {
-        //        SaveToPNG(frameworkElement, size, stream);
-        //    }
-        //}
 
-        //public static void SaveToPNG(FrameworkElement frameworkElement, Size size, Stream stream)
-        //{
-        //    Transform transform = frameworkElement.LayoutTransform;
-        //    frameworkElement.LayoutTransform = null;
-        //    Thickness margin = frameworkElement.Margin;
-        //    frameworkElement.Margin = new Thickness(0, 0, margin.Right - margin.Left, margin.Bottom - margin.Top);
-        //    frameworkElement.Measure(size);
-        //    frameworkElement.Arrange(new Rect(size));
-        //    RenderTargetBitmap bmp = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
-        //    bmp.Render(frameworkElement);
-        //    frameworkElement.LayoutTransform = transform;
-        //    frameworkElement.Margin = margin;
-        //    PngBitmapEncoder encoder = new PngBitmapEncoder();
-        //    encoder.Interlace = PngInterlaceOption.On;
-        //    encoder.Frames.Add(BitmapFrame.Create(bmp));
-        //    encoder.Save(stream);
-        //}
     }
 }
