@@ -24,6 +24,8 @@ namespace WpfApplication1
         string[] tempMas;
         string idText;
         int selIndexEmployee = -1, countEmployee = 0;
+        List<int> comboBoxSelIndex = new List<int>();
+        List<bool[]> errorInCell = new List<bool[]>();
         public bool flag1 = false;
         public WaybillAddWindow(string id)
         {
@@ -45,6 +47,7 @@ namespace WpfApplication1
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             bool flag = false;
+            dataGridInfo.Items.Refresh();
             if(comboBoxEployees.SelectedIndex != -1)
             {
                 flag = true;
@@ -122,6 +125,9 @@ namespace WpfApplication1
             {
                 list[dataGridInfo.SelectedIndex].ID = products[(sender as ComboBox).SelectedIndex].ID.ToString();
             }
+            comboBoxSelIndex[dataGridInfo.SelectedIndex] = (sender as ComboBox).SelectedIndex;
+            errorInCell[dataGridInfo.SelectedIndex][0] = true;
+            (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
         }
 
         private void EmployeeListUpdate()
@@ -169,5 +175,84 @@ namespace WpfApplication1
             EmployeeListUpdate();
         }
 
+        private void comboBoxProduct_Loaded(object sender, RoutedEventArgs e)
+        {
+            if ((sender as ComboBox).Items.Count > 0)
+            {
+                (sender as ComboBox).SelectedIndex = comboBoxSelIndex[dataGridInfo.SelectedIndex];
+            }
+            (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
+        }
+
+        private void comboBoxProduct_Initialized(object sender, EventArgs e)
+        {
+            if(comboBoxSelIndex.Count-1 < dataGridInfo.SelectedIndex)
+            {
+                comboBoxSelIndex.Add(-1);
+            }
+        }
+
+        private void dataGridInfo_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            errorInCell.Add(new bool[] { false, true, true, true, true });
+        }
+
+        private void textBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (dataGridInfo.SelectedIndex != -1)
+            {
+                int j = 0;
+                switch ((sender as TextBlock).Name)
+                {
+                    case "textBlockProduct":
+                        {
+                            j = 0;
+                            break;
+                        }
+                    case "textBlockValue":
+                        {
+                            j = 1;
+                            break;
+                        }
+                    case "textBlockPrice":
+                        {
+                            j = 2;
+                            break;
+                        }
+                    case "textBlockBDate":
+                        {
+                            j = 3;
+                            break;
+                        }
+                    case "textBlockEDate":
+                        {
+                            j = 4;
+                            break;
+                        }
+                }
+                if ((sender as TextBlock).Text == "")
+                {
+                    errorInCell[dataGridInfo.SelectedIndex][j] = false;
+                    list[dataGridInfo.SelectedIndex].COLOR = Brushes.Red;
+                }
+                else
+                {
+                    errorInCell[dataGridInfo.SelectedIndex][j] = true;
+                    bool flagtemp = true;
+                    for (int i = 0; i < errorInCell.Count; i++)
+                    {
+                        if (errorInCell[dataGridInfo.SelectedIndex][i] == false)
+                        {
+                            flagtemp = false;
+                            i = errorInCell.Count;
+                        }
+                    }
+                    if (flagtemp)
+                    {
+                        list[dataGridInfo.SelectedIndex].COLOR = Brushes.Green;
+                    }
+                }
+            }
+        }
     }
 }

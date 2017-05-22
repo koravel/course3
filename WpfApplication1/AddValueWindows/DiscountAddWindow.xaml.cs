@@ -35,13 +35,14 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ErrorCheck.DiscountEnterCheck(comboBoxProduct,datePickerBeginDate,upDownPrice,datePickerEndDate))
+            if (ErrorCheck.DiscountEnterCheck(comboBoxProduct,datePickerBeginDate,upDownPrice,datePickerEndDate,products[comboBoxProduct.SelectedIndex].ID.ToString()))
                 {
                     DataBase.Query(
                     new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text" },
                     new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(), upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
                     "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
                     DataBase.SetLog(idText, 1, 2, "Создание акции,параметры:|код товара:" + products[comboBoxProduct.SelectedIndex].ID.ToString() + "|сроки:" + Converter.DateConvert(datePickerBeginDate.Text) + "-" + Converter.DateConvert(datePickerEndDate.Text) + "|");
+                    obj.ID = int.Parse(DataBase.QueryRetCell(null, null, "SELECT MAX(D_ID) FROM discounts;"));
                     obj.NAME = products[comboBoxProduct.SelectedIndex].NAME.ToString();
                     obj.PRICE = float.Parse(upDownPrice.Text);
                     obj.BDATE = datePickerBeginDate.SelectedDate.Value;

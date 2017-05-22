@@ -98,6 +98,9 @@
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Converter.cs" />
+    <Compile Include="WarningWindows\DuplicateDiscountWindow.xaml.cs">
+      <DependentUpon>DuplicateDiscountWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\ProductInCheck.cs" />
     <Compile Include="Tables\ProductAdvanced.cs" />
     <Compile Include="Tables\DiscountInfo.cs" />
@@ -156,13 +159,13 @@
     <Compile Include="AddValueWindows\WaybillAddWindow.xaml.cs">
       <DependentUpon>WaybillAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DelValueWindows\WarningDelEmployeeBindsWindow.xaml.cs">
+    <Compile Include="WarningWindows\WarningDelEmployeeBindsWindow.xaml.cs">
       <DependentUpon>WarningDelEmployeeBindsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DelValueWindows\WarningDelManufacturerBindsWindow.xaml.cs">
+    <Compile Include="WarningWindows\WarningDelManufacturerBindsWindow.xaml.cs">
       <DependentUpon>WarningDelManufacturerBindsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DelValueWindows\WarningDelProductBindsWindow.xaml.cs">
+    <Compile Include="WarningWindows\WarningDelProductBindsWindow.xaml.cs">
       <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillOutput.cs" />
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddValueWindows\EmployeeAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarningWindows\DuplicateDiscountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -257,15 +264,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DelValueWindows\WarningDelEmployeeBindsWindow.xaml">
+    <Page Include="WarningWindows\WarningDelEmployeeBindsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DelValueWindows\WarningDelManufacturerBindsWindow.xaml">
+    <Page Include="WarningWindows\WarningDelManufacturerBindsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DelValueWindows\WarningDelProductBindsWindow.xaml">
+    <Page Include="WarningWindows\WarningDelProductBindsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

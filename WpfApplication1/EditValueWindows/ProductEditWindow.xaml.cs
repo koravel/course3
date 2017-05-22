@@ -27,6 +27,38 @@ namespace WpfApplication1
             curId = _curId;
             idText = id;
             objout = tempobj;
+            string[] date = DataBase.QueryRetRow(new string[] { "@_id" }, new string[] { objout.ID.ToString() }, "SELECT IF((SELECT DATE_ADD(pap.PAP_DATE, INTERVAL 7 DAY) FROM product_actual_price pap WHERE pap.PAP_ID=p.PAP_ID)>=now(),(DATE_ADD(p.PAP_DATE, INTERVAL 7 DAY)),0),now() FROM product_actual_price p WHERE p.PAP_ID=(SELECT MAX(PAP_ID) FROM product_actual_price WHERE P_ID=p.P_ID) AND p.P_ID=@_id;");
+            if(date[0] == "0")
+            {
+                labelTimeToAdd.Content += "доступно";
+                datePickerToday.IsEnabled = true;
+                upDownPrice.IsEnabled = true;
+            }
+            else
+            {
+                string result = ((TimeSpan)(DateTime.Parse(date[0]) - DateTime.Parse(date[1]))).Days.ToString();
+                labelTimeToAdd.Content += result;
+                switch(int.Parse(result)%10)
+                {
+                    case 1:
+                        {
+                            labelTimeToAdd.Content += " день";
+                            break;
+                        }
+                    case 2:
+                    case 3:
+                    case 4:
+                        {
+                            labelTimeToAdd.Content += " дня";
+                            break;
+                        }
+                    default:
+                        {
+                            labelTimeToAdd.Content += " дней";
+                            break;
+                        }
+                }
+            }
             ManufacturerListUpdate();
             string[] data = new string[9];
             curMan = -1;
@@ -68,22 +100,11 @@ namespace WpfApplication1
                 new string[] { curId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text },
                 "UPDATE product SET P_NAME  = @_name,M_ID = @_manufacturer,P_GROUP = @_group,P_PACK = @_pack,P_MATERIAL = @_material,P_FORM = @_form,P_INSTR = @_instr WHERE P_ID = @_id;");
                 DataBase.SetLog(idText, 1, 1, "Изменение товара,параметры:|код:" + curId + "|название:" + textBoxName.Text + "|группа:" + comboBoxGroup.SelectedItem.ToString() + "|");
-                if(checkBoxNewPrice.IsChecked == true)
-                {
-                    DataBase.Query(
-                    new string[] { "@_id", "@_price", "@_date" },
-                    new string[] { curId, upDownPrice.Text.Replace(',','.'), Converter.DateConvert(datePickerToday.Text) },
-                    "INSERT INTO `product_actual_price`(`P_ID`,`PAP_PRICE`,`PAP_DATE`)VALUES(@_id,@_price,@_date);");
-                    DataBase.SetLog(idText, 1, 2, "Создание цены товара,параметры:|код товара:" + curId + "|дата изменения:" + Converter.DateConvert(datePickerToday.Text) + "|цена:" + Converter.DateConvert(datePickerToday.Text) + "|");
-                }
-                else
-                {
-                    DataBase.Query(
-                    new string[] { "@_id", "@_price", "@_date","@_curid" },
-                    new string[] { curId, upDownPrice.Text.Replace(',', '.'), Converter.DateConvert(datePickerToday.Text), DataBase.QueryRetCell(new string[] { "@_tempid" }, new string[] { curId }, "SELECT PAP_ID from product_actual_price WHERE P_ID=@_tempid ORDER BY PAP_DATE DESC LIMIT 1;") },
-                    "UPDATE product_actual_price SET P_ID = @_id,PAP_PRICE = @_price,PAP_DATE = @_date WHERE PAP_ID = @_curid;");
-                    DataBase.SetLog(idText, 1, 1, "Изменение цены товара,параметры:|код товара:" + curId + "|дата изменения:" + Converter.DateConvert(datePickerToday.Text) + "|цена:" + Converter.DateConvert(datePickerToday.Text) + "|");
-                }
+                DataBase.Query(
+                new string[] { "@_id", "@_price", "@_date" },
+                new string[] { curId, upDownPrice.Text.Replace(',','.'), Converter.DateConvert(datePickerToday.Text) },
+                "INSERT INTO `product_actual_price`(`P_ID`,`PAP_PRICE`,`PAP_DATE`)VALUES(@_id,@_price,@_date);");
+                DataBase.SetLog(idText, 1, 2, "Создание цены товара,параметры:|код товара:" + curId + "|дата изменения:" + Converter.DateConvert(datePickerToday.Text) + "|цена:" + Converter.DateConvert(datePickerToday.Text) + "|");
                 flag = true;
                 this.Close();
             }

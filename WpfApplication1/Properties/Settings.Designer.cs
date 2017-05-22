@@ -166,5 +166,17 @@ namespace WpfApplication1.Properties {
                 this["DelBindingToProduct1"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DuplDiscount {
+            get {
+                return ((bool)(this["DuplDiscount"]));
+            }
+            set {
+                this["DuplDiscount"] = value;
+            }
+        }
     }
 }

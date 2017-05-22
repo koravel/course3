@@ -62,7 +62,7 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ErrorCheck.DiscountEnterCheck(comboBoxProduct,datePickerBeginDate,upDownPrice,datePickerEndDate))
+            if (ErrorCheck.DiscountEnterCheck(comboBoxProduct,datePickerBeginDate,upDownPrice,datePickerEndDate,"0"))
             {
                 DataBase.Query(
                 new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text", "@_curid" },

@@ -78,24 +78,24 @@ namespace WpfApplication1
         //    }
         //}
 
-        public static bool CheckBeginEndDate(DateTime _bdate, DateTime _edate)
-        {
-            if(_bdate != null && _edate != null)
-            {
-                if (_bdate > _edate)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //public static bool CheckBeginEndDate(DateTime _bdate, DateTime _edate)
+        //{
+        //    if(_bdate != null && _edate != null)
+        //    {
+        //        if (_bdate > _edate)
+        //        {
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public static void BEDateCheck(object begin,object end)
         {
@@ -273,6 +273,59 @@ namespace WpfApplication1
             }
         }
 
+        public static bool TextCheck(string text, int mode)
+        {
+            if (text == "")
+            {
+                return false;
+            }
+            else
+            {
+                if (mode == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (mode == 1)
+                    {
+                        bool checkSymbols = true;
+                        for (int i = 0; i < text.Length; i++)
+                        {
+                            if (!Char.IsDigit(text[i]))
+                            {
+                                if (mode == 2)
+                                {
+                                    if (text[i] != ',')
+                                    {
+                                        checkSymbols = false;
+                                        i = text.Length;
+                                    }
+                                }
+                                else
+                                {
+                                    checkSymbols = false;
+                                    i = text.Length;
+                                }
+                            }
+                        }
+                        if (checkSymbols)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
         public static SolidColorBrush SelectionCheck(int index,int itemsCount, ref int flag)
         {
             if (index != -1)
@@ -326,7 +379,7 @@ namespace WpfApplication1
             }
         }
 
-        public static bool DiscountEnterCheck(ComboBox product,DatePicker begin,IntegerUpDown price,DatePicker end)
+        public static bool DiscountEnterCheck(ComboBox product,DatePicker begin,IntegerUpDown price,DatePicker end,string pid)
         {
             int dataCorrect = 0;
             product.BorderBrush = SelectionCheck(product.SelectedIndex,product.Items.Count,ref dataCorrect);
@@ -346,7 +399,30 @@ namespace WpfApplication1
                 {
                     if (dataCorrect == 4)
                     {
-                        return true;
+                        if (int.Parse(DataBase.QueryRetCell(new string[] { "@_bdate", "@_edate", "@_pid" }, new string[] { Converter.DateConvert(begin.Text), Converter.DateConvert(end.Text), pid }, "SELECT COUNT(D_ID) FROM discounts WHERE D_BDATE=@_bdate AND D_EDATE=@_edate AND P_ID=@_pid;")) > 0)
+                        {
+                            if(Properties.Settings.Default.DuplDiscount)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                DuplicateDiscountWindow window = new DuplicateDiscountWindow();
+                                window.ShowDialog();
+                                if (window.flag)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else
                     {
@@ -372,7 +448,15 @@ namespace WpfApplication1
             tel.BorderBrush = TextCheck(tel.Text, 1, Brushes.Yellow);
             if(dataCorrect == 4)
             {
-                return true;
+                if (int.Parse(DataBase.QueryRetCell(new string[] { "@_contract", "@_inn" }, new string[] { contract.Text, inn.Text }, "SELECT COUNT(E_ID) FROM employee WHERE E_CONTRACT=@_contract OR E_INN=@_inn;")) > 0)
+                {
+                    System.Windows.MessageBox.Show("Такой ИНН или контракт уже существуют!");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
@@ -418,5 +502,10 @@ namespace WpfApplication1
                 return false;
             }
         }
+
+        //public static bool WaybillEnterCheck()
+        //{
+
+        //}
     }
 }

@@ -36,6 +36,7 @@ namespace WpfApplication1
             {
                 DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract","@_inn" }, new string[] { textBoxName.Text, textBoxTel.Text, comboBoxPos.SelectedItem.ToString(), textBoxContract.Text,textBoxEmployeeINN.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`,E_INN)VALUES(@_name,@_tel,@_pos,@_contract,@_inn);");
                 DataBase.SetLog(idText, 1, 2, "Создание работника,параметры:|имя:" + textBoxName.Text + "|должность:" + comboBoxPos.SelectedItem.ToString() + "|");
+                obj.ID = int.Parse(DataBase.QueryRetCell(null, null, "SELECT MAX(E_ID) FROM employee;"));
                 obj.NAME = textBoxName.Text;
                 obj.TEL = textBoxTel.Text;
                 obj.POSITION = comboBoxPos.SelectedItem.ToString();
@@ -65,12 +66,17 @@ namespace WpfApplication1
             {
                 case "textBoxTel":
                     {
-                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Yellow);
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 1, Brushes.Yellow);
+                        break;
+                    }
+                case "textBoxName":
+                    {
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
                         break;
                     }
                 default:
                     {
-                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 1, Brushes.Red);
                         break;
                     }
             }
