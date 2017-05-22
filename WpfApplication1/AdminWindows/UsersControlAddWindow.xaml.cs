@@ -26,7 +26,7 @@ namespace WpfApplication1
         {
             try
             {
-                DataBase.Query(new string[] { "@_type", "@_login", "@_pass" }, new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text }, "INSERT INTO `user` (`U_ID`,`U_TYPE`,`U_NAME`,`U_PASS`,`U_ONLINE`) VALUES (null, @_type, @_login, md5(@_pass), 'offline');");
+                DataBase.Query(new string[] { "@_type", "@_login", "@_pass" }, new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text }, "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`,`U_ONLINE`) VALUES (@_type, @_login, md5(@_pass), 'offline');");
             }
             catch(Exception ex)
             {

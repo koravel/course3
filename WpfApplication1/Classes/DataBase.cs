@@ -268,7 +268,7 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT E_ID,E_NAME,E_TEL,E_POSITION,E_CONTRACT FROM `employee`;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT E_ID,E_NAME,E_TEL,E_POSITION,E_CONTRACT,E_INN FROM `employee`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -278,7 +278,8 @@ namespace WpfApplication1
                             NAME=dr.GetString("E_NAME"),
                             TEL=dr.GetString("E_TEL"),
                             POSITION=dr.GetString("E_POSITION"),
-                            CONTRACT=dr.GetInt32("E_CONTRACT")
+                            CONTRACT=dr.GetInt32("E_CONTRACT"),
+                            INN = dr.GetInt32("E_INN")
                         });
                     }
                 }
@@ -313,7 +314,8 @@ namespace WpfApplication1
                             NAME = dr.GetString("E_NAME"),
                             TEL = dr.GetString("E_TEL"),
                             POSITION = dr.GetString("E_POSITION"),
-                            CONTRACT = dr.GetInt32("E_CONTRACT")
+                            CONTRACT = dr.GetInt32("E_CONTRACT"),
+                            INN = dr.GetInt32("E_INN")
                         });
                     }
                 }

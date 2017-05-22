@@ -131,6 +131,7 @@
                             <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
                             <DataGridTextColumn Header="Должность" Binding="{Binding POSITION}"/>
                             <DataGridTextColumn Header="№ контракта" Binding="{Binding CONTRACT}"/>
+                            <DataGridTextColumn Header="ИНН" Binding="{Binding INN}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -276,7 +277,7 @@
             </TabItem>
         </TabControl>
         <Button x:Name="buttonEdit" Content="Изменить" Margin="0,0,244,12" Click="buttonEdit_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
-        <TabControl x:Name="tabControlSearch" Margin="10,22,0,0" HorizontalAlignment="Left" Width="538" Height="361" VerticalAlignment="Top">
+        <TabControl x:Name="tabControlSearch" Margin="10,22,0,0" HorizontalAlignment="Left" Width="538" Height="361" VerticalAlignment="Top" SelectedIndex="0">
             <TabItem x:Name="tabItemCheckSearchSettings" Header="Чеки">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-4">
                     <CheckBox x:Name="checkBoxSearchEmployeeCheck" Content="Кассир" HorizontalAlignment="Right" Margin="0,0,462,303" VerticalAlignment="Bottom" Height="22" Click="checkBoxSearchEmployee_Click"/>
@@ -380,7 +381,9 @@
                     </ComboBox>
                     <TextBox x:Name="textBoxSearchTelEmployee" HorizontalAlignment="Left" Height="23" Margin="397,152,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                     <TextBox x:Name="textBoxSearchCodeEmployee" HorizontalAlignment="Left" Height="23" Margin="397,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <Button x:Name="buttonResetSearchEmployee" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="397,236,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchEmployee_Click"/>
+                    <Button x:Name="buttonResetSearchEmployee" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="398,273,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchEmployee_Click"/>
+                    <CheckBox x:Name="checkBoxSearchINNEmployee" Content="ИНН" HorizontalAlignment="Left" Margin="303,245,0,0" VerticalAlignment="Top" Click="checkBoxSearchINNEmployee_Click"/>
+                    <TextBox x:Name="textBoxSearchINNEmployee" HorizontalAlignment="Left" Height="23" Margin="397,245,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Производители" Margin="-2,0,2,0">
@@ -517,7 +520,7 @@
                     </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Накладные" Margin="-5,0,6,0" IsSelected="True">
+            <TabItem Header="Накладные" Margin="-5,0,6,0">
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="textBoxSearchEmployeeWaybill" HorizontalAlignment="Left" Height="23" Margin="118,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
                     <TextBox x:Name="textBoxSearchAgentWaybill" HorizontalAlignment="Left" Height="23" Margin="118,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
@@ -591,6 +594,7 @@
                     </ComboBox>
                     <TextBlock HorizontalAlignment="Left" Margin="5,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       "/><Run Text="Дата"/><LineBreak/><Run Text=" поступления"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="288,252,0,0" TextWrapping="Wrap" Text="Годен до" VerticalAlignment="Top" IsEnabled="False"/>
+                    <TextBox x:Name="txt" HorizontalAlignment="Left" Height="161" Margin="36,77,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="188"/>
                 </Grid>
             </TabItem>
         </TabControl>

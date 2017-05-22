@@ -72,7 +72,7 @@ namespace WpfApplication1
             }
             if(dataCorrect == 3)
             {
-                DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract" }, new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`)VALUES(@_name,@_tel,@_pos,@_contract);");
+                DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract","@_inn" }, new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text,textBoxEmployeeINN.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`,E_INN)VALUES(@_name,@_tel,@_pos,@_contract,@_inn);");
                 this.Close();
             }
         }

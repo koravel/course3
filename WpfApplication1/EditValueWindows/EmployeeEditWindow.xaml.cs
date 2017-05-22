@@ -21,12 +21,13 @@ namespace WpfApplication1
         {
             InitializeComponent();
             curId = _curId;
-            string[] data = new string[4];
-            data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT E_NAME,E_TEL,E_POSITION,E_CONTRACT FROM employee where E_ID=@curid;");
+            string[] data = new string[5];
+            data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT E_NAME,E_TEL,E_POSITION,E_CONTRACT,E_INN FROM employee where E_ID=@curid;");
             comboBoxPos.SelectedIndex = comboBoxPos.Items.IndexOf(data[2]);
             textBoxName.Text = data[0];
             textBoxTel.Text = data[1];
             textBoxContract.Text = data[3];
+            textBoxEmployeeINN.Text = data[4];
         }
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
@@ -86,9 +87,9 @@ namespace WpfApplication1
             if (dataCorrect == 3)
             {
                 DataBase.Query(
-                    new string[] { "@_name", "@_tel", "@_pos", "@_contract", "@_curid" },
-                    new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text, curId },
-                    "UPDATE employee SET E_NAME = @_name,E_TEL = @_tel,E_POSITION = @_pos,E_CONTRACT = @_contract WHERE E_ID = @_curid;");
+                    new string[] { "@_name", "@_tel", "@_pos", "@_contract", "@_curid","@_inn" },
+                    new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text, curId,textBoxEmployeeINN.Text },
+                    "UPDATE employee SET E_NAME = @_name,E_TEL = @_tel,E_POSITION = @_pos,E_CONTRACT = @_contract,E_INN = @_inn WHERE E_ID = @_curid;");
                 this.Close();
             }
         }

@@ -13,5 +13,8 @@ namespace WpfApplication1
         public string TEL { set; get; }
         public string POSITION { set; get; }
         public int CONTRACT { set; get; }
+
+        //public string CONTRACT_IMAGE { set; get; }
+        public int INN { set; get; }
     }
 }
