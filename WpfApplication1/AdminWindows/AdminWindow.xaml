@@ -4,7 +4,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         x:Name="adminWindow" x:Class="WpfApplication1.AdminWindow"
-        Title="AdminWindow" Height="513.677" Width="1391.536" Closing="adminLogout_Closing" Margin="0" MinWidth="1100">
+        Title="Администратор" Height="513.677" Width="1391.536" Closing="adminLogout_Closing" Margin="0" MinWidth="1100" Icon="/Pharmacy DataBase;component/icone.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

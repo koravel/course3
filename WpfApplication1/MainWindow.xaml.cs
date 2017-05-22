@@ -69,18 +69,10 @@ namespace WpfApplication1
                     }
                     else
                     {
-                        if(loginType == "Менеджер")
+                        if (loginType == "Кассир")
                         {
-                            new ManagerWindow().Show();
+                            new SellerWindow(idText).Show();
                             this.Close();
-                        }
-                        else
-                        {
-                            if (loginType == "Кассир")
-                            {
-                                new SellerWindow(idText).Show();
-                                this.Close();
-                            }
                         }
                     }
                     this.Close();

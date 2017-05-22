@@ -4,7 +4,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:WpfApplication1" x:Name="window" x:Class="WpfApplication1.WaybillAddWindow"
-        Title="WaybillAddWindow" Height="194" Width="986" WindowStartupLocation="CenterScreen">
+        Title="Добавление накладной" Height="194" Width="986" WindowStartupLocation="CenterScreen" Icon="/Pharmacy DataBase;component/icone.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="373"/>

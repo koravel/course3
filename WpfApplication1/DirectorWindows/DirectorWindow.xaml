@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.DirectorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DirectorWindow" Height="196" Width="287" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="Суперпользователь" Height="196" Width="287" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/Pharmacy DataBase;component/icone.ico">
     <Grid>
         <Button x:Name="buttonLoginAsSeller" Content="Кассир" HorizontalAlignment="Left" Margin="159,68,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonLoginAsSeller_Click"/>
         <Button x:Name="buttonLoginAsAdmin" Content="Администратор" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonLoginAsAdmin_Click"/>

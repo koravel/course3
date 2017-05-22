@@ -4,7 +4,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.ProductAddWindow"
-        Title="ProductAddWindow" Height="504.77" Width="337.639" WindowStartupLocation="CenterScreen">
+        Title="Добавление товара" Height="504.77" Width="337.639" WindowStartupLocation="CenterScreen" Icon="/Pharmacy DataBase;component/icone.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>

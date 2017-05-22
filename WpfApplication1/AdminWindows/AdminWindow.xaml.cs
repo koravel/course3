@@ -875,11 +875,6 @@ namespace WpfApplication1
             }
         }
 
-        private void reportsMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            new ReportsWindow().ShowDialog();
-        }
-
         private void dataGridEmployeeOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CalculateEmployeesCount((sender as DataGrid).SelectedIndex);

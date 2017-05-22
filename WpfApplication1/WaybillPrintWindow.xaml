@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.WaybillPrintWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WaybillPrintWindow" Height="1009.429" Width="20cm" KeyUp="Window_KeyUp" ResizeMode="NoResize" FontSize="14" WindowStartupLocation="CenterScreen">
+        Title="Печать" Height="1009.429" Width="20cm" KeyUp="Window_KeyUp" ResizeMode="NoResize" FontSize="14" WindowStartupLocation="CenterScreen" Icon="icone.ico">
     <Grid>
         <DataGrid x:Name="dataGridWaybillPrint" HorizontalAlignment="Left" Margin="0,110,0,85" Width="748" IsReadOnly="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
