@@ -25,6 +25,7 @@ namespace WpfApplication1
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
         {
+            new MainWindow().Show();
             this.Close();
         }
 
@@ -36,6 +37,11 @@ namespace WpfApplication1
         private void buttonLoginAsAdmin_Click(object sender, RoutedEventArgs e)
         {
             new AdminWindow(idText).Show();
+        }
+
+        private void buttonDirectorSettings_Click(object sender, RoutedEventArgs e)
+        {
+            new DirectorSettingsWindow().ShowDialog();
         }
     }
 }

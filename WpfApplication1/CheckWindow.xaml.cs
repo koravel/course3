@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace WpfApplication1
 {
     /// <summary>
-    /// Логика взаимодействия для DirectorSettingsWindow.xaml
+    /// Логика взаимодействия для CheckWindow.xaml
     /// </summary>
-    public partial class DirectorSettingsWindow : Window
+    public partial class CheckWindow : Window
     {
-        public DirectorSettingsWindow()
+        public CheckWindow()
         {
             InitializeComponent();
-            upDownPriceProc.Text = Properties.Settings.Default.PriceProcent;
-
-        }
-        private void buttonPriceSettingsSave_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.PriceProcent = upDownPriceProc.Text;
         }
     }
 }

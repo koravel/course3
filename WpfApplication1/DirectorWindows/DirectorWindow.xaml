@@ -7,7 +7,7 @@
         <Button x:Name="buttonLoginAsAdmin" Content="Администратор" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonLoginAsAdmin_Click"/>
         <Label Content="           Добро пожаловать!&#xA;Вы в режиме суперпользователя" HorizontalAlignment="Left" Margin="40,10,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="buttonExit" Content="Выйти" HorizontalAlignment="Left" Margin="159,131,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonExit_Click"/>
-        <Button x:Name="buttonExit_Copy" Content="Настройки" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonExit_Click"/>
+        <Button x:Name="buttonDirectorSettings" Content="Настройки" HorizontalAlignment="Left" Margin="10,131,0,0" VerticalAlignment="Top" Width="114" FontSize="14" Height="42" Click="buttonDirectorSettings_Click"/>
 
     </Grid>
 </Window>

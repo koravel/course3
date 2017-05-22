@@ -1,11 +1,10 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="WpfApplication1.PriceSettingsWindow"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="WpfApplication1.SettingsWindow"
         Title="SettingsWindow" Height="148" Width="423">
     <Grid>
-        <Button x:Name="buttonPriceSettingsSave" Content="Сохранить" HorizontalAlignment="Left" Margin="12,83,0,0" VerticalAlignment="Top" Width="97" Click="buttonPriceSettingsSave_Click" FontSize="14"/>
-        <Button x:Name="buttonPriceSettingsBack" Content="Назад" HorizontalAlignment="Left" Margin="308,83,0,0" VerticalAlignment="Top" Width="97" Click="buttonPriceSettingsBack_Click" FontSize="14"/>
+        <Button x:Name="buttonSettingsBack" Content="Назад" HorizontalAlignment="Left" Margin="146,83,0,0" VerticalAlignment="Top" Width="97" Click="buttonSettingsBack_Click" FontSize="14"/>
         <TextBox x:Name="textBoxPath" HorizontalAlignment="Left" Height="25" Margin="12,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="341" FontSize="14"/>
         <Label Content="Путь архивации" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="buttonSearchArchiveDir" Content="..." HorizontalAlignment="Left" Margin="369,41,0,0" VerticalAlignment="Top" Width="36" FontSize="14" Height="25" Click="buttonSearchArchiveDir_Click"/>

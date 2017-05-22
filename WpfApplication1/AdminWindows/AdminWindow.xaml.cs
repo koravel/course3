@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using Xceed.Wpf.Toolkit;
 using System.ComponentModel;
+using System.IO;
 
 namespace WpfApplication1
 {
@@ -96,15 +97,25 @@ namespace WpfApplication1
 
         private void CalculateTotalPrice(string curid)
         {
-            string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { curid }, "SELECT C_SUM FROM `check` where C_ID=@_curid;");
+            string stringValue = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { curid }, "SELECT C_SUM FROM `check` where C_ID=@_curid;");
             totalPriceTextBlock.Text = "Общая цена:";
-            if (totalPrice == null)
+            if (stringValue == null)
             {
                 totalPriceTextBlock.Text += "0";
             }
             else
             {
-                totalPriceTextBlock.Text += totalPrice;
+                totalPriceTextBlock.Text += stringValue;
+            }
+            totalPriceTextBlock.Text += "\nАванс:";
+            stringValue = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { curid }, "SELECT C_PREPAYMENT FROM `check` where C_ID=@_curid;");
+            if (stringValue == null)
+            {
+                totalPriceTextBlock.Text += "0";
+            }
+            else
+            {
+                totalPriceTextBlock.Text += stringValue;
             }
         }
 
@@ -479,7 +490,7 @@ namespace WpfApplication1
                         Employee tempobj = DeleteRow<Employee>(dataGridEmployeeOut, Properties.Settings.Default.DelBindingToEmployee, employee, 0, "DELETE FROM `employee` WHERE E_ID", "Удаление работника,код=", 1, 5, "SELECT `employee`.`E_ID`,`employee`.`E_NAME`,`employee`.`E_TEL`,`employee`.`E_POSITION`,`employee`.`E_CONTRACT`,`employee`.`E_INN` FROM `employee` WHERE E_ID=@_id;", DataBase.GetEmployee);
                         if (tempobj != null)
                         {
-                            Files.SaveToArchive(tempobj.ID.ToString(), "\nКод:" + tempobj.ID + "\nФ.И.О." + tempobj.NAME + "\nДолжость:" + tempobj.POSITION + "\nНомер контракта:" + tempobj.CONTRACT + "\nИНН:" + tempobj.INN + "\nТелефон:" + tempobj.TEL,"Employee");
+                            Files.SaveToArchive(tempobj.ID.ToString(), "\nКод:" + tempobj.ID + "\nФ.И.О.:" + tempobj.NAME + "\nДолжость:" + tempobj.POSITION + "\nНомер контракта:" + tempobj.CONTRACT + "\nИНН:" + tempobj.INN + "\nТелефон:" + tempobj.TEL,"Employee");
                         }
                         textBlockTypeCount.Text = "";
                         check = DataBase.GetCheck();
@@ -541,7 +552,7 @@ namespace WpfApplication1
                             {
                                 text = "\n\tВсего пришло:" + tempProductQuantity[0] + "\n\tВсего продано:" + tempProductQuantity[1];
                             }
-                            Files.SaveToArchive(tempobj.ID.ToString(), "\nКод:" + tempobj.ID + "\nНазвание:" + tempobj.NAME + "\nПроизводитель:" + tempobj.MANUFACTURER + "\nФорма отпуска:" + tempobj.FORM + "\nГруппа:" + tempobj.GROUP + "\nМатериал:" + tempobj.MATERIAL + "\nУпаковка" + tempobj.PACK + "\nИнструкция" + tempobj.INSTR+text,"Product");
+                            Files.SaveToArchive(tempobj.ID.ToString(), "\nКод:" + tempobj.ID + "\nНазвание:" + tempobj.NAME + "\nПроизводитель:" + tempobj.MANUFACTURER + "\nФорма отпуска:" + tempobj.FORM + "\nГруппа:" + tempobj.GROUP + "\nМатериал:" + tempobj.MATERIAL + "\nУпаковка:" + tempobj.PACK + "\nИнструкция:" + tempobj.INSTR+text,"Product");
                         }
                         dataGridProductActPriceOut.ItemsSource = null;
                         GetSubTable<ProductActualPrice>(dataGridProductActPriceOut, dataGridProductOut);
@@ -600,7 +611,7 @@ namespace WpfApplication1
                             for (int i = 0; i < tempProductList.Count; i++)
                             {
                                 System.IO.StreamWriter w = new System.IO.StreamWriter(System.IO.File.Create(@"" + Properties.Settings.Default.SaveArchive + "\\" + "Product" + index.ToString() + ".txt"), Encoding.GetEncoding(1251));
-                                w.WriteLine("\nКод:" + tempProductList[i].ID + "\nНазвание:" + tempProductList[i].NAME + "\nПроизводитель:" + tempProductList[i].MANUFACTURER + "\nФорма отпуска:" + tempProductList[i].FORM + "\nГруппа:" + tempProductList[i].GROUP + "\nМатериал:" + tempProductList[i].MATERIAL + "\nпаковка" + tempProductList[i].PACK + "\nИнструкция" + tempProductList[i].INSTR);
+                                w.WriteLine("\nКод:" + tempProductList[i].ID + "\nНазвание:" + tempProductList[i].NAME + "\nПроизводитель:" + tempProductList[i].MANUFACTURER + "\nФорма отпуска:" + tempProductList[i].FORM + "\nГруппа:" + tempProductList[i].GROUP + "\nМатериал:" + tempProductList[i].MATERIAL + "\nУпаковка:" + tempProductList[i].PACK + "\nИнструкция:" + tempProductList[i].INSTR);
                                 string[] tempProductQuantity = DataBase.QueryRetRow(new string[]{ "@_id" }, new string[]{ tempProductList[i].ID.ToString() }, "SELECT PQ_IN,PQ_OUT FROM product_quantity WHERE P_ID=@_id");
                                 if(tempProductQuantity.Length > 0)
                                 {
@@ -883,11 +894,6 @@ namespace WpfApplication1
             CalculateEmployeesCount((sender as DataGrid).SelectedIndex);
         }
 
-        private void menuItemViewSettings_Click(object sender, RoutedEventArgs e)
-        {
-            new ViewSettingsWindow().ShowDialog();
-        }
-
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
             temp = null;
@@ -942,6 +948,14 @@ namespace WpfApplication1
                              new string[] { "@_value", upDownSearchValueCheck.Text }, ref temp, ref flag);
 
                         SQLParameterAdd(checkBoxSearchCheckCode.IsChecked.Value, new string[] { " AND `check`.C_ID=@_id", "@_id", textBoxSearchCheckCode.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        ComparsionGet(checkBoxSearchPrepaymentCheck.IsChecked.Value, new int[] { comboBoxDirectionSearchPrepaymentCheck.SelectedIndex, 0 },
+                            new string[] { " AND `check`.C_PREPAYMENT" },
+                            new string[] { null, Converter.CurrencyConvert(upDownSearchPrepaymentCheck.Text) }, ref temp, ref flag);
+
+                        ComparsionGet(checkBoxSearchSummCheck.IsChecked.Value, new int[] { comboBoxDirectionSearchSummCheck.SelectedIndex, 0 },
+                            new string[] { " AND `check`.C_SUM" },
+                            new string[] { null, Converter.CurrencyConvert(upDownSearchSummCheck.Text) }, ref temp, ref flag);
 
                         MakeSearch(dataGridCheckOut, DataBase.GetCheck, new string[] { 
                             "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME,`check`.C_SUM,`check`.C_PREPAYMENT FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ",
@@ -1316,9 +1330,9 @@ namespace WpfApplication1
             }
         }
 
-        private void menuItemPriceSettings_Click(object sender, RoutedEventArgs e)
+        private void menuItemSettings_Click(object sender, RoutedEventArgs e)
         {
-            new PriceSettingsWindow().ShowDialog();
+            new SettingsWindow().ShowDialog();
         }
 
         private void dataGridProductDiscountsDisplay_Initialized(object sender, EventArgs e)
@@ -1597,6 +1611,14 @@ namespace WpfApplication1
             comboBoxSearchDateRangeTypeCheck.SelectedIndex = 0;
             comboBoxDirectionSearchPrice.SelectedIndex = 0;
             comboBoxDirectionSearchValue.SelectedIndex = 0;
+            checkBoxSearchPrepaymentCheck.IsChecked = false;
+            upDownSearchPrepaymentCheck.IsEnabled = false;
+            upDownSearchPrepaymentCheck.Text = null;
+            comboBoxDirectionSearchPrepaymentCheck.SelectedIndex = 0;
+            checkBoxSearchSummCheck.IsChecked = false;
+            upDownSearchSummCheck.Text = null;
+            upDownSearchSummCheck.IsEnabled = false;
+            comboBoxDirectionSearchSummCheck.SelectedIndex = 0;
 
         }
 
@@ -2035,6 +2057,58 @@ namespace WpfApplication1
         private void checkBoxSearchProductStatusWaybill_Click(object sender, RoutedEventArgs e)
         {
             SearchSingleToggle(checkBoxSearchProductStatusWaybill, comboBoxSearchProductStatusWaybill);
+        }
+
+        private void checkBoxSearchPrepaymentCheck_Click(object sender, RoutedEventArgs e)
+        {
+            SearchSingleToggle(checkBoxSearchPrepaymentCheck, upDownSearchPrepaymentCheck);
+        }
+
+        private void checkBoxSearchSummCheck_Click(object sender, RoutedEventArgs e)
+        {
+            SearchSingleToggle(checkBoxSearchSummCheck, upDownSearchSummCheck);
+        }
+
+        private void menuItemPrint_Click(object sender, RoutedEventArgs e)
+        {
+            SaveToPNG(this, new Size(Width = this.ActualWidth, Height = this.ActualHeight), "h:\\TEX\\КУРСАЧ(3 курс)\\qwety");
+            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap("h:\\TEX\\КУРСАЧ(3 курс)\\qwety.png");
+            PrintDialog p = new PrintDialog();
+            System.Windows.Forms.PrintPreviewDialog q = new System.Windows.Forms.PrintPreviewDialog();
+            System.Drawing.Printing.PrintDocument d = new System.Drawing.Printing.PrintDocument();
+            d.PrintPage += (sender1, args) =>
+                {
+                    args.Graphics.DrawImage(bitmap,0,0);
+                };
+            q.Document = d;
+            q.PrintPreviewControl.Zoom = 1;
+            q.ShowDialog();
+        }
+
+        public static void SaveToPNG(FrameworkElement frameworkElement, Size size, string fileName)
+        {
+            using (FileStream stream = new FileStream(string.Format("{0}.png", fileName), FileMode.Create))
+            {
+                SaveToPNG(frameworkElement, size, stream);
+            }
+        }
+
+        public static void SaveToPNG(FrameworkElement frameworkElement, Size size, Stream stream)
+        {
+            Transform transform = frameworkElement.LayoutTransform;
+            frameworkElement.LayoutTransform = null;
+            Thickness margin = frameworkElement.Margin;
+            frameworkElement.Margin = new Thickness(0, 0, margin.Right - margin.Left, margin.Bottom - margin.Top);
+            frameworkElement.Measure(size);
+            frameworkElement.Arrange(new Rect(size));
+            RenderTargetBitmap bmp = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+            bmp.Render(frameworkElement);
+            frameworkElement.LayoutTransform = transform;
+            frameworkElement.Margin = margin;
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Interlace = PngInterlaceOption.On;
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            encoder.Save(stream);
         }
     }
 }

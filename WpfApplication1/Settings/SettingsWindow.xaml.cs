@@ -16,16 +16,16 @@ using System.Windows.Forms;
 namespace WpfApplication1
 {
 
-    public partial class PriceSettingsWindow : Window
+    public partial class SettingsWindow : Window
     {
-        public PriceSettingsWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
 
             textBoxPath.Text = Properties.Settings.Default.SaveArchive;
         }
 
-        private void buttonPriceSettingsBack_Click(object sender, RoutedEventArgs e)
+        private void buttonSettingsBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

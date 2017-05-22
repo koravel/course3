@@ -88,10 +88,13 @@
     <Compile Include="AdminWindows\DirectorPassWindow.xaml.cs">
       <DependentUpon>DirectorPassWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DirectorSettingsWindow.xaml.cs">
+    <Compile Include="CheckWindow.xaml.cs">
+      <DependentUpon>CheckWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DirectorWindows\DirectorSettingsWindow.xaml.cs">
       <DependentUpon>DirectorSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Files.cs" />
+    <Compile Include="Classes\Files.cs" />
     <Compile Include="SellerWindows\SecurityPassWindow.xaml.cs">
       <DependentUpon>SecurityPassWindow.xaml</DependentUpon>
     </Compile>
@@ -111,7 +114,7 @@
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Converter.cs" />
-    <Compile Include="DirectorWindow.xaml.cs">
+    <Compile Include="DirectorWindows\DirectorWindow.xaml.cs">
       <DependentUpon>DirectorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginWindows\FirstWindow.xaml.cs">
@@ -139,8 +142,8 @@
     <Compile Include="EditValueWindows\ProductEditWindow.xaml.cs">
       <DependentUpon>ProductEditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings\PriceSettingsWindow.xaml.cs">
-      <DependentUpon>PriceSettingsWindow.xaml</DependentUpon>
+    <Compile Include="Settings\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\NameIdList.cs" />
     <Compile Include="Tables\Check.cs" />
@@ -188,9 +191,6 @@
       <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillOutput.cs" />
-    <Compile Include="Settings\ViewSettingsWindow.xaml.cs">
-      <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Tables\WaybillInfo.cs" />
     <Compile Include="SellerWindows\TransactionConfirm.xaml.cs">
       <DependentUpon>TransactionConfirm.xaml</DependentUpon>
@@ -202,7 +202,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DirectorSettingsWindow.xaml">
+    <Page Include="CheckWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DirectorWindows\DirectorSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,7 +226,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DirectorWindow.xaml">
+    <Page Include="DirectorWindows\DirectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,7 +282,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings\PriceSettingsWindow.xaml">
+    <Page Include="Settings\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -319,10 +323,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WarningWindows\WarningDelProductBindsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Settings\ViewSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
