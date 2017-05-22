@@ -44,10 +44,10 @@
     <Setting Name="DuplDiscount" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Directors_password" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="DelBindingToWaybill" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Security_password" Type="System.String" Scope="User">
+    <Setting Name="SaveArchive" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

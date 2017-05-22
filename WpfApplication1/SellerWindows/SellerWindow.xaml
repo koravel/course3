@@ -27,7 +27,7 @@
         </Grid.Background>
         <RadioButton x:Name="radioButtonCash" Content="наличные(F11)" Margin="0,4,11,0" GroupName="Paytype_Group" IsChecked="True" FontSize="14" HorizontalAlignment="Right" Width="110" Height="19" VerticalAlignment="Top" Grid.Column="3" Grid.Row="4"/>
         <RadioButton x:Name="radioButtonCard" Content="карта(F12)" HorizontalAlignment="Right" Margin="0,26,39,0" VerticalAlignment="Top" GroupName="Paytype_Group" FontSize="14" Grid.Column="3" Grid.Row="4"/>
-        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,40,5,2" FontSize="14" ItemsSource="{Binding {}}" Grid.RowSpan="4" Grid.ColumnSpan="2">
+        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,40,5,2" FontSize="14"  Grid.RowSpan="4" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Штрих-код" Binding="{Binding CODE}"/>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
@@ -45,7 +45,6 @@
         <Button x:Name="buttonSellToCheck" Content="Продать(F3)" HorizontalAlignment="Right" Margin="0,0,112,13" VerticalAlignment="Bottom" Width="90" FontSize="14" Click="buttonSellToCheck_Click" Grid.Column="3" Grid.Row="4"/>
         <Button x:Name="buttonCancel" Content="Отмена(F4)" HorizontalAlignment="Right" Margin="0,0,11,13" VerticalAlignment="Bottom" Width="83" FontSize="14" Click="buttonCancel_Click" Grid.Column="3" Grid.Row="4"/>
         <Button x:Name="buttonBack" Content="Выйти" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" FontSize="14" Click="buttonBack_Click" Grid.ColumnSpan="2"/>
-        <TextBlock Margin="12,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" FontSize="14" HorizontalAlignment="Left" Width="52" Grid.Column="3"><Run Language="ru-ru" Text="Кааса№"/></TextBlock>
         <TextBox x:Name="textBoxSearch" Height="25" Margin="6.5,7,270,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" KeyUp="TextBox_KeyUp" Grid.Row="4" Grid.Column="1"/>
         <Button x:Name="buttonSell" Content="&gt;&gt;" Margin="0,1,1,0" FontSize="36" Click="buttonSell_Click" TextOptions.TextFormattingMode="Display" Grid.Column="2" Height="60" VerticalAlignment="Top" Grid.Row="2"/>
         <DataGrid x:Name="dataGridProductToCheckOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="4,40,10,2" FontSize="14" KeyUp="dataGridProductToCheckOut_KeyUp" Grid.Column="3" Grid.RowSpan="4">
@@ -63,7 +62,6 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Right" Margin="0,14,112,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" FontSize="14" Grid.Column="3"><Run Language="ru-ru" Text="Номер/Дата чека"/></TextBlock>
         <ComboBox x:Name="comboBoxSearch" HorizontalAlignment="Right" Margin="0,7,90,0" VerticalAlignment="Top" Width="150" FontSize="14" SelectedIndex="0" Grid.Row="4" Grid.Column="1">
             <System:String>штрих-код</System:String>
             <System:String>название</System:String>
@@ -99,5 +97,12 @@
         </ComboBox>
         <Button x:Name="buttonSearchEscape" Content="X" HorizontalAlignment="Right" Margin="0,7,41,0" VerticalAlignment="Top" Width="44" Height="25" FontSize="14" FontWeight="Bold" Click="buttonSearchEscape_Click" Grid.Row="4" Grid.Column="1"/>
         <Image Margin="5,7,0,0" Grid.Row="4" Source="/WpfApplication1;component/search.png" Stretch="Fill" HorizontalAlignment="Left" Width="53" Height="52" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxEmployeeName" Grid.Column="3" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="menuItemEmployeeUpdate" Header="обновить" Click="menuItemEmployeeUpdate_Click" />
+                </ContextMenu>
+            </ComboBox.ContextMenu>
+        </ComboBox>
     </Grid>
 </Window>

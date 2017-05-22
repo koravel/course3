@@ -41,6 +41,11 @@ namespace WpfApplication1
 
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
+            List<Manufacturer> tempobj = DataBase.GetManufacturer("SELECT * FROM manufacturer WHERE M_ID=@_id", new string[] { "@_id" }, new string[] { curId });
+            if (tempobj.Count > 0)
+            {
+                Files.SaveToArchive(curId, "\nКод:" + tempobj[0].ID + "\nНазвание:" + tempobj[0].NAME + "\nСтрана:" + tempobj[0].COUNTRY + "\nГород:" + tempobj[0].CITY + "\nАдрес:" + tempobj[0].ADDR + "\nТелефон:" + tempobj[0].TEL, "Manufacturer");
+            }
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
             DataBase.SetLog(idText, 1, 3, "Удаление производителя,параметры:|код:" + curId + "|");
             flag = true;

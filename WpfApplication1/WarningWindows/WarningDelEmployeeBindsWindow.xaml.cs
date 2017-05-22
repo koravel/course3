@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace WpfApplication1
 {
     public partial class WarningDelEmployeeBindsWindow : Window
@@ -32,6 +33,11 @@ namespace WpfApplication1
 
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
+            List<Employee> tempobj = DataBase.GetEmployee("SELECT * FROM employee WHERE E_ID=@_id", new string[] { "@_id" }, new string[] { curId });
+            if (tempobj.Count>0)
+            {
+                Files.SaveToArchive(curId, "\nКод:" + tempobj[0].ID + "\nФ.И.О." + tempobj[0].NAME + "\nДолжость:" + tempobj[0].POSITION + "\nНомер контракта:" + tempobj[0].CONTRACT + "\nИНН:" + tempobj[0].INN + "\nТелефон:" + tempobj[0].TEL,"Employee");
+            }
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
             DataBase.SetLog(idText, 1, 3, "Удаление работника,параметры:|код:" + curId + "|");
             flag = true;

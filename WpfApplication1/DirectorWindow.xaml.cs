@@ -14,14 +14,28 @@ using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
-    /// <summary>
-    /// Логика взаимодействия для DirectorWindow.xaml
-    /// </summary>
     public partial class DirectorWindow : Window
     {
-        public DirectorWindow()
+        string idText;
+        public DirectorWindow(string id)
         {
             InitializeComponent();
+            idText = id;
+        }
+
+        private void buttonExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonLoginAsSeller_Click(object sender, RoutedEventArgs e)
+        {
+            new SellerWindow(idText).Show();
+        }
+
+        private void buttonLoginAsAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            new AdminWindow(idText).Show();
         }
     }
 }

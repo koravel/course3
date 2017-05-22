@@ -7,7 +7,7 @@
             <ColumnDefinition Width="173*"/>
             <ColumnDefinition Width="479*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dataGridUserOut" GridLinesVisibility="Horizontal" IsReadOnly="True" AutoGenerateColumns="False" Margin="1,0,7,9" Grid.Column="1" FontSize="14" KeyDown="dataGridUserOut_KeyDown">
+        <DataGrid x:Name="dataGridUserOut" GridLinesVisibility="Horizontal" IsReadOnly="True" AutoGenerateColumns="False" Margin="1,0,7,9" Grid.Column="1" FontSize="14" KeyUp="dataGridUserOut_KeyUp">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Тип записи" Binding="{Binding TYPE}"/>
                 <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}"/>

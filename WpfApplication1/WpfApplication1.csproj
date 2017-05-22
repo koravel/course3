@@ -85,6 +85,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminWindows\DirectorPassWindow.xaml.cs">
+      <DependentUpon>DirectorPassWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DirectorSettingsWindow.xaml.cs">
+      <DependentUpon>DirectorSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Files.cs" />
+    <Compile Include="SellerWindows\SecurityPassWindow.xaml.cs">
+      <DependentUpon>SecurityPassWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SellerWindows\AddPrepaymentWindow.xaml.cs">
       <DependentUpon>AddPrepaymentWindow.xaml</DependentUpon>
     </Compile>
@@ -185,6 +195,21 @@
     <Compile Include="SellerWindows\TransactionConfirm.xaml.cs">
       <DependentUpon>TransactionConfirm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarningWindows\WarningDelWaybillBindsWindow.xaml.cs">
+      <DependentUpon>WarningDelWaybillBindsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdminWindows\DirectorPassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DirectorSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SellerWindows\SecurityPassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SellerWindows\AddPrepaymentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -302,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SellerWindows\TransactionConfirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarningWindows\WarningDelWaybillBindsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

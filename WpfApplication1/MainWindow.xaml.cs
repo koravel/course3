@@ -22,18 +22,31 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
-            if(Properties.Settings.Default.Directors_password == "")
+            try
+            {
+                DataBase.Connection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\nСоединение не установлено!");
+            }
+            if(DataBase.QueryRetCell(null,null,"SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0")
             {
                 this.IsEnabled = false;
                 new FirstWindow().ShowDialog();
             }
-            if(Properties.Settings.Default.Directors_password == "" || Properties.Settings.Default.Security_password == "")
+            if (DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0" || DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='2';") == "0")
             {
                 this.Close();
             }
             else
             {
                 this.IsEnabled = true;
+                if(DataBase.QueryRetCell(null, null, "SELECT COUNT(U_ID) FROM `user` WHERE U_TYPE='Администратор';") == "0")
+                {
+                    MessageBox.Show("Теперь добавьте администратора. Для добавления нажмите любую клавишу.");
+                    new UsersControlWindow("-1").ShowDialog();
+                }
             }
         }
 
@@ -57,6 +70,11 @@ namespace WpfApplication1
                 else
                 {
                     string idText = DataBase.QueryRetCell(new string[] { "@_login", "@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;");
+                    if (loginType == "Директор")
+                    {
+                        new DirectorWindow(idText).Show();
+                        this.Close();
+                    }
                     if (loginType == "Администратор")
                     {
                         new AdminWindow(idText).Show();

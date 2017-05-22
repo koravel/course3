@@ -338,7 +338,7 @@ namespace WpfApplication1
                 if (itemsCount == 0)
                 {
                     System.Windows.MessageBox.Show("Данные отсутствуют, внесите новые.");
-                    return Brushes.Yellow;
+                    return Brushes.Blue;
                 }
                 else
                 {
@@ -531,7 +531,7 @@ namespace WpfApplication1
         {
             int dataCorrect = 0;
             type.BorderBrush = SelectionCheck(type.SelectedIndex, type.Items.Count, ref dataCorrect);
-            if (DataBase.QueryRetCell(new string[] { "@_type" }, new string[] { type.SelectedItem.ToString() }, "SELECT COUNT(U_TYPE) from `user` WHERE U_TYPE=@-type;") == "0")
+            if (DataBase.QueryRetCell(new string[] { "@_type" }, new string[] { type.SelectedItem.ToString() }, "SELECT COUNT(U_TYPE) from `user` WHERE U_TYPE=@_type;") != "0")
             {
                 System.Windows.MessageBox.Show("Типы записей уникальны!");
             }

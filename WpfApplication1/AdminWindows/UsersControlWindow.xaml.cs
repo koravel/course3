@@ -80,7 +80,7 @@ namespace WpfApplication1
             DataBase.SetLog(idText, 1, 0, "Обновление таблицы пользователей...");
         }
 
-        private void dataGridUserOut_KeyDown(object sender, KeyEventArgs e)
+        private void dataGridUserOut_KeyUp(object sender, KeyEventArgs e)
         {
             if ((sender as DataGrid).SelectedIndex != -1)
             {

@@ -96,9 +96,9 @@ namespace WpfApplication1
                 objout.FORM = comboBoxForm.SelectedItem.ToString();
                 objout.INSTR = textBoxInstruction.Text;
                 DataBase.Query(
-                new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr" },
-                new string[] { curId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text },
-                "UPDATE product SET P_NAME  = @_name,M_ID = @_manufacturer,P_GROUP = @_group,P_PACK = @_pack,P_MATERIAL = @_material,P_FORM = @_form,P_INSTR = @_instr WHERE P_ID = @_id;");
+                new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr","@_code" },
+                new string[] { curId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text,textBoxCode.Text },
+                "UPDATE product SET P_NAME  = @_name,M_ID = @_manufacturer,P_GROUP = @_group,P_PACK = @_pack,P_MATERIAL = @_material,P_FORM = @_form,P_INSTR = @_instr,P_CODE=@_code WHERE P_ID = @_id;");
                 DataBase.SetLog(idText, 1, 1, "Изменение товара,параметры:|код:" + curId + "|название:" + textBoxName.Text + "|группа:" + comboBoxGroup.SelectedItem.ToString() + "|");
                 DataBase.Query(
                 new string[] { "@_id", "@_price", "@_date" },

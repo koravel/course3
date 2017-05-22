@@ -181,25 +181,25 @@ namespace WpfApplication1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Directors_password {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DelBindingToWaybill {
             get {
-                return ((string)(this["Directors_password"]));
+                return ((bool)(this["DelBindingToWaybill"]));
             }
             set {
-                this["Directors_password"] = value;
+                this["DelBindingToWaybill"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Security_password {
+        public string SaveArchive {
             get {
-                return ((string)(this["Security_password"]));
+                return ((string)(this["SaveArchive"]));
             }
             set {
-                this["Security_password"] = value;
+                this["SaveArchive"] = value;
             }
         }
     }

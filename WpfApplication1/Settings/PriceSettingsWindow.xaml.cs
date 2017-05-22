@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace WpfApplication1
 {
@@ -20,7 +21,8 @@ namespace WpfApplication1
         public PriceSettingsWindow()
         {
             InitializeComponent();
-            upDownPriceProc.Text = Properties.Settings.Default.PriceProcent;
+
+            textBoxPath.Text = Properties.Settings.Default.SaveArchive;
         }
 
         private void buttonPriceSettingsBack_Click(object sender, RoutedEventArgs e)
@@ -28,9 +30,21 @@ namespace WpfApplication1
             this.Close();
         }
 
-        private void buttonPriceSettingsSave_Click(object sender, RoutedEventArgs e)
+        
+
+        private void buttonSearchArchiveDir_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.PriceProcent = upDownPriceProc.Text;
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.ShowDialog();
+            folderBrowserDialog.Description = "Поиск папки";
+            string folderName = "";
+            folderName = folderBrowserDialog.SelectedPath;
+            if(folderName != "")
+            {
+                Properties.Settings.Default.SaveArchive = folderName;
+                textBoxPath.Text = folderName;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

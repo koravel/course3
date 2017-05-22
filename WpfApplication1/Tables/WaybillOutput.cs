@@ -11,7 +11,6 @@ namespace WpfApplication1
         public string TRADEPRICE { set; get; }
         public DateTime BDATE { set; get; }
         public DateTime EDATE { set; get; }
-        public SolidColorBrush COLOR { set; get; }
 
         public WaybillOutput() 
         {
@@ -20,7 +19,6 @@ namespace WpfApplication1
             TRADEPRICE = "0,00";
             BDATE = DateTime.Today;
             EDATE = DateTime.Today;
-            COLOR = Brushes.Red;
         }
     }
 }

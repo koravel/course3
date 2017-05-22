@@ -20,13 +20,15 @@ namespace WpfApplication1
         List<ProductInCheck> listToCheck = new List<ProductInCheck>();
         List<ProductInCheck> listSearch = new List<ProductInCheck>();
         List<int> indexes = new List<int>(),buffList = new List<int>();
+        List<NameIdList> employees = new List<NameIdList>();
         string idText;
-        float summ = 0;
+        float summ = 0,prepayment = 0;
         public SellerWindow(string id)
         {
             InitializeComponent();
             DataBase.SetLog(id, 1, 0, "Вход в систему...");
             idText = id;
+            EmployeesUpdate();
             list = DataBase.GetProductForSeller();
             dataGridProductOut.ItemsSource = list;
             dataGridProductToCheckOut.ItemsSource = listToCheck;
@@ -40,103 +42,64 @@ namespace WpfApplication1
                 {
                     if(dataGridProductOut.ItemsSource == list)
                     {
-                        bool flag = true;
-                        int index = -1;
-                        for (int i = 0; i < listToCheck.Count; i++)
-                        {
-                            if (listToCheck[i].WAYBILLID == list[dataGridProductOut.SelectedIndex].WAYBILLID)
-                            {
-                                index = i;
-                                i = listToCheck.Count;
-                                flag = false;
-                            }
-                        }
-                        if (flag)
-                        {
-                            indexes.Add(dataGridProductOut.SelectedIndex);
-                            listToCheck.Add(new ProductInCheck(list[dataGridProductOut.SelectedIndex].PRICE, upDownValue.Value.Value, list[dataGridProductOut.SelectedIndex].DISCOUNT)
-                            {
-                                ID = list[dataGridProductOut.SelectedIndex].ID,
-                                NAME = list[dataGridProductOut.SelectedIndex].NAME,
-                                PRICE = list[dataGridProductOut.SelectedIndex].PRICE,
-                                TRADEPRICE = list[dataGridProductOut.SelectedIndex].TRADEPRICE,
-                                VALUE = upDownValue.Value.Value,
-                                DISCOUNT = list[dataGridProductOut.SelectedIndex].DISCOUNT,
-                                MANUFACTURER = list[dataGridProductOut.SelectedIndex].MANUFACTURER,
-                                GROUP = list[dataGridProductOut.SelectedIndex].GROUP,
-                                PACK = list[dataGridProductOut.SelectedIndex].PACK,
-                                MATERIAL = list[dataGridProductOut.SelectedIndex].MATERIAL,
-                                FORM = list[dataGridProductOut.SelectedIndex].FORM,
-                                WAYBILLID = list[dataGridProductOut.SelectedIndex].WAYBILLID,
-                                CODE = list[dataGridProductOut.SelectedIndex].CODE
-                            });
-                            summ += float.Parse(listToCheck[listToCheck.Count - 1].SUMM);
-                            textBlockSumm.Text = "сумма:" + summ.ToString();
-                        }
-                        else
-                        {
-                            float tempSumm = float.Parse(listToCheck[index].SUMM);
-                            listToCheck[index].VALUE += upDownValue.Value.Value;
-                            listToCheck[index].CURPRICE = Converter.CailingRound((float.Parse(listToCheck[index].PRICE) * (100 - listToCheck[index].DISCOUNT) * 0.01)).ToString();
-                            listToCheck[index].SUMM = Math.Round(decimal.Parse((float.Parse(listToCheck[index].CURPRICE) * listToCheck[index].VALUE).ToString()), 2).ToString();
-                            summ += (float.Parse(listToCheck[index].SUMM) - tempSumm);
-                            textBlockSumm.Text = "сумма:" + Math.Round(summ,2).ToString();
-                        }
-
-                        list[dataGridProductOut.SelectedIndex].VALUE -= upDownValue.Value.Value;
-                        dataGridProductOut.Items.Refresh();
-                        dataGridProductToCheckOut.Items.Refresh();
+                        ProductToCheckAdd(list, dataGridProductOut.SelectedIndex);
                     }
                     else
                     {
-                        bool flag = true;
-                        int index = -1;
-                        for (int i = 0; i < listToCheck.Count; i++)
-                        {
-                            if (listToCheck[i].WAYBILLID == listSearch[dataGridProductOut.SelectedIndex].WAYBILLID)
-                            {
-                                index = i;
-                                i = listToCheck.Count;
-                                flag = false;
-                            }
-                        }
-                        if (flag)
-                        {
-                            indexes.Add(buffList[dataGridProductOut.SelectedIndex]);
-                            listToCheck.Add(new ProductInCheck(list[buffList[dataGridProductOut.SelectedIndex]].PRICE, upDownValue.Value.Value, list[buffList[dataGridProductOut.SelectedIndex]].DISCOUNT)
-                            {
-                                ID = list[buffList[dataGridProductOut.SelectedIndex]].ID,
-                                NAME = list[buffList[dataGridProductOut.SelectedIndex]].NAME,
-                                PRICE = list[buffList[dataGridProductOut.SelectedIndex]].PRICE,
-                                TRADEPRICE = list[buffList[dataGridProductOut.SelectedIndex]].TRADEPRICE,
-                                VALUE = upDownValue.Value.Value,
-                                DISCOUNT = list[buffList[dataGridProductOut.SelectedIndex]].DISCOUNT,
-                                MANUFACTURER = list[buffList[dataGridProductOut.SelectedIndex]].MANUFACTURER,
-                                GROUP = list[buffList[dataGridProductOut.SelectedIndex]].GROUP,
-                                PACK = list[buffList[dataGridProductOut.SelectedIndex]].PACK,
-                                MATERIAL = list[buffList[dataGridProductOut.SelectedIndex]].MATERIAL,
-                                FORM = list[buffList[dataGridProductOut.SelectedIndex]].FORM,
-                                WAYBILLID = list[buffList[dataGridProductOut.SelectedIndex]].WAYBILLID,
-                                CODE = list[buffList[dataGridProductOut.SelectedIndex]].CODE
-                            });
-                            summ += float.Parse(listToCheck[listToCheck.Count - 1].SUMM);
-                            textBlockSumm.Text = "сумма:" + summ.ToString();
-                        }
-                        else
-                        {
-                            float tempSumm = float.Parse(listToCheck[index].SUMM);
-                            listToCheck[index].VALUE += upDownValue.Value.Value;
-                            listToCheck[index].CURPRICE = Converter.CailingRound((float.Parse(listToCheck[index].PRICE) * (100 - listToCheck[index].DISCOUNT) * 0.01)).ToString();
-                            listToCheck[index].SUMM = Math.Round(decimal.Parse((float.Parse(listToCheck[index].CURPRICE) * listToCheck[index].VALUE).ToString()), 2).ToString();
-                            summ += (float.Parse(listToCheck[index].SUMM) - tempSumm);
-                            textBlockSumm.Text = "сумма:" + Math.Round(summ, 2).ToString();
-                        }
-                        list[buffList[dataGridProductOut.SelectedIndex]].VALUE -= upDownValue.Value.Value;
-                        dataGridProductOut.Items.Refresh();
-                        dataGridProductToCheckOut.Items.Refresh();
+                        ProductToCheckAdd(listSearch, buffList[dataGridProductOut.SelectedIndex]);
                     }
                 }
             }
+        }
+
+        private void ProductToCheckAdd(List<ProductInCheck> curList,int curIndex)
+        {
+            bool flag = true;
+            int index = -1;
+            for (int i = 0; i < listToCheck.Count; i++)
+            {
+                if (listToCheck[i].WAYBILLID == curList[dataGridProductOut.SelectedIndex].WAYBILLID)
+                {
+                    index = i;
+                    i = listToCheck.Count;
+                    flag = false;
+                }
+            }
+            if (flag)
+            {
+                indexes.Add(curIndex);
+                listToCheck.Add(new ProductInCheck(list[curIndex].PRICE, upDownValue.Value.Value, list[curIndex].DISCOUNT)
+                {
+                    ID = list[curIndex].ID,
+                    NAME = list[curIndex].NAME,
+                    PRICE = list[curIndex].PRICE,
+                    TRADEPRICE = list[curIndex].TRADEPRICE,
+                    VALUE = upDownValue.Value.Value,
+                    DISCOUNT = list[curIndex].DISCOUNT,
+                    MANUFACTURER = list[curIndex].MANUFACTURER,
+                    GROUP = list[curIndex].GROUP,
+                    PACK = list[curIndex].PACK,
+                    MATERIAL = list[curIndex].MATERIAL,
+                    FORM = list[curIndex].FORM,
+                    WAYBILLID = list[curIndex].WAYBILLID,
+                    CODE = list[curIndex].CODE
+                });
+                summ += float.Parse(listToCheck[listToCheck.Count - 1].SUMM);
+                textBlockSumm.Text = "сумма:" + summ.ToString();
+            }
+            else
+            {
+                float tempSumm = float.Parse(listToCheck[index].SUMM);
+                listToCheck[index].VALUE += upDownValue.Value.Value;
+                listToCheck[index].CURPRICE = Converter.CailingRound((float.Parse(listToCheck[index].PRICE) * (100 - listToCheck[index].DISCOUNT) * 0.01)).ToString();
+                listToCheck[index].SUMM = Math.Round(decimal.Parse((float.Parse(listToCheck[index].CURPRICE) * listToCheck[index].VALUE).ToString()), 2).ToString();
+                summ += (float.Parse(listToCheck[index].SUMM) - tempSumm);
+                textBlockSumm.Text = "сумма:" + Math.Round(summ, 2).ToString();
+            }
+
+            list[curIndex].VALUE -= upDownValue.Value.Value;
+            dataGridProductOut.Items.Refresh();
+            dataGridProductToCheckOut.Items.Refresh();
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -154,9 +117,14 @@ namespace WpfApplication1
         {
             if(dataGridProductToCheckOut.SelectedIndex != -1 && e.Key == Key.Delete)
             {
-                BackupAddtion(dataGridProductToCheckOut.SelectedIndex);
-                dataGridProductToCheckOut.Items.Refresh();
-                dataGridProductOut.Items.Refresh();
+                SecurityPassWindow window = new SecurityPassWindow();
+                window.ShowDialog();
+                if (window.flag)
+                {
+                    BackupAddtion(dataGridProductToCheckOut.SelectedIndex);
+                    dataGridProductToCheckOut.Items.Refresh();
+                    dataGridProductOut.Items.Refresh();
+                }
             }
         }
 
@@ -203,21 +171,24 @@ namespace WpfApplication1
             if(window.flag)
             {
                 textBlockPrePayment.Text = "аванс:" + window.prePayment.ToString();
+                prepayment = window.prePayment;
                 textBlockDelivery.Text = "сдача:" + Math.Round((window.prePayment - summ),2).ToString();
             }
         }
 
-        private void buttonSellToCheck_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            
-            while(listToCheck.Count > 0)
+            if(dataGridProductToCheckOut.Items.Count > 0)
             {
-                BackupAddtion(0);
+                SecurityPassWindow window = new SecurityPassWindow();
+                window.ShowDialog();
+                if (window.flag)
+                {
+                    while (listToCheck.Count > 0)
+                    {
+                        BackupAddtion(0);
+                    }
+                }
             }
         }
 
@@ -416,7 +387,7 @@ namespace WpfApplication1
 
         private void buttonSearchEscape_Click(object sender, RoutedEventArgs e)
         {
-            if (dataGridProductOut.ItemsSource != list)
+            if(dataGridProductOut.ItemsSource != list)
             {
                 dataGridProductOut.ItemsSource = null;
                 dataGridProductOut.ItemsSource = list;
@@ -465,5 +436,90 @@ namespace WpfApplication1
                 dataGridProductOut.Items.Refresh();
             }
         }
+
+        private void buttonSellToCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if(comboBoxEmployeeName.SelectedIndex != -1 && listToCheck.Count > 0)
+            {
+                if(summ <= prepayment)
+                {
+                    comboBoxEmployeeName.BorderBrush = Brushes.Gray;
+                    TransactionConfirm window = new TransactionConfirm();
+                    window.ShowDialog();
+                    if (window.flag)
+                    {
+                        string paytype;
+                        if (radioButtonCard.IsChecked.Value)
+                        {
+                            paytype = "Карточка";
+                        }
+                        else
+                        {
+                            paytype = "Наличные";
+                        }
+                        string maxId = DataBase.QueryRetCell(null, null, "SELECT IFNULL(MAX(C_ID)+1,1) FROM `check`;");
+                        DataBase.Query(new string[] { "@_id", "@_eid", "@_paytype", "@_summ", "@_prepayment" }, new string[] { maxId, employees[comboBoxEmployeeName.SelectedIndex].ID.ToString(), paytype, Converter.FloatToCurrencyConvert(summ.ToString()), Converter.FloatToCurrencyConvert(prepayment.ToString()) }, "INSERT INTO `check`(C_ID,E_ID,C_DATE,C_PAYTYPE,C_SUM,C_PREPAYMENT)VALUES(@_id,@_eid,now(),@_paytype,@_summ,@_prepayment);");
+                        List<string> productId = new List<string>();
+                        List<string> productValue = new List<string>();
+                        for (int i = 0; i < dataGridProductToCheckOut.Items.Count;i++ )
+                        {
+                            DataBase.Query(new string[] { "@_wlid", "@_value" }, new string[] { listToCheck[i].WAYBILLID.ToString(),listToCheck[i].VALUE.ToString() }, "UPDATE product_sold SET PS_COUNT=PS_COUNT+@_value WHERE WL_ID=@_wlid;");
+                            DataBase.Query(new string[] { "@_wlid" }, new string[] { listToCheck[i].WAYBILLID.ToString() }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((SELECT product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=wl.WL_VALUE,'Продано','Не просрочено') WHERE po.WL_ID=wl.WL_ID AND wl.WL_ID=@_wlid;");
+                            DataBase.Query(new string[] { "@_cid", "@_pid", "@_clvalue" }, new string[] { maxId, listToCheck[i].ID.ToString(), listToCheck[i].VALUE.ToString() }, "INSERT INTO check_list(C_ID,P_ID,CL_VALUE)VALUES(@_cid,@_pid,@_clvalue)");
+                            for (int j = 0; j < productId.Count; j++)
+                            {
+                                if(productId[i] != listToCheck[i].ID.ToString())
+                                {
+                                    productId.Add(listToCheck[i].ID.ToString());
+                                    productValue.Add(listToCheck[i].VALUE.ToString());
+                                    i = productId.Count;
+                                }
+                                else
+                                {
+                                    productValue[j] = (int.Parse(productValue[j])+listToCheck[i].VALUE).ToString();
+                                }
+                            }
+                        }
+                        for (int i = 0; i < productId.Count;i++ )
+                        {
+                            DataBase.Query(new string[] { "@_pid", "@_value" }, new string[] { productId[i],productValue[i] }, "UPDATE product_quantity SET PQ_OUT=PQ_OUT+@_value WHERE P_ID=@_pid");
+                        }
+                    }
+                    listToCheck.Clear();
+                    summ = 0;
+                    prepayment = 0;
+                    textBlockDelivery.Text = "Сдача:0";
+                    textBlockPrePayment.Text = "Аванс:0";
+                    textBlockSumm.Text = "Сумма:0";
+                    dataGridProductToCheckOut.Items.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("Аванс не может быть меньше суммы!");
+                }
+               
+            }
+            else
+            {
+                comboBoxEmployeeName.BorderBrush = Brushes.Red;
+            }
+        }
+
+        private void menuItemEmployeeUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeesUpdate();
+        }
+
+        private void EmployeesUpdate()
+        {
+            comboBoxEmployeeName.Items.Clear();
+            employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
+            for (int i = 0; i < employees.Count; i++)
+            {
+                comboBoxEmployeeName.Items.Add(employees[i].NAME + "(#" + employees[i].ID + ")");
+            }
+        }
+
+
     }
 }

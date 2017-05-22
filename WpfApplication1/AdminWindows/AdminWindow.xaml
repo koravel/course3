@@ -521,6 +521,14 @@
                     </ComboBox>
                     <CheckBox x:Name="checkBoxSearchBarcode" Content="Штрих-код" HorizontalAlignment="Left" Margin="290,215,0,0" VerticalAlignment="Top" Click="checkBoxSearchBarcode_Click"/>
                     <TextBox x:Name="textBoxSearchBarcode" HorizontalAlignment="Left" Height="23" Margin="397,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="158" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxSearchProductStatus" HorizontalAlignment="Left" Margin="132,253,0,0" VerticalAlignment="Top" Width="153" IsEnabled="False">
+                        <System:String>любое</System:String>
+                        <System:String>не просрочено</System:String>
+                        <System:String>истекает с.г.</System:String>
+                        <System:String>просрочено</System:String>
+                        <System:String>продано</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchProductStatus" Content="Состояние" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductStatus_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Накладные" Margin="-5,0,6,0" FontSize="14">
@@ -531,7 +539,7 @@
                     <CheckBox x:Name="checkBoxSearchEmployeeWaybill" Content="Принимающий" HorizontalAlignment="Left" Margin="10,99,0,0" VerticalAlignment="Top" Click="checkBoxSearchEmployeeWaybill_Click"/>
                     <CheckBox x:Name="checkBoxSearchAgentWaybill" Content="Контрагент" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="checkBoxSearchAgentWaybill_Click"/>
                     <CheckBox x:Name="checkBoxSearchCodeWaybill" Content="Код" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Click="checkBoxSearchCodeWaybill_Click"/>
-                    <Button x:Name="buttonResetSearchWaybill" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="418,301,0,0" VerticalAlignment="Top" Width="135" Click="buttonResetSearchWaybill_Click"/>
+                    <Button x:Name="buttonResetSearchWaybill" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="418,330,0,0" VerticalAlignment="Top" Width="135" Click="buttonResetSearchWaybill_Click"/>
                     <DatePicker x:Name="datePickerSearchBDateProductWaybillOut" HorizontalAlignment="Left" Margin="409,209,0,0" VerticalAlignment="Top" Width="146" IsEnabled="False" DisplayDate="2016-04-27"/>
                     <DatePicker x:Name="datePickerSearchEDateProductWaybillOut" HorizontalAlignment="Left" Margin="409,268,0,0" VerticalAlignment="Top" Width="144" IsEnabled="False"/>
                     <CheckBox x:Name="checkBoxSearchBDateProductWaybillOut" Content="от" HorizontalAlignment="Left" Margin="371,213,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateProductWaybillOut_Click"/>
@@ -597,6 +605,14 @@
                     </ComboBox>
                     <TextBlock HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       "/><Run Text="Дата"/><LineBreak/><Run Text=" поступления"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="310,244,0,0" TextWrapping="Wrap" Text="Годен до" VerticalAlignment="Top" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxSearchProductStatusWaybill" HorizontalAlignment="Left" Margin="402,300,0,0" VerticalAlignment="Top" Width="153" IsEnabled="False">
+                        <System:String>любое</System:String>
+                        <System:String>не просрочено</System:String>
+                        <System:String>истекает с.г.</System:String>
+                        <System:String>просрочено</System:String>
+                        <System:String>продано</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchProductStatusWaybill" Content="Состояние" HorizontalAlignment="Left" Margin="299,306,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductStatusWaybill_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

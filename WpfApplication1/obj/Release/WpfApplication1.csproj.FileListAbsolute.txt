@@ -383,3 +383,9 @@ H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Dire
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\FirstWindow.g.cs
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.baml
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SecurityPassWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SecurityPassWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\DirectorPassWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelWaybillBindsWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\DirectorPassWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelWaybillBindsWindow.g.cs

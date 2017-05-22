@@ -89,7 +89,10 @@ namespace WpfApplication1
 
         private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            comboBoxProduct.BorderBrush = ErrorCheck.SelectionCheck(comboBoxProduct.SelectedIndex, comboBoxProduct.Items.Count);
+            if (comboBoxProduct.Items.Count > 0)
+            {
+                comboBoxProduct.BorderBrush = ErrorCheck.SelectionCheck(comboBoxProduct.SelectedIndex, comboBoxProduct.Items.Count);
+            }
         }
     }
 }
