@@ -912,7 +912,7 @@ namespace WpfApplication1
                         bool flag = false;
                         if (checkBoxSearchNameProduct.IsChecked == true && textBoxSearchNameProduct.Text != "")
                         {
-                            temp += " AND product.P_NAME=@_name";
+                            temp += " AND p.P_NAME=@_name";
                             valuesText.Add("@_name");
                             values.Add(textBoxSearchNameProduct.Text);
                         }
@@ -924,25 +924,25 @@ namespace WpfApplication1
                         }
                         if (checkBoxSearchGroupProduct.IsChecked == true && comboBoxSearchGroupProduct.SelectedIndex != -1)
                         {
-                            temp += " AND product.P_GROUP";
-                            valuesText.Add("@");
+                            temp += " AND p.P_GROUP=@_group";
+                            valuesText.Add("@_group");
                             values.Add(comboBoxSearchGroupProduct.SelectedItem.ToString());
                         }
                         if (checkBoxSearchPackProduct.IsChecked == true && comboBoxSearchPackProduct.SelectedIndex != -1)
                         {
-                            temp += " AND product.P_PACK=@_pack";
+                            temp += " AND p.P_PACK=@_pack";
                             valuesText.Add("@_pack");
                             values.Add(comboBoxSearchPackProduct.SelectedItem.ToString());
                         }
                         if (checkBoxSearchMaterialProduct.IsChecked == true && comboBoxSearchMaterialProduct.SelectedIndex != -1)
                         {
-                            temp += " AND product.P_MATERIAL=@_material";
+                            temp += " AND p.P_MATERIAL=@_material";
                             valuesText.Add("@_material");
                             values.Add(comboBoxSearchMaterialProduct.SelectedItem.ToString());
                         }
                         if (checkBoxSearchFormProduct.IsChecked == true && comboBoxSearchFormProduct.SelectedIndex != -1)
                         {
-                            temp += " AND product.P_FORM=@_form";
+                            temp += " AND p.P_FORM=@_form";
                             valuesText.Add("@_form");
                             values.Add(comboBoxSearchFormProduct.SelectedItem.ToString());
                         }
