@@ -73,6 +73,7 @@
     <Compile Include="AddValueWindows\ProductAddWindow.xaml.cs">
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ErrorCheck.cs" />
     <Compile Include="Row.cs" />
     <Compile Include="Tables\Check.cs" />
     <Compile Include="DataBase.cs" />

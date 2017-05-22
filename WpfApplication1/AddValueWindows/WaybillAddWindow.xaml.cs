@@ -22,6 +22,17 @@ namespace WpfApplication1
         public WaybillAddWindow()
         {
             InitializeComponent();
+            //dataGridInfo.Items.Count
+        }
+
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void bttonSave_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

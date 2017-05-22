@@ -4,8 +4,8 @@
         Title="DiscountAddWindow" Height="332.5" Width="219.667">
     <Grid>
         <ComboBox x:Name="comboBoxProduct" HorizontalAlignment="Left" Margin="76,12,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="textBoxPrice" HorizontalAlignment="Left" Height="22" Margin="76,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="textBoxDescription" HorizontalAlignment="Left" Height="160" Margin="90,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
+        <TextBox x:Name="textBoxPrice" HorizontalAlignment="Left" Height="22" Margin="76,44,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxDescription" HorizontalAlignment="Left" Height="160" Margin="90,132,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
         <DatePicker x:Name="datePickerBeginDate" HorizontalAlignment="Left" Margin="76,72,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="datePickerEndDate" HorizontalAlignment="Left" Margin="76,102,0,0" VerticalAlignment="Top"/>
         <Label Content="Товар" HorizontalAlignment="Left" Margin="20,8,0,0" VerticalAlignment="Top"/>

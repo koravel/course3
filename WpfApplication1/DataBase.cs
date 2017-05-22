@@ -260,72 +260,7 @@ namespace WpfApplication1
 
         }
 
-        //public static string[] QueryRetColumn(string[] _changeParametersText, string[] _changeParameters, string _queryString,int _columnAmount)
-        //{
-        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-        //    {
-        //        try
-        //        {
-        //            con.Open();
-        //            MySqlCommand com = new MySqlCommand(_queryString, con);
-        //            if (_changeParameters != null)
-        //            {
-        //                int n = _changeParameters.Length;
-        //                for (int i = 0; i < n; i++)
-        //                {
-        //                    com.Parameters.AddWithValue(_changeParametersText[i], _changeParameters[i]);
-        //                }
-        //            }
-        //            MySqlDataReader dr = com.ExecuteReader();
-        //            if (dr.HasRows)
-        //            {
-
-        //                string[] StrArrRet = new string[_columnAmount];
-        //                int i = 0;
-        //                while(dr.Read())
-        //                {
-        //                    StrArrRet[i] = dr.GetString(0);
-        //                    i++;
-        //                }
-        //                con.Close();
-        //                return StrArrRet;
-        //            }
-        //        }
-
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message);
-        //        }
-        //        con.Close();
-        //        return null;
-        //    }
-        //}
-
-        //public static int ColumnAmount(string _tableName, string _columnName)
-        //{
-        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-        //    {
-        //        try
-        //        {
-        //            con.Open();
-        //            string q=@"SELECT COUNT("+_columnName+") FROM "+_tableName+";";
-        //            MessageBox.Show(q);
-        //            MySqlCommand com = new MySqlCommand(@"SELECT count(P_NAME) FROM product;", con);
-        //            MySqlDataReader dr = com.ExecuteReader();
-        //            con.Close();
-        //            MessageBox.Show(dr.GetDataTypeName(0).ToString());
-        //            return dr.GetInt32(0);
-        //        }
-        //        catch(Exception e)
-        //        {
-        //            MessageBox.Show(e.Message);
-        //        }
-        //        con.Close();
-        //        return 0;
-        //    }
-        //}
-
-        public static List<Row> GetProductCollection()
+        public static List<Row> QueryGetColumn(string _columnName,string _tableName)
         {
             List<Row> rows = new List<Row>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
@@ -334,13 +269,13 @@ namespace WpfApplication1
                 {
 
                     con.Open();
-                    MySqlCommand com = new MySqlCommand(@"SELECT P_NAME FROM product;", con);
+                    MySqlCommand com = new MySqlCommand(@"SELECT "+_columnName+" FROM "+_tableName+";", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
                         rows.Add(new Row()
                         {
-                            ROW = dr.GetString("P_NAME"),
+                            ROW = dr.GetString(_columnName),
                         });
                     }
                     con.Close();

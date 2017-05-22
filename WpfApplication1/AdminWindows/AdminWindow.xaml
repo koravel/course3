@@ -117,7 +117,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="buttonEdit" Content="Изменить" HorizontalAlignment="Left" Margin="393,384,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="buttonEdit" Content="Изменить" HorizontalAlignment="Left" Margin="393,384,0,0" VerticalAlignment="Top" Width="75" Click="buttonEdit_Click"/>
         <CheckBox x:Name="checkBoxDelAll" Content="Удалять связанные&#xD;&#xA;записи" HorizontalAlignment="Left" Margin="5,345,0,0" VerticalAlignment="Top" Height="34" Width="125" IsChecked="False"/>
     </Grid>
 </Window>

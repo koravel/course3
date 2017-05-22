@@ -135,6 +135,12 @@ namespace WpfApplication1
 
         private void tabItemProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            //string[] currentDate = DateTime.Today.ToString().Split(' ');
+            //string[] currentSplit = currentDate[0].Split('.');
+            //string currentDateInvert = currentSplit[2] + '-' + currentSplit[1] + '-' + currentSplit[0];
+            //string[] value = new string[1]; value[0] = currentDateInvert;
+            //string[] valueText = new string[1]; valueText[0] = "@_date";
+            //string[] overdueProducts = DataBase.QueryRetRow(valueText,value,"SELECT P_ID FROM product_actual_price WHERE PAP_DATE<@_date;");
             dataGridProductOut.ItemsSource = DataBase.GetProduct();
         }
 
@@ -301,7 +307,7 @@ namespace WpfApplication1
                                 var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                                 values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `manufactuter` WHERE M_ID=@_curid;");
+                                DataBase.Query(valuesText, values, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
                                 if (checkBoxDelAll.IsChecked == true)
                                 {
                                     if (Properties.Settings.Default.DelBindingToManufacturer == false)
@@ -330,13 +336,13 @@ namespace WpfApplication1
                         valuesText[0] = "@_curid";
                         try
                         {
-                            int indexTemp = dataGridManufacturersOut.SelectedIndex;
+                            int indexTemp = dataGridProductOut.SelectedIndex;
                             if (indexTemp != -1)
                             {
-                                var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
+                                var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                                 values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `manufactuter` WHERE P_ID=@_curid;");
+                                DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE P_ID=@_curid;");
                                 if (checkBoxDelAll.IsChecked == true)
                                 {
                                     if (Properties.Settings.Default.DelBindingToProduct == false)
@@ -347,7 +353,7 @@ namespace WpfApplication1
                                     {
                                         valuesText[0] = "@_curid";
                                         values[0] = content.Text;
-                                        DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE P_ID=@_curid;");
+                                        DataBase.Query(valuesText, values, "DELETE FROM `waybill` WHERE P_ID=@_curid;");
                                         DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE P_ID=@_curid;");
                                     }
                                 }
@@ -365,6 +371,11 @@ namespace WpfApplication1
                         break;
                     }
             }
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

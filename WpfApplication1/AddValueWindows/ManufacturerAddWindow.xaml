@@ -3,18 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ManufacturerAddWindow" Height="234" Width="216">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="72,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="72,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="72,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="72,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="72,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="23" Margin="72,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxCountry" HorizontalAlignment="Left" Height="23" Margin="72,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxCity" HorizontalAlignment="Left" Height="23" Margin="72,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxAddress" HorizontalAlignment="Left" Height="23" Margin="72,96,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textBoxTel" HorizontalAlignment="Left" Height="23" Margin="72,124,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="4,8,0,0" VerticalAlignment="Top"/>
         <Label Content="Страна" HorizontalAlignment="Left" Margin="18,37,0,0" VerticalAlignment="Top"/>
         <Label Content="Город" HorizontalAlignment="Left" Margin="24,68,0,0" VerticalAlignment="Top"/>
         <Label Content="Адрес" HorizontalAlignment="Left" Margin="24,96,0,0" VerticalAlignment="Top"/>
         <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top"/>
-        <Button Content="Сохранить" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Назад" HorizontalAlignment="Left" Margin="117,165,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="75" Click="buttonSave_Click"/>
+        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="117,165,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click"/>
 
     </Grid>
 </Window>

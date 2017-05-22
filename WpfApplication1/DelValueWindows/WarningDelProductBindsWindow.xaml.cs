@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
-    /// <summary>
-    /// Логика взаимодействия для WarningDelProductBindsWindow.xaml
-    /// </summary>
     public partial class WarningDelProductBindsWindow : Window
     {
         string curId;
