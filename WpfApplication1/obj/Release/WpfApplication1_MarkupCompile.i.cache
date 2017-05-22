@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
 WpfApplication1
 none
 false
 TRACE
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
-21623738784
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
+21946337162
 
-44519161820
-231638820693
-AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;AdminWindows\ReportsWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;SellerWindows\SellerWindow.xaml;ManagerWindows\ManagerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;DelValueWindows\WarningDelEmployeeBindsWindow.xaml;DelValueWindows\WarningDelManufacturerBindsWindow.xaml;DelValueWindows\WarningDelProductBindsWindow.xaml;
+44-218813155
+231605346305
+AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;ManagerWindows\ReportsWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;SellerWindows\SellerWindow.xaml;ManagerWindows\ManagerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;DelValueWindows\WarningDelEmployeeBindsWindow.xaml;DelValueWindows\WarningDelManufacturerBindsWindow.xaml;DelValueWindows\WarningDelProductBindsWindow.xaml;
 
 False
 

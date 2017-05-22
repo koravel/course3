@@ -105,7 +105,7 @@
       <DependentUpon>EmployeeEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ErrorCheck.cs" />
-    <Compile Include="AdminWindows\ReportsWindow.xaml.cs">
+    <Compile Include="ManagerWindows\ReportsWindow.xaml.cs">
       <DependentUpon>ReportsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditValueWindows\ManufacturerEditWindow.xaml.cs">
@@ -200,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AdminWindows\ReportsWindow.xaml">
+    <Page Include="ManagerWindows\ReportsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

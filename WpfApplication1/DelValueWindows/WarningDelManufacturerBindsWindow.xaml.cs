@@ -40,8 +40,6 @@ namespace WpfApplication1
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
-            DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `product` WHERE M_ID=@_curid;");
-            DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `discount` WHERE M_ID=@_curid;");
             this.Close();
         }
 

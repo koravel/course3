@@ -153,14 +153,26 @@ namespace WpfApplication1
                     var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
                     var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(content.Text);
-                    //if(DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT COUNT(WL_VALUE) FROM waybill_list WHERE waybill_list.P_ID=@_id;") != "0")
-                    //{
-                    //    textBlockProductCount.Text = "Всего на складе:" + DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT SUM(WL_VALUE) FROM waybill_list WHERE waybill_list.P_ID=@_id;");
-                    //}
-                    //else
-                    //{
-                    //    textBlockProductCount.Text = "Всего на складе:0";
-                    //}
+                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "SELECT PQ_QUANTITY FROM product_quantity WHERE P_ID=@_id;"),
+                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { content.Text }, "select waybill_list.WL_VALUE-product_sold.PS_COUNT from waybill_list,product_sold,product_overdue where product_overdue.PP_IS_OVERDUE='Просрочено' and product_sold.WL_ID=waybill_list.WL_ID and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.P_ID=@_id;");
+                    textBlockProductCount.Text = "Всего на складе:";
+                    if(quantity == null)
+                    {
+                        textBlockProductCount.Text += "0";
+                    }
+                    else
+                    {
+                        textBlockProductCount.Text += quantity;
+                    }
+                    textBlockProductCount.Text += "\nПросрочено:";
+                    if (overdueValue == null)
+                    {
+                        textBlockProductCount.Text += "0";
+                    }
+                    else
+                    {
+                        textBlockProductCount.Text += overdueValue;
+                    }
                 }
             }
             catch (Exception ex)
@@ -280,8 +292,6 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `waybill` WHERE E_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `check` WHERE E_ID=@_curid;");
                                 }
                             }
                         }
@@ -307,8 +317,6 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `product` WHERE M_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `discount` WHERE M_ID=@_curid;");
                                 }
                             }
                         }
@@ -334,8 +342,6 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `product` WHERE P_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `waybill` WHERE P_ID=@_curid;");
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `discount` WHERE P_ID=@_curid;");
                                 }
                             }
                         }

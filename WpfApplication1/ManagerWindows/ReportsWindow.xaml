@@ -1,0 +1,9 @@
+﻿<Window x:Class="WpfApplication1.ReportsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ReportsWindow" Height="300" Width="300">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="250" Margin="10,10,0,0" TextWrapping="Wrap" Text="Продажи кассиров за день&#xD;&#xA;Продажи продуктов&#xD;&#xA;Количество товаров&#xD;&#xA;Просроченные товары&#xD;&#xA;Продажи товара за день&#xD;&#xA;Поступление товара&#xD;&#xA;Всего продано товара&#xD;&#xA;Всего принято товара&#xD;&#xA;Кол-во и --- акционного товара&#xD;&#xA;Кол-во товара производителя" VerticalAlignment="Top" Width="272"/>
+
+    </Grid>
+</Window>
