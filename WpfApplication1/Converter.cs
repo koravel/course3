@@ -44,5 +44,29 @@ namespace WpfApplication1
                 return "0";
             }
         }
+        public static float CurrencyToFloatConvert(string value)
+        {
+            if (value != null)
+            {
+                value = value.Remove(value.Length - 2);
+                return float.Parse(value);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public static string FloatToCurrencyConvert(string value)
+        {
+            if (value != null)
+            {
+                value = value.Replace(",", ".");
+                return value;
+            }
+            else
+            {
+                return "0";
+            }
+        }
     }
 }

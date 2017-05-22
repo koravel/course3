@@ -74,7 +74,7 @@ namespace WpfApplication1
                 string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
                 for (int i = 0; i < list.Count; i++)
                 {
-                    quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE };
+                    quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE, Converter.DateConvert(list[i].BDATE.ToShortDateString()) };
                     list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
                     queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
                     if(i != list.Count-1)
@@ -95,14 +95,14 @@ namespace WpfApplication1
                     }
                 }
                 queryString += ";";
+                DataBase.Query(null, null, "INSERT INTO product_sold" + queryString);
+                DataBase.Query(null, null, "INSERT INTO product_overdue" + queryString);
                 for (int i = 0; i < quantityData.Length; ++i)
                 {
 
-                    DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], (float.Parse(quantityData[i][1]) * float.Parse(Properties.Settings.Default.PriceProcent)).ToString() }, "INSERT INTO product_quantity(PQ_IN)VALUES(@_value) WHERE P_ID=@_id;");
-                    DataBase.Query(new string[] { "@_id", "@_price" }, new string[] { quantityData[i][0], quantityData[i][2] }, "CALL insert_price(@_id,@_price);");
+                    DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], quantityData[i][1] }, "UPDATE product_quantity SET PQ_IN=PQ_IN+@_value WHERE P_ID=@_id;");
+                    DataBase.Query(new string[] { "@_id", "@_price","@_dat" }, new string[] { quantityData[i][0], Converter.FloatToCurrencyConvert((Converter.CurrencyToFloatConvert(quantityData[i][2]) * (float.Parse(Properties.Settings.Default.PriceProcent)*0.01)).ToString()), quantityData[i][3] }, "CALL insert_price(@_id,@_price,@_dat);");
                 }
-                DataBase.Query(null, null, "INSERT INTO product_sold" + queryString);
-                DataBase.Query(null, null, "INSERT INTO product_overdue" + queryString);
                 this.Close();
             }
         }

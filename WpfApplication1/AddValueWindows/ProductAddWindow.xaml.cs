@@ -70,6 +70,7 @@ namespace WpfApplication1
                 new string[] { "@_id", "@_price", "@_date" },
                 new string[] { maxId, textBoxPrice.Text, Converter.DateConvert(datePickerToday.Text) },
                 "INSERT INTO `product_actual_price`(`P_ID`,`PAP_PRICE`,`PAP_DATE`)VALUES(@_id,@_price,@_date);");
+                DataBase.Query(new string[] { "@_id" }, new string[] { maxId }, "INSERT INTO product_quantity(P_ID)VALUES(@_id)");
                 this.Close();
             }
 
