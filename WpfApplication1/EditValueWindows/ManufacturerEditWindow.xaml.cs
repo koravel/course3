@@ -29,6 +29,7 @@ namespace WpfApplication1
             textBoxAddress.Text = data[3];
             textBoxTel.Text = data[4];
         }
+        
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

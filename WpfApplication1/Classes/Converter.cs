@@ -68,5 +68,18 @@ namespace WpfApplication1
                 return "0";
             }
         }
+        public static string DGCellToStringConvert(int row,int cloumn,DataGrid dataGrid)
+        {
+            var cellInfo = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[cloumn]);
+            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+            if(content.Text != null)
+            {
+                return content.Text;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

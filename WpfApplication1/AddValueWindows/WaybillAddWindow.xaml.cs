@@ -117,10 +117,9 @@ namespace WpfApplication1
 
         private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox a = (ComboBox)sender;
-            if(dataGridInfo.SelectedIndex != -1 && a.SelectedIndex != -1)
+            if(dataGridInfo.SelectedIndex != -1 && (sender as ComboBox).SelectedIndex != -1)
             {
-                list[dataGridInfo.SelectedIndex].ID = products[a.SelectedIndex].ID.ToString();
+                list[dataGridInfo.SelectedIndex].ID = products[(sender as ComboBox).SelectedIndex].ID.ToString();
             }
         }
     }

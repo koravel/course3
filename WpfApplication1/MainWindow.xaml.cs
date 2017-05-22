@@ -32,7 +32,7 @@ namespace WpfApplication1
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message+"\nСоединение не установлено!");
             }
             if (LoginField.Text != "" && PasswordField.Password != "")
             {
@@ -59,21 +59,25 @@ namespace WpfApplication1
                                 return;
                             }
                     }
-                    else if(loginType == "Менеджер")
+                    else
                     {
-                        new ManagerWindow().Show();
-                        this.Close();
-
-                    }
-                    else if (loginType == "Кассир")
-                    {
-                        new SellerWindow().Show();
-                        this.Close();
+                        if(loginType == "Менеджер")
+                        {
+                            new ManagerWindow().Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            if (loginType == "Кассир")
+                            {
+                                new SellerWindow().Show();
+                                this.Close();
+                            }
+                        }
                     }
                     this.Close();
                 }
             }
-
             LoginField.BorderBrush = Brushes.Red;
             PasswordField.BorderBrush = Brushes.Red;
             LoginField.BorderBrush = Brushes.Red;
@@ -91,7 +95,7 @@ namespace WpfApplication1
              new DBSettingsWindow().ShowDialog();
          }
 
-         private void Button_Click(object sender, RoutedEventArgs e)
+         private void Button_Click(object sender, RoutedEventArgs e)//TEMP!!!!
          {
              DataBase.Connection();
              DataBase.Query(null, null, "UPDATE `pharmacy_db`.`user` SET `U_ONLINE`='offline' WHERE `U_ID`='1';");

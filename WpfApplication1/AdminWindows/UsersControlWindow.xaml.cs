@@ -31,17 +31,11 @@ namespace WpfApplication1
         {
              try
             {
-                int indexTemp = dataGridUserOut.SelectedIndex;
-                if (indexTemp != -1)
+                if (dataGridUserOut.SelectedIndex != -1)
                 {
-                    var cellInfo = new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[1]);
-                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                    string[] values = new string[2];
-                    values[0] = content.Text;
-                    cellInfo=new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[2]);
-                    content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                    values[1]=content.Text;
-                    DataBase.Query(new string[] { "@_login", "@_password" }, values, "DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;");
+                    DataBase.Query(new string[] { "@_login", "@_password" }
+                        , new string[2] { Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 1, dataGridUserOut), Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 2, dataGridUserOut) }
+                        , "DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;");
                 }
             }
             catch (Exception ex)
@@ -54,12 +48,9 @@ namespace WpfApplication1
         {
             try
             {
-                int indexTemp = dataGridUserOut.SelectedIndex;
-                if (indexTemp != -1)
+                if (dataGridUserOut.SelectedIndex != -1)
                 {
-                    var cellInfo = new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[0]);
-                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                    new UsersControlEditWindow(content.Text).ShowDialog();
+                    new UsersControlEditWindow(Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 0, dataGridUserOut)).ShowDialog();
                 }
             }
             catch (Exception ex)

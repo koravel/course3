@@ -291,6 +291,41 @@ namespace WpfApplication1
             }
         }
 
+        public static List<Employee> GetEmployee(string _queryString, string[] _valuesText, string[] _values)
+        {
+            List<Employee> employees = new List<Employee>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        employees.Add(new Employee()
+                        {
+                            ID = dr.GetInt32("E_ID"),
+                            NAME = dr.GetString("E_NAME"),
+                            TEL = dr.GetString("E_TEL"),
+                            POSITION = dr.GetString("E_POSITION"),
+                            CONTRACT = dr.GetInt32("E_CONTRACT")
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return employees;
+            }
+        }
+
         public static List<Check> GetCheck()
         {
             List<Check> checks = new List<Check>();
@@ -320,6 +355,7 @@ namespace WpfApplication1
                 return checks;
             }
         }
+   
         public static List<Check> GetCheck(string _queryString,string[] _valuesText,string[] _values)
         {
             List<Check> checks = new List<Check>();
@@ -362,14 +398,15 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT CONCAT( product.P_NAME,\"(#\",product.P_ID,\")\") AS 'P_NAME',cl.CL_VALUE,product_actual_price.PAP_PRICE FROM check_list cl,product,`check`,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=`check`.C_ID AND product_actual_price.PAP_DATE=(SELECT MAX(product_actual_price.PAP_DATE) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID) AND `check`.C_ID=@_curid;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT product.P_ID,CONCAT( product.P_NAME,\"(#\",product.P_ID,\")\") AS 'P_NAME',cl.CL_VALUE,product_actual_price.PAP_PRICE FROM check_list cl,product,`check`,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=`check`.C_ID AND product_actual_price.PAP_DATE=(SELECT MAX(product_actual_price.PAP_DATE) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID) AND `check`.C_ID=@_curid;", con);
                     com.Parameters.AddWithValue("@_curid",_curid);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
                         checklists.Add(new CheckList()
                         {
-                            PRODUCT=dr.GetString("P_NAME"),
+                            ID = dr.GetInt32("P_ID"),
+                            PRODUCT = dr.GetString("P_NAME"),
                             VALUE = dr.GetInt32("CL_VALUE"),
                             PRICE = dr.GetFloat("PAP_PRICE"),
                         });
@@ -393,6 +430,42 @@ namespace WpfApplication1
                 {
                     con.Open();
                     MySqlCommand com = new MySqlCommand("SELECT discounts.D_ID,product.P_NAME,discounts.D_PRICE,discounts.D_BDATE,discounts.D_EDATE,discounts.D_TEXT FROM `discounts`,`product` WHERE `discounts`.`P_ID`=`product`.`P_ID`;", con);
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        discounts.Add(new Discount()
+                        {
+                            ID = dr.GetInt32("D_ID"),
+                            NAME = dr.GetString("P_NAME"),
+                            PRICE = dr.GetFloat("D_PRICE"),
+                            BDATE = dr.GetDateTime("D_BDATE"),
+                            EDATE = dr.GetDateTime("D_EDATE"),
+                            TEXT = dr.GetString("D_TEXT")
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return discounts;
+            }
+        }
+
+        public static List<Discount> GetDiscount(string _queryString, string[] _valuesText, string[] _values)
+        {
+            List<Discount> discounts = new List<Discount>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -448,6 +521,42 @@ namespace WpfApplication1
             }
         }
 
+        public static List<Manufacturer> GetManufacturer(string _queryString, string[] _valuesText, string[] _values)
+        {
+            List<Manufacturer> manufacturers = new List<Manufacturer>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        manufacturers.Add(new Manufacturer()
+                        {
+                            ID = dr.GetInt32("M_ID"),
+                            NAME = dr.GetString("M_NAME"),
+                            COUNTRY = dr.GetString("M_COUNTRY"),
+                            CITY = dr.GetString("M_CITY"),
+                            ADDR = dr.GetString("M_ADDR"),
+                            TEL = dr.GetString("M_TEL")
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return manufacturers;
+            }
+        }
+
         public static List<Product> GetProduct()
         {
             List<Product> products = new List<Product>();
@@ -468,6 +577,39 @@ namespace WpfApplication1
                             GROUP = dr.GetString("P_GROUP"),
                             PACK = dr.GetString("P_PACK"),
                             MATERIAL=dr.GetString("P_MATERIAL"),
+                            FORM = dr.GetString("P_FORM"),
+                            INSTR = dr.GetString("P_INSTR")
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return products;
+            }
+        }
+        public static List<Product> GetProduct(string _queryString, string[] _valuesText, string[] _values)
+        {
+            List<Product> products = new List<Product>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand("SELECT product.P_ID,product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product.P_INSTR FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID`;", con);
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        products.Add(new Product()
+                        {
+                            ID = dr.GetInt32("P_ID"),
+                            NAME = dr.GetString("P_NAME"),
+                            MANUFACTURER = dr.GetString("M_NAME"),
+                            GROUP = dr.GetString("P_GROUP"),
+                            PACK = dr.GetString("P_PACK"),
+                            MATERIAL = dr.GetString("P_MATERIAL"),
                             FORM = dr.GetString("P_FORM"),
                             INSTR = dr.GetString("P_INSTR")
                         });
@@ -632,6 +774,39 @@ namespace WpfApplication1
                 }
                 con.Close();
                 return products;
+            }
+        }
+
+        public static List<DiscountInfo> GetDiscountInfoList(string[] _valuesText,string[] _values, string _queryString)
+        {
+            List<DiscountInfo> discountInfo = new List<DiscountInfo>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        discountInfo.Add(new DiscountInfo()
+                        {
+                            NAME = dr.GetString("D_ID"),
+                            PROCENT = dr.GetString("D_PRICE")
+                        });
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return discountInfo;
             }
         }
     }

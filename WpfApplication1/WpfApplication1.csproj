@@ -97,14 +97,15 @@
     <Compile Include="AddValueWindows\ProductAddWindow.xaml.cs">
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter.cs" />
+    <Compile Include="Classes\Converter.cs" />
+    <Compile Include="Tables\DiscountInfo.cs" />
     <Compile Include="EditValueWindows\DiscountEditWindow.xaml.cs">
       <DependentUpon>DiscountEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditValueWindows\EmployeeEditWindow.xaml.cs">
       <DependentUpon>EmployeeEditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ErrorCheck.cs" />
+    <Compile Include="Classes\ErrorCheck.cs" />
     <Compile Include="ManagerWindows\ReportsWindow.xaml.cs">
       <DependentUpon>ReportsWindow.xaml</DependentUpon>
     </Compile>
@@ -114,12 +115,12 @@
     <Compile Include="EditValueWindows\ProductEditWindow.xaml.cs">
       <DependentUpon>ProductEditWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PriceSettingsWindow.xaml.cs">
+    <Compile Include="Settings\PriceSettingsWindow.xaml.cs">
       <DependentUpon>PriceSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\NameIdList.cs" />
     <Compile Include="Tables\Check.cs" />
-    <Compile Include="DataBase.cs" />
+    <Compile Include="Classes\DataBase.cs" />
     <Compile Include="AdminWindows\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -163,7 +164,7 @@
       <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillOutput.cs" />
-    <Compile Include="ViewSettingsWindow.xaml.cs">
+    <Compile Include="Settings\ViewSettingsWindow.xaml.cs">
       <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
@@ -218,7 +219,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PriceSettingsWindow.xaml">
+    <Page Include="Settings\PriceSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,7 +263,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewSettingsWindow.xaml">
+    <Page Include="Settings\ViewSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
