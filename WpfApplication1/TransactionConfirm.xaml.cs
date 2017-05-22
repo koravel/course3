@@ -14,9 +14,12 @@ using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
-    public partial class SellerWindow : Window
+    /// <summary>
+    /// Логика взаимодействия для TransactionConfirm.xaml
+    /// </summary>
+    public partial class TransactionConfirm : Window
     {
-        public SellerWindow()
+        public TransactionConfirm()
         {
             InitializeComponent();
         }

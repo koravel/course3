@@ -17,10 +17,12 @@ namespace WpfApplication1
     public partial class UsersControlWindow : Window
     {
         string idText;
+        List<User> user = new List<User> { };
         public UsersControlWindow(string id)
         {
             InitializeComponent();
-            dataGridUserOut.ItemsSource = DataBase.GetUser();
+            user = DataBase.GetUser();
+            dataGridUserOut.ItemsSource = user;
             DataBase.SetLog(id, 0, 0, "Заполнение таблицы пользователей...");
             idText = id;
         }
@@ -40,6 +42,8 @@ namespace WpfApplication1
                     DataBase.Query(new string[] { "@_login", "@_password" }
                         , new string[2] { login, Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 2, dataGridUserOut) }
                         , "DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;");
+                    user.RemoveAt(dataGridUserOut.SelectedIndex);
+                    dataGridUserOut.Items.Refresh();
                     DataBase.SetLog(idText, 1, 3, "Удаление пользователя,параметры:|логин:" + login + "|");
                 }
             }

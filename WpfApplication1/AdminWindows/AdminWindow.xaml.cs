@@ -21,61 +21,186 @@ namespace WpfApplication1
 
     public partial class AdminWindow : Window
     {
+        List<Check> check = new List<Check> { };
+        List<Discount> discount = new List<Discount> { };
+        List<Employee> employee = new List<Employee> { };
+        List<Manufacturer> manufacturer = new List<Manufacturer> { };
+        List<Product> product = new List<Product> { };
+        List<Waybill> waybill = new List<Waybill> { };
         static string idText,temp;
-        bool flag;
+        bool flag,intitalizeFlag = false;
         List<CheckList> checkList = new List<CheckList> { };
         List<WaybillList> waybillList = new List<WaybillList> { };
         List<string> valuesText = new List<string>(), values = new List<string>();
         private delegate List<T> GetTableDelegate<T>(string query, string[] values, string[] valuesText);
-        //private delegate List<T> GetSubTableDelegate<T>(string id);
         public AdminWindow(string id)
         {
+            if (DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { id }, "SELECT U_TYPE FROM `user` WHERE U_ID=@_id;") != "Администратор")
+            {
+                System.Windows.MessageBox.Show("Вход запрещен!");
+                this.Close();
+            }
             idText = id;
             InitializeComponent();
             DataBase.SetLog(idText, 1, 0, "Вход в систему...");
-            List<Check> q = DataBase.GetCheck();
-            dataGridCheckOut.ItemsSource = q;
-            //GetSubTable<CheckList>(DataBase.GetCheckList, dataGridCheckListOut, dataGridCheckOut, totalPriceTextBlock, new string[] { "Общая цена:", "Общая цена:0" }, "@_curid", "SELECT C_SUM FROM `check` where C_ID=@_curid;",0,null,0);
+            check = DataBase.GetCheck();
+            dataGridCheckOut.ItemsSource = check;
+            GetSubTable<CheckList>(dataGridCheckListOut, dataGridCheckOut);
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы чеков...");
-            dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
+            discount = DataBase.GetDiscount();
+            dataGridDiscountOut.ItemsSource = discount;
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы скидок...");
-            dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
+            manufacturer = DataBase.GetManufacturer();
+            dataGridManufacturersOut.ItemsSource = manufacturer;
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы производителей...");
-            dataGridProductOut.ItemsSource = DataBase.GetProduct();
+            product = DataBase.GetProduct();
+            dataGridProductOut.ItemsSource = product;
+            GetSubTable<ProductActualPrice>(dataGridProductActPriceOut, dataGridProductOut);
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы товаров...");
-            dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+            employee = DataBase.GetEmployee();
+            dataGridEmployeeOut.ItemsSource = employee;
+            if (dataGridEmployeeOut.Items.Count > 0)
+            {
+                dataGridEmployeeOut.SelectedIndex = 0;
+                CalculateEmployeesCount(0);
+            }
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы работников...");
-            dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
+            waybill = DataBase.GetWaybill();
+            dataGridWaybillOut.ItemsSource = waybill;
+            GetSubTable<WaybillList>(dataGridWaybillListOut, dataGridWaybillOut);
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы накладных...");
             valuesText.Clear();
             values.Clear();
+            intitalizeFlag = true;
         }
 
-        //private void GetSubTable<T>(GetSubTableDelegate<T> data,DataGrid subDataGrid,DataGrid dataGrid,TextBlock textBlock,string[] text,string sqlParam,string sqlQuery,int selectedIndex,string id,int mode)
-        //{
-        //    if (dataGrid.Items.IsEmpty == false)
-        //    {
-        //        dataGrid.SelectedIndex = selectedIndex;
-        //        if(mode == 0)
-        //        {
-        //            subDataGrid.ItemsSource = data(Converter.DGCellToStringConvert(0, 0, dataGrid));
-        //            id = Converter.DGCellToStringConvert(0, 0, dataGrid);
-        //        }
-        //        else
-        //        {
-        //            if(mode == 1)
-        //            {
-        //                subDataGrid.ItemsSource = data(id);
-        //            }
-        //        }
-        //        textBlock.Text = text[0] + DataBase.QueryRetCell(new string[] { sqlParam }, new string[] { id }, sqlQuery);
-        //    }
-        //    else
-        //    {
-        //        subDataGrid.ItemsSource = null;
-        //        textBlock.Text = text[1];
-        //    }
-        //}
+        private void CalculateTotalPrice(string curid)
+        {
+            string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { curid }, "SELECT C_SUM FROM `check` where C_ID=@_curid;");
+            totalPriceTextBlock.Text = "Общая цена:";
+            if (totalPrice == null)
+            {
+                totalPriceTextBlock.Text += "0";
+            }
+            else
+            {
+                totalPriceTextBlock.Text += totalPrice;
+            }
+        }
+
+        private void CalculateProductCount(string curid)
+        {
+            DataBase.Query(new string[] { "@_id" }, new string[] { curid }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
+            string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+            overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IFNULL(waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
+            actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { curid }, "SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
+            textBlockProductCount.Text = "Всего на складе:";
+            if (quantity == null)
+            {
+                textBlockProductCount.Text += "0";
+            }
+            else
+            {
+                textBlockProductCount.Text += quantity;
+            }
+            textBlockProductCount.Text += "\nПросрочено:";
+            if (overdueValue == null)
+            {
+                textBlockProductCount.Text += "0";
+            }
+            else
+            {
+                textBlockProductCount.Text += overdueValue;
+            }
+            textBlockProductCount.Text += "\nНе просрочено:";
+            if (actualValue == null)
+            {
+                textBlockProductCount.Text += "0";
+            }
+            else
+            {
+                textBlockProductCount.Text += actualValue;
+            }
+        }
+
+        private void CalculateWaybillCount(string curid)
+        {
+            string totalTradePrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { curid }, "SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=@_curid;");
+                    totalWaybillPriceTextBlock.Text = "Общая цена:";
+                    if(totalTradePrice == null)
+                    {
+                        totalWaybillPriceTextBlock.Text += "0";
+                    }
+                    else
+                    {
+                        totalWaybillPriceTextBlock.Text += totalTradePrice;
+                    }
+        }
+
+        private void CalculateEmployeesCount(int curid)
+        {
+            if (dataGridEmployeeOut.Items.Count > 0)
+            {
+                if (dataGridEmployeeOut.SelectedIndex != -1)
+                {
+                    string professionName = ((Employee)dataGridEmployeeOut.Items[curid]).POSITION;
+                    if (professionName != "Уборщик")
+                    {
+                        textBlockTypeCount.Text = professionName + "ы:";
+                    }
+                    else
+                    {
+                        textBlockTypeCount.Text = professionName + "и:";
+                    }
+                    textBlockTypeCount.Text += DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { professionName }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
+                }
+            }
+            else
+            {
+                textBlockTypeCount.Text = null;
+            }
+        }
+
+        private void GetSubTable<T>(DataGrid subDataGrid, DataGrid dataGrid)
+        {
+
+            if (dataGrid.Items.IsEmpty == false)
+            {
+                dataGrid.SelectedIndex = 0;
+                string id = null,temp = typeof(T).ToString();
+                string[] type = temp.Split('.');
+                switch (type[1])
+                {
+                    case "CheckList":
+                        {
+                            id = ((Check)dataGrid.Items[0]).ID.ToString();
+                            checkList = DataBase.GetCheckList(id);
+                            subDataGrid.ItemsSource = checkList;
+                            CalculateTotalPrice(id);
+                            break;
+                        }
+                    case "WaybillList":
+                        {
+                            id = ((Waybill)dataGrid.Items[0]).ID.ToString();
+                            waybillList = DataBase.GetWaybillList(id);
+                            subDataGrid.ItemsSource = waybillList;
+                            CalculateWaybillCount(id);
+                            break;
+                        }
+                    case "ProductActualPrice":
+                        {
+                            id = ((Product)dataGrid.Items[0]).ID.ToString();
+                            subDataGrid.ItemsSource = DataBase.GetProductActualPrice(id);
+                            CalculateProductCount(id);
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                subDataGrid.ItemsSource = null;
+            }
+        }
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
         {
@@ -89,45 +214,46 @@ namespace WpfApplication1
             {
                 case 0:
                     {
-                        dataGridCheckOut.ItemsSource = DataBase.GetCheck();
-                        if (dataGridCheckOut.SelectedIndex != -1)
-                        {
-                            checkList = DataBase.GetCheckList(Converter.DGCellToStringConvert(dataGridCheckOut.SelectedIndex, 0, dataGridCheckOut));
-                            dataGridCheckListOut.ItemsSource = checkList;
-                        }
+                        check = DataBase.GetCheck();
+                        dataGridCheckOut.ItemsSource = check;
+                        GetSubTable<CheckList>(dataGridCheckListOut, dataGridCheckOut);
                         break;
                     }
                 case 1:
                     {
-                        dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
+                        discount = DataBase.GetDiscount();
+                        dataGridDiscountOut.ItemsSource = discount;
                         break;
                     }
                 case 2:
                     {
-                        dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+                        employee = DataBase.GetEmployee();
+                        dataGridEmployeeOut.ItemsSource = employee;
+                        if (dataGridEmployeeOut.Items.Count > 0)
+                        {
+                            dataGridEmployeeOut.SelectedIndex = 0;
+                            CalculateEmployeesCount(0);
+                        }
                         break;
                     }
                 case 3:
                     {
-                        dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
+                        manufacturer = DataBase.GetManufacturer();
+                        dataGridManufacturersOut.ItemsSource = manufacturer;
                         break;
                     }
                 case 4:
                     {
-                        dataGridProductOut.ItemsSource = DataBase.GetProduct();
-                        if (dataGridProductOut.SelectedIndex != -1)
-                        {
-                            dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut));
-                        }
+                        product = DataBase.GetProduct();
+                        dataGridProductOut.ItemsSource = product;
+                        GetSubTable<ProductActualPrice>(dataGridProductActPriceOut, dataGridProductOut);
                         break;
                     }
                 case 5:
                     {
-                        dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
-                        if (dataGridWaybillOut.SelectedIndex != -1)
-                        {
-                            dataGridWaybillListOut.ItemsSource = DataBase.GetWaybillList(Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut));
-                        }
+                        waybill = DataBase.GetWaybill();
+                        dataGridWaybillOut.ItemsSource = waybill;
+                        GetSubTable<WaybillList>(dataGridWaybillListOut, dataGridWaybillOut);
                         break;
                     }
             }
@@ -152,15 +278,9 @@ namespace WpfApplication1
                 checkList = DataBase.GetCheckList(checkId);
                 dataGridCheckListOut.ItemsSource = checkList;
                 //string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT IF((SELECT COUNT(discounts.D_ID) FROM discounts,check_list cl,`check` c WHERE cl.C_ID=@_curid AND discounts.P_ID=cl.P_ID AND c.C_ID=cl.C_ID AND c.C_DATE>=discounts.D_BDATE AND c.C_DATE<=discounts.D_EDATE)>0,(SELECT (SELECT SUM(pap.PAP_PRICE*cl.CL_VALUE*(1-d.D_PRICE*0.01)) FROM product_actual_price pap,check_list cl WHERE pap.P_ID=cl.P_ID AND d.P_ID=cl.P_ID AND cl.C_ID=c.C_ID AND pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID ORDER BY 1 DESC LIMIT 1)) FROM `check` c,discounts d WHERE c.C_DATE>=d.D_BDATE AND c.C_DATE<=d.D_EDATE AND c.C_ID=@_curid),(SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT PAP_ID FROM product_actual_price WHERE P_ID=cl.P_ID ORDER BY PAP_DATE DESC LIMIT 1)) FROM `check` c WHERE c.C_ID=@_curid));");
-                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { checkId }, "SELECT C_SUM FROM `check` where C_ID=@_curid;");
-                totalPriceTextBlock.Text = "Общая цена:";
-                if(totalPrice == null)
+                if(checkId != null)
                 {
-                    totalPriceTextBlock.Text += "0";
-                }
-                else
-                {
-                    totalPriceTextBlock.Text += totalPrice;
+                    CalculateTotalPrice(checkId);
                 }
             }
         }
@@ -173,36 +293,9 @@ namespace WpfApplication1
                 {
                     string productId = Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut);
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(productId);
-                    DataBase.Query(new string[] { "@_id" }, new string[] { productId }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
-                    string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IFNULL(SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT),0) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
-                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IFNULL(waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
-                    actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
-                    textBlockProductCount.Text = "Всего на складе:";
-                    if(quantity == null)
+                    if(productId != null)
                     {
-                        textBlockProductCount.Text += "0";
-                    }
-                    else
-                    {
-                        textBlockProductCount.Text += quantity;
-                    }
-                    textBlockProductCount.Text += "\nПросрочено:";
-                    if (overdueValue == null)
-                    {
-                        textBlockProductCount.Text += "0";
-                    }
-                    else
-                    {
-                        textBlockProductCount.Text += overdueValue;
-                    }
-                    textBlockProductCount.Text += "\nНе просрочено:";
-                    if (actualValue == null)
-                    {
-                        textBlockProductCount.Text += "0";
-                    }
-                    else
-                    {
-                        textBlockProductCount.Text += actualValue;
+                        CalculateProductCount(productId);
                     }
                 }
             }
@@ -222,15 +315,9 @@ namespace WpfApplication1
                     string waybillId = Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut);
                     waybillList = DataBase.GetWaybillList(waybillId);
                     dataGridWaybillListOut.ItemsSource = waybillList;
-                    string totalTradePrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { waybillId }, "SELECT SUM(waybill_list.WL_TRADE_PRICE*waybill_list.WL_VALUE) FROM waybill_list WHERE waybill_list.W_ID=@_curid;");
-                    totalWaybillPriceTextBlock.Text = "Общая цена:";
-                    if(totalTradePrice == null)
+                    if(waybillId != null)
                     {
-                        totalWaybillPriceTextBlock.Text += "0";
-                    }
-                    else
-                    {
-                        totalWaybillPriceTextBlock.Text += totalTradePrice;
+                        CalculateWaybillCount(waybillId);
                     }
                 }
             }
@@ -296,6 +383,8 @@ namespace WpfApplication1
                             {
                                 string discountId = Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut);
                                 DataBase.Query(new string[] { "@_curid" }, new string[] { discountId }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
+                                discount.RemoveAt(dataGridDiscountOut.SelectedIndex);
+                                dataGridDiscountOut.Items.Refresh();
                                 DataBase.SetLog(idText, 1, 3, "Удаление акции,код=" + discountId);
                             }
                         }
@@ -319,6 +408,8 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { employeeId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
+                                    employee.RemoveAt(dataGridEmployeeOut.SelectedIndex);
+                                    dataGridEmployeeOut.Items.Refresh();
                                     DataBase.SetLog(idText, 1, 3, "Удаление работника,код=" + employeeId);
                                 }
                             }
@@ -343,6 +434,8 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { maufacturerId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
+                                    manufacturer.RemoveAt(dataGridManufacturersOut.SelectedIndex);
+                                    dataGridManufacturersOut.Items.Refresh();
                                     DataBase.SetLog(idText, 1, 3, "Удаление производителя,код=" + maufacturerId);
                                 }
                             }
@@ -367,6 +460,8 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { productId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
+                                    product.RemoveAt(dataGridProductOut.SelectedIndex);
+                                    dataGridProductOut.Items.Refresh();
                                     DataBase.SetLog(idText, 1, 3, "Удаление товара,код=" + productId);
                                 }
                             }
@@ -432,19 +527,7 @@ namespace WpfApplication1
 
         private void dataGridEmployeeOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(dataGridEmployeeOut.SelectedIndex != -1)
-            {
-                string professionName = Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 3, dataGridEmployeeOut);
-                if (professionName != "Уборщик")
-                {
-                    textBlockTypeCount.Text = professionName + "ы:";
-                }
-                else
-                {
-                    textBlockTypeCount.Text = professionName + "и:";
-                }
-                textBlockTypeCount.Text += DataBase.QueryRetCell(new string[] { "@_pos" }, new string[] { professionName }, "SELECT COUNT(E_ID) FROM employee WHERE E_POSITION=@_pos;");
-            }
+            CalculateEmployeesCount((sender as DataGrid).SelectedIndex);
         }
 
         private void menuItemViewSettings_Click(object sender, RoutedEventArgs e)
@@ -510,7 +593,7 @@ namespace WpfApplication1
                         MakeSearch(dataGridCheckOut, DataBase.GetCheck, new string[] { 
                             "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ",
                             "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` " }, temp, flag);
-                        //q(0);
+                        GetSubTable<CheckList>(dataGridCheckListOut, dataGridCheckOut);
                         break;
                     }
                 case 1:
@@ -530,6 +613,7 @@ namespace WpfApplication1
                             new string[] { Converter.DateConvert(datePickerSearchBDateDiscount.Text), Converter.DateConvert(datePickerSearchEDateDiscount.Text) }, new string[] { "@_bdate", "@_edate" }, ref temp, ref flag);
 
                         SQLParameterAdd(checkBoxSearchCodeDiscount.IsChecked.Value, new string[] { " AND discounts.D_ID=@_id", "@_id", textBoxSearchCodeDiscount.Text }, ref temp, ref flag, new bool[] { false, false });
+
 
                         MakeSearch(dataGridDiscountOut, DataBase.GetDiscount, new string[] { "SELECT discounts.D_ID,product.P_NAME,discounts.D_PRICE,discounts.D_BDATE,discounts.D_EDATE,discounts.D_TEXT FROM `discounts`,`product` WHERE `discounts`.`P_ID`=`product`.`P_ID`", null }, temp, true);
                         break;
@@ -574,14 +658,23 @@ namespace WpfApplication1
 
                         SQLParameterAdd(checkBoxSearchManufacturerProduct.IsChecked.Value, new string[] { " AND manufacturer.M_NAME=@_mname", "@_mname", textBoxSearchManufacturerProduct.Text }, ref temp, ref flag, new bool[] { false, false });
 
-                        SQLParameterAdd(checkBoxSearchGroupProduct.IsChecked.Value, new string[] { " AND p.P_GROUP=@_group", "@_group", comboBoxSearchGroupProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
-
-                        SQLParameterAdd(checkBoxSearchPackProduct.IsChecked.Value, new string[] { " AND p.P_PACK=@_pack", "@_pack", comboBoxSearchPackProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
-
-                        SQLParameterAdd(checkBoxSearchMaterialProduct.IsChecked.Value, new string[] { " AND p.P_MATERIAL=@_material", "@_material", comboBoxSearchMaterialProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
-
-                        SQLParameterAdd(checkBoxSearchFormProduct.IsChecked.Value, new string[] { " AND p.P_FORM=@_form", "@_form", comboBoxSearchFormProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
-
+                        if (comboBoxSearchGroupProduct.SelectedItem != null)
+                        {
+                            SQLParameterAdd(checkBoxSearchGroupProduct.IsChecked.Value, new string[] { " AND p.P_GROUP=@_group", "@_group", comboBoxSearchGroupProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+                        }
+                        if (comboBoxSearchPackProduct.SelectedItem != null)
+                        {
+                            SQLParameterAdd(checkBoxSearchPackProduct.IsChecked.Value, new string[] { " AND p.P_PACK=@_pack", "@_pack", comboBoxSearchPackProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+                        }
+                        if (comboBoxSearchMaterialProduct.SelectedItem != null)
+                        {
+                            SQLParameterAdd(checkBoxSearchMaterialProduct.IsChecked.Value, new string[] { " AND p.P_MATERIAL=@_material", "@_material", comboBoxSearchMaterialProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+                        }
+                        if (comboBoxSearchFormProduct.SelectedItem != null)
+                        {
+                            SQLParameterAdd(checkBoxSearchFormProduct.IsChecked.Value, new string[] { " AND p.P_FORM=@_form", "@_form", comboBoxSearchFormProduct.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, false });
+                        }
+                        
                         ComparsionGet(checkBoxSearchPriceProduct.IsChecked.Value, new int[] { comboBoxSearchPriceRangeProduct.SelectedIndex, 0 },
                               new string[] { " AND product_actual_price.PAP_PRICE" },
                               new string[] { null, Converter.CurrencyConvert(upDownSearchPriceProduct.Text) }, ref temp, ref flag);
@@ -599,6 +692,7 @@ namespace WpfApplication1
                             new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ",
                                 "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " },
                                 temp, flag);
+                        GetSubTable<ProductActualPrice>(dataGridProductActPriceOut, dataGridProductOut);
                         break;
                     }
                 case 5:
@@ -648,6 +742,7 @@ namespace WpfApplication1
                             new string[] { "SELECT DISTINCT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e,waybill_list wl,product p WHERE w.`E_ID`=e.`E_ID` AND wl.W_ID=w.W_ID AND p.P_ID=wl.P_ID ",
                                 "SELECT w.W_ID,w.W_DATE,e.E_NAME,w.W_AGENT_NAME FROM `waybill` w,`employee` e WHERE w.`E_ID`=e.`E_ID` " }
                                 , temp, flag);
+                        GetSubTable<WaybillList>(dataGridWaybillListOut, dataGridWaybillOut);
                         break;
                     }
             }
@@ -837,38 +932,44 @@ namespace WpfApplication1
 
         private void dataGridProductDiscountsDisplay_Initialized(object sender, EventArgs e)
         {
-            if (dataGridCheckListOut.SelectedIndex != -1)
+            if (intitalizeFlag == true)
             {
-                List<DiscountInfo> dataList = DataBase.GetDiscountInfoList(
-                    new string[] { "@_id", "@_cid" },
-                    new string[] { checkList[dataGridCheckListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridCheckOut.SelectedIndex, 0, dataGridCheckOut) },
-                    "SELECT CONCAT('#',D_ID) AS 'D_ID',CONCAT(D_PRICE,'%') AS 'D_PRICE' FROM discounts,check_list,`check` WHERE discounts.P_ID=check_list.P_ID AND `check`.C_ID=@_cid AND check_list.P_ID=@_id AND check_list.C_ID=`check`.C_ID AND `check`.C_DATE>=discounts.D_BDATE AND `check`.C_DATE<=discounts.D_EDATE;");
-                if (dataList.Count != 0)
+                if (dataGridCheckListOut.SelectedIndex != -1)
                 {
-                    (sender as DataGrid).ItemsSource = dataList;
-                }
-                else
-                {
-                    (sender as DataGrid).Visibility = Visibility.Collapsed;
+                    List<DiscountInfo> dataList = DataBase.GetDiscountInfoList(
+                        new string[] { "@_id", "@_cid" },
+                        new string[] { checkList[dataGridCheckListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridCheckOut.SelectedIndex, 0, dataGridCheckOut) },
+                        "SELECT CONCAT('#',D_ID) AS 'D_ID',CONCAT(D_PRICE,'%') AS 'D_PRICE' FROM discounts,check_list,`check` WHERE discounts.P_ID=check_list.P_ID AND `check`.C_ID=@_cid AND check_list.P_ID=@_id AND check_list.C_ID=`check`.C_ID AND `check`.C_DATE>=discounts.D_BDATE AND `check`.C_DATE<=discounts.D_EDATE;");
+                    if (dataList.Count != 0)
+                    {
+                        (sender as DataGrid).ItemsSource = dataList;
+                    }
+                    else
+                    {
+                        (sender as DataGrid).Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }
 
         private void dataGridWaybillOverdueDisplay_Initialized(object sender, EventArgs e)
         {
-            if (dataGridWaybillListOut.SelectedIndex != -1)
+            if (intitalizeFlag == true)
             {
-                List<WaybillInfo> dataList = DataBase.GetWaybillInfoList(
-                    new string[] { "@_id", "@_wid" },
-                    new string[] { waybillList[dataGridWaybillListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut) },
-                    "SELECT IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'OVERDUE',IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Не просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'NOTOVERDUE',ps.PS_COUNT FROM waybill_list wl,product_sold ps,product_overdue po WHERE ps.WL_ID=wl.WL_ID AND po.WL_ID=wl.WL_ID AND wl.W_ID=@_wid AND wl.P_ID=@_id;");
-                if (dataList.Count != 0)
+                if (dataGridWaybillListOut.SelectedIndex != -1)
                 {
-                    (sender as DataGrid).ItemsSource = dataList;
-                }
-                else
-                {
-                    (sender as DataGrid).Visibility = Visibility.Collapsed;
+                    List<WaybillInfo> dataList = DataBase.GetWaybillInfoList(
+                        new string[] { "@_id", "@_wid" },
+                        new string[] { waybillList[dataGridWaybillListOut.SelectedIndex].ID.ToString(), Converter.DGCellToStringConvert(dataGridWaybillOut.SelectedIndex, 0, dataGridWaybillOut) },
+                        "SELECT IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'OVERDUE',IF((SELECT COUNT(wl.WL_ID) WHERE po.PP_IS_OVERDUE='Не просрочено')>0,wl.WL_VALUE-ps.PS_COUNT,0) AS 'NOTOVERDUE',ps.PS_COUNT FROM waybill_list wl,product_sold ps,product_overdue po WHERE ps.WL_ID=wl.WL_ID AND po.WL_ID=wl.WL_ID AND wl.W_ID=@_wid AND wl.P_ID=@_id;");
+                    if (dataList.Count != 0)
+                    {
+                        (sender as DataGrid).ItemsSource = dataList;
+                    }
+                    else
+                    {
+                        (sender as DataGrid).Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }
