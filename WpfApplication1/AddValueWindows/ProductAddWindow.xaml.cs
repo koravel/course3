@@ -63,7 +63,7 @@ namespace WpfApplication1
                 string maxId = DataBase.QueryRetCell(null, null, "SELECT MAX(P_ID)+1 FROM product;");
                 DataBase.Query(
                 new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr"},
-                new string[] { maxId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxPrice.Text},
+                new string[] { maxId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text},
                 "INSERT INTO `product`(`P_ID`,`P_NAME`,`M_ID`,`P_GROUP`,`P_PACK`,`P_MATERIAL`,`P_FORM`,`P_INSTR`)VALUES(@_id,@_name,@_manufacturer,@_group,@_pack,@_material,@_form,@_instr);");
 
                 DataBase.Query(

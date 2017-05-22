@@ -1,4 +1,5 @@
-﻿using System;
+﻿//http://www.24xxx.tv/video/paren-trahaet-tolstuyu-42208.html
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -110,7 +111,7 @@ namespace WpfApplication1
                 var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                 dataGridCheckListOut.ItemsSource = DataBase.GetCheckList(content.Text);
-                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT MAX(PAP_ID) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID)) FROM `check` c WHERE c.C_ID=@_curid;");
+                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT PAP_ID FROM product_actual_price WHERE P_ID=cl.P_ID ORDER BY PAP_DATE DESC LIMIT 1)) FROM `check` c WHERE c.C_ID=@_curid;");
                 totalPriceTextBlock.Text = "Общая цена:";
                 if(totalPrice == null)
                 {
@@ -352,22 +353,47 @@ namespace WpfApplication1
                     }
                 case 1:
                     {
-                        new DiscountEditWindow().ShowDialog();
+                        int indexTemp = dataGridDiscountOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridDiscountOut.Items[indexTemp], dataGridDiscountOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            new DiscountEditWindow(content.Text).ShowDialog();
+                        }
                         break;
                     }
                 case 2:
                     {
-                        new EmployeeEditWindow().ShowDialog();
+
+                        int indexTemp = dataGridEmployeeOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridEmployeeOut.Items[indexTemp], dataGridEmployeeOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            new EmployeeEditWindow(content.Text).ShowDialog();
+                        }
                         break;
                     }
                 case 3:
                     {
-                        new ManufacturerEditWindow().ShowDialog();
+                        int indexTemp = dataGridManufacturersOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            new ManufacturerEditWindow(content.Text).ShowDialog();
+                        }
                         break;
                     }
                 case 4:
                     {
-                        new ProductEditWindow().ShowDialog();
+                        int indexTemp = dataGridProductOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            new ProductEditWindow(content.Text).ShowDialog();
+                        }
                         break;
                     }
             }

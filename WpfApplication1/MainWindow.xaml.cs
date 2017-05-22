@@ -91,6 +91,12 @@ namespace WpfApplication1
              new DBSettingsWindow().ShowDialog();
          }
 
+         private void Button_Click(object sender, RoutedEventArgs e)
+         {
+             DataBase.Connection();
+             DataBase.Query(null, null, "UPDATE `pharmacy_db`.`user` SET `U_ONLINE`='offline' WHERE `U_ID`='1';");
+         }
+
    
     }
 }

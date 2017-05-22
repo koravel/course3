@@ -391,7 +391,7 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT manufacturer.M_ID,manufacturer.M_NAME,manufacturer.M_COUNTRY,manufacturer.M_CITY,manufacturer.M_ADDR,manufacturer.M_TEL FROM `manufacturer`;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT M_ID,M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {

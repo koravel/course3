@@ -1,8 +1,109 @@
-﻿<Window x:Class="WpfApplication1.ProductEditWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ProductEditWindow" Height="300" Width="300">
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="WpfApplication1.ProductEditWindow"
+        Title="ProductEditWindow" Height="456.232" Width="319.757" KeyDown="Window_KeyDown">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="113*"/>
+            <ColumnDefinition Width="199*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textBoxName" Height="23" Margin="109,7,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="comboBoxManufacturer" Margin="109,35,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="comboBoxGroup" Margin="109,62,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <System:String>Без группы</System:String>
+            <System:String>Антисептики</System:String>
+            <System:String>Слабительные</System:String>
+            <System:String>Противовирусные</System:String>
+            <System:String>Антибакериальные</System:String>
+            <System:String>Отхаркивающие и рвотные</System:String>
+            <System:String>Антидепрессанты</System:String>
+            <System:String>Снотворные</System:String>
+            <System:String>Анальгетики</System:String>
+            <System:String>Противогрибковые</System:String>
+            <System:String>Противопаразитные</System:String>
+            <System:String>Противовоспалительные</System:String>
+            <System:String>Противозачаточные</System:String>
+            <System:String>Противоалергические</System:String>
+            <System:String>Гастроэнтероголические</System:String>
+            <System:String>Противорвотные</System:String>
+            <System:String>Противодиарейные</System:String>
+            <System:String>Ингибиторы</System:String>
+            <System:String>Бронхолитические</System:String>
+            <System:String>Муколитические</System:String>
+            <System:String>Противокашлевые</System:String>
+            <System:String>Иммуномодуляторы</System:String>
+            <System:String>Иммуноглобулины</System:String>
+            <System:String>Витаминные</System:String>
+            <System:String>Минеральные</System:String>
+            <System:String>Поливитаминные</System:String>
+            <System:String>Питательные смеси</System:String>
+            <System:String>Жаропонижающие</System:String>
+            <System:String>Антианемические</System:String>
+            <System:String>Фитопрепараты</System:String>
+            <System:String>Средства для контрацепции</System:String>
+            <System:String>Сосудосуживающие</System:String>
+            <System:String>Антиглаукомные</System:String>
+            <System:String>Офтальмологические</System:String>
+            <System:String>Проктологические</System:String>
+            <System:String>Урологические</System:String>
+            <System:String>Нефрологические</System:String>
+            <System:String>Дерматологические</System:String>
+            <System:String>Диагностические</System:String>
+            <System:String>Перевязочные</System:String>
+            <System:String>Токсикологические</System:String>
+            <System:String>Антидоты</System:String>
+            <System:String>Гомеопатические</System:String>
+            <System:String>Эфирные масла</System:String>
+            <System:String>Средства личной гигиены</System:String>
+            <System:String>Косметические</System:String>
+        </ComboBox>
+        <ComboBox x:Name="comboBoxPack" Margin="109,89,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <System:String>Без упаковки</System:String>
+            <System:String>Ампула</System:String>
+            <System:String>Картонная коробка</System:String>
+            <System:String>Банка</System:String>
+            <System:String>Пакет</System:String>
+            <System:String>Полимерная</System:String>
+            <System:String>Баллон</System:String>
+            <System:String>Туба</System:String>
+            <System:String>Флакон</System:String>
+            <System:String>Бумага</System:String>
+        </ComboBox>
+        <ComboBox x:Name="comboBoxMaterial" Margin="109,116,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <System:String>Неизвестно</System:String>
+            <System:String>Жидкость</System:String>
+            <System:String>Сироп</System:String>
+            <System:String>Таблетки</System:String>
+            <System:String>Капсулы</System:String>
+            <System:String>Шприц-тюбики</System:String>
+            <System:String>Порошок</System:String>
+            <System:String>Гранулы</System:String>
+            <System:String>Растительные волокна</System:String>
+            <System:String>Аэрозоль</System:String>
+            <System:String>Суспензия</System:String>
+            <System:String>Мазь</System:String>
+            <System:String>Паста</System:String>
+        </ComboBox>
+        <ComboBox x:Name="comboBoxForm" Margin="109,143,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <System:String>без рецепта</System:String>
+            <System:String>с рецептом</System:String>
+        </ComboBox>
+        <TextBox x:Name="textBoxInstruction" Margin="109,231,10,41" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2"/>
+        <Label Content="Название" Margin="41,7,9,0" VerticalAlignment="Top"/>
+        <Label Content="Производитель" Margin="9,35,9,0" VerticalAlignment="Top"/>
+        <Label Content="Группа" Margin="56,62,9,0" VerticalAlignment="Top"/>
+        <Label Content="Упаковка" Margin="43,89,9,0" VerticalAlignment="Top"/>
+        <Label Content="Материал" Margin="39,116,9,0" VerticalAlignment="Top"/>
+        <Label Content="Отпуск" Margin="56,142,9,0" VerticalAlignment="Top" Height="27"/>
+        <Label Content="Инструкция" Margin="29,231,9,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,129,14" Width="75" Click="buttonSave_Click" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Bottom"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,10,14" Click="buttonBack_Click" Grid.Column="1" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
+        <DatePicker x:Name="datePickerToday" Margin="109,201,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="textBoxPrice" Height="23" Margin="108,174,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="" Grid.ColumnSpan="2"/>
+        <Label Content="Цена" Margin="65,174,10,0" VerticalAlignment="Top"/>
+        <Label Content="Дата цены" Margin="35,201,10,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="checkBoxNewPrice" Content="Создать&#xA;новую цену" Margin="0,0,195,14" Height="32" VerticalAlignment="Bottom" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="107"/>
+
     </Grid>
 </Window>
