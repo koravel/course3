@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.ProductDropWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Утилизация" Height="600" Width="600" FontSize="14" Icon="icone.ico">
+        Title="Утилизация" Height="600" Width="600" FontSize="14">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="173*"/>

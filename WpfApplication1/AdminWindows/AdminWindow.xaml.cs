@@ -447,14 +447,6 @@ namespace WpfApplication1
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
-            if(Properties.Settings.Default.SaveArchive == "")
-            {
-                System.Windows.MessageBox.Show("");
-            }
-            else
-            {
-                System.Windows.MessageBox.Show(Properties.Settings.Default.SaveArchive);
-            }
             int selected = tabControlTables.SelectedIndex;
             switch (selected)
             {
@@ -2101,7 +2093,7 @@ namespace WpfApplication1
                             {
                                 for (int i = 0; i < tempList.Count; i++)
                                 {
-                                    text += tempList[i].PRODUCT + "\t" + tempList[i].VALUE + "*" + tempList[i].PRICE + " А\n\t\t\t=" + tempList[i].VALUE * tempList[i].PRICE + "\n-------------------------------------------------------\n";
+                                    text += tempList[i].PRODUCT + "\t" + tempList[i].VALUE + "*" + tempList[i].PRICE/tempList[i].VALUE + " А\n\t\t\t=" + tempList[i].PRICE + "\n-------------------------------------------------------\n";
                                 }
                             }
                             text += "СУММА\t\t\t" + tempMas[1] + "\nПДВ А = 20,00%\n-------------------------------------------------------\nАВАНС[" + obj.PAYTYPE + "]\t\t" + tempMas[0] + "\n" +
