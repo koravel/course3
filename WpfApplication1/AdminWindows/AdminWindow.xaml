@@ -211,11 +211,15 @@
             <TabItem x:Name="tabItemWaybill" Header="Накладные" Height="20" VerticalAlignment="Top" Margin="15,0,-15,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid Margin="0,0,0,-6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="286*"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dataGridWaybillOut" AutoGenerateColumns="False" SelectionChanged="dataGridWaybillOut_SelectionChanged" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridWaybillOut" AutoGenerateColumns="False" SelectionChanged="dataGridWaybillOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Дата" Binding="{Binding DATE, StringFormat=\{0:dd.MM.yy\}}"/>
@@ -240,6 +244,7 @@
                                 <DataGridTextColumn Header="Годен до" Binding="{Binding EDATE, StringFormat=\{0:dd.MM.yy\}}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <TextBlock x:Name="totalWaybillPriceTextBlock" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Margin="0,0,0,1"><Run Language="ru-ru" Text="Общая цена : "/></TextBlock>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -248,54 +253,61 @@
         <TabControl x:Name="tabControlSearch" Margin="10,22,0,0" HorizontalAlignment="Left" Width="538" Height="361" VerticalAlignment="Top">
             <TabItem x:Name="tabItemCheckSearchSettings" Header="Чеки">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-4">
-                    <CheckBox x:Name="checkBoxSearchEmployeeCheck" Content="Кассир" HorizontalAlignment="Right" Margin="0,0,404,305" VerticalAlignment="Bottom" Height="22" Click="checkBoxSearchEmployee_Click"/>
-                    <TextBox x:Name="textBoxSearchEmployeeCheck" HorizontalAlignment="Right" Margin="0,0,240,305" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
-                    <TextBox x:Name="textBoxSearchCheckCode" HorizontalAlignment="Right" Height="23" Margin="0,0,240,16" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="164" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchCheckCode" Content="Код" HorizontalAlignment="Right" Margin="0,0,421,20" VerticalAlignment="Bottom" Click="checkBoxSearchCheckCode_Click"/>
-                    <TextBlock Text="Дата" HorizontalAlignment="Right" Margin="0,0,434,267" VerticalAlignment="Bottom" Height="24" IsEnabled="False"/>
-                    <DatePicker x:Name="datePickerSearchBDateCheck" HorizontalAlignment="Right" Margin="0,0,240,267" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchBHours" FormatString="" Increment="1" Maximum="24" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,334,188" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchBSeconds" FormatString=""  Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,240,188" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchBMinutes" FormatString=""  Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,287,188" IsEnabled="False"/>
-                    <TextBlock Text="Тип оплаты" HorizontalAlignment="Right" Margin="0,0,394,86" VerticalAlignment="Bottom" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchPaytypeCash" Content="Наличные" HorizontalAlignment="Right" Margin="0,0,331,65" VerticalAlignment="Bottom"/>
-                    <CheckBox x:Name="checkBoxSearchPaytypeCard" Content="Карта" HorizontalAlignment="Right" Margin="0,0,356,44" VerticalAlignment="Bottom"/>
-                    <TextBlock x:Name="checkBoxSearchTime" Text="Время" HorizontalAlignment="Right" Margin="0,0,426,200" VerticalAlignment="Bottom" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchBHours" Content="" HorizontalAlignment="Right" Margin="0,0,346,167" VerticalAlignment="Bottom" Click="checkBoxSearchBHours_Click"/>
-                    <CheckBox x:Name="checkBoxSearchBMinutes" Content="" HorizontalAlignment="Right" Margin="0,0,301,167" VerticalAlignment="Bottom" Click="checkBoxSearchBMinutes_Click"/>
-                    <CheckBox x:Name="checkBoxSearchBSeconds" Content="" HorizontalAlignment="Right" Margin="0,0,253,167" VerticalAlignment="Bottom" Click="checkBoxSearchBSeconds_Click"/>
-                    <Button x:Name="buttonResetSearchCheck" Content="Сбросить фильтры" Margin="0,0,112,138" HorizontalAlignment="Right" Width="114" Height="22" VerticalAlignment="Bottom" Click="buttonResetSearchCheck_Click"/>
-                    <CheckBox x:Name="checkBoxSearchBDateCheck" Content="от" HorizontalAlignment="Right" Margin="0,0,394,275" VerticalAlignment="Bottom" Click="checkBoxSearchBDate_Click"/>
-                    <CheckBox x:Name="checkBoxSearchEDateCheck" Content="до" HorizontalAlignment="Right" Margin="0,0,392,238" VerticalAlignment="Bottom" Click="checkBoxSearchEDate_Click"/>
-                    <DatePicker x:Name="datePickerSearchEDateCheck" HorizontalAlignment="Right" Margin="0,0,240,230" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchEHours" FormatString="" Increment="1" Maximum="24" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,334,136" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchESeconds" FormatString="" Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,240,136" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchEMinutes" FormatString="" Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,287,136" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchEHours" Content="" HorizontalAlignment="Right" Margin="0,0,346,115" VerticalAlignment="Bottom" Click="checkBoxSearchEHours_Click"/>
-                    <CheckBox x:Name="checkBoxSearchEMinutes" Content="" HorizontalAlignment="Right" Margin="0,0,301,115" VerticalAlignment="Bottom" Click="checkBoxSearchEMinutes_Click"/>
-                    <CheckBox x:Name="checkBoxSearchESeconds" Content="" HorizontalAlignment="Right" Margin="0,0,253,115" VerticalAlignment="Bottom" Click="checkBoxSearchESeconds_Click"/>
-                    <TextBlock Text="от" HorizontalAlignment="Right" Margin="0,0,392,188" VerticalAlignment="Bottom" IsEnabled="False"/>
-                    <TextBlock Text="до" HorizontalAlignment="Right" Margin="0,0,390,144" VerticalAlignment="Bottom" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchProductCheck" Content="Товар" HorizontalAlignment="Right" Margin="0,0,176,313" VerticalAlignment="Bottom" Click="checkBoxSearchProductCheck_Click"/>
-                    <CheckBox x:Name="checkBoxSearchPriceCheck" Content="Цена" HorizontalAlignment="Right" Margin="0,0,181,261" VerticalAlignment="Bottom" Click="checkBoxSearchPriceCheck_Click"/>
-                    <CheckBox x:Name="checkBoxSearchValueCheck" Content="Количество" HorizontalAlignment="Right" Margin="0,0,145,206" VerticalAlignment="Bottom" Click="checkBoxSearchValueCheck_Click"/>
-                    <TextBox x:Name="textBoxSearchProductCheck" HorizontalAlignment="Right" Height="23" Margin="0,0,10,285" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="216" IsEnabled="False"/>
-                    <xctk:DecimalUpDown x:Name="upDownSearchPriceCheck" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="216" Margin="0,0,10,227" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchValueCheck" FormatString="" Increment="1" Maximum="99999" Minimum="1" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="216" Margin="0,0,10,176" IsEnabled="False"/>
-                    <ComboBox x:Name="comboBoxDirectionSearchValue" HorizontalAlignment="Left" Margin="388,111,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                    <CheckBox x:Name="checkBoxSearchEmployeeCheck" Content="Кассир" HorizontalAlignment="Right" Margin="0,0,462,303" VerticalAlignment="Bottom" Height="22" Click="checkBoxSearchEmployee_Click"/>
+                    <TextBox x:Name="textBoxSearchEmployeeCheck" HorizontalAlignment="Right" Margin="0,0,293,304" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
+                    <TextBox x:Name="textBoxSearchCheckCode" HorizontalAlignment="Right" Height="23" Margin="0,0,293,15" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="164" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchCheckCode" Content="Код" HorizontalAlignment="Right" Margin="0,0,478,22" VerticalAlignment="Bottom" Click="checkBoxSearchCheckCode_Click"/>
+                    <TextBlock Text="Дата" HorizontalAlignment="Right" Margin="0,0,490,266" VerticalAlignment="Bottom" Height="24" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchBDateCheck" HorizontalAlignment="Right" Margin="0,0,293,266" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchBHours" FormatString="" Increment="1" Maximum="24" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,390,174" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchBSeconds" FormatString=""  Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,296,174" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchBMinutes" FormatString=""  Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,343,174" IsEnabled="False"/>
+                    <TextBlock Text="Тип оплаты" HorizontalAlignment="Right" Margin="0,0,452,85" VerticalAlignment="Bottom" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchPaytypeCash" Content="Наличные" HorizontalAlignment="Right" Margin="0,0,384,64" VerticalAlignment="Bottom"/>
+                    <CheckBox x:Name="checkBoxSearchPaytypeCard" Content="Карта" HorizontalAlignment="Right" Margin="0,0,409,43" VerticalAlignment="Bottom"/>
+                    <TextBlock x:Name="checkBoxSearchTime" Text="Время" HorizontalAlignment="Right" Margin="0,0,482,186" VerticalAlignment="Bottom" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchBHours" Content="" HorizontalAlignment="Right" Margin="0,0,402,153" VerticalAlignment="Bottom" Click="checkBoxSearchBHours_Click"/>
+                    <CheckBox x:Name="checkBoxSearchBMinutes" Content="" HorizontalAlignment="Right" Margin="0,0,357,153" VerticalAlignment="Bottom" Click="checkBoxSearchBMinutes_Click"/>
+                    <CheckBox x:Name="checkBoxSearchBSeconds" Content="" HorizontalAlignment="Right" Margin="0,0,309,153" VerticalAlignment="Bottom" Click="checkBoxSearchBSeconds_Click"/>
+                    <Button x:Name="buttonResetSearchCheck" Content="Сбросить фильтры" Margin="0,0,10,137" HorizontalAlignment="Right" Width="114" Height="22" VerticalAlignment="Bottom" Click="buttonResetSearchCheck_Click"/>
+                    <CheckBox x:Name="checkBoxSearchBDateCheck" Content="от" HorizontalAlignment="Right" Margin="0,0,447,274" VerticalAlignment="Bottom" Click="checkBoxSearchBDate_Click"/>
+                    <CheckBox x:Name="checkBoxSearchEDateCheck" Content="до" HorizontalAlignment="Right" Margin="0,0,445,209" VerticalAlignment="Bottom" Click="checkBoxSearchEDate_Click"/>
+                    <DatePicker x:Name="datePickerSearchEDateCheck" HorizontalAlignment="Right" Margin="0,0,293,205" VerticalAlignment="Bottom" Width="136" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchEHours" FormatString="" Increment="1" Maximum="24" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,390,122" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchESeconds" FormatString="" Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,296,122" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchEMinutes" FormatString="" Increment="1" Maximum="60" Minimum="1" Height="24" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="42" Margin="0,0,343,122" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchEHours" Content="" HorizontalAlignment="Right" Margin="0,0,402,101" VerticalAlignment="Bottom" Click="checkBoxSearchEHours_Click"/>
+                    <CheckBox x:Name="checkBoxSearchEMinutes" Content="" HorizontalAlignment="Right" Margin="0,0,357,101" VerticalAlignment="Bottom" Click="checkBoxSearchEMinutes_Click"/>
+                    <CheckBox x:Name="checkBoxSearchESeconds" Content="" HorizontalAlignment="Right" Margin="0,0,309,101" VerticalAlignment="Bottom" Click="checkBoxSearchESeconds_Click"/>
+                    <TextBlock Text="от" HorizontalAlignment="Right" Margin="0,0,448,174" VerticalAlignment="Bottom" IsEnabled="False"/>
+                    <TextBlock Text="до" HorizontalAlignment="Right" Margin="0,0,446,130" VerticalAlignment="Bottom" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchProductCheck" Content="Название" HorizontalAlignment="Right" Margin="0,0,176,308" VerticalAlignment="Bottom" Click="checkBoxSearchProductCheck_Click"/>
+                    <CheckBox x:Name="checkBoxSearchPriceCheck" Content="Цена" HorizontalAlignment="Right" Margin="0,0,201,222" VerticalAlignment="Bottom" Click="checkBoxSearchPriceCheck_Click"/>
+                    <CheckBox x:Name="checkBoxSearchValueCheck" Content="Количество" HorizontalAlignment="Right" Margin="0,0,165,167" VerticalAlignment="Bottom" Click="checkBoxSearchValueCheck_Click"/>
+                    <TextBox x:Name="textBoxSearchProductCheck" HorizontalAlignment="Right" Height="23" Margin="0,0,10,303" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="150" IsEnabled="False"/>
+                    <xctk:DecimalUpDown x:Name="upDownSearchPriceCheck" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Margin="0,0,10,215" IsEnabled="False"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchValueCheck" FormatString="" Increment="1" Maximum="99999" Minimum="1" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Margin="0,0,10,164" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxDirectionSearchValue" HorizontalAlignment="Left" Margin="388,123,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
                         <System:String>равно</System:String>
                         <System:String>больше или равно</System:String>
                         <System:String>меньше или равно</System:String>
                         <System:String>больше</System:String>
                         <System:String>меньше</System:String>
                     </ComboBox>
-                    <ComboBox x:Name="comboBoxDirectionSearchPrice" HorizontalAlignment="Left" Margin="388,56,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                    <ComboBox x:Name="comboBoxDirectionSearchPrice" HorizontalAlignment="Left" Margin="388,68,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
                         <System:String>равно</System:String>
                         <System:String>больше или равно</System:String>
                         <System:String>меньше или равно</System:String>
                         <System:String>больше</System:String>
                         <System:String>меньше</System:String>
                     </ComboBox>
+                    <ComboBox x:Name="comboBoxSearchDateRangeTypeCheck" HorizontalAlignment="Left" Margin="107,75,0,0" VerticalAlignment="Top" Width="115" SelectedIndex="0" IsEnabled="False">
+                        <System:String>в диапазоне</System:String>
+                        <System:String>не в диапазоне</System:String>
+                    </ComboBox>
+                    <TextBlock Text="Товар" HorizontalAlignment="Left" Margin="240,22,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="checkBoxSearchProductIdCheck" Content="Код" HorizontalAlignment="Left" Margin="282,35,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductIdCheck_Click"/>
+                    <TextBox x:Name="textBoxSearchProductIdCheck" HorizontalAlignment="Left" Height="23" Margin="368,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemDiscountSearchSettings" Header="Акции">
@@ -306,16 +318,16 @@
                     <TextBox x:Name="textBoxSearchProductDiscount" HorizontalAlignment="Left" Height="23" Margin="384,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                     <CheckBox x:Name="checkBoxSearchProcDiscount" Content="Скидка" HorizontalAlignment="Left" Margin="309,78,0,0" VerticalAlignment="Top" Click="checkBoxSearchProcDiscount_Click"/>
                     <DatePicker x:Name="datePickerSearchBDateDiscount" HorizontalAlignment="Left" Margin="384,119,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <DatePicker x:Name="datePickerSearchEDateDiscount" HorizontalAlignment="Left" Margin="384,163,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchEDateDiscount" HorizontalAlignment="Left" Margin="384,175,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                     <CheckBox x:Name="checkBoxSearchBDateDiscount" Content="От" HorizontalAlignment="Left" Margin="309,119,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateDiscount_Click"/>
-                    <CheckBox x:Name="checkBoxSearchEDateDiscount" Content="До" HorizontalAlignment="Left" Margin="309,163,0,0" VerticalAlignment="Top" Height="24" Width="58" Click="checkBoxSearchEDateDiscount_Click"/>
-                    <CheckBox x:Name="checkBoxSearchCodeDiscount" Content="Код" HorizontalAlignment="Left" Margin="309,207,0,0" VerticalAlignment="Top" Click="checkBoxSearchCodeDiscount_Click"/>
-                    <TextBox x:Name="textBoxSearchCodeDiscount" HorizontalAlignment="Left" Height="23" Margin="384,207,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchEDateDiscount" Content="До" HorizontalAlignment="Left" Margin="309,175,0,0" VerticalAlignment="Top" Height="24" Width="58" Click="checkBoxSearchEDateDiscount_Click"/>
+                    <CheckBox x:Name="checkBoxSearchCodeDiscount" Content="Код" HorizontalAlignment="Left" Margin="309,211,0,0" VerticalAlignment="Top" Click="checkBoxSearchCodeDiscount_Click"/>
+                    <TextBox x:Name="textBoxSearchCodeDiscount" HorizontalAlignment="Left" Height="23" Margin="384,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
                     <TextBlock HorizontalAlignment="Left" Margin="509,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" IsEnabled="False"><Run Language="ru-ru" Text="%" IsEnabled="False"/></TextBlock>
-                    <Button x:Name="buttonResetSearchDiscount" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="384,235,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchDiscount_Click"/>
+                    <Button x:Name="buttonResetSearchDiscount" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="384,253,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchDiscount_Click"/>
                     <CheckBox x:Name="checkBoxSearchProductIdDiscount" Content="Код" HorizontalAlignment="Left" Margin="309,43,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductIdDiscount_Click"/>
                     <TextBox x:Name="textBoxSearchProductIdDiscount" HorizontalAlignment="Left" Height="23" Margin="384,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <ComboBox x:Name="comboBoxSearchDateRangeType" HorizontalAlignment="Left" Margin="139,137,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
+                    <ComboBox x:Name="comboBoxSearchDateRangeType" HorizontalAlignment="Left" Margin="339,148,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
                         <System:String>равно</System:String>
                         <System:String>в диапазоне</System:String>
                         <System:String>не в диапазоне</System:String>
@@ -481,25 +493,86 @@
             </TabItem>
             <TabItem Header="Накладные" Margin="-5,0,6,0">
                 <Grid Background="#FFE5E5E5">
-                    <DatePicker x:Name="datePickerSearchDateWaybill" HorizontalAlignment="Left" Margin="129,6,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <TextBox x:Name="textBoxSearchEmployeeWaybill" HorizontalAlignment="Left" Height="23" Margin="129,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <TextBox x:Name="textBoxSearchAgentWaybill" HorizontalAlignment="Left" Height="23" Margin="129,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <TextBox x:Name="textBoxSearchCodeWaybill" HorizontalAlignment="Left" Height="23" Margin="129,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="370,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-                    <xctk:DecimalUpDown FormatString="C2" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Margin="370,86,0,0" IsEnabled="False"/>
-                    <xctk:IntegerUpDown x:Name="upDownSearchHours_Copy2" FormatString="" Value="0" Increment="1" Maximum="24" Minimum="0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Margin="370,47,0,0" IsEnabled="False"/>
-                    <DatePicker HorizontalAlignment="Left" Margin="390,133,-12,0" VerticalAlignment="Top" IsEnabled="False"/>
-                    <DatePicker HorizontalAlignment="Left" Margin="390,177,-12,0" VerticalAlignment="Top" IsEnabled="False"/>
-                    <CheckBox x:Name="checkBoxSearchDateWaybill" Content="Дата составления" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchEmployeeWaybill" Content="Принимающий" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchAgentWaybill" Content="Контрагент" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchCodeWaybill" Content="Код" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchProductWaybill" Content="Товар" HorizontalAlignment="Left" Margin="270,10,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchProductValueWaybill" Content="Количество" HorizontalAlignment="Left" Margin="270,49,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchProductPriceWaybill" Content="Опт.цена" HorizontalAlignment="Left" Margin="270,93,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchProductBDateWaybill" Content="Дата поступления" HorizontalAlignment="Left" Margin="270,136,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="checkBoxSearchProductEDateWaybill" Content="Годен до" HorizontalAlignment="Left" Margin="271,181,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="buttonResetSearchWaybill" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="129,181,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchWaybill_Click"/>
+                    <TextBox x:Name="textBoxSearchEmployeeWaybill" HorizontalAlignment="Left" Height="23" Margin="118,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <TextBox x:Name="textBoxSearchAgentWaybill" HorizontalAlignment="Left" Height="23" Margin="118,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <TextBox x:Name="textBoxSearchCodeWaybill" HorizontalAlignment="Left" Height="23" Margin="118,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchEmployeeWaybill" Content="Принимающий" HorizontalAlignment="Left" Margin="10,99,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="checkBoxSearchAgentWaybill" Content="Контрагент" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="checkBoxSearchCodeWaybill" Content="Код" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="buttonResetSearchWaybill" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="262,300,0,0" VerticalAlignment="Top" Width="120" Click="buttonResetSearchWaybill_Click"/>
+                    <DatePicker x:Name="datePickerSearchBDateProductWaybill" HorizontalAlignment="Left" Margin="388,216,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchEDateProductWaybill" HorizontalAlignment="Left" Margin="388,279,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchBDateProductWaybill" Content="от" HorizontalAlignment="Left" Margin="353,216,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateDiscount_Click"/>
+                    <CheckBox x:Name="checkBoxSearchEDateProductWaybill" Content="до" HorizontalAlignment="Left" Margin="353,279,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="checkBoxSearchEDateDiscount_Click"/>
+                    <ComboBox x:Name="comboBoxSearchDateRangeTypeProductWaybill" HorizontalAlignment="Left" Margin="353,249,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
+                        <System:String>равно</System:String>
+                        <System:String>в диапазоне</System:String>
+                        <System:String>не в диапазоне</System:String>
+                        <System:String>частично</System:String>
+                        <System:String>частично или полностью</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchPriceProductWaybill" Content="Опт.цена" HorizontalAlignment="Right" Margin="0,0,191,132" VerticalAlignment="Bottom" Click="checkBoxSearchPriceCheck_Click" Width="67"/>
+                    <xctk:DecimalUpDown x:Name="upDownSearchPriceProductWaybill" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Margin="0,0,10,132" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxDirectionSearchPriceProductWaybill" HorizontalAlignment="Left" Margin="388,147,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                        <System:String>равно</System:String>
+                        <System:String>больше или равно</System:String>
+                        <System:String>меньше или равно</System:String>
+                        <System:String>больше</System:String>
+                        <System:String>меньше</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchValueProductWaybill" Content="Количество" HorizontalAlignment="Right" Margin="0,0,177,193" VerticalAlignment="Bottom" Click="checkBoxSearchValueCheck_Click"/>
+                    <xctk:IntegerUpDown x:Name="upDownSearchValueProductWaybill" FormatString="" Increment="1" Maximum="99999" Minimum="1" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Margin="0,0,10,190" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxDirectionSearchValueProductWaybill" HorizontalAlignment="Left" Margin="388,93,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                        <System:String>равно</System:String>
+                        <System:String>больше или равно</System:String>
+                        <System:String>меньше или равно</System:String>
+                        <System:String>больше</System:String>
+                        <System:String>меньше</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchProductWaybill" Content="Название" HorizontalAlignment="Left" Margin="313,7,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductDiscount_Click"/>
+                    <TextBlock Text="Товар" HorizontalAlignment="Left" Margin="270,25,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+                    <TextBox x:Name="textBoxSearchProductWaybill" HorizontalAlignment="Left" Height="23" Margin="388,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchProductIdWaybill" Content="Код" HorizontalAlignment="Left" Margin="313,45,0,0" VerticalAlignment="Top" Click="checkBoxSearchProductIdDiscount_Click"/>
+                    <TextBox x:Name="textBoxSearchProductIdWaybill" HorizontalAlignment="Left" Height="23" Margin="388,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchBDateWaybill" HorizontalAlignment="Left" Margin="118,4,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchEDateWaybill" HorizontalAlignment="Left" Margin="118,65,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchBDateWaybill" Content="От" HorizontalAlignment="Left" Margin="80,7,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateDiscount_Click"/>
+                    <CheckBox x:Name="checkBoxSearchEDateWaybill" Content="До" HorizontalAlignment="Left" Margin="80,66,0,0" VerticalAlignment="Top" Height="24" Width="58" Click="checkBoxSearchEDateDiscount_Click"/>
+                    <ComboBox x:Name="comboBoxSearchDateRangeTypeWaybill" HorizontalAlignment="Left" Margin="83,35,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
+                        <System:String>равно</System:String>
+                        <System:String>в диапазоне</System:String>
+                        <System:String>не в диапазоне</System:String>
+                        <System:String>частично</System:String>
+                        <System:String>частично или полностью</System:String>
+                    </ComboBox>
+                    <TextBlock HorizontalAlignment="Left" Margin="4,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       Дата"/><LineBreak/><Run Language="ru-ru" Text=" составления"/></TextBlock>
+                    <ComboBox x:Name="comboBoxSearchTypeCountProductWaybill" HorizontalAlignment="Left" Margin="388,66,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                        <System:String>всего</System:String>
+                        <System:String>просрочено</System:String>
+                        <System:String>не просрочено</System:String>
+                    </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchPriceWaybill" Content="Цена" HorizontalAlignment="Right" Margin="0,0,473,132" VerticalAlignment="Bottom" Click="checkBoxSearchPriceCheck_Click"/>
+                    <xctk:DecimalUpDown x:Name="upDownSearchPriceWaybill" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Margin="0,0,280,125" IsEnabled="False"/>
+                    <ComboBox x:Name="comboBoxDirectionSearchPriceWaybill" HorizontalAlignment="Left" Margin="118,154,0,0" VerticalAlignment="Top" Width="130" SelectedIndex="0">
+                        <System:String>равно</System:String>
+                        <System:String>больше или равно</System:String>
+                        <System:String>меньше или равно</System:String>
+                        <System:String>больше</System:String>
+                        <System:String>меньше</System:String>
+                    </ComboBox>
+                    <DatePicker x:Name="datePickerSearchBDateProductWaybill_Copy" HorizontalAlignment="Left" Margin="118,237,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <DatePicker x:Name="datePickerSearchEDateProductWaybill_Copy" HorizontalAlignment="Left" Margin="118,300,0,0" VerticalAlignment="Top" Width="130" IsEnabled="False"/>
+                    <CheckBox x:Name="checkBoxSearchBDateProductWaybill_Copy" Content="от" HorizontalAlignment="Left" Margin="83,238,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateDiscount_Click"/>
+                    <CheckBox x:Name="checkBoxSearchEDateProductWaybill_Copy" Content="до" HorizontalAlignment="Left" Margin="83,300,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="checkBoxSearchEDateDiscount_Click"/>
+                    <ComboBox x:Name="comboBoxSearchDateRangeTypeProductWaybill_Copy" HorizontalAlignment="Left" Margin="83,270,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
+                        <System:String>равно</System:String>
+                        <System:String>в диапазоне</System:String>
+                        <System:String>не в диапазоне</System:String>
+                        <System:String>частично</System:String>
+                        <System:String>частично или полностью</System:String>
+                    </ComboBox>
+                    <TextBlock HorizontalAlignment="Left" Margin="5,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       "/><Run Text="Дата"/><LineBreak/><Run Text=" поступления"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="288,252,0,0" TextWrapping="Wrap" Text="Годен до" VerticalAlignment="Top" IsEnabled="False"/>
                 </Grid>
             </TabItem>
         </TabControl>

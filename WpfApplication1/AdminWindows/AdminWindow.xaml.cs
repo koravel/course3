@@ -409,7 +409,19 @@ namespace WpfApplication1
                         }
                         if (checkBoxSearchBDateCheck.IsChecked == true && checkBoxSearchEDateCheck.IsChecked == true && datePickerSearchBDateCheck.Text != "" && datePickerSearchEDateCheck.Text != "")
                         {
-                            temp += " AND `check`.C_DATE BETWEEN @bdate AND @edate";
+                            switch(comboBoxSearchDateRangeTypeCheck.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND `check`.C_DATE BETWEEN @bdate AND @edate";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (`check`.C_DATE>@edate OR `check`.C_DATE<@edate)";
+                                        break;
+                                    }
+                            }
                             valuesText.Add("@bdate");
                             values.Add(Converter.DateConvert(datePickerSearchBDateCheck.Text));
                             valuesText.Add("@edate");
@@ -537,6 +549,13 @@ namespace WpfApplication1
                             temp += " AND product.P_NAME=@product";
                             valuesText.Add("@product");
                             values.Add(textBoxSearchProductCheck.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchProductIdCheck.IsChecked == true && textBoxSearchProductIdCheck.Text != "")
+                        {
+                            temp += " AND product.P_ID=@pid";
+                            valuesText.Add("@pid");
+                            values.Add(textBoxSearchProductIdCheck.Text);
                             flag = true;
                         }
                         if (checkBoxSearchPriceCheck.IsChecked == true && upDownSearchPriceCheck.Text != "")
@@ -1094,11 +1113,16 @@ namespace WpfApplication1
             if (checkBoxSearchBDateCheck.IsChecked == true)
             {
                 datePickerSearchBDateCheck.IsEnabled = true;
+                if (checkBoxSearchEDateCheck.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeCheck.IsEnabled = true;
+                }
             }
             else
             {
                 datePickerSearchBDateCheck.Text = null;
                 datePickerSearchBDateCheck.IsEnabled = false;
+                comboBoxSearchDateRangeTypeCheck.IsEnabled = false;
             }
         }
 
@@ -1107,11 +1131,16 @@ namespace WpfApplication1
             if (checkBoxSearchEDateCheck.IsChecked == true)
             {
                 datePickerSearchEDateCheck.IsEnabled = true;
+                if (checkBoxSearchBDateCheck.IsChecked == true)
+                {
+                    comboBoxSearchDateRangeTypeCheck.IsEnabled = true;
+                }
             }
             else
             {
                 datePickerSearchEDateCheck.Text = null;
                 datePickerSearchEDateCheck.IsEnabled = false;
+                comboBoxSearchDateRangeTypeCheck.IsEnabled = false;
             }
         }
 
@@ -1211,11 +1240,27 @@ namespace WpfApplication1
             if (checkBoxSearchProductCheck.IsChecked == true)
             {
                 textBoxSearchProductCheck.IsEnabled = true;
+                textBoxSearchProductIdCheck.IsEnabled = false;
+                checkBoxSearchProductIdCheck.IsEnabled = false;
             }
             else
             {
-                textBoxSearchProductCheck.Text = null;
+                checkBoxSearchProductIdCheck.IsEnabled = true;
                 textBoxSearchProductCheck.IsEnabled = false;
+            }
+        }
+        private void checkBoxSearchProductIdCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchProductIdCheck.IsChecked == true)
+            {
+                textBoxSearchProductIdCheck.IsEnabled = true;
+                textBoxSearchProductCheck.IsEnabled = false;
+                checkBoxSearchProductCheck.IsEnabled = false;
+            }
+            else
+            {
+                checkBoxSearchProductCheck.IsEnabled = true;
+                textBoxSearchProductIdCheck.IsEnabled = false;
             }
         }
 
@@ -1288,6 +1333,16 @@ namespace WpfApplication1
             upDownSearchValueCheck.IsEnabled = false;
             checkBoxSearchPaytypeCard.IsChecked = false;
             checkBoxSearchPaytypeCash.IsChecked = false;
+            comboBoxSearchDateRangeTypeCheck.IsEnabled = false;
+            checkBoxSearchProductIdCheck.IsChecked = false;
+            checkBoxSearchProductIdCheck.IsEnabled = true;
+            textBoxSearchProductIdCheck.Text = null;
+            textBoxSearchProductIdCheck.IsEnabled = false;
+            checkBoxSearchProductCheck.IsEnabled = true;
+            comboBoxSearchDateRangeTypeCheck.SelectedIndex = 0;
+            comboBoxDirectionSearchPrice.SelectedIndex = 0;
+            comboBoxDirectionSearchValue.SelectedIndex = 0;
+
         }
 
         private void menuItemPriceSettings_Click(object sender, RoutedEventArgs e)
@@ -1317,6 +1372,7 @@ namespace WpfApplication1
         private void buttonResetSearchDiscount_Click(object sender, RoutedEventArgs e)
         {
             checkBoxSearchProductDiscount.IsChecked = false;
+            checkBoxSearchProductDiscount.IsEnabled = true;
             textBoxSearchProductDiscount.Text = null;
             textBoxSearchProductDiscount.IsEnabled = false;
             checkBoxSearchProcDiscount.IsChecked = false;
@@ -1332,9 +1388,11 @@ namespace WpfApplication1
             textBoxSearchCodeDiscount.Text = null;
             textBoxSearchCodeDiscount.IsEnabled = false;
             checkBoxSearchProductIdDiscount.IsChecked = false;
+            checkBoxSearchProductIdDiscount.IsEnabled = true;
             textBoxSearchProductIdDiscount.Text = null;
             textBoxSearchProductIdDiscount.IsEnabled = false;
             comboBoxSearchDateRangeType.IsEnabled = false;
+            comboBoxSearchDateRangeType.SelectedIndex = 0;
         }
 
         private void checkBoxSearchProcDiscount_Click(object sender, RoutedEventArgs e)
@@ -1645,6 +1703,9 @@ namespace WpfApplication1
             checkBoxSearchValueProduct.IsChecked = false;
             upDownSearchValueProduct.Text = null;
             upDownSearchValueProduct.IsEnabled = false;
+            comboBoxSearchPriceRangeProduct.SelectedIndex = 0;
+            comboBoxSearchTypeCountProduct.SelectedIndex = 0;
+            comboBoxDirectionSearchValueProduct.SelectedIndex = 0;
         }
 
         private void checkBoxSearchNameProduct_Click(object sender, RoutedEventArgs e)
@@ -1768,6 +1829,8 @@ namespace WpfApplication1
         {
 
         }
+
+        
 
     }
 }
