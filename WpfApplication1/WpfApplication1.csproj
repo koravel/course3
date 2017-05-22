@@ -40,6 +40,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -48,15 +50,30 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddValueWindows\DiscountAddWindow.xaml.cs">
+      <DependentUpon>DiscountAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddValueWindows\EmployeeAddWindow.xaml.cs">
+      <DependentUpon>EmployeeAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddValueWindows\ManufacturerAddWindow.xaml.cs">
+      <DependentUpon>ManufacturerAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddValueWindows\ProductAddWindow.xaml.cs">
+      <DependentUpon>ProductAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Row.cs" />
     <Compile Include="Tables\Check.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="AdminWindows\AdminWindow.xaml.cs">
@@ -74,6 +91,7 @@
     <Compile Include="Tables\Manufacturer.cs" />
     <Compile Include="Tables\Product.cs" />
     <Compile Include="Tables\ProductActualPrice.cs" />
+    <Compile Include="Tables\User.cs" />
     <Compile Include="Tables\Waybill.cs" />
     <Compile Include="AdminWindows\UsersControlAddWindow.xaml.cs">
       <DependentUpon>UsersControlAddWindow.xaml</DependentUpon>
@@ -85,6 +103,29 @@
       <DependentUpon>DBSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillList.cs" />
+    <Compile Include="AdminWindows\UsersControlEditWindow.xaml.cs">
+      <DependentUpon>UsersControlEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddValueWindows\WaybillAddWindow.xaml.cs">
+      <DependentUpon>WaybillAddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelValueWindows\WarningDelEmployeeBindsWindow.xaml.cs">
+      <DependentUpon>WarningDelEmployeeBindsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelValueWindows\WarningDelManufacturerBindsWindow.xaml.cs">
+      <DependentUpon>WarningDelManufacturerBindsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelValueWindows\WarningDelProductBindsWindow.xaml.cs">
+      <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddValueWindows\DiscountAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddValueWindows\EmployeeAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,6 +139,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="AdminWindows\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddValueWindows\ManufacturerAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddValueWindows\ProductAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,6 +167,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginWindows\DBSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindows\UsersControlEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddValueWindows\WaybillAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelValueWindows\WarningDelEmployeeBindsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelValueWindows\WarningDelManufacturerBindsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelValueWindows\WarningDelProductBindsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

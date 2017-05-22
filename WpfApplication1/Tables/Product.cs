@@ -8,6 +8,7 @@ namespace WpfApplication1
 {
     public class Product
     {
+        public int ID { set; get; }
         public string NAME { set; get; }
         public string MANUFACTURER { set; get; }
         public string GROUP { set; get; }
@@ -15,6 +16,5 @@ namespace WpfApplication1
         public string MATERIAL { set; get; }
         public string FORM { set; get; }
         public string INSTR { set; get; }
-        public float PRICE { set; get; }
     }
 }

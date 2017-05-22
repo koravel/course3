@@ -19,8 +19,7 @@ namespace WpfApplication1
         public UsersControlWindow()
         {
             InitializeComponent();
-            string queryString = @"SELECT U_TYPE AS 'Тип записи',U_NAME AS 'Логин',U_PASS AS 'Пароль',U_ONLINE AS 'Статус' FROM `user`;";
-            DataBase.TableOutput(queryString, dataGridUserOut);
+            dataGridUserOut.ItemsSource = DataBase.GetUser();
         }
 
         private void UserAdd_Click(object sender, RoutedEventArgs e)
@@ -32,24 +31,55 @@ namespace WpfApplication1
         {
             string queryString = @"DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;";
             string[] values=new string[2],valuesText=new string[2];
-            //valuesText[0]="@_login";
-            //valuesText[1]="@_password";
-            //values[0] = dataGridUserOut;
-            //values[1] = "";
-            //DataBase.FieldChange(valuesText,values,queryString);
+            valuesText[0]="@_login";
+            valuesText[1]="@_password";
+             try
+            {
+                int indexTemp = dataGridUserOut.SelectedIndex;
+                if (indexTemp != -1)
+                {
+                    var cellInfo = new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[1]);
+                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    values[0] = content.Text;
+                    cellInfo=new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[2]);
+                    content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    values[1]=content.Text;
+                    DataBase.Query(valuesText, values, queryString);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-
-
-        private void UserEdit_Click(object sender, RoutedEventArgs e)
+        private void buttonUserEdit_Click(object sender, RoutedEventArgs e)
         {
-//            string queryString=@"UPDATE ";
+            try
+            {
+                int indexTemp = dataGridUserOut.SelectedIndex;
+                if (indexTemp != -1)
+                {
+                    var cellInfo = new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[0]);
+                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    new UsersControlEditWindow(content.Text).ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void dataGridUserOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
-            //ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            //MessageBox.Show("   You selected " + lbi.Content.ToString() + ".");
+            this.Close();
         }
+
+        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            dataGridUserOut.ItemsSource = DataBase.GetUser();
+        }
+
     }
 }

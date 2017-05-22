@@ -4,19 +4,18 @@
         Title="AdminWindow" Height="447.788" Width="749.953" Closing="adminLogout_Closing">
     <Grid>
         <Menu HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="735">
-            <MenuItem Header="Данные" Click="TablesListVisible_Click"/>
             <MenuItem Header="Управление уч. записями" Click="UsersControl_Click"/>
             <MenuItem Header="Выход" Click="Logout_Click"/>
         </Menu>
         <Button x:Name="buttonUpdate" Content="Обновить" HorizontalAlignment="Left" Margin="633,384,0,0" VerticalAlignment="Top" Width="74" Click="UpdateData_Click"/>
-        <Button x:Name="buttonAdd" Content="Добавить" HorizontalAlignment="Left" Margin="553,384,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button x:Name="buttonDelete" Content="Удалить" HorizontalAlignment="Left" Margin="473,384,0,0" VerticalAlignment="Top" Width="74"/>
-        <TextBox x:Name="textBoxSearch" HorizontalAlignment="Left" Height="23" Margin="278,384,0,0" TextWrapping="Wrap" Text="Найти..." VerticalAlignment="Top" Width="190"/>
-        <ComboBox HorizontalAlignment="Left" Margin="5,27,0,0" VerticalAlignment="Top" Width="120"/>
-        <TabControl Margin="130,27,0,0" Height="352" HorizontalAlignment="Left" VerticalAlignment="Top" Width="577">
-            <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0" MouseUp="tabItemCheck_MouseUp">
+        <Button x:Name="buttonAdd" Content="Добавить" HorizontalAlignment="Left" Margin="553,384,0,0" VerticalAlignment="Top" Width="74" Click="buttonAdd_Click"/>
+        <Button x:Name="buttonDelete" Content="Удалить" HorizontalAlignment="Left" Margin="473,384,0,0" VerticalAlignment="Top" Width="74" Click="buttonDelete_Click"/>
+        <TextBox x:Name="textBoxSearch" HorizontalAlignment="Left" Height="22" Margin="198,384,0,0" TextWrapping="Wrap" Text="Найти..." VerticalAlignment="Top" Width="190"/>
+        <ComboBox x:Name="comboBoxSelectiveSearch" HorizontalAlignment="Left" Margin="5,27,0,0" VerticalAlignment="Top" Width="120"/>
+        <TabControl x:Name="tabControlTables" Margin="130,27,0,0" Height="352" HorizontalAlignment="Left" VerticalAlignment="Top" Width="577">
+            <TabItem x:Name="tabItemCheck" Header="Чеки" Margin="-1,0,-22,0" MouseDoubleClick="tabItemCheck_MouseDoubleClick">
                 <Grid x:Name="gridCheck" Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridCheckOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="356" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged">
+                    <DataGrid x:Name="dataGridCheckOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="356" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Время" Binding="{Binding DATE}"/>
@@ -24,7 +23,7 @@
                             <DataGridTextColumn Header="Оплата" Binding="{Binding PAYTYPE}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="dataGridCheckListOut" Margin="356,0,0,0" VerticalAlignment="Top" Height="320" Width="211" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGridCheckListOut" Margin="356,0,0,0" VerticalAlignment="Top" Height="320" Width="211" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Товар" Binding="{Binding PRODUCT}"/>
                             <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
@@ -32,10 +31,11 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemDiscount" Header="Акции" Margin="21,0,-21,0" MouseUp="tabItemDiscount_MouseUp">
+            <TabItem x:Name="tabItemDiscount" Header="Акции" Margin="21,0,-21,0" MouseDoubleClick="tabItemDiscount_MouseDoubleClick">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridDiscountOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567">
+                    <DataGrid x:Name="dataGridDiscountOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Товар" Binding="{Binding NAME}"/>
                             <DataGridTextColumn Header="Скидка" Binding="{Binding PRICE}"/>
                             <DataGridTextColumn Header="Начало" Binding="{Binding BDATE}"/>
@@ -45,31 +45,49 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemEmployee" Header="Работники" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="90" Margin="20,0,-20,0">
+            <TabItem x:Name="tabItemEmployee" Header="Работники" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="90" Margin="20,0,-20,0" MouseDoubleClick="tabItemEmployee_MouseDoubleClick">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567"/>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="tabItemManufacturer" Header="Производители" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="119" Margin="20,0,-20,0" MouseUp="tabItemManufacturer_MouseUp">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridManufacturersOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567"/>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="tabItemProduct" Header="Товары" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="66" Margin="18,0,-18,0">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridProductOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="356" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGridEmployeeOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Ф.И.О." Binding="{Binding NAME}"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
+                            <DataGridTextColumn Header="Должность" Binding="{Binding POSITION}"/>
+                            <DataGridTextColumn Header="№ контракта" Binding="{Binding CONTRACT}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemManufacturer" Header="Производители" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="119" Margin="18,0,-18,0" MouseDoubleClick="tabItemManufacturer_MouseDoubleClick">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dataGridManufacturersOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="567" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding NAME}"/>
+                            <DataGridTextColumn Header="Страна" Binding="{Binding COUNTRY}"/>
+                            <DataGridTextColumn Header="Город" Binding="{Binding CITY}"/>
+                            <DataGridTextColumn Header="Адрес" Binding="{Binding ADDR}"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemProduct" Header="Товары" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="66" Margin="16,0,-16,0" MouseDoubleClick="tabItemProduct_MouseDoubleClick">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dataGridProductOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="356" AutoGenerateColumns="False" SelectionChanged="dataGridProductOut_SelectionChanged" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
                             <DataGridTextColumn Header="Производитель" Binding="{Binding MANUFACTURER}"/>
                             <DataGridTextColumn Header="Группа" Binding="{Binding GROUP}"/>
                             <DataGridTextColumn Header="Упаковка" Binding="{Binding PACK}"/>
                             <DataGridTextColumn Header="Материал" Binding="{Binding MATERIAL}"/>
                             <DataGridTextColumn Header="Отпуск" Binding="{Binding FORM}"/>
-                            <DataGridTextColumn Header="Конец" Binding="{Binding INSTRUCTION}"/>
-                            <DataGridTextColumn Header="Актуальная цена" Binding="{Binding PRICE}"/>
+                            <DataGridTextColumn Header="Инструкция" Binding="{Binding INSTRUCTION}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="dataGridProductActPriceOut" HorizontalAlignment="Left" Margin="356,0,0,0" VerticalAlignment="Top" Height="320" Width="211" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGridProductActPriceOut" HorizontalAlignment="Left" Margin="356,0,0,0" VerticalAlignment="Top" Height="320" Width="211" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Дата" Binding="{Binding DATE}"/>
                             <DataGridTextColumn Header="Цена" Binding="{Binding PRICE}"/>
@@ -77,9 +95,29 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItemWaybill" Header="Накладные" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="101" Margin="17,0,-17,0">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="tabItemWaybill" Header="Накладные" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="101" Margin="15,0,-15,0" MouseDoubleClick="tabItemWaybill_MouseDoubleClick">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="dataGridWaybillOut" HorizontalAlignment="Left" VerticalAlignment="Top" Height="320" Width="356" AutoGenerateColumns="False" SelectionChanged="dataGridWaybillOut_SelectionChanged" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Дата" Binding="{Binding DATE}"/>
+                            <DataGridTextColumn Header="Принял" Binding="{Binding EMPLOYEE}"/>
+                            <DataGridTextColumn Header="Контрагент" Binding="{Binding AGENT}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid x:Name="dataGridWaybillListOut" HorizontalAlignment="Left" Margin="356,0,0,0" VerticalAlignment="Top" Height="320" Width="211" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Товар" Binding="{Binding PRODUCT}"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
+                            <DataGridTextColumn Header="Опт.цена" Binding="{Binding TRADEPRICE}"/>
+                            <DataGridTextColumn Header="Дата поступления" Binding="{Binding BDATE}"/>
+                            <DataGridTextColumn Header="Годен до" Binding="{Binding EDATE}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
+        <Button x:Name="buttonEdit" Content="Изменить" HorizontalAlignment="Left" Margin="393,384,0,0" VerticalAlignment="Top" Width="75"/>
+        <CheckBox x:Name="checkBoxDelAll" Content="Удалять связанные&#xD;&#xA;записи" HorizontalAlignment="Left" Margin="5,345,0,0" VerticalAlignment="Top" Height="34" Width="125" IsChecked="False"/>
     </Grid>
 </Window>

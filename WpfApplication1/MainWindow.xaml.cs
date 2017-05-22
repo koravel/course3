@@ -49,11 +49,10 @@ namespace WpfApplication1
 
                         if (onlineCheck == "offline")
                             {
-                                string query = @"UPDATE `user` SET U_ONLINE='online' WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" +DataBase.computeMD5(PasswordField.Password)+ "';";
-                                DataBase.FieldChange(null,null,query);
-                                query = @"SELECT U_ID FROM `user` WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" + DataBase.computeMD5(PasswordField.Password) + "';";
-                                AdminWindow openWindow = new AdminWindow(DataBase.FieldChangeWithResult(null,null,query));
-                                openWindow.Show();
+                                DataBase.Query(null,null,@"UPDATE `user` SET U_ONLINE='online' WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" +DataBase.computeMD5(PasswordField.Password)+ "';");
+                                this.Visibility = Visibility.Hidden;
+                                new AdminWindow(DataBase.QueryRetCell(null,null,@"SELECT U_ID FROM `user` WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" + DataBase.computeMD5(PasswordField.Password) + "';")).ShowDialog();
+                                this.Visibility = Visibility.Visible;
                             }
                             else
                             {
@@ -63,13 +62,15 @@ namespace WpfApplication1
                     }
                     else if(loginType == "Менеджер")
                     {
-                        ManagerWindow openWindow = new ManagerWindow();
-                        openWindow.Show();
+                        this.Visibility = Visibility.Hidden;
+                        new ManagerWindow().ShowDialog();
+                        this.Visibility = Visibility.Visible;
                     }
                     else if (loginType == "Кассир")
                     {
-                        SellerWindow openWindow = new SellerWindow();
-                        openWindow.Show();
+                        this.Visibility = Visibility.Hidden;
+                        new SellerWindow().ShowDialog();
+                        this.Visibility = Visibility.Visible;
                     }
                     this.Close();
                 }

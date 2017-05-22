@@ -23,42 +23,10 @@ namespace WpfApplication1
         public AdminWindow(string _idText)
         {
             InitializeComponent();
+            checkBoxDelAll.IsChecked = false;
             idText = _idText;
-
-        }
-
-        private void TablesListVisible_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Employees_Selected(object sender, RoutedEventArgs e)
-        {
-            //dataGridEmployeesOut.ItemsSource = DataBase.GetEmployee();
-        }
-
-        private void Waybill_Lists_Selected(object sender, RoutedEventArgs e)
-        {
-            //string query = @"SELECT waybill.W_ID AS 'Номер наклдной',product.P_NAME AS 'Товар',waybill_list.WL_VALUE AS 'Количество',waybill_list.WL_TRADE_PRICE AS 'Опт.цена',waybill_list.WL_BDATE AS 'Дата поступления',waybill_list.WL_EDATE AS 'Годен до'FROM `waybill`,`waybill_list`,`product` WHERE `waybill_list`.`W_ID`=`waybill`.`W_ID` AND `waybill_list`.`P_ID`=`product`.`P_ID`;";
-            //DataBase.TableOutput(query, dataGridOut);
-        }
-
-        private void Waybills_Selected(object sender, RoutedEventArgs e)
-        {
-            //string query = @"SELECT waybill.W_ID AS 'Номер накладной',waybill.W_DATE AS 'Дата',waybill.W_AGENT_NAME AS 'Контрагент',employee.E_NAME AS 'Принял' FROM `waybill`,`employee` WHERE `waybill`.`E_ID`=`employee`.`E_ID`;";
-            //DataBase.TableOutput(query, dataGridOut);
-        }
-
-        private void Produts_Actual_Price_Selected(object sender, RoutedEventArgs e)
-        {
-            //string query = @"SELECT product.P_NAME AS 'Товар',product_actual_price.PAP_PRICE AS 'Акт.цена',product_actual_price.PAP_DATE AS 'Срок действия' FROM `product`,`product_actual_price` WHERE `product_actual_price`.`P_ID`=`product`.`P_ID`;";
-            //DataBase.TableOutput(query, dataGridOut);
-        }
-
-        private void Products_Selected(object sender, RoutedEventArgs e)
-        {
-            //string query = @"SELECT product.P_NAME AS 'Товар',manufacturer.M_NAME AS 'Название',product.P_GROUP AS 'Группа',product.P_PACK AS 'Упаковка',product.P_MATERIAL AS 'Форма',product.P_FORM AS 'Отпуск',product.P_INSTR AS 'Инструкция' FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID`;";
-            //DataBase.TableOutput(query, dataGridOut);
+            textBoxSearch.Visibility = Visibility.Hidden;
+            comboBoxSelectiveSearch.Visibility = Visibility.Hidden;
         }
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
@@ -68,62 +36,67 @@ namespace WpfApplication1
 
         private void UpdateData_Click(object sender, RoutedEventArgs e)
         {
-        //    if (tableList.SelectedIndex != -1)
-        //    {
-        //        int i = tableList.SelectedIndex;
-        //        switch (i)
-        //        {
-        //            case 0:
-        //                {
-        //                    break;
-        //                }
-        //            case 1:
-        //                {
-        //                    queryString = @"SELECT check.C_ID AS 'Код чека',product.P_NAME AS 'Название товара',check_list.CL_VALUE AS 'Количество' FROM `check_list`,`product`,`check` WHERE `check_list`.`P_ID`=`product`.`P_ID`;";
-        //                    break;
-        //                }
-        //            case 2:
-        //                {
-        //                    queryString = @"SELECT product.P_NAME AS 'Товар',discounts.D_PRICE AS 'Скидка',discounts.D_BDATE AS 'Начало',discounts.D_EDATE AS 'Конец',discounts.D_TEXT AS 'Описание' FROM `discounts`,`product` WHERE `discounts`.`P_ID`=`product`.`P_ID`;";
-        //                    break;
-        //                }
-        //            case 3:
-        //                {
-        //                    queryString = @"SELECT E_NAME AS 'ФИО',E_TEL AS 'Телефон',E_POSITION AS 'Дожлность',E_CONTRACT AS 'Контракт' FROM `employee`;";
-        //                    break;
-        //                }
-        //            case 4:
-        //                {
-        //                    queryString = @"SELECT manufacturer.M_NAME AS 'Название',manufacturer.M_COUNTRY AS 'Страна',manufacturer.M_CITY AS 'Город',manufacturer.M_ADDR AS 'Адрес',manufacturer.M_TEL AS 'Телефон' FROM `manufacturer`;";
-        //                    break;
-        //                }
-        //            case 5:
-        //                {
-        //                    queryString = @"SELECT product.P_NAME AS 'Товар',manufacturer.M_NAME AS 'Название',product.P_GROUP AS 'Группа',product.P_PACK AS 'Упаковка',product.P_MATERIAL AS 'Форма',product.P_FORM AS 'Отпуск',product.P_INSTR AS 'Инструкция' FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID`;";
-        //                    break;
-        //                }
-        //            case 6:
-        //                {
-        //                    queryString = @"SELECT product.P_NAME AS 'Товар',product_actual_price.PAP_PRICE AS 'Акт.цена',product_actual_price.PAP_DATE AS 'Срок действия' FROM `product`,`product_actual_price` WHERE `product_actual_price`.`P_ID`=`product`.`P_ID`;";
-        //                    break;
-        //                }
-        //            case 7:
-        //                {
-        //                    queryString = @"SELECT waybill.W_ID AS 'Номер накладной',waybill.W_DATE AS 'Дата',waybill.W_AGENT_NAME AS 'Контрагент',employee.E_NAME AS 'Принял' FROM `waybill`,`employee` WHERE `waybill`.`E_ID`=`employee`.`E_ID`;";
-        //                    break;
-        //                }
-        //            case 8:
-        //                {
-        //                    queryString = @"SELECT waybill.W_ID AS 'Номер наклдной',product.P_NAME AS 'Товар',waybill_list.WL_VALUE AS 'Количество',waybill_list.WL_TRADE_PRICE AS 'Опт.цена',waybill_list.WL_BDATE AS 'Дата поступления',waybill_list.WL_EDATE AS 'Годен до'FROM `waybill`,`waybill_list`,`product` WHERE `waybill_list`.`W_ID`=`waybill`.`W_ID` AND `waybill_list`.`P_ID`=`product`.`P_ID`;";
-        //                    break;
-        //                }
-        //        }
-        //    }
+            int selected = tabControlTables.SelectedIndex;
+            switch(selected)
+            {
+                case 0:
+                    {
+                        dataGridCheckOut.ItemsSource = DataBase.GetCheck();
+                        int indexTemp = dataGridCheckOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            dataGridCheckListOut.ItemsSource = DataBase.GetCheckList(content.Text);
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
+                        break;
+                    }
+                case 2:
+                    {
+                        dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+                        break;
+                    }
+                case 3:
+                    {
+                        dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
+                        break;
+                    }
+                case 4:
+                    {
+                        dataGridProductOut.ItemsSource = DataBase.GetProduct();
+                        int indexTemp = dataGridProductOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(content.Text);
+                        }
+                        break;
+                    }
+                case 5:
+                    {
+                        dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
+                        int indexTemp = dataGridWaybillOut.SelectedIndex;
+                        if (indexTemp != -1)
+                        {
+                            var cellInfo = new DataGridCellInfo(dataGridWaybillOut.Items[indexTemp], dataGridWaybillOut.Columns[0]);
+                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            dataGridWaybillListOut.ItemsSource = DataBase.GetWaybillList(content.Text);
+                        }
+                        break;
+                    }
+            }
+            
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            DataBase.FieldChange(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='"+idText+"';");
+            DataBase.Query(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='" + idText + "';");
             MainWindow openWindow = new MainWindow();
             openWindow.Show();
             this.Close();
@@ -131,12 +104,12 @@ namespace WpfApplication1
 
         private void adminLogout_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DataBase.FieldChange(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='" + idText + "';");
+            DataBase.Query(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='" + idText + "';");
         }
 
         private void dataGridCheckOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int indexTemp=dataGridCheckOut.SelectedIndex;
+            int indexTemp = dataGridCheckOut.SelectedIndex;
             if (indexTemp != -1)
             {
                 var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
@@ -145,20 +118,253 @@ namespace WpfApplication1
             }
         }
 
-        private void tabItemCheck_MouseUp(object sender, MouseButtonEventArgs e)
+        private void tabItemCheck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dataGridCheckOut.ItemsSource = DataBase.GetCheck();
         }
 
-        private void tabItemDiscount_MouseUp(object sender, MouseButtonEventArgs e)
+        private void tabItemDiscount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
         }
 
-        private void tabItemManufacturer_MouseUp(object sender, MouseButtonEventArgs e)
+        private void tabItemManufacturer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
         }
-      
+
+        private void tabItemProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dataGridProductOut.ItemsSource = DataBase.GetProduct();
+        }
+
+        private void dataGridProductOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                int indexTemp = dataGridProductOut.SelectedIndex;
+                if (indexTemp != -1)
+                {
+                    var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
+                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(content.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void tabItemEmployee_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+        }
+
+        private void tabItemWaybill_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
+        }
+
+        private void dataGridWaybillOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                int indexTemp = dataGridWaybillOut.SelectedIndex;
+                if (indexTemp != -1)
+                {
+                    var cellInfo = new DataGridCellInfo(dataGridWaybillOut.Items[indexTemp], dataGridWaybillOut.Columns[0]);
+                    var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    dataGridWaybillListOut.ItemsSource = DataBase.GetWaybillList(content.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            int selected = tabControlTables.SelectedIndex;
+            switch (selected)
+            {
+                case 0:
+                    {
+                        MessageBox.Show("Добавление запрещено.");
+                        break;
+                    }
+                case 1:
+                    {
+                        new DiscountAddWindow().ShowDialog();
+                        break;
+                    }
+                case 2:
+                    {
+                        new EmployeeAddWindow().ShowDialog();
+                        break;
+                    }
+                case 3:
+                    {
+                        new ManufacturerAddWindow().ShowDialog();
+                        break;
+                    }
+                case 4:
+                    {
+                        new ProductAddWindow().ShowDialog();
+                        break;
+                    }
+                case 5:
+                    {
+                        new WaybillAddWindow().ShowDialog();
+                        break;
+                    }
+            }
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            int selected = tabControlTables.SelectedIndex;
+            switch (selected)
+            {
+                case 0:
+                    {
+                        MessageBox.Show("Удаление запрещено.");
+                        break;
+                    }
+                case 1:
+                    {
+                        string[] values = new string[1], valuesText = new string[1];
+                        valuesText[0] = "@_curid";
+                        try
+                        {
+                            int indexTemp = dataGridDiscountOut.SelectedIndex;
+                            if (indexTemp != -1)
+                            {
+                                var cellInfo = new DataGridCellInfo(dataGridDiscountOut.Items[indexTemp], dataGridDiscountOut.Columns[0]);
+                                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                                values[0] = content.Text;
+                                DataBase.Query(valuesText, values, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        string[] values = new string[1], valuesText = new string[1];
+                        valuesText[0] = "@_curid";
+                        try
+                        {
+                            int indexTemp = dataGridEmployeeOut.SelectedIndex;
+                            if (indexTemp != -1)
+                            {
+                                var cellInfo = new DataGridCellInfo(dataGridEmployeeOut.Items[indexTemp], dataGridEmployeeOut.Columns[0]);
+                                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                                values[0] = content.Text;
+                                DataBase.Query(valuesText, values, "DELETE FROM `employee` WHERE E_ID=@_curid;");
+                                if (checkBoxDelAll.IsChecked == true)
+                                {
+                                    if(Properties.Settings.Default.DelBindingToEmployee == false)
+                                    {
+                                        new WarningDelEmployeeBindsWindow(content.Text).ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        valuesText[0] = "@_curid";
+                                        values[0] = content.Text;
+                                        DataBase.Query(valuesText, values, "DELETE FROM `waybill` WHERE E_ID=@_curid;");
+                                        DataBase.Query(valuesText, values, "DELETE FROM `check` WHERE E_ID=@_curid;");
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        string[] values = new string[1], valuesText = new string[1];
+                        valuesText[0] = "@_curid";
+                        try
+                        {
+                            int indexTemp = dataGridManufacturersOut.SelectedIndex;
+                            if (indexTemp != -1)
+                            {
+                                var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
+                                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                                values[0] = content.Text;
+                                DataBase.Query(valuesText, values, "DELETE FROM `manufactuter` WHERE M_ID=@_curid;");
+                                if (checkBoxDelAll.IsChecked == true)
+                                {
+                                    if (Properties.Settings.Default.DelBindingToManufacturer == false)
+                                    {
+                                        new WarningDelManufacturerBindsWindow(content.Text).ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        valuesText[0] = "@_curid";
+                                        values[0] = content.Text;
+                                        DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE M_ID=@_curid;");
+                                        DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE M_ID=@_curid;");
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+                    }
+                case 4:
+                    {
+                        string[] values = new string[1], valuesText = new string[1];
+                        valuesText[0] = "@_curid";
+                        try
+                        {
+                            int indexTemp = dataGridManufacturersOut.SelectedIndex;
+                            if (indexTemp != -1)
+                            {
+                                var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
+                                var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                                values[0] = content.Text;
+                                DataBase.Query(valuesText, values, "DELETE FROM `manufactuter` WHERE P_ID=@_curid;");
+                                if (checkBoxDelAll.IsChecked == true)
+                                {
+                                    if (Properties.Settings.Default.DelBindingToProduct == false)
+                                    {
+                                        new WarningDelProductBindsWindow(content.Text).ShowDialog();
+                                    }
+                                    else
+                                    {
+                                        valuesText[0] = "@_curid";
+                                        values[0] = content.Text;
+                                        DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE P_ID=@_curid;");
+                                        DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE P_ID=@_curid;");
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+                    }
+                case 5:
+                    {
+                        MessageBox.Show("Удаление запрещено.");
+                        break;
+                    }
+            }
+        }
     }
 }
