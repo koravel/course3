@@ -171,7 +171,6 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Main
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\AdminWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.baml
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\ReportsWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ManufacturerEditWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ProductEditWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.baml
@@ -191,7 +190,6 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Main
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\AdminWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.g.cs
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\ReportsWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ManufacturerEditWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ProductEditWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.g.cs
@@ -211,3 +209,5 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddV
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.g.resources
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.Properties.Resources.resources
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csproj.GenerateResource.Cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.g.cs
