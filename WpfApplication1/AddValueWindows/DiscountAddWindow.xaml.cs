@@ -42,10 +42,6 @@ namespace WpfApplication1
             {
                 dataCorrect++;
             }
-            if(ErrorCheck.CheckPrice(textBoxPrice.Text))
-            {
-                dataCorrect++;
-            }
             if(datePickerBeginDate.Text=="")
             {
                 MessageBox.Show("Введите дату начала!");
@@ -62,13 +58,13 @@ namespace WpfApplication1
             {
                 dataCorrect++;
             }
-            if(dataCorrect==4)
+            if(dataCorrect==3)
             {
                 if(ErrorCheck.CheckBeginEndDate(datePickerBeginDate.Text,datePickerEndDate.Text))
                     {
                         DataBase.Query(
                         new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text"},
-                        new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),textBoxPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
+                        new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
                         "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
                         this.Close();
                     }

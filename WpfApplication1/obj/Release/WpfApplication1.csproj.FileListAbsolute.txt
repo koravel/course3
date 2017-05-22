@@ -211,7 +211,5 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfA
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csproj.GenerateResource.Cache
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.baml
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.g.cs
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SearchSettingsWindow.baml
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ViewSettingsWindow.baml
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SearchSettingsWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ViewSettingsWindow.g.cs

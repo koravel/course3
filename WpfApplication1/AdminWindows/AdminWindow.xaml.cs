@@ -110,7 +110,7 @@ namespace WpfApplication1
                 var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                 dataGridCheckListOut.ItemsSource = DataBase.GetCheckList(content.Text);
-                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT IF((SELECT COUNT(discounts.D_ID) FROM discounts,check_list cl,`check` c WHERE cl.C_ID=@_curid AND discounts.P_ID=cl.P_ID AND c.C_ID=cl.C_ID AND c.C_DATE>=discounts.D_BDATE AND c.C_DATE<=discounts.D_EDATE)>0,(SELECT (SELECT SUM(pap.PAP_PRICE*cl.CL_VALUE*(1-d.D_PRICE)) FROM product_actual_price pap,check_list cl WHERE pap.P_ID=cl.P_ID AND d.P_ID=cl.P_ID AND cl.C_ID=c.C_ID AND pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID ORDER BY 1 DESC LIMIT 1)) FROM `check` c,discounts d WHERE c.C_DATE>=d.D_BDATE AND c.C_DATE<=d.D_EDATE AND c.C_ID=@_curid),(SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT PAP_ID FROM product_actual_price WHERE P_ID=cl.P_ID ORDER BY PAP_DATE DESC LIMIT 1)) FROM `check` c WHERE c.C_ID=@_curid));");
+                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT IF((SELECT COUNT(discounts.D_ID) FROM discounts,check_list cl,`check` c WHERE cl.C_ID=@_curid AND discounts.P_ID=cl.P_ID AND c.C_ID=cl.C_ID AND c.C_DATE>=discounts.D_BDATE AND c.C_DATE<=discounts.D_EDATE)>0,(SELECT (SELECT SUM(pap.PAP_PRICE*cl.CL_VALUE*(1-d.D_PRICE*0.01)) FROM product_actual_price pap,check_list cl WHERE pap.P_ID=cl.P_ID AND d.P_ID=cl.P_ID AND cl.C_ID=c.C_ID AND pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID ORDER BY 1 DESC LIMIT 1)) FROM `check` c,discounts d WHERE c.C_DATE>=d.D_BDATE AND c.C_DATE<=d.D_EDATE AND c.C_ID=@_curid),(SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT PAP_ID FROM product_actual_price WHERE P_ID=cl.P_ID ORDER BY PAP_DATE DESC LIMIT 1)) FROM `check` c WHERE c.C_ID=@_curid));");
                 totalPriceTextBlock.Text = "Общая цена:";
                 if(totalPrice == null)
                 {
@@ -435,14 +435,309 @@ namespace WpfApplication1
             }
         }
 
-        private void menuItemSearchSettings_Click(object sender, RoutedEventArgs e)
-        {
-            new SearchSettingsWindow().ShowDialog();
-        }
-
         private void menuItemViewSettings_Click(object sender, RoutedEventArgs e)
         {
             new ViewSettingsWindow().ShowDialog();
         }
+
+        private void buttonSearch_Click(object sender, RoutedEventArgs e)
+        {
+             int selected = tabControlSearch.SelectedIndex;
+            switch(selected)
+            {
+                case 0:
+                    {
+                        if (checkBoxSearchEmployeeCheck.IsChecked == true)
+                        {
+                            dataGridCheckOut.ItemsSource = DataBase.GetCheck("employee.E_NAME", textBoxSearchEmployeeCheck.Text);
+                        }
+                        if (checkBoxSearchBDateCheck.IsChecked == true)
+                        {
+                            //datePickerSearchBDateCheck.Text;
+                        }
+                        if (checkBoxSearchEDateCheck.IsChecked == true)
+                        {
+                            //datePickerSearchEDateCheck.Text;
+                        }
+                        if(checkBoxSearchBHours.IsChecked == true)
+                        {
+                            //upDownSearchBHours.Text;
+                        }
+                        if (checkBoxSearchBMinutes.IsChecked == true)
+                        {
+                            //upDownSearchBMinutes.Text;
+                        }
+                        if (checkBoxSearchBSeconds.IsChecked == true)
+                        {
+                            //upDownSearchBSeconds.Text;
+                        }
+                        if (checkBoxSearchEHours.IsChecked == true)
+                        {
+                            //upDownSearchEHours.Text;
+                        }
+                        if (checkBoxSearchEMinutes.IsChecked == true)
+                        {
+                            //upDownSearchEMinutes.Text;
+                        }
+                        if (checkBoxSearchESeconds.IsChecked == true)
+                        {
+                            //upDownSearchESeconds.Text;
+                        }
+                        if (checkBoxSearchCheckCode.IsChecked == true)
+                        {
+                            //textBoxSearchCheckCode.Text;
+                        }
+                        if (checkBoxSearchProductCheck.IsChecked == true)
+                        {
+                            //textBoxSearchProductCheck.Text;
+                        }
+                        if (checkBoxSearchPriceCheck.IsChecked == true)
+                        {
+                            //upDownSearchPriceCheck.Text;
+                        }
+                        if (checkBoxSearchValueCheck.IsChecked == true)
+                        {
+                            //upDownSearchValueCheck.Text;
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        break;
+                    }
+                case 2:
+                    {
+                        break;
+                    }
+                case 3:
+                    {
+                        break;
+                    }
+                case 4:
+                    {
+                        break;
+                    }
+                case 5:
+                    {
+                        break;
+                    }
+
+            }
+        }
+
+        private void checkBoxSearchEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEmployeeCheck.IsChecked == true)
+            {
+                textBoxSearchEmployeeCheck.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchEmployeeCheck.Text = null;
+                textBoxSearchEmployeeCheck.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBDateCheck.IsChecked == true)
+            {
+                datePickerSearchBDateCheck.IsEnabled = true;
+            }
+            else
+            {
+                datePickerSearchBDateCheck.Text = null;
+                datePickerSearchBDateCheck.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEDateCheck.IsChecked == true)
+            {
+                datePickerSearchEDateCheck.IsEnabled = true;
+            }
+            else
+            {
+                datePickerSearchEDateCheck.Text = null;
+                datePickerSearchEDateCheck.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBHours_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBHours.IsChecked == true)
+            {
+                upDownSearchBHours.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchBHours.Text = null;
+                upDownSearchBHours.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBMinutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBMinutes.IsChecked == true)
+            {
+                upDownSearchBMinutes.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchBMinutes.Text = null;
+                upDownSearchBMinutes.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchBSeconds_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchBSeconds.IsChecked == true)
+            {
+                upDownSearchBSeconds.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchBSeconds.Text = null;
+                upDownSearchBSeconds.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEHours_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEHours.IsChecked == true)
+            {
+                upDownSearchEHours.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchEHours.Text = null;
+                upDownSearchEHours.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchEMinutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchEMinutes.IsChecked == true)
+            {
+                upDownSearchEMinutes.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchEMinutes.Text = null;
+                upDownSearchEMinutes.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchESeconds_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchESeconds.IsChecked == true)
+            {
+                upDownSearchESeconds.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchESeconds.Text = null;
+                upDownSearchESeconds.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchCheckCode_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchCheckCode.IsChecked == true)
+            {
+                textBoxSearchCheckCode.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchCheckCode.Text = null;
+                textBoxSearchCheckCode.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchProductCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchProductCheck.IsChecked == true)
+            {
+                textBoxSearchProductCheck.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchProductCheck.Text = null;
+                textBoxSearchProductCheck.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchPriceCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchPriceCheck.IsChecked == true)
+            {
+                upDownSearchPriceCheck.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchPriceCheck.Text = null;
+                upDownSearchPriceCheck.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchValueCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchValueCheck.IsChecked == true)
+            {
+                upDownSearchValueCheck.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchValueCheck.Text = null;
+                upDownSearchValueCheck.IsEnabled = false;
+            }
+        }
+
+        private void buttonResetSearchCheck_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxSearchEmployeeCheck.IsChecked = false;
+            textBoxSearchEmployeeCheck.Text = null;
+            textBoxSearchEmployeeCheck.IsEnabled = false;
+            checkBoxSearchBDateCheck.IsChecked = false;
+            datePickerSearchBDateCheck.Text = null;
+            datePickerSearchBDateCheck.IsEnabled = false;
+            checkBoxSearchEDateCheck.IsChecked = false;
+            datePickerSearchEDateCheck.Text = null;
+            datePickerSearchEDateCheck.IsEnabled = false;
+            checkBoxSearchBHours.IsChecked = false;
+            upDownSearchBHours.Text = null;
+            upDownSearchBHours.IsEnabled = false;
+            checkBoxSearchEHours.IsChecked = false;
+            upDownSearchEHours.Text = null;
+            upDownSearchEHours.IsEnabled = false;
+            checkBoxSearchBMinutes.IsChecked = false;
+            upDownSearchBMinutes.Text = null;
+            upDownSearchBMinutes.IsEnabled = false;
+            checkBoxSearchEMinutes.IsChecked = false;
+            upDownSearchEMinutes.Text = null;
+            upDownSearchEMinutes.IsEnabled = false;
+            checkBoxSearchBSeconds.IsChecked = false;
+            upDownSearchBSeconds.Text = null;
+            upDownSearchBSeconds.IsEnabled = false;
+            checkBoxSearchESeconds.IsChecked = false;
+            upDownSearchESeconds.Text = null;
+            upDownSearchESeconds.IsEnabled = false;
+            checkBoxSearchCheckCode.IsChecked = false;
+            textBoxSearchCheckCode.Text = null;
+            textBoxSearchCheckCode.IsEnabled = false;
+            checkBoxSearchProductCheck.IsChecked = false;
+            textBoxSearchProductCheck.Text = null;
+            textBoxSearchProductCheck.IsEnabled = false;
+            checkBoxSearchPriceCheck.IsChecked = false;
+            upDownSearchPriceCheck.Text = null;
+            upDownSearchPriceCheck.IsEnabled = false;
+            checkBoxSearchValueCheck.IsChecked = false;
+            upDownSearchValueCheck.Text = null;
+            upDownSearchValueCheck.IsEnabled = false;
+            checkBoxSearchPaytypeCard.IsChecked = false;
+            checkBoxSearchPaytypeCash.IsChecked = false;
+        }
+
     }
 }
