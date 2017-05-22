@@ -17,6 +17,7 @@ namespace WpfApplication1
     public partial class UsersControlEditWindow : Window
     {
         string curtype,idText;
+        public bool flag = false;
         public UsersControlEditWindow(string id,string _curtype)
         {
             InitializeComponent();
@@ -30,22 +31,25 @@ namespace WpfApplication1
 
         private void buttonSaveChange_Click(object sender, RoutedEventArgs e)
         {
-            if(textBoxLogin.Text!="")
+            if (textBoxLogin.Text != "")
             {
-                if(textBoxPassword.Text.Length==32)
-                {
-                    DataBase.Query(new string[] { "@_login", "@_password", "@_type" }, new string[] { textBoxLogin.Text, textBoxPassword.Text, curtype }, "UPDATE `user` SET `U_NAME`=@_login, `U_PASS`=@_password WHERE `U_TYPE`=@_type;");
-                    DataBase.SetLog(idText, 1, 1, "Изменение пользователя,параметры:|тип записи:" + curtype + "|логин:" + textBoxLogin.Text + "|");
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("В поле пароля неверное количество символов!");
-                }
+                textBoxLogin.BorderBrush = Brushes.Green;
             }
             else
             {
-                MessageBox.Show("Поле псевдонима пустое!");
+                textBoxLogin.BorderBrush = Brushes.Red;
+            }
+            if(textBoxPassword.Text != "")
+            {
+                textBoxPassword.BorderBrush = Brushes.Green;
+                DataBase.Query(new string[] { "@_login", "@_password", "@_type" }, new string[] { textBoxLogin.Text, textBoxPassword.Text, curtype }, "UPDATE `user` SET `U_NAME`=@_login, `U_PASS`=md5(@_password) WHERE `U_TYPE`=@_type;");
+                DataBase.SetLog(idText, 1, 1, "Изменение пользователя,параметры:|тип записи:" + curtype + "|логин:" + textBoxLogin.Text + "|");
+                flag = true;
+                this.Close();
+            }
+            else
+            {
+                textBoxPassword.BorderBrush = Brushes.Red;
             }
         }
 

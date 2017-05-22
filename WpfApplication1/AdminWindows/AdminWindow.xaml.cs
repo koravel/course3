@@ -384,7 +384,11 @@ namespace WpfApplication1
                     {
                         WaybillAddWindow window = new WaybillAddWindow(idText);
                         window.ShowDialog();
-                        flag = window.flag1;
+                        if (window.flag1 == true)
+                        {
+                            waybill.Add(window.obj);
+                            dataGridWaybillOut.Items.Refresh();
+                        }
                         break;
                     }
             }

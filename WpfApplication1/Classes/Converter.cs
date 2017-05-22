@@ -89,5 +89,17 @@ namespace WpfApplication1
                 return null;
             }
         }
+
+        public static double CailingRound(double value)
+        {
+            value *= 100;
+            double intvalue = Math.Truncate(value);
+            value = value - intvalue;
+            if(value > 0)
+            {
+                value = intvalue + 1;
+            }
+            return value * 0.01;
+        }
     }
 }

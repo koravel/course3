@@ -12,9 +12,10 @@ namespace WpfApplication1
         public string SUMM { get; set; }
         public int WAYBILLID { get; set; }
 
-        public ProductInCheck(string price,int value)
+        public ProductInCheck(string price,int value,int discount)
         {
-            CURPRICE = (float.Parse(price) * (100 - DISCOUNT) * 0.01).ToString();
+
+            CURPRICE = Converter.CailingRound((float.Parse(price) * (100 - discount) * 0.01)).ToString();
             SUMM = (float.Parse(CURPRICE) * value).ToString();
         }
     }

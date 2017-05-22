@@ -13,6 +13,14 @@
                 <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}"/>
                 <DataGridTextColumn Header="Пароль" Binding="{Binding PASS}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Изменить" Click="buttonUserEdit_Click"/>
+                    <MenuItem x:Name="menuItemDel" Header="Удалить" Click="UserDelete_Click"/>
+                    <MenuItem Header="Добавить" Click="UserAdd_Click"/>
+                    <MenuItem Header="Обновить" Click="buttonUpdate_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <Button x:Name="buttonUserAdd" Content="Добавить запись" Click="UserAdd_Click" Margin="10,38,4,0" Height="26" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="buttonUserDelete" Content="Удалить запись" Margin="10,8,4,0" Click="UserDelete_Click" Height="26" VerticalAlignment="Top" FontSize="14"/>

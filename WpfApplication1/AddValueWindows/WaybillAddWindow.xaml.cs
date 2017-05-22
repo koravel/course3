@@ -25,13 +25,12 @@ namespace WpfApplication1
         string idText;
         int selIndexEmployee = -1, countEmployee = 0;
         List<int[]> comboBoxSelIndex = new List<int[]>();
-        List<bool[]> errorInCell = new List<bool[]>();
         public bool flag1 = false;
-        List<bool> rowFirstEdting = new List<bool>();
+        public Waybill obj = new Waybill();
         public WaybillAddWindow(string id)
         {
             InitializeComponent();
-            datePickerToday.Text = DateTime.Today.ToString();
+            datePickerToday.Text = DataBase.QueryRetCell(null,null,"SELECT date(now());");
             ProductListUpdate();
             EmployeeListUpdate();
             countEmployee = comboBoxEployees.Items.Count;
@@ -47,85 +46,84 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            bool errors = true;
-            for (int i = 0; i < errorInCell.Count-1;i++ )
+            if(ErrorCheck.WaybillEnterCheck(comboBoxEployees,textBoxAgent,datePickerToday) && products.Count > 0)
             {
-                for(int j = 0; j<5;j++)
-                {
-                    if(!errorInCell[i][j])
-                    {
-                        System.Windows.MessageBox.Show(i.ToString() + "|" + j.ToString());
-                        errors = false;
-                    }
-                }
-            }
-            if(!errors)
-            {
-                List<string[]> temp = new List<string[]>();
-
-                dataGridInfo.Items.Refresh();
-            }
-            bool flag = false;
-            if(comboBoxEployees.SelectedIndex != -1)
-            {
-                flag = true;
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("Выберите принимающего!");
-            }
-            if(textBoxAgent.Text != "")
-            {
-                flag = true;
-            }
-            else
-            {
-                flag = false;
-                System.Windows.MessageBox.Show("Имя контрагента пусто!");
-            }
-            if(flag == true)
-            {
-                string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
+                string lastId = DataBase.QueryRetCell(null, null, "SELECT IFNULL(MAX(W_ID)+1,1) FROM waybill;");
+                obj.ID = int.Parse(lastId);
+                obj.EMPLOYEE = employees[comboBoxEployees.SelectedIndex].NAME;
+                obj.AGENT = textBoxAgent.Text;
+                obj.DATE = datePickerToday.SelectedDate.Value;
                 string[][] quantityData = new string[list.Count][];
-                DataBase.Query(
-                new string[] { "@_id", "@_date", "@_employee", "@_agent" },
-                new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
-                "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
                 string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
-                for (int i = 0; i < list.Count; i++)
+                bool checkForErr = false;
+                if (list.Count > 0 && comboBoxSelIndex.Count > 0 ) 
                 {
-                    quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE, Converter.DateConvert(list[i].BDATE.ToShortDateString()) };
-                    list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
-                    queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
-                    if(i != list.Count-1)
+                    for (int i = 0; i < comboBoxSelIndex.Count; i++)
                     {
-                        queryString += ",";
+                        if (list[i].ID == "NULL")
+                        {
+                            checkForErr = true;
+                            i = list.Count;
+                        }
+                        else
+                        {
+                            if (list[i].VALUE == "")
+                            {
+                                checkForErr = true;
+                                i = list.Count;
+                            }
+                            else
+                            {
+                                if (list[i].TRADEPRICE == "")
+                                {
+                                    checkForErr = true;
+                                    i = list.Count;
+                                }
+                                else
+                                {
+                                    quantityData[i] = new string[] { list[i].ID, list[i].VALUE, list[i].TRADEPRICE, Converter.DateConvert(list[i].BDATE.ToShortDateString()) };
+                                    list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
+                                    queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
+                                    if (i != list.Count - 1)
+                                    {
+                                        queryString += ",";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!checkForErr)
+                    {
+                        queryString += ";";
+                        DataBase.Query(
+                        new string[] { "@_id", "@_date", "@_employee", "@_agent" },
+                        new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
+                        "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
+                        DataBase.Query(null, null, queryString);
+                        string[] waybillListIds = DataBase.QueryRetColumn(new string[] { "@_id" }, new string[] { lastId }, "SELECT WL_ID FROM waybill,waybill_list WHERE waybill.W_ID=waybill_list.W_ID AND waybill.W_ID=@_id;");
+                        queryString = "(WL_ID)VALUES ";
+                        for (int i = 0; i < waybillListIds.Length; i++)
+                        {
+                            queryString += "(" + waybillListIds[i] + ")";
+                            if (i != waybillListIds.Length - 1)
+                            {
+                                queryString += ",";
+                            }
+                        }
+                        queryString += ";";
+                        DataBase.Query(null, null, "INSERT INTO product_sold" + queryString);
+                        DataBase.Query(null, null, "INSERT INTO product_overdue" + queryString);
+                        for (int i = 0; i < quantityData.Length; ++i)
+                        {
+                            DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], quantityData[i][1] }, "UPDATE product_quantity SET PQ_IN=PQ_IN+@_value WHERE P_ID=@_id;");
+                            DataBase.Query(new string[] { "@_id", "@_price", "@_dat" }, new string[] { quantityData[i][0], Converter.FloatToCurrencyConvert((Converter.CurrencyToFloatConvert(quantityData[i][2]) * (1 - float.Parse(Properties.Settings.Default.PriceProcent) * 0.01)).ToString()), quantityData[i][3] }, "CALL insert_price(@_id,@_price,@_dat);");
+                        }
+                        DataBase.Query(null, null, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND po.PP_ID>0 AND wl.WL_ID>0;");
+                        DataBase.SetLog(idText, 1, 2, "Создание накладной,параметры:|код:" + lastId + "|дата:" + Converter.DateConvert(datePickerToday.Text) + "|");
+                        flag1 = true;
+                        this.Close();
                     }
                 }
-                queryString += ";";
-                DataBase.Query(null, null, queryString);
-                string[] waybillListIds = DataBase.QueryRetColumn(new string[] { "@_id" }, new string[] { lastId }, "SELECT WL_ID FROM waybill,waybill_list WHERE waybill.W_ID=waybill_list.W_ID AND waybill.W_ID=@_id;");
-                queryString = "(WL_ID)VALUES ";
-                for (int i = 0; i < waybillListIds.Length; i++)
-                {
-                    queryString += "(" + waybillListIds[i] + ")";
-                    if (i != waybillListIds.Length - 1)
-                    {
-                        queryString += ",";
-                    }
-                }
-                queryString += ";";
-                DataBase.Query(null, null, "INSERT INTO product_sold" + queryString);
-                DataBase.Query(null, null, "INSERT INTO product_overdue" + queryString);
-                for (int i = 0; i < quantityData.Length; ++i)
-                {
-                    DataBase.Query(new string[] { "@_id", "@_value" }, new string[] { quantityData[i][0], quantityData[i][1] }, "UPDATE product_quantity SET PQ_IN=PQ_IN+@_value WHERE P_ID=@_id;");
-                    DataBase.Query(new string[] { "@_id", "@_price","@_dat" }, new string[] { quantityData[i][0], Converter.FloatToCurrencyConvert((Converter.CurrencyToFloatConvert(quantityData[i][2]) * (1 - float.Parse(Properties.Settings.Default.PriceProcent)*0.01)).ToString()), quantityData[i][3] }, "CALL insert_price(@_id,@_price,@_dat);");
-                }
-                DataBase.Query(null, null, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND po.PP_ID>0 AND wl.WL_ID>0;");
-                DataBase.SetLog(idText, 1, 2, "Создание накладной,параметры:|код:" + lastId + "|дата:" + Converter.DateConvert(datePickerToday.Text) + "|");
-                flag1 = true;
-                this.Close();
             }
         }
 
@@ -143,16 +141,14 @@ namespace WpfApplication1
             {
                 list[dataGridInfo.SelectedIndex].ID = products[(sender as ComboBox).SelectedIndex].ID.ToString();
             }
-            for (int i = 0; i < comboBoxSelIndex.Count; i++ )
+            for (int i = 0; i < comboBoxSelIndex.Count; i++)
             {
-                if(comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
+                if (comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
                 {
-                    comboBoxSelIndex[dataGridInfo.SelectedIndex][1] =
+                    comboBoxSelIndex[i][1] =
                         (sender as ComboBox).SelectedIndex;
                 }
             }
-            errorInCell[dataGridInfo.SelectedIndex][0] = true;
-            (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
         }
 
         private void EmployeeListUpdate()
@@ -202,103 +198,37 @@ namespace WpfApplication1
 
         private void comboBoxProduct_Loaded(object sender, RoutedEventArgs e)
         {
-            if (comboBoxSelIndex.Count - 1 < dataGridInfo.SelectedIndex)
+            bool flagTemp = false;
+            int index = -1;
+            for (int i = 0; i < comboBoxSelIndex.Count;i++ )
             {
-                comboBoxSelIndex.Add(new int[]{dataGridInfo.SelectedIndex, -1});
-            }
-            if ((sender as ComboBox).Items.Count > 0)
-            {
-                for(int i = 0; i< comboBoxSelIndex.Count; i++) 
+                if(comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
                 {
-                    if(comboBoxSelIndex[i][0] == dataGridInfo.SelectedIndex)
-                    {
-                        (sender as ComboBox).SelectedIndex = comboBoxSelIndex[i][1];
-                    }
+                    flagTemp = true;
+                    index = i;
                 }
             }
-            (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
-        }
-
-
-
-        private void textBlock_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (dataGridInfo.SelectedIndex != -1 && (sender as TextBlock) != null)
+            if (!flagTemp)
             {
-                int j = 0;
-                switch ((sender as TextBlock).Name)
+                comboBoxSelIndex.Add(new int[] { dataGridInfo.SelectedIndex, -1 });
+            }
+            else
+            {
+                if ((sender as ComboBox).Items.Count > 0)
                 {
-                    case "textBlockProduct":
-                        {
-                            j = 0;
-                            break;
-                        }
-                    case "textBlockValue":
-                        {
-                            j = 1;
-                            break;
-                        }
-                    case "textBlockPrice":
-                        {
-                            j = 2;
-                            break;
-                        }
-                    case "textBlockBDate":
-                        {
-                            j = 3;
-                            break;
-                        }
-                    case "textBlockEDate":
-                        {
-                            j = 4;
-                            break;
-                        }
-                }
-                if (errorInCell.Count - 1 < dataGridInfo.SelectedIndex)
-                {
-                    errorInCell.Add(new bool[] { false, true, true, true, true });
-                }
-                if ((sender as TextBlock).Text == "")
-                {
-                    errorInCell[dataGridInfo.SelectedIndex][j] = false;
-                    if (list.Count - 1 >= dataGridInfo.SelectedIndex)
-                    {
-                        (sender as TextBlock).Foreground = Brushes.Red;
-                        list[dataGridInfo.SelectedIndex].COLOR = Brushes.Red;
-                    }
-                }
-                else
-                {
-                    errorInCell[dataGridInfo.SelectedIndex][j] = true;
-                    bool flagtemp = true;
-                    for (int i = 0; i < errorInCell.Count; i++)
-                    {
-                        if (errorInCell[dataGridInfo.SelectedIndex][i] == false)
-                        {
-                            flagtemp = false;
-                            i = errorInCell.Count;
-                        }
-                    }
-                    if (flagtemp)
-                    {
-                        if (list.Count - 1 >= dataGridInfo.SelectedIndex)
-                        {
-                            (sender as TextBlock).Foreground = Brushes.Green;
-                            list[dataGridInfo.SelectedIndex].COLOR = Brushes.Green;
-                        }
-                    }
+                    (sender as ComboBox).SelectedIndex = comboBoxSelIndex[index][1];
                 }
             }
         }
 
-        private void dataGridInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void comboBoxEployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //rowFirstEdting.Add(false);
+            comboBoxEployees.BorderBrush = ErrorCheck.SelectionCheck(comboBoxEployees.SelectedIndex, comboBoxEployees.Items.Count);
         }
 
-        private void dataGridInfo_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void textBoxAgent_KeyUp(object sender, KeyEventArgs e)
         {
-            errorInCell.Add(new bool[] { false, true, true, true, true });
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
         }
     }
 }

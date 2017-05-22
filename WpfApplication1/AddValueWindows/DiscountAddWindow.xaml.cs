@@ -35,7 +35,9 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ErrorCheck.DiscountEnterCheck(comboBoxProduct,datePickerBeginDate,upDownPrice,datePickerEndDate,products[comboBoxProduct.SelectedIndex].ID.ToString()))
+            if(comboBoxProduct.Items.Count > 0)
+            {
+                if (ErrorCheck.DiscountEnterCheck(comboBoxProduct, datePickerBeginDate, upDownPrice, datePickerEndDate, products[comboBoxProduct.SelectedIndex].ID.ToString()))
                 {
                     DataBase.Query(
                     new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text" },
@@ -51,6 +53,11 @@ namespace WpfApplication1
                     flag = true;
                     this.Close();
                 }
+            }
+            else
+            {
+                ErrorCheck.DiscountEnterCheck(comboBoxProduct, datePickerBeginDate, upDownPrice, datePickerEndDate, "-1");
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

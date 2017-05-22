@@ -411,7 +411,14 @@ namespace WpfApplication1
                                 window.ShowDialog();
                                 if (window.flag)
                                 {
-                                    return true;
+                                    if (pid != "-1")
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
                                 }
                                 else
                                 {
@@ -503,9 +510,20 @@ namespace WpfApplication1
             }
         }
 
-        //public static bool WaybillEnterCheck()
-        //{
-
-        //}
+        public static bool WaybillEnterCheck(ComboBox employee,TextBox agent,DatePicker date)
+        {
+            int dataCorrect = 0;
+            employee.BorderBrush = SelectionCheck(employee.SelectedIndex, employee.Items.Count, ref dataCorrect);
+            agent.BorderBrush = TextCheck(agent.Text, ref dataCorrect, 0, Brushes.Red);
+            date.BorderBrush = TextCheck(date.Text, ref dataCorrect, 0, Brushes.Red);
+            if(dataCorrect == 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

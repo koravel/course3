@@ -18,6 +18,8 @@ namespace WpfApplication1
     public partial class UsersControlAddWindow : Window
     {
         string idText;
+        public bool flag = false;
+
         public UsersControlAddWindow(string id)
         {
             InitializeComponent();
@@ -26,19 +28,30 @@ namespace WpfApplication1
 
         private void AddToDB_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (textBoxAddLogin.Text != "")
             {
+                textBoxAddLogin.BorderBrush = Brushes.Green;
+            }
+            else
+            {
+                textBoxAddLogin.BorderBrush = Brushes.Red;
+            }
+            if (textBoxAddPassword.Text != "")
+            {
+                textBoxAddPassword.BorderBrush = Brushes.Green;
                 DataBase.Query(
-                    new string[] { "@_type", "@_login", "@_pass" }, 
-                    new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text }, 
-                    "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`,`U_ONLINE`) VALUES (@_type, @_login, md5(@_pass), 'offline');");
+                            new string[] { "@_type", "@_login", "@_pass" },
+                            new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text },
+                            "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`) VALUES (@_type, @_login, md5(@_pass));");
                 DataBase.SetLog(idText, 1, 2, "Создание пользователя,параметры:|тип записи:" + textBoxAddType.Text + "|логин:" + textBoxAddLogin.Text + "|");
+                flag = true;
+                this.Close();
+               
             }
-            catch(Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                textBoxAddLogin.BorderBrush = Brushes.Red;
             }
-            this.Close();
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)

@@ -19,7 +19,7 @@ namespace WpfApplication1
         List<NameIdList> comboBoxValues = new List<NameIdList> { };
         string idText;
         public bool flag = false;
-        public Product obj;
+        public Product obj = new Product();
         public ProductAddWindow(string id)
         {
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace WpfApplication1
                 {
                     comboBoxMaterial.SelectedIndex = 0;
                 }
-                string maxId = DataBase.QueryRetCell(null, null, "SELECT MAX(P_ID)+1 FROM product;");
+                string maxId = DataBase.QueryRetCell(null, null, "SELECT IFNULL(MAX(P_ID)+1,1) FROM product;");
                 DataBase.Query(
                 new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr"},
                 new string[] { maxId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text},
