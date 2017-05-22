@@ -377,5 +377,13 @@ namespace WpfApplication1
         {
             new ReportsWindow().ShowDialog();
         }
+
+        private void dataGridEmployeeOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //foreach (var item in dataGridEmployeeOut.SelectedItems)
+            //{
+            //    MessageBox.Show(((Employee)item).NAME);
+            //}
+        }
     }
 }

@@ -19,8 +19,6 @@ namespace WpfApplication1
     public partial class WaybillAddWindow : Window
     {
         List<NameIdList> employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
-        //public List<string> products = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
-        public List<string> pr { get; set; }
         public WaybillAddWindow()
         {
             InitializeComponent();
@@ -30,7 +28,6 @@ namespace WpfApplication1
                 comboBoxEployees.Items.Add(employees[i].NAME+"(#"+employees[i].ID+")");
             }
             dataGridInfo.ItemsSource = new List<WaybillOutput> { new WaybillOutput() };
-            //pr = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
             dataGridInfo.DataContext = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
         }
         
@@ -41,15 +38,21 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
-            DataBase.Query(
-            new string[] { "@_id", "@_date", "@_employee", "@_agent" },
-            new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
-            "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
+            //string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
+            //DataBase.Query(
+            //new string[] { "@_id", "@_date", "@_employee", "@_agent" },
+            //new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
+            //"INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
             List<WaybillOutput> productsOutput = new List<WaybillOutput>();
-            for (int i = 0; i < dataGridInfo.Items.Count;i++ )
+            //foreach (var item in dataGridInfo.Items)
+            //{
+            //    System.Windows.MessageBox.Show(((WaybillOutput)item).ID);
+            //}
+            object item;
+            for (int i = 0; i < dataGridInfo.Items.Count-1; i++ )
             {
-                productsOutput[i] = (WaybillOutput)dataGridInfo.Items[dataGridInfo.SelectedIndex];
+                item = dataGridInfo.Items[i];
+                System.Windows.MessageBox.Show(((WaybillOutput)item).ID);
             }
                 //DataBase.Query(
                 //new string[] { },
