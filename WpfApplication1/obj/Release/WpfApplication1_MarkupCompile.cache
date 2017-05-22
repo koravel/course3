@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
 WpfApplication1
 none
 false
 TRACE
-h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
-25-1397745425
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
+281776737303
 
-48-1826035264
-23-2109925320
-AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;WarningWindows\DuplicateDiscountWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;ManagerWindows\ReportsWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;Settings\PriceSettingsWindow.xaml;SellerWindows\SellerWindow.xaml;ManagerWindows\ManagerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;WarningWindows\WarningDelEmployeeBindsWindow.xaml;WarningWindows\WarningDelManufacturerBindsWindow.xaml;WarningWindows\WarningDelProductBindsWindow.xaml;Settings\ViewSettingsWindow.xaml;SellerWindows\TransactionConfirm.xaml;
+51-654217091
+23-533855910
+SellerWindows\AddPrepaymentWindow.xaml;AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;DirectorWindow.xaml;LoginWindows\FirstWindow.xaml;WarningWindows\DuplicateDiscountWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;ManagerWindows\ReportsWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;Settings\PriceSettingsWindow.xaml;SellerWindows\SellerWindow.xaml;ManagerWindows\ManagerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;WarningWindows\WarningDelEmployeeBindsWindow.xaml;WarningWindows\WarningDelManufacturerBindsWindow.xaml;WarningWindows\WarningDelProductBindsWindow.xaml;Settings\ViewSettingsWindow.xaml;SellerWindows\TransactionConfirm.xaml;
 
 False
 

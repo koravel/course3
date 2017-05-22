@@ -4,7 +4,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" 
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.ProductEditWindow"
-        Title="ProductEditWindow" Height="479.224" Width="458.984" KeyDown="Window_KeyDown">
+        Title="ProductEditWindow" Height="569.399" Width="458.984">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="113*"/>
@@ -97,22 +97,24 @@
             <System:String>без рецепта</System:String>
             <System:String>с рецептом</System:String>
         </ComboBox>
-        <TextBox x:Name="textBoxInstruction" Margin="158,231,10,41" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2" FontSize="14"/>
+        <TextBox x:Name="textBoxInstruction" Margin="158,265,10,41" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2" FontSize="14"/>
         <Label Content="Название" Margin="65,7,10,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Производитель" Margin="36,35,10,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Группа" Margin="76,62,10,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Упаковка" Margin="66,89,10,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Материал" Margin="63,116,10,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Отпуск" Margin="76,142,10,0" VerticalAlignment="Top" Height="27" FontSize="14"/>
-        <Label Content="Инструкция" Margin="56,231,10,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,121,14" Width="83" Click="buttonSave_Click" Height="25" VerticalAlignment="Bottom" FontSize="14" Grid.Column="1"/>
-        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,10,14" Click="buttonBack_Click" Grid.Column="1" HorizontalAlignment="Right" Width="81" Height="25" VerticalAlignment="Bottom" FontSize="14"/>
+        <Label Content="Инструкция" Margin="56,265,10,0" VerticalAlignment="Top" FontSize="14" Height="31"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,121,14" Width="83" Click="buttonSave_Click" Height="25" VerticalAlignment="Bottom" FontSize="14" Grid.Column="1" IsDefault="True"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,10,14" Click="buttonBack_Click" Grid.Column="1" HorizontalAlignment="Right" Width="81" Height="25" VerticalAlignment="Bottom" FontSize="14" IsCancel="True"/>
         <DatePicker x:Name="datePickerToday" Margin="158,201,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectedDateChanged="datePickerToday_SelectedDateChanged" FontSize="14" IsEnabled="False"/>
         <Label Content="Цена" Margin="83,174,11,0" VerticalAlignment="Top" FontSize="14"/>
         <Label Content="Дата цены" Margin="60,201,11,0" VerticalAlignment="Top" FontSize="14"/>
 
         <xctk:DecimalUpDown x:Name="upDownPrice" FormatString="" Increment=".01" Value="0.01" Maximum="99999.99" Minimum="0.01" Height="25" VerticalAlignment="Top" Margin="158,170,10,0" Grid.ColumnSpan="2" KeyUp="upDownPrice_KeyUp" FontSize="14" IsEnabled="False"/>
-        <Label x:Name="labelTimeToAdd" Content="Установка новой цены&#xD;&#xA;будет доступна через:&#xD;&#xA;&#x9;" Margin="0,297,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="labelTimeToAdd" Content="Установка новой цены&#xD;&#xA;будет доступна через:&#xD;&#xA;&#x9;" Margin="0,323,0,0" VerticalAlignment="Top" FontSize="14" Height="79"/>
+        <TextBox x:Name="textBoxCode" HorizontalAlignment="Left" Height="25" Margin="158,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="283" FontSize="14" KeyUp="textBoxCode_KeyUp" Grid.ColumnSpan="2"/>
+        <Label Content="Штирих-код" Margin="56,231,19,0" VerticalAlignment="Top" FontSize="14"/>
 
     </Grid>
 </Window>

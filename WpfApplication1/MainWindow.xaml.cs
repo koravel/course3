@@ -22,6 +22,19 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
+            if(Properties.Settings.Default.Directors_password == "")
+            {
+                this.IsEnabled = false;
+                new FirstWindow().ShowDialog();
+            }
+            if(Properties.Settings.Default.Directors_password == "" || Properties.Settings.Default.Security_password == "")
+            {
+                this.Close();
+            }
+            else
+            {
+                this.IsEnabled = true;
+            }
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
@@ -43,9 +56,10 @@ namespace WpfApplication1
                 }
                 else
                 {
+                    string idText = DataBase.QueryRetCell(new string[] { "@_login", "@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;");
                     if (loginType == "Администратор")
                     {
-                        new AdminWindow(DataBase.QueryRetCell(new string[] { "@_login", "@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;")).Show();
+                        new AdminWindow(idText).Show();
                         this.Close();
                     }
                     else
@@ -59,7 +73,7 @@ namespace WpfApplication1
                         {
                             if (loginType == "Кассир")
                             {
-                                new SellerWindow().Show();
+                                new SellerWindow(idText).Show();
                                 this.Close();
                             }
                         }

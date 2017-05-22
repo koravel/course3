@@ -489,7 +489,7 @@ namespace WpfApplication1
             }
         }
 
-        public static bool ProductEnterCheck(TextBox name,ComboBox manufacturer,ComboBox group,ComboBox pack,ComboBox material,ComboBox form,DecimalUpDown price,DatePicker pricedate)
+        public static bool ProductEnterCheck(TextBox name,ComboBox manufacturer,ComboBox group,ComboBox pack,ComboBox material,ComboBox form,DecimalUpDown price,DatePicker pricedate,TextBox code)
         {
             int dataCorrect = 0;
             name.BorderBrush = TextCheck(name.Text, ref dataCorrect, 0, Brushes.Red);
@@ -497,10 +497,11 @@ namespace WpfApplication1
             form.BorderBrush = SelectionCheck(form.SelectedIndex, form.Items.Count, ref dataCorrect);
             price.BorderBrush = TextCheck(price.Text, ref dataCorrect, 2, Brushes.Red);
             pricedate.BorderBrush = TextCheck(pricedate.Text, ref dataCorrect, 0, Brushes.Red);
+            code.BorderBrush = TextCheck(code.Text, ref dataCorrect, 1, Brushes.Red);
             group.BorderBrush = SelectionCheck(group.SelectedIndex);
             pack.BorderBrush = SelectionCheck(pack.SelectedIndex);
             material.BorderBrush = SelectionCheck(material.SelectedIndex);
-            if (dataCorrect == 5)
+            if (dataCorrect == 6)
             {
                 return true;
             }
@@ -517,6 +518,44 @@ namespace WpfApplication1
             agent.BorderBrush = TextCheck(agent.Text, ref dataCorrect, 0, Brushes.Red);
             date.BorderBrush = TextCheck(date.Text, ref dataCorrect, 0, Brushes.Red);
             if(dataCorrect == 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool UserEnterCheck(ComboBox type, TextBox login, TextBox pass)
+        {
+            int dataCorrect = 0;
+            type.BorderBrush = SelectionCheck(type.SelectedIndex, type.Items.Count, ref dataCorrect);
+            if (DataBase.QueryRetCell(new string[] { "@_type" }, new string[] { type.SelectedItem.ToString() }, "SELECT COUNT(U_TYPE) from `user` WHERE U_TYPE=@-type;") == "0")
+            {
+                System.Windows.MessageBox.Show("Типы записей уникальны!");
+            }
+            else
+            {
+                dataCorrect++;
+            }
+            login.BorderBrush = TextCheck(login.Text, ref dataCorrect, 0, Brushes.Red);
+            pass.BorderBrush = TextCheck(pass.Text, ref dataCorrect, 0, Brushes.Red);
+            if (dataCorrect == 4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool UserEnterCheck(TextBox login, TextBox pass)
+        {
+            int dataCorrect = 0;
+            login.BorderBrush = TextCheck(login.Text, ref dataCorrect, 0, Brushes.Red);
+            pass.BorderBrush = TextCheck(pass.Text, ref dataCorrect, 0, Brushes.Red);
+            if (dataCorrect == 2)
             {
                 return true;
             }

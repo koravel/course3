@@ -127,14 +127,6 @@ namespace WpfApplication1
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
-        }
-
         private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dataGridInfo.SelectedIndex != -1 && (sender as ComboBox).SelectedIndex != -1 && (sender as ComboBox).SelectedIndex != (sender as ComboBox).Items.Count)

@@ -4,8 +4,8 @@
         Title="DuplicateDiscountWindow" Height="171" Width="281">
     <Grid x:Name="gridWarnWin">
         <Label x:Name="labelWarning" Content="Для данного товара уже существует&#xD;&#xA; такая акция. Желаете добавить?" HorizontalAlignment="Left" Margin="16,10,0,0" VerticalAlignment="Top" Width="241" FontSize="14"/>
-        <Button x:Name="buttonConfirm" Content="Да" HorizontalAlignment="Left" Margin="34,62,0,0" VerticalAlignment="Top" Width="75" Click="buttonConfirm_Click" FontSize="14"/>
-        <Button x:Name="buttonBack" Content="Нет" HorizontalAlignment="Left" Margin="166,62,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click" FontSize="14"/>
+        <Button x:Name="buttonConfirm" Content="Да" HorizontalAlignment="Left" Margin="34,62,0,0" VerticalAlignment="Top" Width="75" Click="buttonConfirm_Click" FontSize="14" IsDefault="True"/>
+        <Button x:Name="buttonBack" Content="Нет" HorizontalAlignment="Left" Margin="166,62,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click" FontSize="14" IsCancel="True"/>
         <CheckBox x:Name="checkBoxWarningSettings" Content="Больше не показывать это окно" HorizontalAlignment="Left" Margin="34,101,0,0" VerticalAlignment="Top" Click="checkBoxWarningSettings_Click" FontSize="14"/>
     </Grid>
 </Window>

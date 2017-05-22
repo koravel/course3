@@ -28,35 +28,32 @@ namespace WpfApplication1
 
         private void AddToDB_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxAddLogin.Text != "")
-            {
-                textBoxAddLogin.BorderBrush = Brushes.Green;
-            }
-            else
-            {
-                textBoxAddLogin.BorderBrush = Brushes.Red;
-            }
-            if (textBoxAddPassword.Text != "")
+            if (ErrorCheck.UserEnterCheck(comboBoxType,textBoxAddLogin,textBoxAddPassword))
             {
                 textBoxAddPassword.BorderBrush = Brushes.Green;
                 DataBase.Query(
                             new string[] { "@_type", "@_login", "@_pass" },
-                            new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text },
+                            new string[] { comboBoxType.SelectedItem.ToString(), textBoxAddLogin.Text, textBoxAddPassword.Text },
                             "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`) VALUES (@_type, @_login, md5(@_pass));");
-                DataBase.SetLog(idText, 1, 2, "Создание пользователя,параметры:|тип записи:" + textBoxAddType.Text + "|логин:" + textBoxAddLogin.Text + "|");
+                DataBase.SetLog(idText, 1, 2, "Создание пользователя,параметры:|тип записи:" + comboBoxType.SelectedItem.ToString() + "|логин:" + textBoxAddLogin.Text + "|");
                 flag = true;
                 this.Close();
-               
-            }
-            else
-            {
-                textBoxAddLogin.BorderBrush = Brushes.Red;
             }
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
+        }
+
+        private void comboBoxType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            comboBoxType.BorderBrush = ErrorCheck.SelectionCheck(comboBoxType.SelectedIndex, comboBoxType.Items.Count);
         }
     }
 }

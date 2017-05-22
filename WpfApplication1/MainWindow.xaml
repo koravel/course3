@@ -8,8 +8,6 @@
         <Button x:Name="buttonExit" Content="Выход" HorizontalAlignment="Left" Margin="360,282,0,0" VerticalAlignment="Top" Width="74" Height="24" Click="LoginExit_Click" TabIndex="5" FontSize="14"/>
         <Button x:Name="buttonLogin" Content="Войти" HorizontalAlignment="Left" Margin="234,207,0,0" VerticalAlignment="Top" Width="74" Click="Login_Click" TabIndex="3" IsDefault="True" FontSize="14"/>
         <Button x:Name="buttonDatabaseSettings" Content="Настроить подключение" HorizontalAlignment="Left" Margin="360,252,0,0" VerticalAlignment="Top" Width="176" Click="DBSettings_Click" TabIndex="4" FontSize="14"/>
-        <Canvas HorizontalAlignment="Left" Height="126" Margin="198,0,0,0" VerticalAlignment="Top" Width="146">
-            <Image Height="126" Source="pack://siteoforigin:,,,/20099851-caduceus-green-circle-glossy-icon--Stock-Photo-logo-medical-symbol.jpg" Stretch="Fill" Width="126" Canvas.Left="10"/>
-        </Canvas>
+        <Image Margin="206,-2,219,202" Source="logo.jpg" Stretch="Fill"/>
     </Grid>
 </Window>

@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("logo_apt.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("search.png")]
 
 

@@ -87,7 +87,7 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (ErrorCheck.ProductEnterCheck(textBoxName, comboBoxManufacturer, comboBoxGroup, comboBoxPack, comboBoxMaterial, comboBoxForm, upDownPrice, datePickerToday))
+            if (ErrorCheck.ProductEnterCheck(textBoxName, comboBoxManufacturer, comboBoxGroup, comboBoxPack, comboBoxMaterial, comboBoxForm, upDownPrice, datePickerToday, textBoxCode))
             {
                 objout.NAME = textBoxName.Text;
                 objout.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].NAME.ToString();
@@ -114,14 +114,6 @@ namespace WpfApplication1
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -181,6 +173,11 @@ namespace WpfApplication1
         private void datePickerToday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             (sender as DatePicker).BorderBrush = ErrorCheck.TextCheck((sender as DatePicker).Text, 0, Brushes.Red);
+        }
+
+        private void textBoxCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            textBoxCode.BorderBrush = ErrorCheck.TextCheck(textBoxCode.Text, 1, Brushes.Red);
         }
     }
 }

@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="UsersControlEditWindow" Height="182" Width="271" ResizeMode="CanMinimize">
     <Grid Height="152" VerticalAlignment="Bottom">
-        <TextBox x:Name="textBoxLogin" HorizontalAlignment="Left" Height="23" Margin="10,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14"/>
-        <TextBox x:Name="textBoxPassword" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14"/>
-        <Button x:Name="buttonSaveChange" Content="Сохранить" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top" Width="112" Click="buttonSaveChange_Click" FontSize="14"/>
-        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="146,113,0,0" VerticalAlignment="Top" Width="107" Click="buttonBack_Click" FontSize="14"/>
+        <TextBox x:Name="textBoxLogin" HorizontalAlignment="Left" Height="23" Margin="10,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14" MaxLength="20" KeyUp="textBox_KeyUp"/>
+        <TextBox x:Name="textBoxPassword" HorizontalAlignment="Left" Height="23" Margin="10,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243" FontSize="14" KeyUp="textBox_KeyUp"/>
+        <Button x:Name="buttonSaveChange" Content="Сохранить" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top" Width="112" Click="buttonSaveChange_Click" FontSize="14" IsDefault="True"/>
+        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="146,113,0,0" VerticalAlignment="Top" Width="107" Click="buttonBack_Click" FontSize="14" IsCancel="True"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontSize="14"><Run Language="ru-ru" Text="Логин"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="10,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="55" FontSize="14"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
 

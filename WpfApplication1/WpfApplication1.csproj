@@ -85,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SellerWindows\AddPrepaymentWindow.xaml.cs">
+      <DependentUpon>AddPrepaymentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddValueWindows\DiscountAddWindow.xaml.cs">
       <DependentUpon>DiscountAddWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,12 @@
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\Converter.cs" />
+    <Compile Include="DirectorWindow.xaml.cs">
+      <DependentUpon>DirectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindows\FirstWindow.xaml.cs">
+      <DependentUpon>FirstWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WarningWindows\DuplicateDiscountWindow.xaml.cs">
       <DependentUpon>DuplicateDiscountWindow.xaml</DependentUpon>
     </Compile>
@@ -176,11 +185,23 @@
     <Compile Include="SellerWindows\TransactionConfirm.xaml.cs">
       <DependentUpon>TransactionConfirm.xaml</DependentUpon>
     </Compile>
+    <Page Include="SellerWindows\AddPrepaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddValueWindows\EmployeeAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DirectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindows\FirstWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,13 +342,16 @@
     <None Include="Resources\Apteka1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="20099851-caduceus-green-circle-glossy-icon--Stock-Photo-logo-medical-symbol.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\logo_apt.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\snake-41705_960_720.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

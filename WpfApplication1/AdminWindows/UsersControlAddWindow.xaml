@@ -1,16 +1,21 @@
 ﻿<Window x:Class="WpfApplication1.UsersControlAddWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" 
         Title="UsersControlAddWindow" Height="246.421" Width="202" ResizeMode="CanMinimize">
     <Grid>
-        <TextBox x:Name="textBoxAddType" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" FontSize="14"/>
-        <TextBox x:Name="textBoxAddLogin" HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" FontSize="14"/>
-        <TextBox x:Name="textBoxAddPassword" HorizontalAlignment="Left" Height="23" Margin="10,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" FontSize="14"/>
+        <TextBox x:Name="textBoxAddLogin" HorizontalAlignment="Left" Height="23" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" FontSize="14" MaxLength="20" KeyUp="textBox_KeyUp"/>
+        <TextBox x:Name="textBoxAddPassword" HorizontalAlignment="Left" Height="23" Margin="10,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" FontSize="14" KeyUp="textBox_KeyUp"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Тип записи"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="10,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Логин"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
-        <Button x:Name="buttonUserAddToDB" Content="Добавить" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="75" Click="AddToDB_Click" FontSize="14"/>
-        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="101,175,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Логин"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
+        <Button x:Name="buttonUserAddToDB" Content="Добавить" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="75" Click="AddToDB_Click" FontSize="14" IsDefault="True"/>
+        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="101,175,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click" FontSize="14" IsCancel="True"/>
+        <ComboBox x:Name="comboBoxType" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="166" FontSize="14" SelectionChanged="comboBoxType_SelectionChanged">
+            <System:String>Администратор</System:String>
+            <System:String>Менеджер</System:String>
+            <System:String>Кассир</System:String>
+        </ComboBox>
 
     </Grid>
 </Window>

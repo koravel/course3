@@ -39,14 +39,6 @@ namespace WpfApplication1
             this.Close();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
-        }
-
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
 

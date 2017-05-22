@@ -34,12 +34,12 @@
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dataGridCheckOut" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2">
+                        <DataGrid x:Name="dataGridCheckOut" AutoGenerateColumns="False" SelectionChanged="dataGridCheckOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2" KeyUp="dataGrid_KeyUp">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Время" Binding="{Binding DATE}"/>
                                 <DataGridTextColumn Header="Кассир" Binding="{Binding NAME}"/>
                                 <DataGridTextColumn Header="Оплата" Binding="{Binding PAYTYPE}"/>
+                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
@@ -95,7 +95,7 @@
             </TabItem>
             <TabItem x:Name="tabItemDiscount" Header="Акции" Margin="21,0,-21,0">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridDiscountOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6">
+                    <DataGrid x:Name="dataGridDiscountOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6" KeyUp="dataGrid_KeyUp">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Товар" Binding="{Binding NAME}"/>
@@ -124,14 +124,14 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="dataGridEmployeeOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,1" SelectionChanged="dataGridEmployeeOut_SelectionChanged">
+                    <DataGrid x:Name="dataGridEmployeeOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,1" SelectionChanged="dataGridEmployeeOut_SelectionChanged" KeyUp="dataGrid_KeyUp">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Ф.И.О." Binding="{Binding NAME}"/>
                             <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
                             <DataGridTextColumn Header="Должность" Binding="{Binding POSITION}"/>
                             <DataGridTextColumn Header="№ контракта" Binding="{Binding CONTRACT}"/>
                             <DataGridTextColumn Header="ИНН" Binding="{Binding INN}"/>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -147,14 +147,14 @@
             </TabItem>
             <TabItem x:Name="tabItemManufacturer" Header="Производители" Margin="18,0,-18,0">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="dataGridManufacturersOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6">
+                    <DataGrid x:Name="dataGridManufacturersOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,-6" KeyUp="dataGrid_KeyUp">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Название" Binding="{Binding NAME}"/>
                             <DataGridTextColumn Header="Страна" Binding="{Binding COUNTRY}"/>
                             <DataGridTextColumn Header="Город" Binding="{Binding CITY}"/>
                             <DataGridTextColumn Header="Адрес" Binding="{Binding ADDR}"/>
                             <DataGridTextColumn Header="Телефон" Binding="{Binding TEL}"/>
+                            <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
@@ -179,9 +179,9 @@
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" SelectionChanged="dataGridProductOut_SelectionChanged" IsReadOnly="True">
+                        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" SelectionChanged="dataGridProductOut_SelectionChanged" IsReadOnly="True" KeyUp="dataGrid_KeyUp">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
+                                <DataGridTextColumn Header="Штрих-код" Binding="{Binding CODE}"/>
                                 <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
                                 <DataGridTextColumn Header="Производитель" Binding="{Binding MANUFACTURER}"/>
                                 <DataGridTextColumn Header="Группа" Binding="{Binding GROUP}"/>
@@ -189,6 +189,7 @@
                                 <DataGridTextColumn Header="Материал" Binding="{Binding MATERIAL}"/>
                                 <DataGridTextColumn Header="Отпуск" Binding="{Binding FORM}"/>
                                 <DataGridTextColumn Header="Инструкция" Binding="{Binding INSTR}"/>
+                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
@@ -220,12 +221,12 @@
                             <ColumnDefinition Width="256*"/>
                             <ColumnDefinition Width="128*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dataGridWaybillOut" AutoGenerateColumns="False" SelectionChanged="dataGridWaybillOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2">
+                        <DataGrid x:Name="dataGridWaybillOut" AutoGenerateColumns="False" SelectionChanged="dataGridWaybillOut_SelectionChanged" IsReadOnly="True" Grid.RowSpan="2" KeyUp="dataGrid_KeyUp">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                                 <DataGridTextColumn Header="Дата" Binding="{Binding DATE, StringFormat=\{0:dd.MM.yy\}}"/>
                                 <DataGridTextColumn Header="Принял" Binding="{Binding EMPLOYEE}"/>
                                 <DataGridTextColumn Header="Контрагент" Binding="{Binding AGENT}"/>
+                                <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                             </DataGrid.Columns>
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
@@ -494,7 +495,7 @@
                     <CheckBox x:Name="checkBoxSearchMaterialProduct" Content="Материал" HorizontalAlignment="Left" Margin="305,45,0,0" VerticalAlignment="Top" Click="checkBoxSearchMaterialProduct_Click"/>
                     <CheckBox x:Name="checkBoxSearchFormProduct" Content="Отпуск" HorizontalAlignment="Left" Margin="305,87,0,0" VerticalAlignment="Top" Click="checkBoxSearchFormProduct_Click"/>
                     <CheckBox x:Name="checkBoxSearchPriceProduct" Content="Цена" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" Click="checkBoxSearchPriceProduct_Click"/>
-                    <Button x:Name="buttonResetSearchProduct" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="420,233,0,0" VerticalAlignment="Top" Width="135" Click="buttonResetSearchProduct_Click"/>
+                    <Button x:Name="buttonResetSearchProduct" Content="Сбросить фильтры" HorizontalAlignment="Left" Margin="420,252,0,0" VerticalAlignment="Top" Width="135" Click="buttonResetSearchProduct_Click"/>
                     <ComboBox  x:Name="comboBoxSearchPriceRangeProduct" HorizontalAlignment="Left" Margin="129,138,0,0" VerticalAlignment="Top" Width="153" SelectedIndex="0">
                         <System:String>равно</System:String>
                         <System:String>больше или равно</System:String>
@@ -518,6 +519,8 @@
                         <System:String>просрочено</System:String>
                         <System:String>не просрочено</System:String>
                     </ComboBox>
+                    <CheckBox x:Name="checkBoxSearchBarcode" Content="Штрих-код" HorizontalAlignment="Left" Margin="290,215,0,0" VerticalAlignment="Top" Click="checkBoxSearchBarcode_Click"/>
+                    <TextBox x:Name="textBoxSearchBarcode" HorizontalAlignment="Left" Height="23" Margin="397,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="158" IsEnabled="False"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Накладные" Margin="-5,0,6,0" FontSize="14">

@@ -731,12 +731,14 @@ namespace WpfApplication1
                             " AND (SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)" },
                             new string[] { "@valueq", upDownSearchValueProduct.Text }, ref temp, ref flag);
 
-                        SQLParameterAdd(checkBoxSearchCodeProduct.IsChecked.Value, new string[] { " AND product.P_ID=@_code", "@_code", textBoxSearchCodeProduct.Text }, ref temp, ref flag, new bool[] { false, false });
+                        SQLParameterAdd(checkBoxSearchCodeProduct.IsChecked.Value, new string[] { " AND p.P_ID=@_code", "@_code", textBoxSearchCodeProduct.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchBarcode.IsChecked.Value, new string[] { " AND p.P_CODE=@_barcode", "@_barcode", textBoxSearchBarcode.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         MakeSearch(
                             dataGridProductOut, DataBase.GetProduct, 
-                            new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ",
-                                "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " },
+                            new string[] { "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR,p.P_CODE FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ",
+                                "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR,p.P_CODE FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` " },
                                 temp, flag);
                         GetSubTable<ProductActualPrice>(dataGridProductActPriceOut, dataGridProductOut);
                         break;
@@ -1423,6 +1425,9 @@ namespace WpfApplication1
 
         private void buttonResetSearchProduct_Click(object sender, RoutedEventArgs e)
         {
+            checkBoxSearchBarcode.IsChecked = false;
+            textBoxSearchBarcode.Text = null;
+            textBoxSearchBarcode.IsEnabled = false;
             checkBoxSearchNameProduct.IsChecked = false;
             textBoxSearchNameProduct.Text = null;
             textBoxSearchNameProduct.IsEnabled = false;
@@ -1499,6 +1504,11 @@ namespace WpfApplication1
         {
             SearchSingleToggle(checkBoxSearchValueProduct, upDownSearchValueProduct);
         }
+        private void checkBoxSearchBarcode_Click(object sender, RoutedEventArgs e)
+        {
+            SearchSingleToggle(checkBoxSearchBarcode, textBoxSearchBarcode);
+        }
+        
 
         private void buttonResetSearchWaybill_Click(object sender, RoutedEventArgs e)
         {
@@ -1636,6 +1646,36 @@ namespace WpfApplication1
             buttonResetSearchManufacturer_Click(null, null);
             buttonResetSearchProduct_Click(null, null);
             buttonResetSearchWaybill_Click(null, null);
+        }
+
+        private void dataGrid_KeyUp(object sender, KeyEventArgs e)
+        {
+            if((sender as DataGrid).SelectedIndex != -1)
+            {
+                switch(e.Key)
+                {
+                    case Key.Delete:
+                        {
+                            buttonDelete_Click(null,null);
+                            break;
+                        }
+                    case Key.Insert:
+                        {
+                            buttonAdd_Click(null,null);
+                            break;
+                        }
+                    case Key.F12:
+                        {
+                            buttonEdit_Click(null,null);
+                            break;
+                        }
+                    case Key.F11:
+                        {
+                            UpdateData_Click(null,null);
+                            break;
+                        }
+                }
+            }
         }
     }
 }

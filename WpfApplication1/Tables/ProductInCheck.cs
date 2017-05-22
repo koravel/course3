@@ -16,7 +16,7 @@ namespace WpfApplication1
         {
 
             CURPRICE = Converter.CailingRound((float.Parse(price) * (100 - discount) * 0.01)).ToString();
-            SUMM = (float.Parse(CURPRICE) * value).ToString();
+            SUMM = Math.Round(decimal.Parse((float.Parse(CURPRICE) * value).ToString()), 2).ToString();
         }
     }
 }

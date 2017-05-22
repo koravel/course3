@@ -16,5 +16,6 @@ namespace WpfApplication1
         public string MATERIAL { set; get; }
         public string FORM { set; get; }
         public string INSTR { set; get; }
+        public string CODE { set; get; }
     }
 }

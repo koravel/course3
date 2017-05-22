@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.DiscountAddWindow"
-        Title="DiscountAddWindow" Height="300" Width="300" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
+        Title="DiscountAddWindow" Height="300" Width="300" ResizeMode="CanMinimize">
     <Window.Resources>
         <Color x:Key="Color1">#FF617584</Color>
     </Window.Resources>
@@ -28,8 +28,8 @@
         <Label Content="Начало" Margin="10,69,168,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2" FontSize="14"/>
         <Label Content="Конец" Margin="10,100,8,0" VerticalAlignment="Top" Height="26" FontSize="14"/>
         <Label Content="Описание" Margin="0,130,167,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2" FontSize="14"/>
-        <Button x:Name="buttonSave" Content="Сохранить" Margin="0,0,139,10" Click="buttonSave_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Grid.ColumnSpan="2" FontSize="14"/>
-        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,26,10" Click="buttonBack_Click" Grid.Column="1" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="76" FontSize="14"/>
+        <Button x:Name="buttonSave" Content="Сохранить" Margin="0,0,139,10" Click="buttonSave_Click" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Grid.ColumnSpan="2" FontSize="14" IsDefault="True"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,26,10" Click="buttonBack_Click" Grid.Column="1" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="76" FontSize="14" IsCancel="True"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="179,42,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Height="22" FontSize="14"/>
         <xctk:IntegerUpDown x:Name="upDownPrice" FormatString="" Value="0" Increment="1" Maximum="100" Minimum="0" HorizontalAlignment="Left" Width="193" Height="23" VerticalAlignment="Top" Margin="75,42,0,0" Grid.ColumnSpan="2" KeyUp="upDownPrice_KeyUp" FontSize="14"/>
     </Grid>

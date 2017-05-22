@@ -178,5 +178,29 @@ namespace WpfApplication1.Properties {
                 this["DuplDiscount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Directors_password {
+            get {
+                return ((string)(this["Directors_password"]));
+            }
+            set {
+                this["Directors_password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Security_password {
+            get {
+                return ((string)(this["Security_password"]));
+            }
+            set {
+                this["Security_password"] = value;
+            }
+        }
     }
 }

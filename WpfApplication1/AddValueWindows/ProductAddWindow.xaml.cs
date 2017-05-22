@@ -30,7 +30,7 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            if(ErrorCheck.ProductEnterCheck(textBoxName,comboBoxManufacturer,comboBoxGroup,comboBoxPack,comboBoxMaterial,comboBoxForm,upDownPrice,datePickerToday))
+            if(ErrorCheck.ProductEnterCheck(textBoxName,comboBoxManufacturer,comboBoxGroup,comboBoxPack,comboBoxMaterial,comboBoxForm,upDownPrice,datePickerToday,textBoxCode))
             {
                 if(comboBoxGroup.SelectedIndex == -1)
                 {
@@ -71,14 +71,6 @@ namespace WpfApplication1
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                this.Close();
-            }
         }
 
         private void ManufacturerListUpdate()
@@ -125,6 +117,11 @@ namespace WpfApplication1
                     }
             }
             
+        }
+
+        private void textBoxCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            textBoxCode.BorderBrush = ErrorCheck.TextCheck(textBoxCode.Text, 1, Brushes.Red);
         }
 
     }

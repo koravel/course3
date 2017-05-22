@@ -79,5 +79,35 @@ namespace WpfApplication1
             dataGridUserOut.ItemsSource = DataBase.GetUser();
             DataBase.SetLog(idText, 1, 0, "Обновление таблицы пользователей...");
         }
+
+        private void dataGridUserOut_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((sender as DataGrid).SelectedIndex != -1)
+            {
+                switch (e.Key)
+                {
+                    case Key.Delete:
+                        {
+                            UserDelete_Click(null, null);
+                            break;
+                        }
+                    case Key.Insert:
+                        {
+                            UserAdd_Click(null, null);
+                            break;
+                        }
+                    case Key.F12:
+                        {
+                            buttonUserEdit_Click(null, null);
+                            break;
+                        }
+                    case Key.F11:
+                        {
+                            buttonUpdate_Click(null, null);
+                            break;
+                        }
+                }
+            }
+        }
     }
 }

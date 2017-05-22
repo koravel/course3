@@ -7,7 +7,7 @@
             <ColumnDefinition Width="173*"/>
             <ColumnDefinition Width="479*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dataGridUserOut" GridLinesVisibility="Horizontal" IsReadOnly="True" AutoGenerateColumns="False" Margin="1,0,7,9" Grid.Column="1" FontSize="14">
+        <DataGrid x:Name="dataGridUserOut" GridLinesVisibility="Horizontal" IsReadOnly="True" AutoGenerateColumns="False" Margin="1,0,7,9" Grid.Column="1" FontSize="14" KeyDown="dataGridUserOut_KeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Тип записи" Binding="{Binding TYPE}"/>
                 <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}"/>
@@ -25,7 +25,7 @@
         <Button x:Name="buttonUserAdd" Content="Добавить запись" Click="UserAdd_Click" Margin="10,38,4,0" Height="26" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="buttonUserDelete" Content="Удалить запись" Margin="10,8,4,0" Click="UserDelete_Click" Height="26" VerticalAlignment="Top" FontSize="14"/>
         <Button x:Name="buttonUpdate" Content="Обновить" Margin="10,98,4,0" Click="buttonUpdate_Click" Height="26" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="buttonBack" Content="Назад" Margin="10,128,4,0" Click="buttonBack_Click" Height="26" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="10,128,4,0" Click="buttonBack_Click" Height="26" VerticalAlignment="Top" FontSize="14" IsCancel="True"/>
         <Button x:Name="buttonUserEdit" Content="Изменить запись" Margin="10,68,4,0" Click="buttonUserEdit_Click" Height="26" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </Window>

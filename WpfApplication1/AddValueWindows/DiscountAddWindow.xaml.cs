@@ -60,14 +60,6 @@ namespace WpfApplication1
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Escape)
-            {
-                this.Close();
-            }
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             new ProductAddWindow(idText).ShowDialog();

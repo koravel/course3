@@ -377,3 +377,9 @@ h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Warn
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelProductBindsWindow.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\DuplicateDiscountWindow.baml
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\DuplicateDiscountWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\FirstWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\FirstWindow.g.cs
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.baml
+H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.g.cs

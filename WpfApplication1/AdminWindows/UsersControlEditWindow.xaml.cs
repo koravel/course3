@@ -31,15 +31,7 @@ namespace WpfApplication1
 
         private void buttonSaveChange_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxLogin.Text != "")
-            {
-                textBoxLogin.BorderBrush = Brushes.Green;
-            }
-            else
-            {
-                textBoxLogin.BorderBrush = Brushes.Red;
-            }
-            if(textBoxPassword.Text != "")
+            if (ErrorCheck.UserEnterCheck(textBoxLogin, textBoxPassword))
             {
                 textBoxPassword.BorderBrush = Brushes.Green;
                 DataBase.Query(new string[] { "@_login", "@_password", "@_type" }, new string[] { textBoxLogin.Text, textBoxPassword.Text, curtype }, "UPDATE `user` SET `U_NAME`=@_login, `U_PASS`=md5(@_password) WHERE `U_TYPE`=@_type;");
@@ -56,6 +48,11 @@ namespace WpfApplication1
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
         }
     }
 }
