@@ -45,19 +45,8 @@ namespace WpfApplication1
                 {
                     if (loginType == "Администратор")
                     {
-                        string onlineCheck=DataBase.CheckLogin(LoginField.Text, DataBase.computeMD5(PasswordField.Password));
-
-                        if (onlineCheck == "offline")
-                            {
-                                DataBase.Query(new string[] { "@_login","@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "UPDATE `user` SET U_ONLINE='online' WHERE U_NAME=@_login AND U_PASS=@_pass;");
-                                new AdminWindow(DataBase.QueryRetCell(new string[] { "@_login","@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;")).Show();
-                                this.Close();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Пользователь уже онлайн!");
-                                return;
-                            }
+                        new AdminWindow(DataBase.QueryRetCell(new string[] { "@_login", "@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;")).Show();
+                        this.Close();
                     }
                     else
                     {
@@ -94,13 +83,5 @@ namespace WpfApplication1
          {
              new DBSettingsWindow().ShowDialog();
          }
-
-         private void Button_Click(object sender, RoutedEventArgs e)//TEMP!!!!
-         {
-             DataBase.Connection();
-             DataBase.Query(null, null, "UPDATE `pharmacy_db`.`user` SET `U_ONLINE`='offline' WHERE `U_ID`='1';");
-         }
-
-   
     }
 }

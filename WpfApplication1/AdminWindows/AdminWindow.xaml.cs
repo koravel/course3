@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Data;
 using Xceed.Wpf.Toolkit;
+using System.ComponentModel;
 
 namespace WpfApplication1
 {
@@ -25,17 +26,25 @@ namespace WpfApplication1
         List<CheckList> checkList = new List<CheckList> { };
         List<WaybillList> waybillList = new List<WaybillList> { };
         List<string> valuesText = new List<string>(), values = new List<string>();
-        delegate List<T> GetTableDelegate<T>(string query, string[] values, string[] valuesText);
-        public AdminWindow(string _idText)
+        private delegate List<T> GetTableDelegate<T>(string query, string[] values, string[] valuesText);
+        public AdminWindow(string id)
         {
+            idText = id;
             InitializeComponent();
-            idText = _idText;
             dataGridCheckOut.ItemsSource = DataBase.GetCheck();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы чеков...");
             dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы скидок...");
             dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы производителей...");
             dataGridProductOut.ItemsSource = DataBase.GetProduct();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы товаров...");
             dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы работников...");
             dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
+            DataBase.SetLog(idText, 0, 0, DateTime.Now, "Заполнение таблицы накладных...");
+            valuesText.Clear();
+            values.Clear();
         }
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
@@ -99,9 +108,8 @@ namespace WpfApplication1
             this.Close();
         }
 
-        private void adminLogout_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void adminLogout_Closing(object sender, CancelEventArgs e)
         {
-            DataBase.Query(new string[] { "@_id" }, new string[] { idText }, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID=@_id;");
             new MainWindow().Show();
         }
 
@@ -125,6 +133,7 @@ namespace WpfApplication1
                 }
             }
         }
+
         private void dataGridProductOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -254,7 +263,9 @@ namespace WpfApplication1
                         {
                             if (dataGridDiscountOut.SelectedIndex != -1)
                             {
-                                DataBase.Query(new string[] { "@_curid" }, new string[] { Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut) }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
+                                string discountId = Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut);
+                                DataBase.Query(new string[] { "@_curid" }, new string[] { discountId }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
+                                DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление акции,код=" + discountId);
                             }
                         }
                         catch (Exception ex)
@@ -277,6 +288,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { employeeId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
+                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление работника,код=" + employeeId);
                                 }
                             }
                         }
@@ -300,6 +312,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { maufacturerId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
+                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление производителя,код=" + maufacturerId);
                                 }
                             }
                         }
@@ -323,6 +336,7 @@ namespace WpfApplication1
                                 else
                                 {
                                     DataBase.Query(new string[] { "@_curid" }, new string[] { productId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
+                                    DataBase.SetLog(idText, 1, 3, DateTime.Now, "Удаление товара,код=" + productId);
                                 }
                             }
                         }
@@ -409,145 +423,31 @@ namespace WpfApplication1
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-            int selected = tabControlSearch.SelectedIndex;
-            switch(selected)
+            temp = null;
+            flag = false;
+            switch(tabControlSearch.SelectedIndex)
             {
                 case 0:
                     {
-                        string temp = null;
-                        bool flag = false;
-                        valuesText.Clear();
-                        values.Clear();
-                        if (checkBoxSearchEmployeeCheck.IsChecked == true && textBoxSearchEmployeeCheck.Text != "")
-                        {
-                            temp += "AND employee.E_NAME=@employee";
-                            valuesText.Add("@employee");
-                            values.Add(textBoxSearchEmployeeCheck.Text);
-                        }
-                        if (checkBoxSearchBDateCheck.IsChecked == true && checkBoxSearchEDateCheck.IsChecked == true && datePickerSearchBDateCheck.Text != "" && datePickerSearchEDateCheck.Text != "")
-                        {
-                            switch(comboBoxSearchDateRangeTypeCheck.SelectedIndex)
-                            {
-                                case 0:
-                                    {
-                                        temp += " AND `check`.C_DATE BETWEEN @bdate AND @edate";
-                                        break;
-                                    }
-                                case 1:
-                                    {
-                                        temp += " AND (`check`.C_DATE>@edate OR `check`.C_DATE<@bdate)";
-                                        break;
-                                    }
-                            }
-                            valuesText.Add("@bdate");
-                            values.Add(Converter.DateConvert(datePickerSearchBDateCheck.Text));
-                            valuesText.Add("@edate");
-                            values.Add(Converter.DateConvert(datePickerSearchEDateCheck.Text));
-                        }
-                        else
-                        {
-                            if (checkBoxSearchBDateCheck.IsChecked == true && datePickerSearchBDateCheck.Text != "")
-                            {
-                                temp += "AND `check`.C_DATE>=@bdate";
-                                valuesText.Add("@bdate");
-                                values.Add(Converter.DateConvert(datePickerSearchBDateCheck.Text));
-                            }
-                            else
-                            {
-                                if (checkBoxSearchEDateCheck.IsChecked == true && datePickerSearchEDateCheck.Text != "")
-                                {
-                                    temp += "AND `check`.C_DATE<=@edate";
-                                    valuesText.Add("@edate");
-                                    values.Add(Converter.DateConvert(datePickerSearchEDateCheck.Text));
-                                }
-                            }
-                        }
-                        if (checkBoxSearchBHours.IsChecked == true && checkBoxSearchEHours.IsChecked == true && upDownSearchBHours.Text != "" && upDownSearchEHours.Text != "")
-                        {
-                            temp += " AND HOUR(`check`.C_DATE) BETWEEN @bhour AND @ehour";
-                            valuesText.Add("@bhour");
-                            values.Add(upDownSearchBHours.Text);
-                            valuesText.Add("@ehour");
-                            values.Add(upDownSearchEHours.Text);
-                        }
-                        else
-                        {
-                            if (checkBoxSearchBHours.IsChecked == true && upDownSearchBHours.Text != "")
-                            {
-                                temp += " AND HOUR(`check`.C_DATE)>=@bhour";
-                                valuesText.Add("@bhour");
-                                values.Add(upDownSearchBHours.Text);
-                            }
-                            else
-                            {
-                                if (checkBoxSearchEHours.IsChecked == true && upDownSearchEHours.Text != "")
-                                {
-                                    temp += " AND HOUR(`check`.C_DATE)<=@ehour";
-                                    valuesText.Add("@ehour");
-                                    values.Add(upDownSearchEHours.Text);
-                                }
-                            }
-                        }
-                        if (checkBoxSearchBMinutes.IsChecked == true && checkBoxSearchEMinutes.IsChecked == true && upDownSearchBMinutes.Text != "" && upDownSearchEMinutes.Text != "")
-                        {
-                            temp += " AND MINUTE(`check`.C_DATE) BETWEEN @bminute AND @eminute";
-                            valuesText.Add("@bminute");
-                            values.Add(upDownSearchBMinutes.Text);
-                            valuesText.Add("@eminute");
-                            values.Add(upDownSearchEMinutes.Text);
-                        }
-                        else
-                        {
-                            if (checkBoxSearchBMinutes.IsChecked == true && upDownSearchBMinutes.Text != "")
-                            {
-                                temp += " AND MINUTE(`check`.C_DATE)>=@bminute";
-                                valuesText.Add("@bminute");
-                                values.Add(upDownSearchBMinutes.Text);
-                            }
-                            else
-                            {
-                                if (checkBoxSearchEMinutes.IsChecked == true && upDownSearchEMinutes.Text != "")
-                                {
-                                    temp += " AND MINUTE(`check`.C_DATE)<=@eminute";
-                                    valuesText.Add("@eminute");
-                                    values.Add(upDownSearchEMinutes.Text);
-                                }
-                            }
-                        }
+                          SQLParameterAdd(checkBoxSearchEmployeeCheck.IsChecked.Value, new string[] { " AND employee.E_NAME=@_employee", "@_employee", textBoxSearchEmployeeCheck.Text }, ref temp, ref flag, new bool[] { false, false });
 
-                        if (checkBoxSearchBSeconds.IsChecked == true && checkBoxSearchESeconds.IsChecked == true && upDownSearchBSeconds.Text != "" && upDownSearchESeconds.Text != "")
-                        {
-                            temp += " AND SECOND(`check`.C_DATE) BETWEEN @bsecond AND @esecond";
-                            valuesText.Add("@bsecond");
-                            values.Add(upDownSearchBSeconds.Text);
-                            valuesText.Add("@esecond");
-                            values.Add(upDownSearchESeconds.Text);
-                        }
-                        else
-                        {
-                            if (checkBoxSearchBSeconds.IsChecked == true && upDownSearchBSeconds.Text != "")
-                            {
-                                temp += " AND SECOND(`check`.C_DATE)>=@bsecond";
-                                valuesText.Add("@bsecond");
-                                values.Add(upDownSearchBSeconds.Text);
-                            }
-                            else
-                            {
-                                if (checkBoxSearchESeconds.IsChecked == true && upDownSearchESeconds.Text != "")
-                                {
-                                    temp += " AND SECOND(`check`.C_DATE)<=@esecond";
-                                    valuesText.Add("@esecond");
-                                    values.Add(upDownSearchESeconds.Text);
-                                }
-                            }
-                        }
+                        RangeComparsionGet(new bool[] { checkBoxSearchBDateCheck.IsChecked.Value, checkBoxSearchEDateCheck.IsChecked.Value }, comboBoxSearchDateRangeTypeCheck.SelectedIndex, new string[] { 
+                                "AND `check`.C_DATE>=@_bdate","AND `check`.C_DATE<=@_edate"," AND `check`.C_DATE BETWEEN @_bdate AND @_edate"," AND (`check`.C_DATE>@_edate OR `check`.C_DATE<@_bdate)"},
+                            new string[] { Converter.DateConvert(datePickerSearchBDateCheck.Text), Converter.DateConvert(datePickerSearchEDateCheck.Text) }, new string[] { "@_bdate", "@_edate" }, ref temp, ref flag);
 
+                        RangeComparsionGet(new bool[] { checkBoxSearchBHours.IsChecked.Value, checkBoxSearchEHours.IsChecked.Value }, 0, new string[] { 
+                                " AND HOUR(`check`.C_DATE)>=@_bhour"," AND HOUR(`check`.C_DATE)<=@_ehour"," AND HOUR(`check`.C_DATE) BETWEEN @_bhour AND @_ehour"},
+                            new string[] { upDownSearchBHours.Text, upDownSearchEHours.Text }, new string[] { "@_bhour", "@_ehour" }, ref temp, ref flag);
 
-                        if (checkBoxSearchPaytypeCash.IsChecked == true && checkBoxSearchPaytypeCard.IsChecked == true)
-                        {
+                        RangeComparsionGet(new bool[] { checkBoxSearchBMinutes.IsChecked.Value, checkBoxSearchEMinutes.IsChecked.Value }, 0, new string[] { 
+                                " AND MINUTE(`check`.C_DATE)>=@_bminute"," AND MINUTE(`check`.C_DATE)<=@_eminute"," AND MINUTE(`check`.C_DATE) BETWEEN @_bminute AND @_eminute"},
+                            new string[] { upDownSearchBMinutes.Text, upDownSearchEMinutes.Text }, new string[] { "@_bminute", "@_eminute" }, ref temp, ref flag);
 
-                        }
-                        else
+                        RangeComparsionGet(new bool[] { checkBoxSearchBSeconds.IsChecked.Value, checkBoxSearchESeconds.IsChecked.Value }, 0, new string[] { 
+                                " AND SECOND(`check`.C_DATE)>=@_bsecond"," AND SECOND(`check`.C_DATE)<=@_esecond"," AND SECOND(`check`.C_DATE) BETWEEN @_bsecond AND @_esecond"},
+                            new string[] { upDownSearchBSeconds.Text, upDownSearchESeconds.Text }, new string[] { "@_bsecond", "@_esecond" }, ref temp, ref flag);
+
+                        if (!(checkBoxSearchPaytypeCash.IsChecked == true && checkBoxSearchPaytypeCard.IsChecked == true))
                         {
                             if (checkBoxSearchPaytypeCash.IsChecked == true)
                             {
@@ -561,141 +461,49 @@ namespace WpfApplication1
                                 }
                             }
                         }
-                        if (checkBoxSearchProductCheck.IsChecked == true && textBoxSearchProductCheck.Text != "")
-                        {
-                            temp += " AND product.P_NAME=@product";
-                            valuesText.Add("@product");
-                            values.Add(textBoxSearchProductCheck.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchProductIdCheck.IsChecked == true && textBoxSearchProductIdCheck.Text != "")
-                        {
-                            temp += " AND product.P_ID=@pid";
-                            valuesText.Add("@pid");
-                            values.Add(textBoxSearchProductIdCheck.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchPriceCheck.IsChecked == true && upDownSearchPriceCheck.Text != "")
-                        {
-                            temp += " AND product_actual_price.PAP_PRICE";
-                            temp += ComparsionGet(comboBoxDirectionSearchPrice.SelectedIndex);
-                            temp += Converter.CurrencyConvert(upDownSearchPriceCheck.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchValueCheck.IsChecked == true && upDownSearchValueCheck.Text != "")
-                        {
-                            temp += " AND check_list.CL_VALUE";
-                            temp += ComparsionGet(comboBoxDirectionSearchValue.SelectedIndex);
-                            temp += "@value";
-                            valuesText.Add("@value");
-                            values.Add(upDownSearchValueCheck.Text);
-                            flag = true;
-                        }
-                        if (checkBoxSearchCheckCode.IsChecked == true && textBoxSearchCheckCode.Text != "")
-                        {
 
-                            temp += " AND `check`.C_ID=@id";
-                            valuesText.Add("@id");
-                            values.Add(textBoxSearchCheckCode.Text);
-                        }
-                        MakeSearch(dataGridCheckOut, DataBase.GetCheck, new string[] { "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ", "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` " }, temp, flag);
+                        SQLParameterAdd(checkBoxSearchProductCheck.IsChecked.Value, new string[] { " AND product.P_NAME=@_product", "@_product", textBoxSearchProductCheck.Text }, ref temp, ref flag, new bool[] { true, false });
+
+                        SQLParameterAdd(checkBoxSearchProductIdCheck.IsChecked.Value, new string[] { " AND product.P_ID=@_pid", "@_pid", textBoxSearchProductIdCheck.Text }, ref temp, ref flag, new bool[] { true, false });
+
+                        ComparsionGet(checkBoxSearchPriceCheck.IsChecked.Value, new int[] { comboBoxDirectionSearchPrice.SelectedIndex, 0 },
+                            new string[] { " AND product_actual_price.PAP_PRICE" },
+                            new string[] { null, Converter.CurrencyConvert(upDownSearchPriceCheck.Text) }, ref temp, ref flag);
+
+                        ComparsionGet(checkBoxSearchValueCheck.IsChecked.Value, new int[] { comboBoxDirectionSearchValue.SelectedIndex, 0 },
+                             new string[] { " AND check_list.CL_VALUE" },
+                             new string[] { "@_value", upDownSearchValueCheck.Text }, ref temp, ref flag);
+
+                        SQLParameterAdd(checkBoxSearchCheckCode.IsChecked.Value, new string[] { " AND `check`.C_ID=@_id", "@_id", textBoxSearchCheckCode.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        MakeSearch(dataGridCheckOut, DataBase.GetCheck, new string[] { 
+                            "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ",
+                            "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` " }, temp, flag);
                         break;
                     }
                 case 1:
                     {
-                        valuesText.Clear();
-                        values.Clear();
-                        string temp = null;
-                        if (checkBoxSearchProductDiscount.IsChecked == true && textBoxSearchProductDiscount.Text != "")
-                        {
-                            temp += " AND product.P_NAME=@_product";
-                            valuesText.Add("@_product");
-                            values.Add(textBoxSearchProductDiscount.Text);
-                        }
-                        else
-                        {
-                            if (checkBoxSearchProductIdDiscount.IsChecked == true && textBoxSearchProductIdDiscount.Text != "")
-                            {
-                                temp += " AND discounts.P_ID=@_product";
-                                valuesText.Add("@_product");
-                                values.Add(textBoxSearchProductIdDiscount.Text);
-                            }
-                        }
-                        if(checkBoxSearchProcDiscount.IsChecked == true && upDownSearchProcDiscount.Text != "")
-                        {
-                            temp += " AND discounts.D_PRICE=@_proc";
-                            valuesText.Add("@_proc");
-                            values.Add(upDownSearchProcDiscount.Text);
-                        }
-                        if (checkBoxSearchBDateDiscount.IsChecked == true && datePickerSearchBDateDiscount.Text != "" && checkBoxSearchEDateDiscount.IsChecked == true && datePickerSearchEDateDiscount.Text != "")
-                        {
-                            switch(comboBoxSearchDateRangeType.SelectedIndex)
-                            {
-                                case 0:
-                                    {
-                                        temp += " AND discounts.D_BDATE=@_bdate AND discounts.D_EDATE=@_edate";
-                                        break;
-                                    }
-                                case 1:
-                                    {
-                                        temp += " AND discounts.D_BDATE>=@_bdate AND discounts.D_EDATE<=@_edate";
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        temp += " AND ((discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_bdate) OR (discounts.D_BDATE>=@_edate AND discounts.D_EDATE>=@_edate))";
-                                        break;
-                                    }
-                                case 3:
-                                    {
-                                        temp += " AND ((discounts.D_BDATE>=@_bdate AND discounts.D_EDATE>=@_edate AND discounts.D_BDATE<=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE>=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_edate AND discounts.D_EDATE>=@_bdate))";
-                                        break;
-                                    }
-                                case 4:
-                                    {
-                                        temp += " AND ((discounts.D_BDATE>=@_bdate AND discounts.D_EDATE>=@_edate AND discounts.D_BDATE<=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE>=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_edate AND discounts.D_EDATE>=@_bdate) OR (discounts.D_BDATE>=@_bdate AND discounts.D_EDATE<=@_edate))";
-                                        break;
-                                    }
-                            }
-                            valuesText.Add("@_bdate");
-                            values.Add(Converter.DateConvert(datePickerSearchBDateDiscount.Text));
-                            valuesText.Add("@_edate");
-                            values.Add(Converter.DateConvert(datePickerSearchEDateDiscount.Text));
-                        }
-                        else
-                        {
-                            if (checkBoxSearchBDateDiscount.IsChecked == true && datePickerSearchBDateDiscount.Text != "")
-                            {
-                                temp += " AND discounts.D_BDATE>=@_bdate";
-                                valuesText.Add("@_bdate");
-                                values.Add(Converter.DateConvert(datePickerSearchBDateDiscount.Text));
-                            }
-                            else
-                            {
-                                if (checkBoxSearchEDateDiscount.IsChecked == true && datePickerSearchEDateDiscount.Text != "")
-                                {
-                                    temp += " AND discounts.D_EDATE<=@_edate";
-                                    valuesText.Add("@_edate");
-                                    values.Add(Converter.DateConvert(datePickerSearchEDateDiscount.Text));
-                                }
-                            }
-                        }
-                        if(checkBoxSearchCodeDiscount.IsChecked == true && textBoxSearchCodeDiscount.Text != "")
-                        {
-                            temp += " AND discounts.D_ID=@_id";
-                            valuesText.Add("@_id");
-                            values.Add(textBoxSearchCodeDiscount.Text);
-                        }
+                        SQLParameterAdd(checkBoxSearchProductDiscount.IsChecked.Value, new string[] { " AND discounts.P_ID=@_product", "@_product", textBoxSearchProductDiscount.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchProductIdDiscount.IsChecked.Value, new string[] { " AND discounts.P_ID=@_product", "@_product", textBoxSearchProductIdDiscount.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        SQLParameterAdd(checkBoxSearchProcDiscount.IsChecked.Value, new string[] { " AND discounts.D_PRICE=@_proc", "@_proc", upDownSearchProcDiscount.Text }, ref temp, ref flag, new bool[] { false, false });
+
+                        RangeComparsionGet(new bool[] { checkBoxSearchBDateDiscount.IsChecked.Value, checkBoxSearchEDateDiscount.IsChecked.Value }, comboBoxSearchDateRangeType.SelectedIndex, new string[] { 
+                                " AND discounts.D_BDATE>=@_bdate", " AND discounts.D_EDATE<=@_edate", 
+                                " AND discounts.D_BDATE=@_bdate AND discounts.D_EDATE=@_edate", " AND discounts.D_BDATE>=@_bdate AND discounts.D_EDATE<=@_edate", 
+                                " AND ((discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_bdate) OR (discounts.D_BDATE>=@_edate AND discounts.D_EDATE>=@_edate))", 
+                                " AND ((discounts.D_BDATE>=@_bdate AND discounts.D_EDATE>=@_edate AND discounts.D_BDATE<=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE>=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_edate AND discounts.D_EDATE>=@_bdate))",
+                                " AND ((discounts.D_BDATE>=@_bdate AND discounts.D_EDATE>=@_edate AND discounts.D_BDATE<=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE>=@_edate) OR (discounts.D_BDATE<=@_bdate AND discounts.D_EDATE<=@_edate AND discounts.D_EDATE>=@_bdate) OR (discounts.D_BDATE>=@_bdate AND discounts.D_EDATE<=@_edate))" },
+                            new string[] { Converter.DateConvert(datePickerSearchBDateDiscount.Text), Converter.DateConvert(datePickerSearchEDateDiscount.Text) }, new string[] { "@_bdate", "@_edate" }, ref temp, ref flag);
+
+                        SQLParameterAdd(checkBoxSearchCodeDiscount.IsChecked.Value, new string[] { " AND discounts.D_ID=@_id", "@_id", textBoxSearchCodeDiscount.Text }, ref temp, ref flag, new bool[] { false, false });
+
                         MakeSearch(dataGridDiscountOut, DataBase.GetDiscount, new string[] { "SELECT discounts.D_ID,product.P_NAME,discounts.D_PRICE,discounts.D_BDATE,discounts.D_EDATE,discounts.D_TEXT FROM `discounts`,`product` WHERE `discounts`.`P_ID`=`product`.`P_ID`", null }, temp, true);
                         break;
                     }
                 case 2:
                     {
-                        valuesText.Clear();
-                        values.Clear();
-                        temp = null;
-                        flag = false;
-
                         SQLParameterAdd(checkBoxSearchPosEmployee.IsChecked.Value, new string[] { "WHERE E_NAME=@_name", "@_name", textBoxSearchNameEmployee.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         SQLParameterAdd(checkBoxSearchPosEmployee.IsChecked.Value, new string[] { " E_POSITION=@_pos", "@_pos", comboBoxSearchPosEmployee.SelectedItem.ToString() }, ref temp, ref flag, new bool[] { false, true });
@@ -713,11 +521,6 @@ namespace WpfApplication1
                     }
                 case 3:
                     {
-                        valuesText.Clear();
-                        values.Clear();
-                        temp = null;
-                        flag = false;
-
                         SQLParameterAdd(checkBoxSearchNameManufacturer.IsChecked.Value, new string[] { "WHERE M_NAME=@_name", "@_name", textBoxSearchNameManufacturer.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         SQLParameterAdd(checkBoxSearchCountryManufacturer.IsChecked.Value, new string[] { " M_COUNTRY=@_country", "@_country", textBoxSearchCountryManufacturer.Text }, ref temp, ref flag, new bool[] { false, true });
@@ -735,11 +538,6 @@ namespace WpfApplication1
                     }
                 case 4:
                     {
-                        valuesText.Clear();
-                        values.Clear();
-                        temp = null;
-                        flag = false;
-
                         SQLParameterAdd(checkBoxSearchNameProduct.IsChecked.Value, new string[] { " AND p.P_NAME=@_name", "@_name", textBoxSearchNameProduct.Text }, ref temp, ref flag, new bool[] { false, false });
 
                         SQLParameterAdd(checkBoxSearchManufacturerProduct.IsChecked.Value, new string[] { " AND manufacturer.M_NAME=@_mname", "@_mname", textBoxSearchManufacturerProduct.Text }, ref temp, ref flag, new bool[] { false, false });
@@ -773,11 +571,6 @@ namespace WpfApplication1
                     }
                 case 5:
                     {
-                        valuesText.Clear();
-                        values.Clear();
-                        temp = null;
-                        flag = false;
-
                         RangeComparsionGet(new bool[] { checkBoxSearchBDateWaybill.IsChecked.Value, checkBoxSearchEDateWaybill.IsChecked.Value },
                             comboBoxSearchDateRangeTypeWaybill.SelectedIndex,
                             new string[] { " AND w.W_DATE>=@bdate", " AND w.W_DATE<=@edate", " AND w.W_DATE BETWEEN @bdate AND @edate", " AND (w.W_DATE>@edate OR w.W_DATE<@bdate)" },
@@ -826,6 +619,8 @@ namespace WpfApplication1
                         break;
                     }
             }
+            valuesText.Clear();
+            values.Clear();
         }
 
         private void MakeSearch<T>(DataGrid dataGrid, GetTableDelegate<T> data, string[] queryPart, string sqlParams, bool flag)
@@ -848,9 +643,6 @@ namespace WpfApplication1
                     SQLQuery += queryPart[1] + sqlParams + ";";
                 }
                 dataGrid.ItemsSource = data(SQLQuery, valuesTextStr, valuesStr);
-                txt.Text = SQLQuery;
-                valuesText.Clear();
-                values.Clear();
             }
         }
 
@@ -978,37 +770,6 @@ namespace WpfApplication1
                         flag = true;
                     }
                 }
-            }
-        }
-
-        private string ComparsionGet(int number)
-        {
-            switch (number)
-            {
-                case 0:
-                    {
-                        return "=";
-                    }
-                case 1:
-                    {
-                        return ">=";
-                    }
-                case 2:
-                    {
-                        return "<=";
-                    }
-                case 3:
-                    {
-                        return ">";
-                    }
-                case 4:
-                    {
-                        return "<";
-                    }
-                default :
-                    {
-                        return "";
-                    }
             }
         }
 

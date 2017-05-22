@@ -83,34 +83,6 @@ namespace WpfApplication1
             return hash;
         }
 
-        public static string CheckLogin(string _userName, string _userPassword)
-        {
-            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-            {
-                try
-                {
-                    con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT U_ONLINE FROM `user` WHERE U_NAME=@_userName AND U_PASS=@_userPassword;", con);
-                    com.Parameters.AddWithValue("@_userName", _userName);
-                    com.Parameters.AddWithValue("@_userPassword", _userPassword);
-                    MySqlDataReader dr = com.ExecuteReader();
-                    if (dr.HasRows)
-                    {
-                        dr.Read();
-                        con.Close();
-                        return dr.GetString(0);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                con.Close();
-                return null;
-            }
-        }
-
         public static void Query(string[] _changeParametersText,string[] _changeParameters, string _queryString)
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
@@ -885,6 +857,56 @@ namespace WpfApplication1
                 con.Close();
                 return waybillInfo;
             }
+        }
+
+        public static void SetLog(string id,int actor, int type, DateTime time, string description)
+        {
+            string logOutput = time.ToString()+"|",typeOut = null;
+            switch (actor)
+            {
+                case 0:
+                    {
+                        logOutput += "System";
+                        break;
+                    }
+                case 1:
+                    {
+                        logOutput += "User";
+                        break;
+                    }
+            }
+            logOutput += "|--ID=[" + id + "]:";
+            switch(type)
+            {
+                case 0:
+                    {
+                        logOutput += "Select";
+                        typeOut = "Select";
+                        break;
+                    }
+                case 1:
+                    {
+                        logOutput += "Update";
+                        typeOut = "Update";
+                        break;
+                    }
+                case 2:
+                    {
+                        logOutput += "Insert";
+                        typeOut = "Insert";
+                        break;
+                    }
+                case 3:
+                    {
+                        logOutput += "Delete";
+                        typeOut = "Delete";
+                        break;
+                    }
+            }
+            logOutput += "{" + description + "}";
+            DataBase.Query(
+                new string[] { "@_id", "@_type", "@_time", "@_text" },
+                new string[] { id, typeOut, Converter.DateConvert(time.ToShortDateString()) + " " + time.ToLongTimeString(), logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
         }
     }
 }

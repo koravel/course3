@@ -66,6 +66,7 @@ namespace WpfApplication1
                         new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text"},
                         new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
                         "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
+                        //DataBase.SetLog(idText, 1, 3, DateTime.Now, "Создание акции,параметры: ");
                         this.Close();
                     }
             }
