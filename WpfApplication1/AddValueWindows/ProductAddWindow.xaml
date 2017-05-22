@@ -9,7 +9,7 @@
             <ColumnDefinition Width="199*"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="textBoxName" Height="23" Margin="109,7,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="comboBoxManufacturer" Margin="109,35,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBoxManufacturer_SelectionChanged"/>
+        <ComboBox x:Name="comboBoxManufacturer" Margin="109,35,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <ComboBox x:Name="comboBoxGroup" Margin="109,62,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <System:String>Без группы</System:String>
             <System:String>Антисептики</System:String>

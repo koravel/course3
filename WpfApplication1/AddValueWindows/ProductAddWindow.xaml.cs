@@ -24,7 +24,6 @@ namespace WpfApplication1
             {
                 comboBoxManufacturer.Items.Add(comboBoxValues[i].NAME+"(#"+comboBoxValues[i].ID+")");
             }
-            comboBoxManufacturer.Items.Add("Добавить нового...");
             datePickerToday.Text = DateTime.Today.ToString();
         }
 
@@ -88,15 +87,6 @@ namespace WpfApplication1
             {
                 this.Close();
             }
-        }
-
-        private void comboBoxManufacturer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(comboBoxManufacturer.SelectedIndex == comboBoxManufacturer.Items.Count)
-            {
-                new ManufacturerAddWindow().ShowDialog();
-            }
-            comboBoxManufacturer.SelectedIndex = -1;
         }
     }
 }

@@ -179,12 +179,6 @@ namespace WpfApplication1 {
             return;
             case 3:
             this.comboBoxManufacturer = ((System.Windows.Controls.ComboBox)(target));
-            
-            #line 12 "..\..\..\EditValueWindows\ProductEditWindow.xaml"
-            this.comboBoxManufacturer.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(this.comboBoxManufacturer_SelectionChanged);
-            
-            #line default
-            #line hidden
             return;
             case 4:
             this.comboBoxGroup = ((System.Windows.Controls.ComboBox)(target));

@@ -1190,7 +1190,6 @@ namespace WpfApplication1
 
                             }
                             temp += Converter.CurrencyConvert(upDownSearchPriceWaybill.Text);
-                            flag = true;
                         }
                         if (checkBoxSearchCodeWaybill.IsChecked == true && textBoxSearchCodeWaybill.Text != "")
                         {
@@ -1210,6 +1209,7 @@ namespace WpfApplication1
                             temp += " AND wl.P_ID=@_id";
                             valuesText.Add("@_id");
                             values.Add(textBoxSearchProductIdWaybill.Text);
+                            flag = true;
                         }
                         if (checkBoxSearchValueProductWaybill.IsChecked == true && upDownSearchValueProductWaybill.Text != "")
                         {
@@ -1232,7 +1232,7 @@ namespace WpfApplication1
                                     }
 
                             }
-                            switch (comboBoxDirectionSearchValueProduct.SelectedIndex)
+                            switch (comboBoxDirectionSearchValueProductWaybill.SelectedIndex)
                             {
                                 case 0:
                                     {
@@ -1261,15 +1261,15 @@ namespace WpfApplication1
                                     }
 
                             }
-                            temp += "@value";
-                            valuesText.Add("@value");
-                            values.Add(comboBoxDirectionSearchValueProduct.Text);
+                            temp += "@valueq";
+                            valuesText.Add("@valueq");
+                            values.Add(comboBoxDirectionSearchValueProductWaybill.Text);
                             flag = true;
                         }
                         if (checkBoxSearchPriceProductWaybill.IsChecked == true && upDownSearchPriceProductWaybill.Text != "")
                         {
                             temp += " AND wl.WL_TRADE_PRICE";
-                            switch (comboBoxSearchPriceRangeProduct.SelectedIndex)
+                            switch (comboBoxDirectionSearchPriceProductWaybill.SelectedIndex)
                             {
                                 case 0:
                                     {
@@ -1307,12 +1307,12 @@ namespace WpfApplication1
                             {
                                 case 0:
                                     {
-                                        temp += " AND wl.WL_BDATE BETWEEN @bbdate AND @bedate";
+                                        temp += " AND wl.WL_EDATE BETWEEN @bbdate AND @bedate";
                                         break;
                                     }
                                 case 1:
                                     {
-                                        temp += " AND (wl.WL_BDATE>@bedate OR wl.WL_BDATE<@bbdate)";
+                                        temp += " AND (wl.WL_EDATE>@bedate OR wl.WL_EDATE<@bbdate)";
                                         break;
                                     }
                             }
@@ -1320,12 +1320,13 @@ namespace WpfApplication1
                             values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillOut.Text));
                             valuesText.Add("@bedate");
                             values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillOut.Text));
+                            flag = true;
                         }
                         else
                         {
                             if (checkBoxSearchBDateProductWaybillOut.IsChecked == true && datePickerSearchBDateProductWaybillOut.Text != "")
                             {
-                                temp += "AND wl.WL_BDATE>=@bbdate";
+                                temp += "AND wl.WL_EDATE>=@bbdate";
                                 valuesText.Add("@bbdate");
                                 values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillOut.Text));
                             }
@@ -1333,11 +1334,12 @@ namespace WpfApplication1
                             {
                                 if (checkBoxSearchEDateProductWaybillOut.IsChecked == true && datePickerSearchEDateProductWaybillOut.Text != "")
                                 {
-                                    temp += "AND wl.WL_BDATE<=@bedate";
+                                    temp += "AND wl.WL_EDATE<=@bedate";
                                     valuesText.Add("@bedate");
                                     values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillOut.Text));
                                 }
                             }
+                            flag = true;
                         }
                         if (checkBoxSearchBDateProductWaybillIn.IsChecked == true && checkBoxSearchEDateProductWaybillIn.IsChecked == true && datePickerSearchBDateProductWaybillIn.Text != "" && datePickerSearchEDateProductWaybillIn.Text != "")
                         {
@@ -1345,12 +1347,12 @@ namespace WpfApplication1
                             {
                                 case 0:
                                     {
-                                        temp += " AND wl.WL_EDATE BETWEEN @ebdate AND @eedate";
+                                        temp += " AND wl.WL_BDATE BETWEEN @ebdate AND @eedate";
                                         break;
                                     }
                                 case 1:
                                     {
-                                        temp += " AND (wl.WL_EDATE>@eedate OR wl.WL_EDATE<@ebdate)";
+                                        temp += " AND (wl.WL_BDATE>@eedate OR wl.WL_BDATE<@ebdate)";
                                         break;
                                     }
                             }
@@ -1358,12 +1360,13 @@ namespace WpfApplication1
                             values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text));
                             valuesText.Add("@eedate");
                             values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text));
+                            flag = true;
                         }
                         else
                         {
-                            if (checkBoxSearchBDateProductWaybillOut.IsChecked == true && datePickerSearchBDateProductWaybillIn.Text != "")
+                            if (checkBoxSearchBDateProductWaybillIn.IsChecked == true && datePickerSearchBDateProductWaybillIn.Text != "")
                             {
-                                temp += "AND wl.WL_EDATE>=@ebdate";
+                                temp += "AND wl.WL_BDATE>=@ebdate";
                                 valuesText.Add("@ebdate");
                                 values.Add(Converter.DateConvert(datePickerSearchBDateProductWaybillIn.Text));
                             }
@@ -1371,10 +1374,30 @@ namespace WpfApplication1
                             {
                                 if (checkBoxSearchEDateProductWaybillIn.IsChecked == true && datePickerSearchEDateProductWaybillIn.Text != "")
                                 {
-                                    temp += "AND wl.WL_EDATE<=@eedate";
+                                    temp += "AND wl.WL_BDATE<=@eedate";
                                     valuesText.Add("@eedate");
                                     values.Add(Converter.DateConvert(datePickerSearchEDateProductWaybillIn.Text));
                                 }
+                            }
+                            flag = true;
+                        }
+                        if(temp != null)
+                        {
+                            string[] valuesTextStr = new string[valuesText.Count], valuesStr = new string[values.Count];
+                            for (int j = 0; j < valuesText.Count; j++)
+                            {
+                                valuesTextStr[j] = valuesText[j];
+                                valuesStr[j] = values[j];
+                            }
+                            if (flag == true)
+                            {
+                                redefineQuery += temp + ";";
+                                dataGridWaybillOut.ItemsSource = DataBase.GetWaybill(redefineQuery, valuesTextStr, valuesStr);
+                            }
+                            else
+                            {
+                                query += temp + ";";
+                                dataGridWaybillOut.ItemsSource = DataBase.GetWaybill(query, valuesTextStr, valuesStr);
                             }
                         }
                         break;
@@ -1571,12 +1594,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductCheck.IsEnabled = true;
                 textBoxSearchProductIdCheck.IsEnabled = false;
+                textBoxSearchProductIdCheck.Text = null;
                 checkBoxSearchProductIdCheck.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductIdCheck.IsEnabled = true;
                 textBoxSearchProductCheck.IsEnabled = false;
+                textBoxSearchProductCheck.Text = null;
             }
         }
 
@@ -1586,12 +1611,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductIdCheck.IsEnabled = true;
                 textBoxSearchProductCheck.IsEnabled = false;
+                textBoxSearchProductCheck.Text = null;
                 checkBoxSearchProductCheck.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductCheck.IsEnabled = true;
                 textBoxSearchProductIdCheck.IsEnabled = false;
+                textBoxSearchProductIdCheck.Text = null;
             }
         }
 
@@ -1770,12 +1797,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductIdDiscount.IsEnabled = true;
                 textBoxSearchProductDiscount.IsEnabled = false;
+                textBoxSearchProductDiscount.Text = null;
                 checkBoxSearchProductDiscount.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductDiscount.IsEnabled = true;
                 textBoxSearchProductIdDiscount.IsEnabled = false;
+                textBoxSearchProductIdDiscount.Text = null;
             }
         }
 
@@ -1785,12 +1814,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductDiscount.IsEnabled = true;
                 textBoxSearchProductIdDiscount.IsEnabled = false;
+                textBoxSearchProductIdDiscount.Text = null;
                 checkBoxSearchProductIdDiscount.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductIdDiscount.IsEnabled = true;
                 textBoxSearchProductDiscount.IsEnabled = false;
+                textBoxSearchProductDiscount.Text = null;
             }
         }
 
@@ -2320,12 +2351,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductWaybill.IsEnabled = true;
                 textBoxSearchProductIdWaybill.IsEnabled = false;
+                textBoxSearchProductIdWaybill.Text = null;
                 checkBoxSearchProductIdWaybill.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductIdWaybill.IsEnabled = true;
                 textBoxSearchProductWaybill.IsEnabled = false;
+                textBoxSearchProductWaybill.Text = null;
             }
         }
 
@@ -2335,12 +2368,14 @@ namespace WpfApplication1
             {
                 textBoxSearchProductIdWaybill.IsEnabled = true;
                 textBoxSearchProductWaybill.IsEnabled = false;
+                textBoxSearchProductWaybill.Text = null;
                 checkBoxSearchProductWaybill.IsEnabled = false;
             }
             else
             {
                 checkBoxSearchProductWaybill.IsEnabled = true;
                 textBoxSearchProductIdWaybill.IsEnabled = false;
+                textBoxSearchProductIdWaybill.Text = null;
             }
         }
 

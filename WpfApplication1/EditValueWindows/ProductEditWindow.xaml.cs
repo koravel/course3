@@ -44,7 +44,6 @@ namespace WpfApplication1
             textBoxPrice.Text = data[6].Replace(",", ".");
             datePickerToday.Text = data[7];
             textBoxInstruction.Text = data[8];
-            comboBoxManufacturer.Items.Add("Добавить нового...");
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
@@ -113,14 +112,6 @@ namespace WpfApplication1
             if (e.Key == Key.Escape)
             {
                 this.Close();
-            }
-        }
-
-        private void comboBoxManufacturer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(comboBoxManufacturer.SelectedIndex == comboBoxManufacturer.Items.Count)
-            {
-                new ManufacturerAddWindow().ShowDialog();
             }
         }
     }

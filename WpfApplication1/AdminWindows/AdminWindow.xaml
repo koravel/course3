@@ -531,11 +531,8 @@
                     <CheckBox x:Name="checkBoxSearchBDateProductWaybillOut" Content="от" HorizontalAlignment="Left" Margin="353,216,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateProductWaybillOut_Click"/>
                     <CheckBox x:Name="checkBoxSearchEDateProductWaybillOut" Content="до" HorizontalAlignment="Left" Margin="353,279,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="checkBoxSearchEDateProductWaybillOut_Click"/>
                     <ComboBox x:Name="comboBoxSearchDateRangeTypeProductWaybillOut" HorizontalAlignment="Left" Margin="353,249,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
-                        <System:String>равно</System:String>
                         <System:String>в диапазоне</System:String>
                         <System:String>не в диапазоне</System:String>
-                        <System:String>частично</System:String>
-                        <System:String>частично или полностью</System:String>
                     </ComboBox>
                     <CheckBox x:Name="checkBoxSearchPriceProductWaybill" Content="Опт.цена" HorizontalAlignment="Right" Margin="0,0,191,132" VerticalAlignment="Bottom" Click="checkBoxSearchPriceProductWaybill_Click" Width="67"/>
                     <xctk:DecimalUpDown x:Name="upDownSearchPriceProductWaybill" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Margin="0,0,10,132" IsEnabled="False"/>
@@ -570,9 +567,10 @@
                     </ComboBox>
                     <TextBlock HorizontalAlignment="Left" Margin="4,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       Дата"/><LineBreak/><Run Language="ru-ru" Text=" составления"/></TextBlock>
                     <ComboBox x:Name="comboBoxSearchTypeCountProductWaybill" HorizontalAlignment="Left" Margin="335,66,0,0" VerticalAlignment="Top" Width="183" SelectedIndex="0">
-                        <System:String>всего</System:String>
+                        <System:String>всего принято</System:String>
                         <System:String>просрочено</System:String>
                         <System:String>не просрочено</System:String>
+                        <System:String>продано</System:String>
                     </ComboBox>
                     <CheckBox x:Name="checkBoxSearchPriceWaybill" Content="Цена" HorizontalAlignment="Right" Margin="0,0,473,132" VerticalAlignment="Bottom" Click="checkBoxSearchPriceWaybill_Click"/>
                     <xctk:DecimalUpDown x:Name="upDownSearchPriceWaybill" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Margin="0,0,280,125" IsEnabled="False"/>
@@ -588,11 +586,8 @@
                     <CheckBox x:Name="checkBoxSearchBDateProductWaybillIn" Content="от" HorizontalAlignment="Left" Margin="83,238,0,0" VerticalAlignment="Top" Height="24" Click="checkBoxSearchBDateProductWaybillIn_Click"/>
                     <CheckBox x:Name="checkBoxSearchEDateProductWaybillIn" Content="до" HorizontalAlignment="Left" Margin="83,300,0,0" VerticalAlignment="Top" Height="24" Width="70" Click="checkBoxSearchEDateProductWaybillIn_Click"/>
                     <ComboBox x:Name="comboBoxSearchDateRangeTypeProductWaybillIn" HorizontalAlignment="Left" Margin="83,270,0,0" VerticalAlignment="Top" Width="165" SelectedIndex="0" IsEnabled="False">
-                        <System:String>равно</System:String>
                         <System:String>в диапазоне</System:String>
                         <System:String>не в диапазоне</System:String>
-                        <System:String>частично</System:String>
-                        <System:String>частично или полностью</System:String>
                     </ComboBox>
                     <TextBlock HorizontalAlignment="Left" Margin="5,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False"><Run Language="ru-ru" Text="       "/><Run Text="Дата"/><LineBreak/><Run Text=" поступления"/></TextBlock>
                     <TextBlock HorizontalAlignment="Left" Margin="288,252,0,0" TextWrapping="Wrap" Text="Годен до" VerticalAlignment="Top" IsEnabled="False"/>

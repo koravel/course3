@@ -38,12 +38,13 @@ namespace WpfApplication1
             datePickerBeginDate.Text = data[2];
             datePickerEndDate.Text = data[3];
             textBoxDescription.Text = data[4];
-            comboBoxProduct.Items.Add("Добавить новый...");
         }
+
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -51,6 +52,7 @@ namespace WpfApplication1
                 this.Close();
             }
         }
+
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             int dataCorrect = 0;
@@ -92,14 +94,6 @@ namespace WpfApplication1
                     "UPDATE discounts SET P_ID = @_id,D_PRICE = @_price,D_BDATE = @_bdate,D_EDATE = @_edate,D_TEXT = @_text WHERE D_ID = @_curid;");
                     this.Close();
                 }
-            }
-        }
-
-        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (comboBoxProduct.SelectedIndex == comboBoxProduct.Items.Count)
-            {
-                new ProductAddWindow().ShowDialog();
             }
         }
     }

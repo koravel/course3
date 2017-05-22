@@ -9,7 +9,7 @@
             <ColumnDefinition Width="79*"/>
             <ColumnDefinition Width="169*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="comboBoxProduct" Margin="75,12,24,0" Height="22" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBoxProduct_SelectionChanged"/>
+        <ComboBox x:Name="comboBoxProduct" Margin="75,12,24,0" Height="22" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox x:Name="textBoxDescription" Margin="75,131,24,37" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
         <DatePicker x:Name="datePickerBeginDate" Margin="75,72,24,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <DatePicker x:Name="datePickerEndDate" Margin="75,101,24,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
