@@ -96,7 +96,7 @@
             <System:String>меньше</System:String>
         </ComboBox>
         <Button x:Name="buttonSearchEscape" Content="X" HorizontalAlignment="Right" Margin="0,7,41,0" VerticalAlignment="Top" Width="44" Height="25" FontSize="14" FontWeight="Bold" Click="buttonSearchEscape_Click" Grid.Row="4" Grid.Column="1"/>
-        <Image Margin="5,7,0,0" Grid.Row="4" Source="/WpfApplication1;component/search.png" Stretch="Fill" HorizontalAlignment="Left" Width="53" Height="52" VerticalAlignment="Top"/>
+        <Image Margin="5,7,0,0" Grid.Row="4" Source="/Pharmacy DataBase;component/Resources/search.png" Stretch="Fill" HorizontalAlignment="Left" Width="53" Height="52" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBoxEmployeeName" Grid.Column="3" HorizontalAlignment="Left" Margin="4,13,0,0" VerticalAlignment="Top" Width="216" RenderTransformOrigin="0.349,0.624">
             <ComboBox.ContextMenu>
                 <ContextMenu>

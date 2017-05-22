@@ -106,6 +106,10 @@
     <Compile Include="AdminWindows\DirectorPassWindow.xaml.cs">
       <DependentUpon>DirectorPassWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tables\ProductDrop.cs" />
+    <Compile Include="AdminWindows\ProductDropWindow.xaml.cs">
+      <DependentUpon>ProductDropWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\CheckPrint.cs" />
     <Compile Include="DirectorWindows\DirectorSettingsWindow.xaml.cs">
       <DependentUpon>DirectorSettingsWindow.xaml</DependentUpon>
@@ -209,14 +213,21 @@
       <DependentUpon>WarningDelWaybillBindsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillPrint.cs" />
-    <Compile Include="WaybillPrintWindow.xaml.cs">
+    <Compile Include="AdminWindows\WaybillPrintWindow.xaml.cs">
       <DependentUpon>WaybillPrintWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SellerWindows\WindowCheckPrint.xaml.cs">
+      <DependentUpon>WindowCheckPrint.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminWindows\DirectorPassWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DirectorWindows\DirectorSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindows\ProductDropWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -336,7 +347,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WaybillPrintWindow.xaml">
+    <Page Include="AdminWindows\WaybillPrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SellerWindows\WindowCheckPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -447,6 +447,14 @@ namespace WpfApplication1
 
         private void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if(Properties.Settings.Default.SaveArchive == "")
+            {
+                System.Windows.MessageBox.Show("");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(Properties.Settings.Default.SaveArchive);
+            }
             int selected = tabControlTables.SelectedIndex;
             switch (selected)
             {
@@ -2137,6 +2145,11 @@ namespace WpfApplication1
                     }
             }
             
+        }
+
+        private void buttonDropProduct_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductDropWindow(idText).ShowDialog();
         }
 
 

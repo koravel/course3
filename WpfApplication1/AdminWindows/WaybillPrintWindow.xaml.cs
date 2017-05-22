@@ -65,10 +65,12 @@ namespace WpfApplication1
                 };
                 printPreviewDialog.Document = printDocument;
                 printPreviewDialog.PrintPreviewControl.Zoom = 1;
+                this.Hide();
                 printPreviewDialog.ShowDialog();
                 printPreviewDialog.Close();
                 bitmap.Dispose();
                 File.Delete("imagetemp.png");
+                this.Close();
             }
             else
             {

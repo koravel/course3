@@ -1,0 +1,21 @@
+﻿<Window x:Class="WpfApplication1.ProductDropWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Утилизация" Height="600" Width="600" FontSize="14" Icon="icone.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="173*"/>
+            <ColumnDefinition Width="419*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dataGridProductDrop" Margin="2,0,0,0" Grid.Column="1" IsReadOnly="True" AutoGenerateColumns="False"> 
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Накладная №" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Товар" Binding="{Binding PRODUCT}"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="buttonDrop" Content="Утилзировать" HorizontalAlignment="Left" Margin="26,28,0,0" VerticalAlignment="Top" Width="122" Click="buttonDrop_Click"/>
+        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="26,70,0,0" VerticalAlignment="Top" Width="122" Click="buttonBack_Click"/>
+
+    </Grid>
+</Window>

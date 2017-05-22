@@ -11,9 +11,7 @@
         </Grid.ColumnDefinitions>
         <Menu Height="29" VerticalAlignment="Top" FontSize="14">
             <MenuItem x:Name="userControlMenuiItem" Header="Управление уч. записями" Click="UsersControl_Click"/>
-            <MenuItem x:Name="menuItemSettings" Header="Настройки">
-                <MenuItem x:Name="menuItemArchiveSettings" Header="Архивация" Click="menuItemSettings_Click"/>
-            </MenuItem>
+            <MenuItem x:Name="menuItemSettings" Header="Настройки" Click="menuItemSettings_Click"/>
             <MenuItem x:Name="menuItemPrint" Header="Печать" Click="menuItemPrint_Click"/>
             <MenuItem x:Name="exitMenuItem" Header="Выход" Click="Logout_Click"/>
         </Menu>
@@ -199,13 +197,14 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                        <DataGrid x:Name="dataGridProductActPriceOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" Grid.RowSpan="2">
+                        <DataGrid x:Name="dataGridProductActPriceOut" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Дата" Binding="{Binding DATE, StringFormat=\{0:dd.MM.yy\}}"/>
                                 <DataGridTextColumn Header="Цена" Binding="{Binding PRICE}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBlock x:Name="textBlockProductCount" TextWrapping="Wrap" Grid.Row="1"/>
+                        <Button x:Name="buttonDropProduct" Content="Утилизация" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="257" Height="50" Click="buttonDropProduct_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>

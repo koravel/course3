@@ -432,65 +432,69 @@ namespace WpfApplication1
 
         private void buttonSellToCheck_Click(object sender, RoutedEventArgs e)
         {
-            if(comboBoxEmployeeName.SelectedIndex != -1 && listToCheck.Count > 0)
+            string maxId = "";
+            if(comboBoxEmployeeName.SelectedIndex != -1)
             {
-                if(summ <= prepayment)
+                comboBoxEmployeeName.BorderBrush = Brushes.Gray;
+                if (listToCheck.Count > 0)
                 {
-                    comboBoxEmployeeName.BorderBrush = Brushes.Gray;
-                    TransactionConfirm window = new TransactionConfirm();
-                    window.ShowDialog();
-                    if (window.flag)
+                    if (summ <= prepayment)
                     {
-                        string paytype;
-                        if (radioButtonCard.IsChecked.Value)
+                        TransactionConfirm window = new TransactionConfirm();
+                        window.ShowDialog();
+                        if (window.flag)
                         {
-                            paytype = "Карточка";
-                        }
-                        else
-                        {
-                            paytype = "Наличные";
-                        }
-                        string maxId = DataBase.QueryRetCell(null, null, "SELECT IFNULL(MAX(C_ID)+1,1) FROM `check`;");
-                        DataBase.Query(new string[] { "@_id", "@_eid", "@_paytype", "@_summ", "@_prepayment" }, new string[] { maxId, employees[comboBoxEmployeeName.SelectedIndex].ID.ToString(), paytype, Converter.FloatToCurrencyConvert(summ.ToString()), Converter.FloatToCurrencyConvert(prepayment.ToString()) }, "INSERT INTO `check`(C_ID,E_ID,C_DATE,C_PAYTYPE,C_SUM,C_PREPAYMENT)VALUES(@_id,@_eid,now(),@_paytype,@_summ,@_prepayment);");
-                        List<string> productId = new List<string>();
-                        List<string> productValue = new List<string>();
-                        for (int i = 0; i < dataGridProductToCheckOut.Items.Count;i++ )
-                        {
-                            DataBase.Query(new string[] { "@_wlid", "@_value" }, new string[] { listToCheck[i].WAYBILLID.ToString(),listToCheck[i].VALUE.ToString() }, "UPDATE product_sold SET PS_COUNT=PS_COUNT+@_value WHERE WL_ID=@_wlid;");
-                            DataBase.Query(new string[] { "@_wlid" }, new string[] { listToCheck[i].WAYBILLID.ToString() }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((SELECT product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=wl.WL_VALUE,'Продано','Не просрочено') WHERE po.WL_ID=wl.WL_ID AND wl.WL_ID=@_wlid;");
-                            DataBase.Query(new string[] { "@_cid", "@_pid", "@_clvalue" }, new string[] { maxId, listToCheck[i].ID.ToString(), listToCheck[i].VALUE.ToString() }, "INSERT INTO check_list(C_ID,P_ID,CL_VALUE)VALUES(@_cid,@_pid,@_clvalue)");
-                            for (int j = 0; j < productId.Count; j++)
+                            string paytype;
+                            if (radioButtonCard.IsChecked.Value)
                             {
-                                if(productId[i] != listToCheck[i].ID.ToString())
+                                paytype = "Карточка";
+                            }
+                            else
+                            {
+                                paytype = "Наличные";
+                            }
+                            maxId = DataBase.QueryRetCell(null, null, "SELECT IFNULL(MAX(C_ID)+1,1) FROM `check`;");
+                            DataBase.Query(new string[] { "@_id", "@_eid", "@_paytype", "@_summ", "@_prepayment" }, new string[] { maxId, employees[comboBoxEmployeeName.SelectedIndex].ID.ToString(), paytype, Converter.FloatToCurrencyConvert(summ.ToString()), Converter.FloatToCurrencyConvert(prepayment.ToString()) }, "INSERT INTO `check`(C_ID,E_ID,C_DATE,C_PAYTYPE,C_SUM,C_PREPAYMENT)VALUES(@_id,@_eid,now(),@_paytype,@_summ,@_prepayment);");
+                            List<string> productId = new List<string>();
+                            List<string> productValue = new List<string>();
+                            for (int i = 0; i < dataGridProductToCheckOut.Items.Count; i++)
+                            {
+                                DataBase.Query(new string[] { "@_wlid", "@_value" }, new string[] { listToCheck[i].WAYBILLID.ToString(), listToCheck[i].VALUE.ToString() }, "UPDATE product_sold SET PS_COUNT=PS_COUNT+@_value WHERE WL_ID=@_wlid;");
+                                DataBase.Query(new string[] { "@_wlid" }, new string[] { listToCheck[i].WAYBILLID.ToString() }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((SELECT product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=wl.WL_VALUE,'Продано','Не просрочено') WHERE po.WL_ID=wl.WL_ID AND wl.WL_ID=@_wlid;");
+                                DataBase.Query(new string[] { "@_cid", "@_pid", "@_clvalue" }, new string[] { maxId, listToCheck[i].ID.ToString(), listToCheck[i].VALUE.ToString() }, "INSERT INTO check_list(C_ID,P_ID,CL_VALUE)VALUES(@_cid,@_pid,@_clvalue)");
+                                for (int j = 0; j < productId.Count; j++)
                                 {
-                                    productId.Add(listToCheck[i].ID.ToString());
-                                    productValue.Add(listToCheck[i].VALUE.ToString());
-                                    i = productId.Count;
-                                }
-                                else
-                                {
-                                    productValue[j] = (int.Parse(productValue[j])+listToCheck[i].VALUE).ToString();
+                                    if (productId[i] != listToCheck[i].ID.ToString())
+                                    {
+                                        productId.Add(listToCheck[i].ID.ToString());
+                                        productValue.Add(listToCheck[i].VALUE.ToString());
+                                        i = productId.Count;
+                                    }
+                                    else
+                                    {
+                                        productValue[j] = (int.Parse(productValue[j]) + listToCheck[i].VALUE).ToString();
+                                    }
                                 }
                             }
+                            for (int i = 0; i < productId.Count; i++)
+                            {
+                                DataBase.Query(new string[] { "@_pid", "@_value" }, new string[] { productId[i], productValue[i] }, "UPDATE product_quantity SET PQ_OUT=PQ_OUT+@_value WHERE P_ID=@_pid");
+                            }
                         }
-                        for (int i = 0; i < productId.Count;i++ )
-                        {
-                            DataBase.Query(new string[] { "@_pid", "@_value" }, new string[] { productId[i],productValue[i] }, "UPDATE product_quantity SET PQ_OUT=PQ_OUT+@_value WHERE P_ID=@_pid");
-                        }
+                        listToCheck.Clear();
+                        summ = 0;
+                        prepayment = 0;
+                        textBlockDelivery.Text = "Сдача:0";
+                        textBlockPrePayment.Text = "Аванс:0";
+                        textBlockSumm.Text = "Сумма:0";
+                        dataGridProductToCheckOut.Items.Refresh();
+                        new WindowCheckPrint(maxId).Show();
                     }
-                    listToCheck.Clear();
-                    summ = 0;
-                    prepayment = 0;
-                    textBlockDelivery.Text = "Сдача:0";
-                    textBlockPrePayment.Text = "Аванс:0";
-                    textBlockSumm.Text = "Сумма:0";
-                    dataGridProductToCheckOut.Items.Refresh();
+                    else
+                    {
+                        MessageBox.Show("Аванс не может быть меньше суммы!");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Аванс не может быть меньше суммы!");
-                }
-               
             }
             else
             {

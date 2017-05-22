@@ -217,8 +217,6 @@ namespace WpfApplication1
 
         }
 
-
-
         public static bool ConCheck(string[] database_settings)
         {
             DataBase.Connection(database_settings);
@@ -270,7 +268,6 @@ namespace WpfApplication1
                
            
             }
-        
 
         public static List<Employee> GetEmployee(string _queryString, string[] _valuesText, string[] _values)
         {
@@ -548,7 +545,6 @@ namespace WpfApplication1
 
             }
         
-
         public static List<Manufacturer> GetManufacturer()
         {
             List<Manufacturer> manufacturers = new List<Manufacturer>();
@@ -617,8 +613,6 @@ namespace WpfApplication1
                 }
         }
             
-        
-
         public static List<Product> GetProduct()
         {
             List<Product> products = new List<Product>();
@@ -1037,9 +1031,12 @@ namespace WpfApplication1
             }
             logOutput += "{" + description + "}";
             string[] dateTime= time.Split(' ');
-            DataBase.Query(
-                new string[] { "@_id", "@_type", "@_time", "@_text" },
-                new string[] { id, typeOut, Converter.DateConvert(dateTime[0]) + " " + dateTime[1], logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
+            if(id != "-1")
+            {
+                DataBase.Query(
+                    new string[] { "@_id", "@_type", "@_time", "@_text" },
+                    new string[] { id, typeOut, Converter.DateConvert(dateTime[0]) + " " + dateTime[1], logOutput }, "INSERT INTO user_action(U_ID,UA_TYPE,UA_DATETIME,UA_DESCRIPTION)VALUES(@_id,@_type,@_time,@_text)");
+            }
         }
 
         public static List<ProductInCheck> GetProductForSeller()
@@ -1108,6 +1105,37 @@ namespace WpfApplication1
                 }
                 con.Close();
                 return waybillId;
+            }
+        }
+
+        public static List<ProductDrop> GetProductDrop()
+        {
+            List<ProductDrop> productDrop = new List<ProductDrop>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand("SELECT wl.WL_ID,p.P_NAME,IF((wl.WL_VALUE-ps.PS_COUNT)>0,wl.WL_VALUE-ps.PS_COUNT,0) FROM waybill_list wl,product p,product_sold ps,product_overdue po WHERE wl.P_ID=p.P_ID AND wl.WL_ID=ps.WL_ID AND po.PP_IS_OVERDUE='Просрочено' AND po.WL_ID=wl.WL_ID;", con);
+
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        productDrop.Add(new ProductDrop()
+                        {
+                            ID = dr.GetInt32("WL_ID"),
+                            PRODUCT = dr.GetString("P_NAME"),
+                            VALUE = dr.GetString(2)
+                        });
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                con.Close();
+                return productDrop;
             }
         }
     }

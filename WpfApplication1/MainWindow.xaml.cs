@@ -29,7 +29,7 @@ namespace WpfApplication1
             else
             {
                 this.IsEnabled = true;
-                if(DataBase.QueryRetCell(null, null, "SELECT COUNT(U_ID) FROM `user` WHERE U_TYPE='Администратор';") == "0")
+                if(DataBase.QueryRetCell(null, null, "SELECT IFNULL(COUNT(U_ID),0) FROM `user` WHERE U_TYPE='Администратор';") == "0")
                 {
                     MessageBox.Show("Теперь добавьте администратора. Для добавления нажмите любую клавишу.");
                     new UsersControlWindow("-1").ShowDialog();
