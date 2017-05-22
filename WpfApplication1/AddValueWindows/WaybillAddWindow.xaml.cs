@@ -73,8 +73,7 @@ namespace WpfApplication1
                 string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
                 for (int i = 0; i < list.Count; i++)
                 {
-                    list[i].TRADEPRICE = list[i].TRADEPRICE.Remove(list[i].TRADEPRICE.Length - 2);
-                    list[i].TRADEPRICE = list[i].TRADEPRICE.Replace(",", ".");
+                    list[i].TRADEPRICE = Converter.CurrencyConvert(list[i].TRADEPRICE);
                     queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
                     if(i != list.Count-1)
                     {

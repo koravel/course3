@@ -320,7 +320,7 @@ namespace WpfApplication1
                 return checks;
             }
         }
-        public static List<Check> GetCheck(string _column,string _value)
+        public static List<Check> GetCheck(string _queryString,string[] _valuesText,string[] _values)
         {
             List<Check> checks = new List<Check>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
@@ -328,10 +328,11 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    string temp = "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` AND " + _column + "=@valueq;";
-                    MySqlCommand com = new MySqlCommand(temp, con);
-                    com.Parameters.AddWithValue("@valueq", _value);
-                    MessageBox.Show(_value);
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for(int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i],_values[i]);
+                    }
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {

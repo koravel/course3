@@ -20,10 +20,17 @@ namespace WpfApplication1
     public partial class AdminWindow : Window
     {
         static string idText;
+        List<Check> checkList = new List<Check> { };
         public AdminWindow(string _idText)
         {
             InitializeComponent();
             idText = _idText;
+            dataGridCheckOut.ItemsSource = DataBase.GetCheck();
+            dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
+            dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
+            dataGridProductOut.ItemsSource = DataBase.GetProduct();
+            dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
+            dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
         }
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
@@ -122,27 +129,6 @@ namespace WpfApplication1
                 }
             }
         }
-
-        private void tabItemCheck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridCheckOut.ItemsSource = DataBase.GetCheck();
-        }
-
-        private void tabItemDiscount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
-        }
-
-        private void tabItemManufacturer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridManufacturersOut.ItemsSource = DataBase.GetManufacturer();
-        }
-
-        private void tabItemProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridProductOut.ItemsSource = DataBase.GetProduct();
-        }
-
         private void dataGridProductOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -181,17 +167,6 @@ namespace WpfApplication1
             }
 
         }
-
-        private void tabItemEmployee_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridEmployeeOut.ItemsSource = DataBase.GetEmployee();
-        }
-
-        private void tabItemWaybill_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            dataGridWaybillOut.ItemsSource = DataBase.GetWaybill();
-        }
-
         private void dataGridWaybillOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -442,62 +417,253 @@ namespace WpfApplication1
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-             int selected = tabControlSearch.SelectedIndex;
+            int selected = tabControlSearch.SelectedIndex;
+            string temp = null,query = "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` ",
+            redefineQuery = "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ";
+            bool flag = false;
+            List<string> valuesText = new List<string>(), values = new List<string>();
             switch(selected)
             {
                 case 0:
                     {
                         if (checkBoxSearchEmployeeCheck.IsChecked == true)
                         {
-                            dataGridCheckOut.ItemsSource = DataBase.GetCheck("employee.E_NAME", textBoxSearchEmployeeCheck.Text);
+                            temp += "AND employee.E_NAME=@employee";
+                            valuesText.Add("@employee");
+                            values.Add(textBoxSearchEmployeeCheck.Text);
                         }
-                        if (checkBoxSearchBDateCheck.IsChecked == true)
+                        if (checkBoxSearchBDateCheck.IsChecked == true && checkBoxSearchEDateCheck.IsChecked == true)
                         {
-                            //datePickerSearchBDateCheck.Text;
+                            temp += " AND `check`.C_DATE BETWEEN @bdate AND @edate";
+                            valuesText.Add("@bdate");
+                            values.Add(Converter.DateConvert(datePickerSearchBDateCheck.Text));
+                            valuesText.Add("@edate");
+                            values.Add(Converter.DateConvert(datePickerSearchEDateCheck.Text));
                         }
-                        if (checkBoxSearchEDateCheck.IsChecked == true)
+                        else
                         {
-                            //datePickerSearchEDateCheck.Text;
+                            if (checkBoxSearchBDateCheck.IsChecked == true)
+                            {
+                                temp += "AND `check`.C_DATE>=@bdate";
+                                valuesText.Add("@bdate");
+                                values.Add(Converter.DateConvert(datePickerSearchBDateCheck.Text));
+                            }
+                            else
+                            {
+                                if (checkBoxSearchEDateCheck.IsChecked == true)
+                                {
+                                    temp += "AND `check`.C_DATE<=@edate";
+                                    valuesText.Add("@edate");
+                                    values.Add(Converter.DateConvert(datePickerSearchEDateCheck.Text));
+                                }
+                            }
                         }
-                        if(checkBoxSearchBHours.IsChecked == true)
+                        if (checkBoxSearchBHours.IsChecked == true && checkBoxSearchEHours.IsChecked == true)
                         {
-                            //upDownSearchBHours.Text;
+                            temp += " AND HOUR(`check`.C_DATE) BETWEEN @bhour AND @ehour";
+                            valuesText.Add("@bhour");
+                            values.Add(upDownSearchBHours.Text);
+                            valuesText.Add("@ehour");
+                            values.Add(upDownSearchEHours.Text);
                         }
-                        if (checkBoxSearchBMinutes.IsChecked == true)
+                        else
                         {
-                            //upDownSearchBMinutes.Text;
+                            if(checkBoxSearchBHours.IsChecked == true)
+                            {
+                                temp += " AND HOUR(`check`.C_DATE)>=@bhour";
+                                valuesText.Add("@bhour");
+                                values.Add(upDownSearchBHours.Text);
+                            }
+                            else
+                            {
+                                if(checkBoxSearchEHours.IsChecked == true)
+                                {
+                                    temp += " AND HOUR(`check`.C_DATE)<=@ehour";
+                                    valuesText.Add("@ehour");
+                                    values.Add(upDownSearchEHours.Text);
+                                }
+                            }
                         }
-                        if (checkBoxSearchBSeconds.IsChecked == true)
+                        if (checkBoxSearchBMinutes.IsChecked == true && checkBoxSearchEMinutes.IsChecked == true)
                         {
-                            //upDownSearchBSeconds.Text;
+                            temp += " AND MINUTE(`check`.C_DATE) BETWEEN @bminute AND @eminute";
+                            valuesText.Add("@bminute");
+                            values.Add(upDownSearchBMinutes.Text);
+                            valuesText.Add("@eminute");
+                            values.Add(upDownSearchEMinutes.Text);
                         }
-                        if (checkBoxSearchEHours.IsChecked == true)
+                        else
                         {
-                            //upDownSearchEHours.Text;
+                            if(checkBoxSearchBMinutes.IsChecked == true)
+                            {
+                                temp += " AND MINUTE(`check`.C_DATE)>=@bminute";
+                                valuesText.Add("@bminute");
+                                values.Add(upDownSearchBMinutes.Text);
+                            }
+                            else
+                            {
+                                if(checkBoxSearchEMinutes.IsChecked == true)
+                                {
+                                    temp += " AND MINUTE(`check`.C_DATE)<=@eminute";
+                                    valuesText.Add("@eminute");
+                                    values.Add(upDownSearchEMinutes.Text);
+                                }
+                            }
                         }
-                        if (checkBoxSearchEMinutes.IsChecked == true)
+
+                        if (checkBoxSearchBSeconds.IsChecked == true && checkBoxSearchESeconds.IsChecked == true)
                         {
-                            //upDownSearchEMinutes.Text;
+                            temp += " AND SECOND(`check`.C_DATE) BETWEEN @bsecond AND @esecond";
+                            valuesText.Add("@bsecond");
+                            values.Add(upDownSearchBSeconds.Text);
+                            valuesText.Add("@esecond");
+                            values.Add(upDownSearchESeconds.Text);
                         }
-                        if (checkBoxSearchESeconds.IsChecked == true)
+                        else
                         {
-                            //upDownSearchESeconds.Text;
+                            if (checkBoxSearchBSeconds.IsChecked == true)
+                            {
+                                temp += " AND SECOND(`check`.C_DATE)>=@bsecond";
+                                valuesText.Add("@bsecond");
+                                values.Add(upDownSearchBSeconds.Text);
+                            }
+                            else
+                            {
+                                if (checkBoxSearchESeconds.IsChecked == true)
+                                {
+                                    temp += " AND SECOND(`check`.C_DATE)<=@esecond";
+                                    valuesText.Add("@esecond");
+                                    values.Add(upDownSearchESeconds.Text);
+                                }
+                            }
                         }
-                        if (checkBoxSearchCheckCode.IsChecked == true)
+
+
+                        if (checkBoxSearchPaytypeCash.IsChecked == true && checkBoxSearchPaytypeCard.IsChecked == true)
                         {
-                            //textBoxSearchCheckCode.Text;
+
+                        }
+                        else
+                        {
+                            if (checkBoxSearchPaytypeCash.IsChecked == true)
+                            {
+                                temp += " AND `check`.C_PAYTYPE='Наличные'";
+                            }
+                            else
+                            {
+                                if (checkBoxSearchPaytypeCard.IsChecked == true)
+                                {
+                                    temp += " AND `check`.C_PAYTYPE='Карточка'";
+                                }
+                            }
                         }
                         if (checkBoxSearchProductCheck.IsChecked == true)
                         {
-                            //textBoxSearchProductCheck.Text;
+                            temp += " AND product.P_NAME=@product";
+                            valuesText.Add("@product");
+                            values.Add(textBoxSearchProductCheck.Text);
+                            flag = true;
                         }
                         if (checkBoxSearchPriceCheck.IsChecked == true)
                         {
-                            //upDownSearchPriceCheck.Text;
+                            temp += " AND product_actual_price.PAP_PRICE";
+                            switch(comboBoxDirectionSearchPrice.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += Converter.CurrencyConvert(upDownSearchPriceCheck.Text);
+                            flag = true;
                         }
                         if (checkBoxSearchValueCheck.IsChecked == true)
                         {
-                            //upDownSearchValueCheck.Text;
+                            temp += " AND check_list.C_VALUE";
+                            switch (comboBoxDirectionSearchPrice.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += "@value";
+                            valuesText.Add("@value");
+                            values.Add(upDownSearchValueCheck.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchCheckCode.IsChecked == true)
+                        {
+
+                            query = "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=@code;";
+                            valuesText = null;
+                            values = null;
+                            dataGridCheckOut.ItemsSource = DataBase.GetCheck(redefineQuery, new string[] { "@code" }, new string[] { textBoxSearchCheckCode.Text });
+                            valuesText.Clear();
+                            values.Clear();
+                        }
+                        else
+                        {
+                            string[] valuesTextStr = new string[valuesText.Count], valuesStr = new string[values.Count];
+                            for (int j = 0; j < valuesText.Count; j++)
+                            {
+                                valuesTextStr[j] = valuesText[j];
+                                valuesStr[j] = values[j];
+                            }
+                            if(flag == true)
+                            {
+                                redefineQuery += temp + ";";
+                                dataGridCheckOut.ItemsSource = DataBase.GetCheck(redefineQuery, valuesTextStr, valuesStr);
+                            }
+                            else
+                            {
+                                query += temp + ";";
+                                dataGridCheckOut.ItemsSource = DataBase.GetCheck(query, valuesTextStr, valuesStr);
+                            }
                         }
                         break;
                     }
@@ -738,6 +904,5 @@ namespace WpfApplication1
             checkBoxSearchPaytypeCard.IsChecked = false;
             checkBoxSearchPaytypeCash.IsChecked = false;
         }
-
     }
 }

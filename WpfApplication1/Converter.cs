@@ -14,7 +14,14 @@ namespace WpfApplication1
         public static string DateConvert(string value)
         {
             string[] date = value.Split('.');
-            return date[2] + "." + date[1] + "." + date[0];
+            string q = date[2] + "-" + date[1] + "-" + date[0];
+            return q;
+        }
+        public static string CurrencyConvert(string value)
+        {
+            value = value.Remove(value.Length - 2);
+            value = value.Replace(",", ".");
+            return value;
         }
     }
 }
