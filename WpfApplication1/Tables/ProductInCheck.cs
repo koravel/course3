@@ -10,6 +10,7 @@ namespace WpfApplication1
     {
         public string CURPRICE { get; set; }
         public string SUMM { get; set; }
+        public int WAYBILLID { get; set; }
 
         public ProductInCheck(string price,int value)
         {

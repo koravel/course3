@@ -4,30 +4,33 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         x:Class="WpfApplication1.DiscountAddWindow"
         Title="DiscountAddWindow" Height="300" Width="300" KeyDown="Window_KeyDown" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <Color x:Key="Color1">#FF617584</Color>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="79*"/>
             <ColumnDefinition Width="169*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="comboBoxProduct" Margin="75,12,24,0" Height="22" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <ComboBox x:Name="comboBoxProduct" Margin="75,12,24,0" Height="22" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBoxProduct_SelectionChanged">
             <ComboBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Добавить новый..." Click="MenuItem_Click"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
-               
+
         </ComboBox>
         <TextBox x:Name="textBoxDescription" Margin="75,131,24,37" Text="" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
-        <DatePicker x:Name="datePickerBeginDate" Margin="75,72,24,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <DatePicker x:Name="datePickerEndDate" Margin="75,101,24,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <DatePicker x:Name="datePickerBeginDate" Margin="75,72,24,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectedDateChanged="DateCheck_Click"/>
+        <DatePicker x:Name="datePickerEndDate" Margin="74,101,25,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectedDateChanged="DateCheck_Click"/>
         <Label Content="Товар" Margin="10,10,13,0" VerticalAlignment="Top" Height="26"/>
         <Label Content="Скидка" Margin="10,39,1,0" VerticalAlignment="Top" Height="26"/>
         <Label Content="Начало" Margin="10,69,168,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2"/>
         <Label Content="Конец" Margin="10,100,8,0" VerticalAlignment="Top" Height="26"/>
         <Label Content="Описание" Margin="0,130,167,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonSave" Content="Сохранить" Margin="0,0,116,10" Click="buttonSave_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="67" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,34,10" Click="buttonBack_Click" Grid.Column="1" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="67"/>
+        <Button x:Name="buttonSave" Content="Сохранить" Margin="0,0,152,10" Click="buttonSave_Click" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="67" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,26,10" Click="buttonBack_Click" Grid.Column="1" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="67"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="179,42,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Height="22"/>
-        <xctk:IntegerUpDown x:Name="upDownPrice" FormatString="" Value="0" Increment="1" Maximum="100" Minimum="0" HorizontalAlignment="Left" Width="193" Height="23" VerticalAlignment="Top" Margin="75,42,0,0" Grid.ColumnSpan="2"/>
+        <xctk:IntegerUpDown x:Name="upDownPrice" FormatString="" Value="0" Increment="1" Maximum="100" Minimum="0" HorizontalAlignment="Left" Width="193" Height="23" VerticalAlignment="Top" Margin="75,42,0,0" Grid.ColumnSpan="2" KeyDown="upDownPrice_KeyDown"/>
     </Grid>
 </Window>

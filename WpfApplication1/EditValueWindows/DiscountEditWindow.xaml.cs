@@ -86,7 +86,7 @@ namespace WpfApplication1
             }
             if (dataCorrect == 3)
             {
-                if (ErrorCheck.CheckBeginEndDate(datePickerBeginDate.Text, datePickerEndDate.Text))
+                if (ErrorCheck.CheckBeginEndDate(datePickerBeginDate.SelectedDate.Value, datePickerEndDate.SelectedDate.Value))
                 {
                     DataBase.Query(
                     new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text", "@_curid" },

@@ -51,8 +51,6 @@
             </DataGrid.ContextMenu>
         </DataGrid>
         <TextBlock HorizontalAlignment="Left" Margin="1056,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21"><Run Language="ru-ru" Text="Номер/Дата чека"/></TextBlock>
-        <Image HorizontalAlignment="Left" Height="25" Margin="10,422,0,0" VerticalAlignment="Top" Width="34"/>
-        <Image Margin="10,422,1134,134" Source="/WpfApplication1;component/search.png" Stretch="Fill"/>
-
+        <Image Margin="10,422,1134,134" Source="search.png" Stretch="Fill"/>
     </Grid>
 </Window>

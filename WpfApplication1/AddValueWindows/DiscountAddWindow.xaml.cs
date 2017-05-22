@@ -36,6 +36,7 @@ namespace WpfApplication1
             int dataCorrect = 0;
             if (comboBoxProduct.SelectedItem == null)
             {
+                comboBoxProduct.BorderBrush = Brushes.Red;
                 MessageBox.Show("Выберите товар!");
             }
             else
@@ -44,6 +45,7 @@ namespace WpfApplication1
             }
             if(datePickerBeginDate.Text=="")
             {
+                datePickerBeginDate.BorderBrush = Brushes.Red;
                 MessageBox.Show("Введите дату начала!");
             }
             else
@@ -52,23 +54,33 @@ namespace WpfApplication1
             }
             if (datePickerEndDate.Text == "")
             {
+                datePickerEndDate.BorderBrush = Brushes.Red;
                 MessageBox.Show("Введите дату конца!");
             }
             else
             {
                 dataCorrect++;
             }
-            if(dataCorrect==3)
+            if(datePickerBeginDate.SelectedDate != null && datePickerEndDate.SelectedDate != null)
             {
-                if(ErrorCheck.CheckBeginEndDate(datePickerBeginDate.Text,datePickerEndDate.Text))
+                if (ErrorCheck.CheckBeginEndDate(datePickerBeginDate.SelectedDate.Value, datePickerEndDate.SelectedDate.Value))
+                {
+                    if (dataCorrect == 3)
                     {
                         DataBase.Query(
-                        new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text"},
-                        new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
+                        new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text" },
+                        new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(), upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
                         "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
-                        DataBase.SetLog(idText, 1, 2, "Создание акции,параметры:|код товара:" + products[comboBoxProduct.SelectedIndex].ID.ToString() + "|сроки:" + Converter.DateConvert(datePickerBeginDate.Text) + "-" + Converter.DateConvert(datePickerEndDate.Text)+"|");
+                        DataBase.SetLog(idText, 1, 2, "Создание акции,параметры:|код товара:" + products[comboBoxProduct.SelectedIndex].ID.ToString() + "|сроки:" + Converter.DateConvert(datePickerBeginDate.Text) + "-" + Converter.DateConvert(datePickerEndDate.Text) + "|");
                         this.Close();
                     }
+                }
+                else
+                {
+                    datePickerBeginDate.BorderBrush = Brushes.Red;
+                    datePickerEndDate.BorderBrush = Brushes.Red;
+                    MessageBox.Show("Дата конца не может быть меньше даты начала!");
+                }
             }
         }
 
@@ -94,6 +106,56 @@ namespace WpfApplication1
             for (int i = 0; i < products.Count; i++)
             {
                 comboBoxProduct.Items.Add(products[i].NAME + "(#" + products[i].ID + ")");
+            }
+        }
+
+        private void DateCheck_Click(object sender, SelectionChangedEventArgs e)
+        {
+            if(datePickerBeginDate.Text != "" && datePickerEndDate.Text !="")
+            {
+                if (DateTime.Parse(datePickerBeginDate.Text) > DateTime.Parse(datePickerEndDate.Text))
+                {
+                    datePickerBeginDate.BorderBrush = Brushes.Red;
+                    datePickerEndDate.BorderBrush = Brushes.Red;
+                }
+                else
+                {
+                    datePickerBeginDate.BorderBrush = Brushes.PowderBlue;
+                    datePickerEndDate.BorderBrush = Brushes.PowderBlue;
+                }
+            }
+        }
+
+        private void upDownPrice_KeyDown(object sender, KeyEventArgs e)
+        {
+            string s = (new KeyConverter()).ConvertToString(e.Key);
+            int i = 0;
+            if (s.Contains("NumPad"))
+            {
+                i = 6;
+            }
+            if(s[i] < '0' || s[i] > '9')
+            {
+                upDownPrice.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                upDownPrice.BorderBrush = Brushes.Gray;
+            }
+        }
+
+        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(comboBoxProduct.SelectedIndex != -1)
+            {
+                comboBoxProduct.BorderBrush = Brushes.Gray;
+            }
+            else
+            {
+                if(comboBoxProduct.Items.Count == 0)
+                {
+                    MessageBox.Show("Товары отсутствут, внесите данные.");
+                }
             }
         }
     }

@@ -11,6 +11,5 @@ namespace WpfApplication1
         public string TYPE { set; get; }
         public string LOGIN { set; get; }
         public string PASS { set; get; }
-        public string ONLINE { set; get; }
     }
 }

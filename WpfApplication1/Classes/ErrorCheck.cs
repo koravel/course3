@@ -70,57 +70,22 @@ namespace WpfApplication1
             }
         }
 
-        public static bool CheckBeginEndDate(string _bdate,string _edate)
+        public static bool CheckBeginEndDate(DateTime _bdate, DateTime _edate)
         {
-            string[] bdate = new string[3];
-            bdate=_bdate.Split('.');
-            string[] edate = new string[3];
-            edate = _edate.Split('.');
-            if(Convert.ToInt32(bdate[2]) < Convert.ToInt32(edate[2]))
+            if(_bdate != null && _edate != null)
             {
-                return true;
-            }
-            else
-            {
-                if(Convert.ToInt32(bdate[2]) > Convert.ToInt32(edate[2]))
+                if (_bdate > _edate)
                 {
-                    MessageBox.Show("Начальная дата не может быть больше конечной!");
                     return false;
                 }
                 else
                 {
-                    if(Convert.ToInt32(bdate[1]) < Convert.ToInt32(edate[1]))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        if(Convert.ToInt32(bdate[1]) > Convert.ToInt32(edate[1]))
-                        {
-                            MessageBox.Show("Начальная дата не может быть больше конечной!");
-                            return false;
-                        }
-                        else
-                        {
-                            if(Convert.ToInt32(bdate[0]) < Convert.ToInt32(edate[0]))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                if(Convert.ToInt32(bdate[1]) > Convert.ToInt32(edate[1]))
-                                {
-                                    MessageBox.Show("Начальная дата не может быть больше конечной!");
-                                    return false;
-                                }
-                                else
-                                {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
+                    return true;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
     }

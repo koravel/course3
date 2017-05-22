@@ -163,17 +163,18 @@ namespace WpfApplication1
                         }
                     }
                     MySqlDataReader dr = com.ExecuteReader();
-                    if (dr.HasRows)
+                    List<string> retArr = new List<string> { };
+                    while (dr.Read())
                     {
-                        string[] StrArrRet=new string[dr.FieldCount];
-                        dr.Read();
-                        for (int i = 0; i < dr.FieldCount;i++)
-                        {
-                            StrArrRet[i] = dr.GetString(i);
-                        }
-                            con.Close();
-                        return StrArrRet;
+                            retArr.Add(dr.GetString(0));
                     }
+                    con.Close();
+                    string[] StrArrRet = new string[retArr.Count];
+                    for (int i = 0; i < retArr.Count;i++ )
+                    {
+                        StrArrRet[i] = retArr[i];
+                    }
+                        return StrArrRet;
                 }
 
                 catch (Exception ex)
@@ -740,7 +741,7 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT U_TYPE,U_NAME,U_PASS,U_ONLINE FROM `user`;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT U_TYPE,U_NAME,U_PASS FROM `user`;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -748,8 +749,7 @@ namespace WpfApplication1
                         {
                             TYPE=dr.GetString("U_TYPE"),
                             LOGIN=dr.GetString("U_NAME"),
-                            PASS=dr.GetString("U_PASS"),
-                            ONLINE = dr.GetString("U_ONLINE"),
+                            PASS=dr.GetString("U_PASS")
                         });
 
                     }
@@ -918,7 +918,7 @@ namespace WpfApplication1
             {
          
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,(SELECT pap.PAP_PRICE FROM product_actual_price pap WHERE pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1) AND pap.P_ID=p.P_ID),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE>=NOW() AND d.D_EDATE<=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,(SELECT pap.PAP_PRICE FROM product_actual_price pap WHERE pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1) AND pap.P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE>=NOW() AND d.D_EDATE<=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
@@ -934,7 +934,8 @@ namespace WpfApplication1
                             GROUP = dr.GetString(7),
                             PACK = dr.GetString(8),
                             MATERIAL = dr.GetString(9),
-                            FORM = dr.GetString(10)
+                            FORM = dr.GetString(10),
+                            WAYBILLID = dr.GetInt32(11)
                         });
 
                     }

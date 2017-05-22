@@ -12,7 +12,6 @@
                 <DataGridTextColumn Header="Тип записи" Binding="{Binding TYPE}"/>
                 <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}"/>
                 <DataGridTextColumn Header="Пароль" Binding="{Binding PASS}"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding ONLINE}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="buttonUserAdd" Content="Добавить запись" Click="UserAdd_Click" Margin="10,32,4,0" Height="22" VerticalAlignment="Top"/>

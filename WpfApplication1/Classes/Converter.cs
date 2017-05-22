@@ -50,7 +50,11 @@ namespace WpfApplication1
         {
             if (value != null)
             {
-                value = value.Remove(value.Length - 2);
+                if (value.Contains("р."))
+                {
+                    value = value.Remove(value.Length - 2);
+                }
+                value.Replace('.',',');
                 return float.Parse(value);
             }
             else

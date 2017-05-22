@@ -294,5 +294,7 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Mana
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\PriceSettingsWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\ViewSettingsWindow.g.cs
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.baml
-E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs

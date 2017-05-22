@@ -170,7 +170,7 @@
       <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\WaybillInfo.cs" />
-    <Compile Include="TransactionConfirm.xaml.cs">
+    <Compile Include="SellerWindows\TransactionConfirm.xaml.cs">
       <DependentUpon>TransactionConfirm.xaml</DependentUpon>
     </Compile>
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
@@ -273,7 +273,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TransactionConfirm.xaml">
+    <Page Include="SellerWindows\TransactionConfirm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,7 +307,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="search.png" />
+    <Resource Include="SellerWindows\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

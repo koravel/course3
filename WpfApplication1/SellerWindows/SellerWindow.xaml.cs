@@ -24,7 +24,7 @@ namespace WpfApplication1
 
         private void buttonSell_Click(object sender, RoutedEventArgs e)
         {
-            dataGridProductToCheckOut.ItemsSource = DataBase.GetProductForSeller();
+            //dataGridProductToCheckOut.ItemsSource = DataBase.GetProductForSeller();
         }
     }
 }
