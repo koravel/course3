@@ -590,6 +590,7 @@ namespace WpfApplication1
                 return products;
             }
         }
+
         public static List<Product> GetProduct(string _queryString, string[] _valuesText, string[] _values)
         {
             List<Product> products = new List<Product>();
@@ -598,7 +599,11 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT product.P_ID,product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product.P_INSTR FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID`;", con);
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    for (int i = 0; i < _values.Length; i++)
+                    {
+                        com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                    }
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {

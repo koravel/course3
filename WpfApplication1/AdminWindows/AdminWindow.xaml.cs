@@ -130,7 +130,7 @@ namespace WpfApplication1
                     dataGridProductActPriceOut.ItemsSource = DataBase.GetProductActualPrice(productId);
                     DataBase.Query(new string[] { "@_id" }, new string[] { productId }, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND wl.P_ID=@_id AND wl.WL_ID>0;");
                     string quantity = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM product_sold,waybill_list WHERE product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
-                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "select waybill_list.WL_VALUE-product_sold.PS_COUNT from waybill_list,product_sold,product_overdue where product_overdue.PP_IS_OVERDUE='Просрочено' and product_sold.WL_ID=waybill_list.WL_ID and product_overdue.WL_ID=waybill_list.WL_ID and waybill_list.P_ID=@_id;"),
+                    overdueValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT waybill_list.WL_VALUE-product_sold.PS_COUNT FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;"),
                     actualValue = DataBase.QueryRetCell(new string[] { "@_id" }, new string[] { productId }, "SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=@_id;");
                     textBlockProductCount.Text = "Всего на складе:";
                     if(quantity == null)
@@ -905,10 +905,171 @@ namespace WpfApplication1
                     }
                 case 4:
                     {
+                        List<string> valuesText = new List<string>(), values = new List<string>();
+                        string query = "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer` WHERE `manufacturer`.`M_ID`=p.`M_ID` ",
+                        redefineQuery = "SELECT p.P_ID,p.P_NAME,manufacturer.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,p.P_INSTR FROM `product` p,`manufacturer`,product_actual_price WHERE `manufacturer`.`M_ID`=p.`M_ID` AND p.P_ID=product_actual_price.P_ID ",
+                        temp=null;
+                        bool flag = false;
+                        if (checkBoxSearchNameProduct.IsChecked == true && textBoxSearchNameProduct.Text != "")
+                        {
+                            temp += " AND product.P_NAME=@_name";
+                            valuesText.Add("@_name");
+                            values.Add(textBoxSearchNameProduct.Text);
+                        }
+                        if (checkBoxSearchManufacturerProduct.IsChecked == true && textBoxSearchManufacturerProduct.Text != "")
+                        {
+                            temp += " AND manufacturer.M_NAME=@_mname";
+                            valuesText.Add("@_mname");
+                            values.Add(textBoxSearchManufacturerProduct.Text);
+                        }
+                        if (checkBoxSearchGroupProduct.IsChecked == true && comboBoxSearchGroupProduct.SelectedIndex != -1)
+                        {
+                            temp += " AND product.P_GROUP";
+                            valuesText.Add("@");
+                            values.Add(comboBoxSearchGroupProduct.SelectedItem.ToString());
+                        }
+                        if (checkBoxSearchPackProduct.IsChecked == true && comboBoxSearchPackProduct.SelectedIndex != -1)
+                        {
+                            temp += " AND product.P_PACK=@_pack";
+                            valuesText.Add("@_pack");
+                            values.Add(comboBoxSearchPackProduct.SelectedItem.ToString());
+                        }
+                        if (checkBoxSearchMaterialProduct.IsChecked == true && comboBoxSearchMaterialProduct.SelectedIndex != -1)
+                        {
+                            temp += " AND product.P_MATERIAL=@_material";
+                            valuesText.Add("@_material");
+                            values.Add(comboBoxSearchMaterialProduct.SelectedItem.ToString());
+                        }
+                        if (checkBoxSearchFormProduct.IsChecked == true && comboBoxSearchFormProduct.SelectedIndex != -1)
+                        {
+                            temp += " AND product.P_FORM=@_form";
+                            valuesText.Add("@_form");
+                            values.Add(comboBoxSearchFormProduct.SelectedItem.ToString());
+                        }
+                        if (checkBoxSearchPriceProduct.IsChecked == true && upDownSearchPriceProduct.Text != "")
+                        {
+                            temp += " AND product_actual_price.PAP_PRICE";
+                            switch (comboBoxSearchPriceRangeProduct.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += Converter.CurrencyConvert(upDownSearchPriceProduct.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchValueProduct.IsChecked == true && upDownSearchValueProduct.Text != "")
+                        {
+                            switch(comboBoxSearchTypeCountProduct.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += " AND (SELECT SUM(waybill_list.WL_VALUE-product_sold.PS_COUNT) FROM waybill_list,product_sold WHERE waybill_list.P_ID=p.P_ID AND waybill_list.WL_ID=product_sold.WL_ID)";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += " AND (SELECT waybill_list.WL_VALUE-product_sold.PS_COUNT FROM waybill_list,product_sold,product_overdue WHERE product_overdue.PP_IS_OVERDUE='Просрочено' AND product_sold.WL_ID=waybill_list.WL_ID AND product_overdue.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += " AND (SELECT IF(COUNT(waybill_list.WL_VALUE-product_sold.PS_COUNT)>0,waybill_list.WL_VALUE-product_sold.PS_COUNT,0) FROM product_sold,product_overdue,waybill_list WHERE product_sold.WL_ID=product_overdue.WL_ID AND product_overdue.PP_IS_OVERDUE<>'Просрочено' AND product_overdue.PP_IS_OVERDUE<>'Продано' AND product_sold.WL_ID=waybill_list.WL_ID AND waybill_list.P_ID=p.P_ID)";
+                                        break;
+                                    }
+
+                            }
+                            switch (comboBoxDirectionSearchValueProduct.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        temp += "=";
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        temp += ">=";
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        temp += "<=";
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        temp += ">";
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        temp += "<";
+                                        break;
+                                    }
+
+                            }
+                            temp += "@value";
+                            valuesText.Add("@value");
+                            values.Add(upDownSearchValueProduct.Text);
+                            flag = true;
+                        }
+                        if (checkBoxSearchCodeProduct.IsChecked == true && textBoxSearchCodeProduct.Text != "")
+                        {
+
+                            dataGridProductOut.ItemsSource = DataBase.GetProduct(
+                                "SELECT product.P_ID,product.P_NAME,manufacturer.M_NAME,product.P_GROUP,product.P_PACK,product.P_MATERIAL,product.P_FORM,product.P_INSTR FROM `product`,`manufacturer` WHERE `manufacturer`.`M_ID`=`product`.`M_ID AND product.P_ID=@_code`;",
+                                new string[] { "@code" },
+                                new string[] { textBoxSearchCodeProduct.Text });
+                            valuesText.Clear();
+                            values.Clear();
+                        }
+                        else
+                        {
+                            string[] valuesTextStr = new string[valuesText.Count], valuesStr = new string[values.Count];
+                            for (int j = 0; j < valuesText.Count; j++)
+                            {
+                                valuesTextStr[j] = valuesText[j];
+                                valuesStr[j] = values[j];
+                            }
+                            if (flag == true)
+                            {
+                                redefineQuery += temp + ";";
+                                dataGridProductOut.ItemsSource = DataBase.GetProduct(redefineQuery, valuesTextStr, valuesStr);
+                            }
+                            else
+                            {
+                                query += temp + ";";
+                                dataGridProductOut.ItemsSource = DataBase.GetProduct(query, valuesTextStr, valuesStr);
+                            }
+                        }
                         break;
                     }
                 case 5:
                     {
+                        //!!!!!!!!!!!
                         break;
                     }
 
@@ -1453,6 +1614,159 @@ namespace WpfApplication1
                 textBoxSearchCodeManufacturer.Text = null;
                 textBoxSearchCodeManufacturer.IsEnabled = false;
             }
+        }
+
+        private void buttonResetSearchProduct_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxSearchNameProduct.IsChecked = false;
+            textBoxSearchNameProduct.Text = null;
+            textBoxSearchNameProduct.IsEnabled = false;
+            checkBoxSearchManufacturerProduct.IsChecked = false;
+            textBoxSearchManufacturerProduct.Text = null;
+            textBoxSearchManufacturerProduct.IsEnabled = false;
+            checkBoxSearchGroupProduct.IsChecked = false;
+            comboBoxSearchGroupProduct.SelectedIndex = -1;
+            comboBoxSearchGroupProduct.IsEnabled = false;
+            checkBoxSearchPackProduct.IsChecked = false;
+            comboBoxSearchPackProduct.SelectedIndex = -1;
+            comboBoxSearchPackProduct.IsEnabled = false;
+            checkBoxSearchMaterialProduct.IsChecked = false;
+            comboBoxSearchMaterialProduct.SelectedIndex = -1;
+            comboBoxSearchMaterialProduct.IsEnabled = false;
+            checkBoxSearchFormProduct.IsChecked = false;
+            comboBoxSearchFormProduct.SelectedIndex = -1;
+            comboBoxSearchFormProduct.IsEnabled = false;
+            checkBoxSearchPriceProduct.IsChecked = false;
+            upDownSearchPriceProduct.Text = null;
+            upDownSearchPriceProduct.IsEnabled = false;
+            checkBoxSearchCodeProduct.IsChecked = false;
+            textBoxSearchCodeProduct.Text = null;
+            textBoxSearchCodeProduct.IsEnabled = false;
+            checkBoxSearchValueProduct.IsChecked = false;
+            upDownSearchValueProduct.Text = null;
+            upDownSearchValueProduct.IsEnabled = false;
+        }
+
+        private void checkBoxSearchNameProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchNameProduct.IsChecked == true)
+            {
+                textBoxSearchNameProduct.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchNameProduct.Text = null;
+                textBoxSearchNameProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchManufacturerProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchManufacturerProduct.IsChecked == true)
+            {
+                textBoxSearchManufacturerProduct.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchManufacturerProduct.Text = null;
+                textBoxSearchManufacturerProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchGroupProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchGroupProduct.IsChecked == true)
+            {
+                comboBoxSearchGroupProduct.IsEnabled = true;
+            }
+            else
+            {
+                comboBoxSearchGroupProduct.SelectedIndex = -1;
+                comboBoxSearchGroupProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchPackProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchPackProduct.IsChecked == true)
+            {
+                comboBoxSearchPackProduct.IsEnabled = true;
+            }
+            else
+            {
+                comboBoxSearchPackProduct.SelectedIndex = -1;
+                comboBoxSearchPackProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchMaterialProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchMaterialProduct.IsChecked == true)
+            {
+                comboBoxSearchMaterialProduct.IsEnabled = true;
+            }
+            else
+            {
+                comboBoxSearchMaterialProduct.SelectedIndex = -1;
+                comboBoxSearchMaterialProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchFormProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchFormProduct.IsChecked == true)
+            {
+                comboBoxSearchFormProduct.IsEnabled = true;
+            }
+            else
+            {
+                comboBoxSearchFormProduct.SelectedIndex = -1;
+                comboBoxSearchFormProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchPriceProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchPriceProduct.IsChecked == true)
+            {
+                upDownSearchPriceProduct.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchPriceProduct.Text = null;
+                upDownSearchPriceProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchCodeProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchCodeProduct.IsChecked == true)
+            {
+                textBoxSearchCodeProduct.IsEnabled = true;
+            }
+            else
+            {
+                textBoxSearchCodeProduct.Text = null;
+                textBoxSearchCodeProduct.IsEnabled = false;
+            }
+        }
+
+        private void checkBoxSearchValueProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkBoxSearchValueProduct.IsChecked == true)
+            {
+                upDownSearchValueProduct.IsEnabled = true;
+            }
+            else
+            {
+                upDownSearchValueProduct.Text = null;
+                upDownSearchValueProduct.IsEnabled = false;
+            }
+        }
+
+        private void buttonResetSearchWaybill_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
