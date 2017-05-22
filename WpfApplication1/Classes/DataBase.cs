@@ -146,7 +146,7 @@ namespace WpfApplication1
 
         }
 
-        public static string[] QueryRetRow(string[] _changeParametersText, string[] _changeParameters, string _queryString)
+        public static string[] QueryRetColumn(string[] _changeParametersText, string[] _changeParameters, string _queryString)
         {
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
@@ -175,6 +175,45 @@ namespace WpfApplication1
                         StrArrRet[i] = retArr[i];
                     }
                         return StrArrRet;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                con.Close();
+                return null;
+            }
+        }
+
+        public static string[] QueryRetRow(string[] _changeParametersText, string[] _changeParameters, string _queryString)
+        {
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    if (_changeParameters != null)
+                    {
+                        int n = _changeParameters.Length;
+                        for (int i = 0; i < n; i++)
+                        {
+                            com.Parameters.AddWithValue(_changeParametersText[i], _changeParameters[i]);
+                        }
+                    }
+                    MySqlDataReader dr = com.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        string[] StrArrRet = new string[dr.FieldCount];
+                        dr.Read();
+                        for (int i = 0; i < dr.FieldCount; i++)
+                        {
+                            StrArrRet[i] = dr.GetString(i);
+                        }
+                        con.Close();
+                        return StrArrRet;
+                    }
                 }
 
                 catch (Exception ex)
@@ -373,7 +412,7 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT product.P_ID,CONCAT( product.P_NAME,\"(#\",product.P_ID,\")\") AS 'P_NAME',cl.CL_VALUE,product_actual_price.PAP_PRICE FROM check_list cl,product,`check`,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=`check`.C_ID AND product_actual_price.PAP_DATE=(SELECT MAX(product_actual_price.PAP_DATE) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID) AND `check`.C_ID=@_curid;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT distinct product.P_ID,CONCAT( product.P_NAME,\"(#\",product.P_ID,\")\") AS 'P_NAME',cl.CL_VALUE,product_actual_price.PAP_PRICE FROM check_list cl,product,`check` c,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=c.C_ID AND product_actual_price.PAP_PRICE=ifnull((select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID and pap.PAP_DATE<=c.C_DATE  order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1),(select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=cl.P_ID order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1)) AND c.C_ID=@_curid;", con);
                     com.Parameters.AddWithValue("@_curid",_curid);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
@@ -918,7 +957,7 @@ namespace WpfApplication1
             {
          
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,(SELECT pap.PAP_PRICE FROM product_actual_price pap WHERE pap.PAP_DATE=(SELECT PAP_DATE FROM product_actual_price WHERE P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1) AND pap.P_ID=p.P_ID ORDER BY 1 DESC LIMIT 1),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE>=NOW() AND d.D_EDATE<=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT p.P_ID,p.P_NAME,ifnull((select pap.PAP_PRICE from product_actual_price pap,waybill w where pap.P_ID=p.P_ID and pap.PAP_DATE<=w.W_DATE  order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1),(select pap.PAP_PRICE from product_actual_price pap where pap.P_ID=p.P_ID order by pap.PAP_DATE desc,pap.PAP_PRICE desc limit 1)),wl.WL_TRADE_PRICE,(SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено'),(SELECT if((SELECT COUNT(d.D_ID))>0,d.D_PRICE,0) FROM discounts d WHERE d.P_ID=p.P_ID AND d.D_BDATE>=NOW() AND d.D_EDATE<=NOW()),m.M_NAME,p.P_GROUP,p.P_PACK,p.P_MATERIAL,p.P_FORM,wl.WL_ID FROM product p,manufacturer m,product_sold ps,waybill_list wl WHERE wl.WL_ID=ps.WL_ID AND p.P_ID=wl.P_ID AND p.M_ID=m.M_ID AND (SELECT wl.WL_VALUE-ps.PS_COUNT FROM product_overdue WHERE WL_ID=wl.WL_ID AND PP_IS_OVERDUE='Не просрочено')>0;", con);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {

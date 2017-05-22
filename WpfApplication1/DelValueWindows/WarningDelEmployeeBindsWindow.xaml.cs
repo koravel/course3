@@ -17,6 +17,7 @@ namespace WpfApplication1
     public partial class WarningDelEmployeeBindsWindow : Window
     {
         string curId,idText;
+        public bool flag = false;
         public WarningDelEmployeeBindsWindow(string id,string _curId)
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace WpfApplication1
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
             DataBase.SetLog(idText, 1, 3, "Удаление работника,параметры:|код:" + curId + "|");
+            flag = true;
             this.Close();
         }
 

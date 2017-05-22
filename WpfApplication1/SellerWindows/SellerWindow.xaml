@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SellerWindow" Height="610.5" Width="1177">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="779,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="83"><Run Language="ru-ru" Text="аванс"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="867,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="96"><Run Language="ru-ru" Text="сумма"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="968,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="90"><Run Language="ru-ru" Text="сдача"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Height="27" Margin="779,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83"><Run Language="ru-ru" Text="скидка%"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Height="27" Margin="867,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"><Run Language="ru-ru" Text="скидка"/></TextBlock>
-        <RadioButton Content="наличка" HorizontalAlignment="Left" Margin="1091,409,0,0" VerticalAlignment="Top" GroupName="Paytype_Group" IsChecked="True"/>
-        <RadioButton Content="карта" HorizontalAlignment="Left" Margin="1091,431,0,0" VerticalAlignment="Top" GroupName="Paytype_Group"/>
-        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="10,40,0,180" HorizontalAlignment="Left" Width="683">
+        <TextBlock HorizontalAlignment="Left" Margin="779,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="83" FontSize="14"><Run Language="ru-ru" Text="аванс"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="867,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="96" FontSize="14"><Run Language="ru-ru" Text="сумма"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="968,425,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" Width="90" FontSize="14"><Run Language="ru-ru" Text="сдача"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="27" Margin="779,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" FontSize="14"><Run Language="ru-ru" Text="скидка%"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Height="27" Margin="867,468,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" FontSize="14"><Run Language="ru-ru" Text="скидка"/></TextBlock>
+        <RadioButton Content="наличка" HorizontalAlignment="Left" Margin="1091,409,0,0" VerticalAlignment="Top" GroupName="Paytype_Group" IsChecked="True" FontSize="14"/>
+        <RadioButton Content="карта" HorizontalAlignment="Left" Margin="1091,431,0,0" VerticalAlignment="Top" GroupName="Paytype_Group" FontSize="14"/>
+        <DataGrid x:Name="dataGridProductOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="10,40,0,180" HorizontalAlignment="Left" Width="683" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
@@ -30,14 +30,14 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Left" Margin="846,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21"><Run Language="ru-ru" Text="кассир"/></TextBlock>
-        <Button Content="Продать" HorizontalAlignment="Left" Margin="779,530,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button Content="Отмена" HorizontalAlignment="Left" Margin="917,530,0,0" VerticalAlignment="Top" Width="74"/>
-        <Button Content="Выйти" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBlock HorizontalAlignment="Left" Margin="779,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21"><Run Language="ru-ru" Text="Кааса№"/></TextBlock>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="44,422,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="649"/>
+        <TextBlock HorizontalAlignment="Left" Margin="846,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" FontSize="14"><Run Language="ru-ru" Text="кассир"/></TextBlock>
+        <Button Content="Продать" HorizontalAlignment="Left" Margin="779,530,0,0" VerticalAlignment="Top" Width="74" FontSize="14"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="917,530,0,0" VerticalAlignment="Top" Width="74" FontSize="14"/>
+        <Button Content="Выйти" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="779,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" FontSize="14"><Run Language="ru-ru" Text="Кааса№"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="64,409,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364" FontSize="14"/>
         <Button x:Name="buttonSell" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="702,184,0,0" VerticalAlignment="Top" Width="68" FontSize="36" Height="61" Click="buttonSell_Click"/>
-        <DataGrid x:Name="dataGridProductToCheckOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="779,40,0,180" HorizontalAlignment="Left" Width="373">
+        <DataGrid x:Name="dataGridProductToCheckOut" AutoGenerateColumns="False" IsReadOnly="True" Margin="775,40,0,180" HorizontalAlignment="Left" Width="384" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding ID}"/>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
@@ -50,7 +50,8 @@
                 <ContextMenu/>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Left" Margin="1056,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21"><Run Language="ru-ru" Text="Номер/Дата чека"/></TextBlock>
-        <Image Margin="10,422,1134,134" Source="search.png" Stretch="Fill"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1056,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" FontSize="14"><Run Language="ru-ru" Text="Номер/Дата чека"/></TextBlock>
+        <Image Margin="11,403,1118,140" Source="/WpfApplication1;component/Resources/search.png" Stretch="Fill"/>
+        <ComboBox HorizontalAlignment="Left" Margin="458,409,0,0" VerticalAlignment="Top" Width="120" FontSize="14"/>
     </Grid>
 </Window>

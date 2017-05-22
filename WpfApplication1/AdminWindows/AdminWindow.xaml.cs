@@ -103,7 +103,7 @@ namespace WpfApplication1
             {
                 textBlockProductCount.Text += quantity;
             }
-            textBlockProductCount.Text += "\nПросрочено:";
+            textBlockProductCount.Text += "   Просрочено:";
             if (overdueValue == null)
             {
                 textBlockProductCount.Text += "0";
@@ -112,7 +112,7 @@ namespace WpfApplication1
             {
                 textBlockProductCount.Text += overdueValue;
             }
-            textBlockProductCount.Text += "\nНе просрочено:";
+            textBlockProductCount.Text += "   Не просрочено:";
             if (actualValue == null)
             {
                 textBlockProductCount.Text += "0";
@@ -329,8 +329,7 @@ namespace WpfApplication1
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            int selected = tabControlTables.SelectedIndex;
-            switch (selected)
+            switch (tabControlTables.SelectedIndex)
             {
                 case 0:
                     {
@@ -339,27 +338,53 @@ namespace WpfApplication1
                     }
                 case 1:
                     {
-                        new DiscountAddWindow(idText).ShowDialog();
+                        DiscountAddWindow window = new DiscountAddWindow(idText);
+                        window.ShowDialog();
+                        if (window.flag == true)
+                        {
+                            discount.Add(window.obj);
+                            dataGridDiscountOut.Items.Refresh();
+                        }
                         break;
                     }
                 case 2:
                     {
-                        new EmployeeAddWindow(idText).ShowDialog();
+                        EmployeeAddWindow window = new EmployeeAddWindow(idText);
+                        window.ShowDialog();
+                        if (window.flag == true)
+                        {
+                            employee.Add(window.obj);
+                            dataGridEmployeeOut.Items.Refresh();
+                        }
                         break;
                     }
                 case 3:
                     {
-                        new ManufacturerAddWindow(idText).ShowDialog();
+                        ManufacturerAddWindow window = new ManufacturerAddWindow(idText);
+                        window.ShowDialog();
+                        if (window.flag == true)
+                        {
+                            manufacturer.Add(window.obj);
+                            dataGridManufacturersOut.Items.Refresh();
+                        }
                         break;
                     }
                 case 4:
                     {
-                        new ProductAddWindow(idText).ShowDialog();
+                        ProductAddWindow window = new ProductAddWindow(idText);
+                        window.ShowDialog();
+                        if (window.flag == true)
+                        {
+                            product.Add(window.obj);
+                            dataGridProductOut.Items.Refresh();
+                        }
                         break;
                     }
                 case 5:
                     {
-                        new WaybillAddWindow(idText).ShowDialog();
+                        WaybillAddWindow window = new WaybillAddWindow(idText);
+                        window.ShowDialog();
+                        flag = window.flag1;
                         break;
                     }
             }
@@ -377,101 +402,94 @@ namespace WpfApplication1
                     }
                 case 1:
                     {
-                        try
-                        {
-                            if (dataGridDiscountOut.SelectedIndex != -1)
-                            {
-                                string discountId = Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut);
-                                DataBase.Query(new string[] { "@_curid" }, new string[] { discountId }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
-                                discount.RemoveAt(dataGridDiscountOut.SelectedIndex);
-                                dataGridDiscountOut.Items.Refresh();
-                                DataBase.SetLog(idText, 1, 3, "Удаление акции,код=" + discountId);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Windows.MessageBox.Show(ex.Message);
-                        }
+                        DeleteRow<Discount>(dataGridDiscountOut, true, discount, -1, "DELETE FROM `discounts` WHERE D_ID", "Удаление работника,акции=", 0);
                         break;
                     }
                 case 2:
                     {
-                        try
-                        {
-                            if (dataGridEmployeeOut.SelectedIndex != -1)
-                            {
-                                string employeeId = Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut);
-                                if(Properties.Settings.Default.DelBindingToEmployee == false)
-                                {
-                                    new WarningDelEmployeeBindsWindow(idText,employeeId).ShowDialog();
-                                }
-                                else
-                                {
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { employeeId }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
-                                    employee.RemoveAt(dataGridEmployeeOut.SelectedIndex);
-                                    dataGridEmployeeOut.Items.Refresh();
-                                    DataBase.SetLog(idText, 1, 3, "Удаление работника,код=" + employeeId);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Windows.MessageBox.Show(ex.Message);
-                        }
+                        DeleteRow<Employee>(dataGridEmployeeOut, Properties.Settings.Default.DelBindingToEmployee, employee, 0, "DELETE FROM `employee` WHERE E_ID", "Удаление работника,код=", 1);
+                        textBlockTypeCount.Text = "";
                         break;
                     }
                 case 3:
                     {
-                        try
-                        {
-                            if (dataGridManufacturersOut.SelectedIndex != -1)
-                            {
-                                string maufacturerId = Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut);
-                                if (Properties.Settings.Default.DelBindingToManufacturer == false)
-                                {
-                                    new WarningDelManufacturerBindsWindow(idText,maufacturerId).ShowDialog();
-                                }
-                                else
-                                {
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { maufacturerId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
-                                    manufacturer.RemoveAt(dataGridManufacturersOut.SelectedIndex);
-                                    dataGridManufacturersOut.Items.Refresh();
-                                    DataBase.SetLog(idText, 1, 3, "Удаление производителя,код=" + maufacturerId);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Windows.MessageBox.Show(ex.Message);
-                        }
+                        DeleteRow<Manufacturer>(dataGridManufacturersOut, Properties.Settings.Default.DelBindingToManufacturer, manufacturer, 1, "DELETE FROM `manufacturer` WHERE M_ID", "Удаление производителя,код=", 1);
                         break;
                     }
                 case 4:
                     {
-                        try
-                        {
-                            if (dataGridProductOut.SelectedIndex != -1)
-                            {
-                                string productId = Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut);
-                                if (Properties.Settings.Default.DelBindingToProduct == false)
-                                {
-                                    new WarningDelProductBindsWindow(idText,productId).ShowDialog();
-                                }
-                                else
-                                {
-                                    DataBase.Query(new string[] { "@_curid" }, new string[] { productId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
-                                    product.RemoveAt(dataGridProductOut.SelectedIndex);
-                                    dataGridProductOut.Items.Refresh();
-                                    DataBase.SetLog(idText, 1, 3, "Удаление товара,код=" + productId);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Windows.MessageBox.Show(ex.Message);
-                        }
+                        DeleteRow<Product>(dataGridProductOut, Properties.Settings.Default.DelBindingToProduct1, product, 2, "DELETE FROM `product` WHERE P_ID", "Удаление товара,код=", 1);
+                        dataGridProductActPriceOut.ItemsSource = null;
                         break;
                     }
+            }
+        }
+
+        public void DeleteRow<T>(DataGrid dataGrid,bool settings,List<T> list,int type,string sqlQuery,string logText,int mode)
+        {
+            try
+            {
+                if (dataGrid.SelectedIndex != -1)
+                {
+                    string objId = Converter.DGCellToStringConvert(dataGrid.SelectedIndex, 0, dataGrid);
+                    if (mode == 1)
+                    {
+                        if (settings == false)
+                        {
+                            bool flag = false;
+                            switch(type)
+                            {
+                                case 0:
+                                    {
+                                        WarningDelEmployeeBindsWindow window = new WarningDelEmployeeBindsWindow(idText, objId);
+                                        window.ShowDialog();
+                                        flag = window.flag;
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        WarningDelManufacturerBindsWindow window = new WarningDelManufacturerBindsWindow(idText, objId);
+                                        window.ShowDialog();
+                                        flag = window.flag;
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        WarningDelProductBindsWindow window = new WarningDelProductBindsWindow(idText, objId);
+                                        window.ShowDialog();
+                                        flag = window.flag;
+                                        break;
+                                    }
+                            }
+                            if (flag == true)
+                            {
+                                list.RemoveAt(dataGrid.SelectedIndex);
+                                dataGrid.Items.Refresh();
+                            }
+                        }
+                        else
+                        {
+                            DataBase.Query(new string[] { "@_curid" }, new string[] { objId }, sqlQuery + "=@_curid;");
+                            list.RemoveAt(dataGrid.SelectedIndex);
+                            dataGrid.Items.Refresh();
+                            DataBase.SetLog(idText, 1, 3, logText + objId);
+                        }
+                    }
+                    else
+                    {
+                        if(mode == 0)
+                        {
+                            DataBase.Query(new string[] { "@_curid" }, new string[] { objId }, sqlQuery + "=@_curid;");
+                            list.RemoveAt(dataGrid.SelectedIndex);
+                            dataGrid.Items.Refresh();
+                            DataBase.SetLog(idText, 1, 3, logText + objId);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -489,7 +507,13 @@ namespace WpfApplication1
                     {
                         if (dataGridDiscountOut.SelectedIndex != -1)
                         {
-                            new DiscountEditWindow(idText,Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut)).ShowDialog();
+                            DiscountEditWindow window = new DiscountEditWindow(idText, Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut), ((Discount)(dataGridDiscountOut.SelectedItem)));
+                            window.ShowDialog();
+                            if (window.flag)
+                            {
+                                discount[dataGridDiscountOut.SelectedIndex] = window.obj;
+                                dataGridDiscountOut.Items.Refresh();
+                            }
                         }
                         break;
                     }
@@ -497,7 +521,13 @@ namespace WpfApplication1
                     {
                         if (dataGridEmployeeOut.SelectedIndex != -1)
                         {
-                            new EmployeeEditWindow(idText, Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut)).ShowDialog();
+                            EmployeeEditWindow window = new EmployeeEditWindow(idText, Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut), ((Employee)(dataGridEmployeeOut.SelectedItem)));
+                            window.ShowDialog();
+                            if (window.flag)
+                            {
+                                employee[dataGridEmployeeOut.SelectedIndex] = window.obj;
+                                dataGridEmployeeOut.Items.Refresh();
+                            }
                         }
                         break;
                     }
@@ -505,7 +535,13 @@ namespace WpfApplication1
                     {
                         if (dataGridManufacturersOut.SelectedIndex != -1)
                         {
-                            new ManufacturerEditWindow(idText, Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut)).ShowDialog();
+                            ManufacturerEditWindow window = new ManufacturerEditWindow(idText, Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut),((Manufacturer)(dataGridManufacturersOut.SelectedItem)));
+                            window.ShowDialog();
+                            if (window.flag)
+                            {
+                                manufacturer[dataGridManufacturersOut.SelectedIndex] = window.obj;
+                                dataGridManufacturersOut.Items.Refresh();
+                            }
                         }
                         break;
                     }
@@ -513,7 +549,13 @@ namespace WpfApplication1
                     {
                         if (dataGridProductOut.SelectedIndex != -1)
                         {
-                            new ProductEditWindow(idText, Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut)).ShowDialog();
+                            ProductEditWindow window = new ProductEditWindow(idText, Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut),((Product)(dataGridProductOut.SelectedItem)));
+                            window.ShowDialog();
+                            if(window.flag)
+                            {
+                                product[dataGridProductOut.SelectedIndex] = window.objout;
+                                dataGridProductOut.Items.Refresh();
+                            }
                         }
                         break;
                     }

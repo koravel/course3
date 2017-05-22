@@ -17,6 +17,7 @@ namespace WpfApplication1
     public partial class WarningDelManufacturerBindsWindow : Window
     {
         string curId,idText;
+        public bool flag = false;
         public WarningDelManufacturerBindsWindow(string id,string _curId)
         {
             InitializeComponent();
@@ -42,6 +43,7 @@ namespace WpfApplication1
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
             DataBase.SetLog(idText, 1, 3, "Удаление производителя,параметры:|код:" + curId + "|");
+            flag = true;
             this.Close();
         }
 

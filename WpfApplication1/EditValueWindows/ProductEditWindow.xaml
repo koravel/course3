@@ -2,21 +2,21 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="WpfApplication1.ProductEditWindow"
-        Title="ProductEditWindow" Height="456.232" Width="319.757" KeyDown="Window_KeyDown">
+        Title="ProductEditWindow" Height="479.224" Width="341.471" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="113*"/>
             <ColumnDefinition Width="199*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="textBoxName" Height="23" Margin="109,7,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="comboBoxManufacturer" Margin="109,35,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <TextBox x:Name="textBoxName" Height="25" Margin="117,7,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Grid.ColumnSpan="2" KeyUp="textBoxName_KeyUp" MaxLength="50" FontSize="14"/>
+        <ComboBox x:Name="comboBoxManufacturer" Margin="117,35,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" FontSize="14">
             <ComboBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Добавить нового..." Click="MenuItem_Click"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
         </ComboBox>
-        <ComboBox x:Name="comboBoxGroup" Margin="109,62,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <ComboBox x:Name="comboBoxGroup" Margin="117,62,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" FontSize="14">
             <System:String>Без группы</System:String>
             <System:String>Антисептики</System:String>
             <System:String>Слабительные</System:String>
@@ -64,7 +64,7 @@
             <System:String>Средства личной гигиены</System:String>
             <System:String>Косметические</System:String>
         </ComboBox>
-        <ComboBox x:Name="comboBoxPack" Margin="109,89,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <ComboBox x:Name="comboBoxPack" Margin="117,89,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" FontSize="14">
             <System:String>Без упаковки</System:String>
             <System:String>Ампула</System:String>
             <System:String>Картонная коробка</System:String>
@@ -76,7 +76,7 @@
             <System:String>Флакон</System:String>
             <System:String>Бумага</System:String>
         </ComboBox>
-        <ComboBox x:Name="comboBoxMaterial" Margin="109,116,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <ComboBox x:Name="comboBoxMaterial" Margin="117,116,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" FontSize="14">
             <System:String>Неизвестно</System:String>
             <System:String>Жидкость</System:String>
             <System:String>Сироп</System:String>
@@ -91,26 +91,26 @@
             <System:String>Мазь</System:String>
             <System:String>Паста</System:String>
         </ComboBox>
-        <ComboBox x:Name="comboBoxForm" Margin="109,143,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        <ComboBox x:Name="comboBoxForm" Margin="117,143,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" FontSize="14">
             <System:String>без рецепта</System:String>
             <System:String>с рецептом</System:String>
         </ComboBox>
-        <TextBox x:Name="textBoxInstruction" Margin="109,231,10,41" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2"/>
-        <Label Content="Название" Margin="41,7,9,0" VerticalAlignment="Top"/>
-        <Label Content="Производитель" Margin="9,35,9,0" VerticalAlignment="Top"/>
-        <Label Content="Группа" Margin="56,62,9,0" VerticalAlignment="Top"/>
-        <Label Content="Упаковка" Margin="43,89,9,0" VerticalAlignment="Top"/>
-        <Label Content="Материал" Margin="39,116,9,0" VerticalAlignment="Top"/>
-        <Label Content="Отпуск" Margin="56,142,9,0" VerticalAlignment="Top" Height="27"/>
-        <Label Content="Инструкция" Margin="29,231,9,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,129,14" Width="75" Click="buttonSave_Click" Grid.ColumnSpan="2" Height="22" VerticalAlignment="Bottom"/>
-        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,10,14" Click="buttonBack_Click" Grid.Column="1" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom"/>
-        <DatePicker x:Name="datePickerToday" Margin="109,201,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Label Content="Цена" Margin="65,174,10,0" VerticalAlignment="Top"/>
-        <Label Content="Дата цены" Margin="35,201,10,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkBoxNewPrice" Content="Создать&#xA;новую цену" Margin="0,0,195,14" Height="32" VerticalAlignment="Bottom" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="107"/>
+        <TextBox x:Name="textBoxInstruction" Margin="117,231,10,41" TextWrapping="Wrap" Text="" Grid.ColumnSpan="2" FontSize="14"/>
+        <Label Content="Название" Margin="41,7,9,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Производитель" Margin="3,35,4,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Группа" Margin="56,62,9,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Упаковка" Margin="43,89,9,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Материал" Margin="39,116,9,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Отпуск" Margin="56,142,9,0" VerticalAlignment="Top" Height="27" FontSize="14"/>
+        <Label Content="Инструкция" Margin="29,231,4,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,121,14" Width="83" Click="buttonSave_Click" Height="25" VerticalAlignment="Bottom" FontSize="14" Grid.Column="1"/>
+        <Button x:Name="buttonBack" Content="Назад" Margin="0,0,10,14" Click="buttonBack_Click" Grid.Column="1" HorizontalAlignment="Right" Width="81" Height="25" VerticalAlignment="Bottom" FontSize="14"/>
+        <DatePicker x:Name="datePickerToday" Margin="117,201,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectedDateChanged="datePickerToday_SelectedDateChanged" FontSize="14"/>
+        <Label Content="Цена" Margin="65,174,10,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="Дата цены" Margin="35,201,10,0" VerticalAlignment="Top" FontSize="14"/>
+        <CheckBox x:Name="checkBoxNewPrice" Content="Создать&#xA;новую цену" Margin="0,0,209,0" Height="46" VerticalAlignment="Bottom" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="107" FontSize="14"/>
 
-        <xctk:DecimalUpDown x:Name="upDownPrice" FormatString="" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="26" VerticalAlignment="Top" Margin="109,170,10,0" Grid.ColumnSpan="2"/>
+        <xctk:DecimalUpDown x:Name="upDownPrice" FormatString="" Increment=".01" Value="0.01" Maximum="99999.99" Minimum="0.01" Height="25" VerticalAlignment="Top" Margin="117,170,10,0" Grid.ColumnSpan="2" KeyUp="upDownPrice_KeyUp" FontSize="14"/>
 
     </Grid>
 </Window>

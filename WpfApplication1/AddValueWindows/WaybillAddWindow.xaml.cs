@@ -24,6 +24,7 @@ namespace WpfApplication1
         string[] tempMas;
         string idText;
         int selIndexEmployee = -1, countEmployee = 0;
+        public bool flag1 = false;
         public WaybillAddWindow(string id)
         {
             InitializeComponent();
@@ -82,7 +83,7 @@ namespace WpfApplication1
                 }
                 queryString += ";";
                 DataBase.Query(null, null, queryString);
-                string[] waybillListIds = DataBase.QueryRetRow(new string[] { "@_id" }, new string[] { lastId }, "SELECT WL_ID FROM waybill,waybill_list WHERE waybill.W_ID=waybill_list.W_ID AND waybill.W_ID=@_id;");
+                string[] waybillListIds = DataBase.QueryRetColumn(new string[] { "@_id" }, new string[] { lastId }, "SELECT WL_ID FROM waybill,waybill_list WHERE waybill.W_ID=waybill_list.W_ID AND waybill.W_ID=@_id;");
                 queryString = "(WL_ID)VALUES ";
                 for (int i = 0; i < waybillListIds.Length; i++)
                 {
@@ -102,6 +103,7 @@ namespace WpfApplication1
                 }
                 DataBase.Query(null, null, "UPDATE product_overdue po,waybill_list wl SET po.PP_IS_OVERDUE=IF((wl.WL_EDATE-14)>DATE(NOW())-0,IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Не просрочено'),IF((WL_EDATE)<DATE(NOW()),IF((SELECT wl.WL_VALUE-product_sold.PS_COUNT FROM product_sold WHERE product_sold.WL_ID=wl.WL_ID)=0,'Продано','Просрочено'),'Скоро истекает срок годности'))WHERE po.PP_IS_OVERDUE<>'Просрочено' AND po.PP_IS_OVERDUE<>'Продано' AND po.WL_ID=wl.WL_ID AND po.PP_ID>0 AND wl.WL_ID>0;");
                 DataBase.SetLog(idText, 1, 2, "Создание накладной,параметры:|код:" + lastId + "|дата:" + Converter.DateConvert(datePickerToday.Text) + "|");
+                flag1 = true;
                 this.Close();
             }
         }

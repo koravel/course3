@@ -134,18 +134,6 @@ namespace WpfApplication1.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DelBindingToProduct {
-            get {
-                return ((bool)(this["DelBindingToProduct"]));
-            }
-            set {
-                this["DelBindingToProduct"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowCode {
             get {
                 return ((bool)(this["ShowCode"]));
@@ -164,6 +152,18 @@ namespace WpfApplication1.Properties {
             }
             set {
                 this["PriceProcent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DelBindingToProduct1 {
+            get {
+                return ((bool)(this["DelBindingToProduct1"]));
+            }
+            set {
+                this["DelBindingToProduct1"] = value;
             }
         }
     }

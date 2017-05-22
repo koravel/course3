@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
 WpfApplication1
 none
 false
 TRACE
-e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
 24-158732602
 
 47836033855
-231605346305
+23-2109925320
 AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;ManagerWindows\ReportsWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;Settings\PriceSettingsWindow.xaml;SellerWindows\SellerWindow.xaml;ManagerWindows\ManagerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;DelValueWindows\WarningDelEmployeeBindsWindow.xaml;DelValueWindows\WarningDelManufacturerBindsWindow.xaml;DelValueWindows\WarningDelProductBindsWindow.xaml;Settings\ViewSettingsWindow.xaml;SellerWindows\TransactionConfirm.xaml;
 
 False

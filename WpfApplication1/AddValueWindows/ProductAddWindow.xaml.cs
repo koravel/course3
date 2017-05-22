@@ -16,8 +16,10 @@ namespace WpfApplication1
 {
     public partial class ProductAddWindow : Window
     {
-        List<NameIdList> comboBoxValues = new List<NameIdList>();
+        List<NameIdList> comboBoxValues = new List<NameIdList> { };
         string idText;
+        public bool flag = false;
+        public Product obj;
         public ProductAddWindow(string id)
         {
             InitializeComponent();
@@ -28,33 +30,20 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            int dataCorrect = 0;
-            if(textBoxName.Text == "")
+            if(ErrorCheck.ProductEnterCheck(textBoxName,comboBoxManufacturer,comboBoxGroup,comboBoxPack,comboBoxMaterial,comboBoxForm,upDownPrice,datePickerToday))
             {
-                MessageBox.Show("Введите название!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(comboBoxManufacturer.SelectedItem == null)
-            {
-                MessageBox.Show("Укажите производителя!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(comboBoxForm.SelectedItem == null)
-            {
-                MessageBox.Show("Укажите форму отпуска!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(dataCorrect == 3)
-            {
+                if(comboBoxGroup.SelectedIndex == -1)
+                {
+                    comboBoxGroup.SelectedIndex = 0;
+                }
+                if (comboBoxPack.SelectedIndex == -1)
+                {
+                    comboBoxPack.SelectedIndex = 0;
+                }
+                if (comboBoxMaterial.SelectedIndex == -1)
+                {
+                    comboBoxMaterial.SelectedIndex = 0;
+                }
                 string maxId = DataBase.QueryRetCell(null, null, "SELECT MAX(P_ID)+1 FROM product;");
                 DataBase.Query(
                 new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr"},
@@ -66,9 +55,17 @@ namespace WpfApplication1
                 "INSERT INTO `product_actual_price`(`P_ID`,`PAP_PRICE`,`PAP_DATE`)VALUES(@_id,@_price,@_date);");
                 DataBase.Query(new string[] { "@_id" }, new string[] { maxId }, "INSERT INTO product_quantity(P_ID)VALUES(@_id)");
                 DataBase.SetLog(idText, 1, 2, "Создание товара,параметры:|код:" + maxId + "|название:" + textBoxName.Text + "|производитель код:" + comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString() + "|цена:" + upDownPrice.Text + "|");
+                obj.ID = int.Parse(maxId);
+                obj.NAME = textBoxName.Text;
+                obj.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString();
+                obj.GROUP = comboBoxGroup.SelectedItem.ToString();
+                obj.PACK = comboBoxPack.SelectedItem.ToString();
+                obj.MATERIAL = comboBoxMaterial.SelectedItem.ToString();
+                obj.FORM = comboBoxForm.SelectedItem.ToString();
+                obj.INSTR = textBoxInstruction.Text;
+                flag = true;
                 this.Close();
             }
-
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -100,5 +97,35 @@ namespace WpfApplication1
             new ManufacturerAddWindow(idText).ShowDialog();
             ManufacturerListUpdate();
         }
+
+        private void upDownPrice_KeyUp(object sender, KeyEventArgs e)
+        {
+            ErrorCheck.upDownDigitCheck(sender);
+        }
+
+        private void textBoxName_KeyUp(object sender, KeyEventArgs e)
+        {
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Yellow);
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch((sender as ComboBox).Name)
+            {
+                case "comboBoxManufacturer":
+                case "comboBoxForm":
+                    {
+                        (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
+                        break;
+                    }
+                default:
+                    {
+                        (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex);
+                        break;
+                    }
+            }
+            
+        }
+
     }
 }

@@ -17,6 +17,7 @@ namespace WpfApplication1
     public partial class WarningDelProductBindsWindow : Window
     {
         string curId,idText;
+        public bool flag = false;
         public WarningDelProductBindsWindow(string id,string _curId)
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace WpfApplication1
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
             DataBase.SetLog(idText, 1, 3, "Удаление товара,параметры:|код:" + curId + "|");
+            flag = true;
             this.Close();
         }
 
@@ -40,7 +42,7 @@ namespace WpfApplication1
         {
             if(checkBoxWarningSettings.IsChecked == true)
             {
-                Properties.Settings.Default.DelBindingToProduct = true;
+                Properties.Settings.Default.DelBindingToProduct1 = true;
                 Properties.Settings.Default.Save();
             }
         }

@@ -17,6 +17,8 @@ namespace WpfApplication1
     public partial class ManufacturerAddWindow : Window
     {
         string idText;
+        public bool flag = false;
+        public Manufacturer obj = new Manufacturer();
         public ManufacturerAddWindow(string id)
         {
             InitializeComponent();
@@ -30,35 +32,17 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            int dataCorrect = 0;
-            if(textBoxName.Text == "")
-            {
-                MessageBox.Show("Введите название!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(textBoxCountry.Text == "")
-            {
-                MessageBox.Show("Введите страну!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(textBoxCity.Text == "")
-            {
-                MessageBox.Show("Введите город!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if(dataCorrect == 3)
+            if (ErrorCheck.ManufacturerEnterCheck(textBoxName,textBoxCountry,textBoxCity,textBoxAddress,textBoxTel))
             {
                 DataBase.Query(new string[] { "@_name", "@_country", "@_city", "@_addr", "@_tel" }, new string[] { textBoxName.Text, textBoxCountry.Text, textBoxCity.Text, textBoxAddress.Text, textBoxTel.Text }, "INSERT INTO `manufacturer`(`M_NAME`,`M_COUNTRY`,`M_CITY`,`M_ADDR`,`M_TEL`)VALUES(@_name,@_country,@_city,@_addr,@_tel);");
                 DataBase.SetLog(idText, 1, 2, "Создание производителя,параметры:|название:" + textBoxName.Text + "|страна:" + textBoxCountry.Text + "|адрес:" + textBoxAddress.Text + "|");
+                obj.ID = int.Parse(DataBase.QueryRetCell(null, null, "SELECT MAX(M_ID) FROM manufacturer;"));
+                obj.NAME = textBoxName.Text;
+                obj.COUNTRY = textBoxCountry.Text;
+                obj.CITY = textBoxCity.Text;
+                obj.ADDR = textBoxAddress.Text;
+                obj.TEL = textBoxTel.Text;
+                flag = true;
                 this.Close();
             }
         }
@@ -68,6 +52,24 @@ namespace WpfApplication1
             if (e.Key == Key.Escape)
             {
                 this.Close();
+            }
+        }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            switch((sender as TextBox).Name)
+            {
+                case "textBoxName":
+                case "textBoxCountry":
+                    {
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
+                        break;
+                    }
+                default:
+                    {
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Yellow);
+                        break;
+                    }
             }
         }
     }

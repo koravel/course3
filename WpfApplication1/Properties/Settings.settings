@@ -32,14 +32,14 @@
     <Setting Name="DelBindingToManufacturer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DelBindingToProduct" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="ShowCode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PriceProcent" Type="System.String" Scope="User">
       <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="DelBindingToProduct1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

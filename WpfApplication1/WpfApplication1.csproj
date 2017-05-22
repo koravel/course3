@@ -295,6 +295,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -307,7 +308,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SellerWindows\search.png" />
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Apteka1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="20099851-caduceus-green-circle-glossy-icon--Stock-Photo-logo-medical-symbol.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo_apt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snake-41705_960_720.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

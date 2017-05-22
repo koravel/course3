@@ -19,11 +19,14 @@ namespace WpfApplication1
         List<NameIdList> comboBoxValues = new List<NameIdList>();
         string curId,idText;
         int curMan,count;
-        public ProductEditWindow(string id,string _curId)
+        public Product objout;
+        public bool flag = false;
+        public ProductEditWindow(string id,string _curId,Product tempobj)
         {
             InitializeComponent();
             curId = _curId;
             idText = id;
+            objout = tempobj;
             ManufacturerListUpdate();
             string[] data = new string[9];
             curMan = -1;
@@ -52,33 +55,14 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            int dataCorrect = 0;
-            if (textBoxName.Text == "")
+            if (ErrorCheck.ProductEnterCheck(textBoxName, comboBoxManufacturer, comboBoxGroup, comboBoxPack, comboBoxMaterial, comboBoxForm, upDownPrice, datePickerToday))
             {
-                MessageBox.Show("Введите название!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (comboBoxManufacturer.SelectedItem == null)
-            {
-                MessageBox.Show("Укажите производителя!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (comboBoxForm.SelectedItem == null)
-            {
-                MessageBox.Show("Укажите форму отпуска!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (dataCorrect == 3)
-            {
+                objout.NAME = textBoxName.Text;
+                objout.MANUFACTURER = comboBoxValues[comboBoxManufacturer.SelectedIndex].NAME.ToString();
+                objout.GROUP = comboBoxGroup.SelectedItem.ToString();
+                objout.PACK = comboBoxPack.SelectedItem.ToString();
+                objout.FORM = comboBoxForm.SelectedItem.ToString();
+                objout.INSTR = textBoxInstruction.Text;
                 DataBase.Query(
                 new string[] { "@_id", "@_name", "@_manufacturer", "@_group", "@_pack", "@_material", "@_form", "@_instr" },
                 new string[] { curId, textBoxName.Text, comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString(), comboBoxGroup.SelectedItem.ToString(), comboBoxPack.SelectedItem.ToString(), comboBoxMaterial.SelectedItem.ToString(), comboBoxForm.SelectedItem.ToString(), textBoxInstruction.Text },
@@ -100,6 +84,7 @@ namespace WpfApplication1
                     "UPDATE product_actual_price SET P_ID = @_id,PAP_PRICE = @_price,PAP_DATE = @_date WHERE PAP_ID = @_curid;");
                     DataBase.SetLog(idText, 1, 1, "Изменение цены товара,параметры:|код товара:" + curId + "|дата изменения:" + Converter.DateConvert(datePickerToday.Text) + "|цена:" + Converter.DateConvert(datePickerToday.Text) + "|");
                 }
+                flag = true;
                 this.Close();
             }
 
@@ -141,6 +126,40 @@ namespace WpfApplication1
             comboBoxValues.Clear();
             comboBoxValues = DataBase.GetNameIdList(new string[] { "M_ID", "M_NAME" }, "SELECT M_ID,M_NAME FROM manufacturer");
             comboBoxManufacturer.Items.Clear();
+        }
+
+        private void textBoxName_KeyUp(object sender, KeyEventArgs e)
+        {
+            (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch ((sender as ComboBox).Name)
+            {
+                case "comboBoxManufacturer":
+                case "comboBoxForm":
+                    {
+                        (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex, (sender as ComboBox).Items.Count);
+                        break;
+                    }
+                default:
+                    {
+                        (sender as ComboBox).BorderBrush = ErrorCheck.SelectionCheck((sender as ComboBox).SelectedIndex);
+                        break;
+                    }
+            }
+
+        }
+
+        private void upDownPrice_KeyUp(object sender, KeyEventArgs e)
+        {
+            ErrorCheck.upDownDigitCheck(sender);
+        }
+
+        private void datePickerToday_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (sender as DatePicker).BorderBrush = ErrorCheck.TextCheck((sender as DatePicker).Text, 0, Brushes.Red);
         }
     }
 }

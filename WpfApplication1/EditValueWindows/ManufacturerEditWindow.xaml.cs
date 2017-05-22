@@ -17,11 +17,14 @@ namespace WpfApplication1
     public partial class ManufacturerEditWindow : Window
     {
         string curId,idText;
-        public ManufacturerEditWindow(string id,string _curId)
+        public bool flag = false;
+        public Manufacturer obj;
+        public ManufacturerEditWindow(string id,string _curId,Manufacturer tempObj)
         {
             InitializeComponent();
             curId = _curId;
             idText = id;
+            obj = tempObj;
             string[] data = new string[5];
             data = DataBase.QueryRetRow(new string[]{ "@curid" },new string[]{ _curId },"SELECT M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer WHERE M_ID=@curid;");
             textBoxName.Text = data[0];
@@ -38,38 +41,19 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            int dataCorrect = 0;
-            if (textBoxName.Text == "")
-            {
-                MessageBox.Show("Введите название!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (textBoxCountry.Text == "")
-            {
-                MessageBox.Show("Введите страну!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (textBoxCity.Text == "")
-            {
-                MessageBox.Show("Введите город!");
-            }
-            else
-            {
-                dataCorrect++;
-            }
-            if (dataCorrect == 3)
+            if (ErrorCheck.ManufacturerEnterCheck(textBoxName, textBoxCountry, textBoxCity, textBoxAddress, textBoxTel))
             {
                 DataBase.Query(
                     new string[] { "@_name", "@_country", "@_city", "@_addr", "@_tel", "@_curid" },
                     new string[] { textBoxName.Text, textBoxCountry.Text, textBoxCity.Text, textBoxAddress.Text, textBoxTel.Text, curId },
                     "UPDATE manufacturer SET M_NAME = @_name,M_COUNTRY = @_country,M_CITY = @_city,M_ADDR = @_addr,M_TEL = @_tel WHERE M_ID = @_curid;");
                 DataBase.SetLog(idText, 1, 1, "Изменение производителя,параметры:|код:" + curId + "|");
+                obj.NAME = textBoxName.Text;
+                obj.COUNTRY = textBoxCountry.Text;
+                obj.CITY = textBoxCity.Text;
+                obj.ADDR = textBoxAddress.Text;
+                obj.TEL = textBoxTel.Text;
+                flag = true;
                 this.Close();
             }
         }
@@ -79,6 +63,24 @@ namespace WpfApplication1
             if (e.Key == Key.Escape)
             {
                 this.Close();
+            }
+        }
+        
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            switch ((sender as TextBox).Name)
+            {
+                case "textBoxName":
+                case "textBoxCountry":
+                    {
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Red);
+                        break;
+                    }
+                default:
+                    {
+                        (sender as TextBox).BorderBrush = ErrorCheck.TextCheck((sender as TextBox).Text, 0, Brushes.Yellow);
+                        break;
+                    }
             }
         }
     }
