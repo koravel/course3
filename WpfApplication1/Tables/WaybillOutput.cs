@@ -9,6 +9,7 @@ namespace WpfApplication1
     public class WaybillOutput
     {
         public string ID { set; get; }
+        public string NAME { set; get; }
         public string VALUE { set; get; }
         public string TRADEPRICE { set; get; }
         public DateTime BDATE { set; get; }

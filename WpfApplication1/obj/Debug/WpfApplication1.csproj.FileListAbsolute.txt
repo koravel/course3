@@ -131,3 +131,145 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\ru\Xce
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\WpfApplication1.exe
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\WpfApplication1.pdb
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\MySql.Data.DLL
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.DataGrid.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\Xceed.Wpf.Toolkit.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\DiscountAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\EmployeeAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\MainWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\ManufacturerAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\ProductAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlEditWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelEmployeeBindsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelManufacturerBindsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelProductBindsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\DiscountAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\EmployeeAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\MainWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\ManufacturerAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\ProductAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AdminWindows\UsersControlEditWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\WaybillAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelEmployeeBindsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelManufacturerBindsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelProductBindsWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\App.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\AddValueWindows\WaybillAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.exe
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v10]\WpfApplication1\obj\Debug\WpfApplication1.pdb
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\WpfApplication1.exe
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\WpfApplication1.pdb
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\MySql.Data.DLL
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.DataGrid.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\Xceed.Wpf.Toolkit.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\DiscountAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\EmployeeAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\MainWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\ManufacturerAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\ProductAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlEditWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelEmployeeBindsWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelManufacturerBindsWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelProductBindsWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\DiscountAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\EmployeeAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\MainWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\ManufacturerAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\ProductAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AdminWindows\UsersControlEditWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\WaybillAddWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelEmployeeBindsWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelManufacturerBindsWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\DelValueWindows\WarningDelProductBindsWindow.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\App.g.cs
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.lref
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\AddValueWindows\WaybillAddWindow.baml
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.exe
+d:\Kor\тех\WpfApplication1[v11]\WpfApplication1\obj\Debug\WpfApplication1.pdb

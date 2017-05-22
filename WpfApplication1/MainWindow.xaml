@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="330" Width="539.713" ResizeMode="CanMinimize">
     <Grid>
-        <PasswordBox x:Name="PasswordField" HorizontalAlignment="Left" Margin="193,135,0,0" VerticalAlignment="Top" Width="145" TabIndex="2" KeyDown="EnterCatch_KeyDown" Height="23"/>
+        <PasswordBox x:Name="PasswordField" HorizontalAlignment="Left" Margin="193,135,0,0" VerticalAlignment="Top" Width="145" TabIndex="2" Height="23"/>
         <TextBox x:Name="LoginField" HorizontalAlignment="Left" Height="23" Margin="193,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TabIndex="1"/>
         <Button x:Name="buttonExit" Content="Выход" HorizontalAlignment="Left" Margin="447,227,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="LoginExit_Click" TabIndex="5"/>
-        <Button x:Name="buttonLogin" Content="Войти" HorizontalAlignment="Left" Margin="228,172,0,0" VerticalAlignment="Top" Width="75" Click="Login_Click" TabIndex="3"/>
+        <Button x:Name="buttonLogin" Content="Войти" HorizontalAlignment="Left" Margin="228,172,0,0" VerticalAlignment="Top" Width="75" Click="Login_Click" TabIndex="3" IsDefault="True"/>
         <Image HorizontalAlignment="Left" Height="30" Margin="308,172,0,0" VerticalAlignment="Top" Width="30"/>
         <Button x:Name="buttonDatabaseSettings" Content="Настроить подключение" HorizontalAlignment="Left" Margin="375,200,0,0" VerticalAlignment="Top" Width="147" Click="DBSettings_Click" TabIndex="4"/>
 

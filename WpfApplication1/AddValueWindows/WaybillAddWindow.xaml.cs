@@ -19,16 +19,23 @@ namespace WpfApplication1
     public partial class WaybillAddWindow : Window
     {
         List<NameIdList> employees = DataBase.GetNameIdList(new string[] { "E_ID", "E_NAME" }, "SELECT E_ID,E_NAME FROM employee;");
+        List<WaybillOutput> list = new List<WaybillOutput>();
+        List<NameIdList> products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
         public WaybillAddWindow()
         {
             InitializeComponent();
             datePickerToday.Text = DateTime.Today.ToString();
+            string[] tempMas = new string[products.Count];
             for (int i = 0; i < employees.Count; i++)
             {
                 comboBoxEployees.Items.Add(employees[i].NAME+"(#"+employees[i].ID+")");
             }
-            dataGridInfo.ItemsSource = new List<WaybillOutput> { new WaybillOutput() };
-            dataGridInfo.DataContext = DataBase.QueryGetColumn("concat(P_NAME,\"(#\",P_ID,\")\")", "product");
+            for (int i = 0; i < products.Count; i++ )
+            {
+                tempMas[i] = products[i].NAME + "(#" + products[i].ID + ")";
+            }
+                dataGridInfo.ItemsSource = list;
+            dataGridInfo.DataContext = tempMas;
         }
         
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -63,17 +70,19 @@ namespace WpfApplication1
                 new string[] { "@_id", "@_date", "@_employee", "@_agent" },
                 new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
                 "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
-                List<WaybillOutput> productsOutput = new List<WaybillOutput>();
-                object item;
-                for (int i = 0; i < dataGridInfo.Items.Count - 1; i++)
+                string queryString = "INSERT INTO `waybill_list`(`W_ID`, `P_ID`, `WL_VALUE`, `WL_TRADE_PRICE`, `WL_BDATE`, `WL_EDATE`)VALUES ";
+                for (int i = 0; i < list.Count; i++)
                 {
-                    item = dataGridInfo.Items[i];
-                    System.Windows.MessageBox.Show(((WaybillOutput)item).ID + " " + ((WaybillOutput)item).TRADEPRICE);
+                    list[i].TRADEPRICE = list[i].TRADEPRICE.Remove(list[i].TRADEPRICE.Length - 2);
+                    list[i].TRADEPRICE = list[i].TRADEPRICE.Replace(",", ".");
+                    queryString += "(" + lastId + "," + list[i].ID + ",'" + list[i].VALUE + "','" + list[i].TRADEPRICE + "','" + Converter.DateConvert(list[i].BDATE.ToShortDateString()) + "','" + Converter.DateConvert(list[i].EDATE.ToShortDateString()) + "')";
+                    if(i != list.Count-1)
+                    {
+                        queryString += ",";
+                    }
                 }
-                //DataBase.Query(
-                //new string[] { },
-                //new string[] { },
-                //"INSERT INTO `waybill_list`()VALUES()");
+                queryString += ";";
+                DataBase.Query(null, null, queryString);
                 this.Close();
             }
         }
@@ -86,17 +95,13 @@ namespace WpfApplication1
             }
         }
 
-        private void textBlockProduct_GotFocus(object sender, RoutedEventArgs e)
+        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            ComboBox a = (ComboBox)sender;
+            if(dataGridInfo.SelectedIndex != -1 && a.SelectedIndex != -1)
+            {
+                list[dataGridInfo.SelectedIndex].ID = products[a.SelectedIndex].ID.ToString();
+            }
         }
-
-        private void comboBoxProduct_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-       
-
     }
 }

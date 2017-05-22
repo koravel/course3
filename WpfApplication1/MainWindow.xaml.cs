@@ -91,12 +91,6 @@ namespace WpfApplication1
              new DBSettingsWindow().ShowDialog();
          }
 
-         private void EnterCatch_KeyDown(object sender, KeyEventArgs e)
-         {
-             if (e.Key == Key.Enter)
-             {
-                 Login_Click(null,null);
-             }
-         }
+   
     }
 }

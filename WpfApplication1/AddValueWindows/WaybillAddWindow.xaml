@@ -20,34 +20,22 @@
         <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False">
 
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Код товара" x:Name="idColumn">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true }" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <TextBox x:Name="textBoxID" Text="{Binding ID , Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
-                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Наименование" x:Name="nameColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock x:Name="textBlockProduct" Text="{Binding comboBoxProduct, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <TextBlock x:Name="textBlockProduct" Text="{Binding NAME, Mode=TwoWay,NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" LostFocus="comboBoxProduct_LostFocus"/>
+                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectedItem="{Binding NAME,NotifyOnValidationError=true, ValidatesOnExceptions=true}" SelectionChanged="comboBoxProduct_SelectionChanged"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Количество" x:Name="valueColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding VALUE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                            <TextBlock Text="{Binding VALUE, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -59,12 +47,12 @@
                 <DataGridTemplateColumn Header="Опт.цена" x:Name="tpriceColumn" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TRADEPRICE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+                            <TextBlock Text="{Binding TRADEPRICE, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:DecimalUpDown FormatString="C" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Text="{Binding TRADEPRICE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <xctk:DecimalUpDown FormatString="C2" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Text="{Binding TRADEPRICE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
