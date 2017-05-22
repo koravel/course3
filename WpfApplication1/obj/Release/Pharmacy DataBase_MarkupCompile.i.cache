@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\
 WpfApplication1
 none
 false
 TRACE
-H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\App.xaml
 32742259459
 
 63-1047239209
-23-533855910
+23-2109925320
 AdminWindows\DirectorPassWindow.xaml;DirectorWindows\DirectorSettingsWindow.xaml;AdminWindows\ProductDropWindow.xaml;SellerWindows\SecurityPassWindow.xaml;SellerWindows\AddPrepaymentWindow.xaml;AddValueWindows\DiscountAddWindow.xaml;AddValueWindows\EmployeeAddWindow.xaml;DirectorWindows\DirectorWindow.xaml;LoginWindows\FirstWindow.xaml;WarningWindows\DuplicateDiscountWindow.xaml;EditValueWindows\DiscountEditWindow.xaml;EditValueWindows\EmployeeEditWindow.xaml;MainWindow.xaml;AdminWindows\AdminWindow.xaml;AddValueWindows\ManufacturerAddWindow.xaml;AddValueWindows\ProductAddWindow.xaml;EditValueWindows\ManufacturerEditWindow.xaml;EditValueWindows\ProductEditWindow.xaml;Settings\SettingsWindow.xaml;SellerWindows\SellerWindow.xaml;AdminWindows\UsersControlAddWindow.xaml;AdminWindows\UsersControlWindow.xaml;LoginWindows\DBSettingsWindow.xaml;AdminWindows\UsersControlEditWindow.xaml;AddValueWindows\WaybillAddWindow.xaml;WarningWindows\WarningDelEmployeeBindsWindow.xaml;WarningWindows\WarningDelManufacturerBindsWindow.xaml;WarningWindows\WarningDelProductBindsWindow.xaml;SellerWindows\TransactionConfirm.xaml;WarningWindows\WarningDelWaybillBindsWindow.xaml;AdminWindows\WaybillPrintWindow.xaml;SellerWindows\WindowCheckPrint.xaml;
 
-False
+True
 

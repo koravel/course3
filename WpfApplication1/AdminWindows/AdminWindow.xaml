@@ -502,6 +502,7 @@
                     <ComboBox x:Name="comboBoxSearchFormProduct" HorizontalAlignment="Left" Margin="397,87,0,0" VerticalAlignment="Top" Width="158" IsEnabled="False">
                         <System:String>без рецепта</System:String>
                         <System:String>с рецептом</System:String>
+                        <System:String>строгого учета</System:String>
                     </ComboBox>
                     <xctk:DecimalUpDown x:Name="upDownSearchPriceProduct" FormatString="C2" Increment=".01" Maximum="99999.99" Minimum="0.01" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="153" Margin="0,0,295,183" IsEnabled="False"/>
                     <CheckBox x:Name="checkBoxSearchNameProduct" Content="Название" HorizontalAlignment="Left" Margin="7,14,0,0" VerticalAlignment="Top" Click="checkBoxSearchNameProduct_Click"/>
