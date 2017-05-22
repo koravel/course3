@@ -416,6 +416,35 @@ namespace WpfApplication1
                 return checklists;
             }
         }
+        public static List<CheckPrint> GetCheckPrint(string query, string[] _valuesText, string[] _values)
+        {
+            List<CheckPrint> checklists = new List<CheckPrint>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+
+                con.Open();
+                MySqlCommand com = new MySqlCommand(query, con);
+                for (int i = 0; i < _values.Length; i++)
+                {
+                    com.Parameters.AddWithValue(_valuesText[i], _values[i]);
+                }
+                MySqlDataReader dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    checklists.Add(new CheckPrint()
+                    {
+                        ID = dr.GetInt32(0),
+                        PRODUCT = dr.GetString(1),
+                        VALUE = dr.GetInt32(2),
+                        PRICE = dr.GetFloat(3),
+                        DISCOUNT = dr.GetInt32(4)
+                    });
+                }
+
+                con.Close();
+                return checklists;
+            }
+        }
 
         public static List<Discount> GetDiscount()
         {
