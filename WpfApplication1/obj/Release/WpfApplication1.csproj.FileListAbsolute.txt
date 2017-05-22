@@ -1,4 +1,3 @@
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.exe.config
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\DiscountAddWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\EmployeeAddWindow.baml
@@ -7,15 +6,11 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Admi
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ManagerWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlAddWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\DBSettingsWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlEditWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\WaybillAddWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelEmployeeBindsWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelManufacturerBindsWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelProductBindsWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\DiscountAddWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\EmployeeAddWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\MainWindow.g.cs
@@ -23,25 +18,15 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Admi
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ManufacturerAddWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\ProductAddWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SellerWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ManagerWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlAddWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\DBSettingsWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\UsersControlEditWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddValueWindows\WaybillAddWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelEmployeeBindsWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelManufacturerBindsWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DelValueWindows\WarningDelProductBindsWindow.g.cs
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\App.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1_MarkupCompile.cache
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.g.resources
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.Properties.Resources.resources
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csproj.GenerateResource.Cache
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.exe
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\WpfApplication1.pdb
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\MySql.Data.DLL
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.exe
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.pdb
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\DiscountEditWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\EmployeeEditWindow.baml
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\EditValueWindows\ManufacturerEditWindow.baml
@@ -66,7 +51,6 @@ F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\ro\X
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\ru\Xceed.Wpf.AvalonDock.resources.dll
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\sv\Xceed.Wpf.AvalonDock.resources.dll
 F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1_MarkupCompile.lref
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v11]\WpfApplication1\bin\Release\WpfApplication1.exe.config
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v11]\WpfApplication1\obj\Release\WpfApplication1.exe
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1[v11]\WpfApplication1\obj\Release\WpfApplication1.pdb
@@ -287,15 +271,7 @@ G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AddV
 G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.g.resources
 G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.Properties.Resources.resources
 G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csproj.GenerateResource.Cache
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\PriceSettingsWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\ViewSettingsWindow.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\ManagerWindows\ReportsWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\PriceSettingsWindow.g.cs
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\ViewSettingsWindow.g.cs
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.baml
-F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\TransactionConfirm.g.cs
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.baml
 e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs
 h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WpfApplication1.csprojResolveAssemblyReference.cache
@@ -572,3 +548,45 @@ H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Admi
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\WaybillPrintWindow.g.cs
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\WindowCheckPrint.baml
 H:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\WindowCheckPrint.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.exe.config
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.exe
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.pdb
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.exe
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Release\Pharmacy DataBase.pdb
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\DirectorPassWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorSettingsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\ProductDropWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SecurityPassWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\FirstWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\DuplicateDiscountWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\SettingsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelEmployeeBindsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelManufacturerBindsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelProductBindsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelWaybillBindsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\WaybillPrintWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\WindowCheckPrint.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\DirectorPassWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorSettingsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\ProductDropWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\SecurityPassWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\AddPrepaymentWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\DirectorWindows\DirectorWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\LoginWindows\FirstWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\DuplicateDiscountWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Settings\SettingsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelEmployeeBindsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelManufacturerBindsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelProductBindsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\TransactionConfirm.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\WarningWindows\WarningDelWaybillBindsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\AdminWindows\WaybillPrintWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\SellerWindows\WindowCheckPrint.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.cache
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase_MarkupCompile.lref
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\Pharmacy DataBase.g.resources
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckConWindow.baml
+h:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Release\CheckConWindow.g.cs

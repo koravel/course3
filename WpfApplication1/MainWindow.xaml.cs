@@ -8,31 +8,46 @@ namespace WpfApplication1
     {
         public MainWindow()
         {
+            bool flag = true;
+            CheckConWindow checkWindow = null;
+            DBSettingsWindow setWindow = null;
             InitializeComponent();
-            try
+            while (!DataBase.ConCheck(new string[] { Properties.Settings.Default.Address, Properties.Settings.Default.Database, Properties.Settings.Default.Login, Properties.Settings.Default.Password }) && flag)
             {
-                DataBase.Connection();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\nСоединение не установлено!");
-            }
-            if(DataBase.QueryRetCell(null,null,"SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0")
-            {
-                this.IsEnabled = false;
-                new FirstWindow().ShowDialog();
-            }
-            if (DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0" || DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='2';") == "0")
-            {
-                this.Close();
-            }
-            else
-            {
-                this.IsEnabled = true;
-                if(DataBase.QueryRetCell(null, null, "SELECT IFNULL(COUNT(U_ID),0) FROM `user` WHERE U_TYPE='Администратор';") == "0")
+                checkWindow = new CheckConWindow();
+                setWindow = new DBSettingsWindow();
+                checkWindow.ShowDialog();
+                if(checkWindow.flag)
                 {
-                    MessageBox.Show("Теперь добавьте администратора. Для добавления нажмите любую клавишу.");
-                    new UsersControlWindow("-1").ShowDialog();
+                    setWindow.ShowDialog();
+                }
+                else
+                {
+                    flag = false;
+                    this.Close();
+                }
+                checkWindow.Close();
+                setWindow.Close();
+            }
+            if (DataBase.ConCheck(new string[] { Properties.Settings.Default.Address, Properties.Settings.Default.Database, Properties.Settings.Default.Login, Properties.Settings.Default.Password }))
+            {
+                if (DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0")
+                {
+                    this.IsEnabled = false;
+                    new FirstWindow().ShowDialog();
+                }
+                if (DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='1';") == "0" || DataBase.QueryRetCell(null, null, "SELECT COUNT(PW_ID) FROM passwords WHERE PW_TYPE='2';") == "0")
+                {
+                    this.Close();
+                }
+                else
+                {
+                    this.IsEnabled = true;
+                    if (DataBase.QueryRetCell(null, null, "SELECT IFNULL(COUNT(U_ID),0) FROM `user` WHERE U_TYPE=3;") == "0")
+                    {
+                        MessageBox.Show("Теперь добавьте администратора. Для добавления нажмите любую клавишу.");
+                        new UsersControlWindow("-1").ShowDialog();
+                    }
                 }
             }
         }

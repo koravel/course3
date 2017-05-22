@@ -21,10 +21,24 @@ namespace WpfApplication1
         {
             if (ErrorCheck.UserEnterCheck(comboBoxType,textBoxAddLogin,textBoxAddPassword))
             {
+                string type = "";
                 textBoxAddPassword.BorderBrush = Brushes.Green;
+                switch(comboBoxType.SelectedItem.ToString())
+                {
+                    case "Администратор":
+                        {
+                            type = "3";
+                            break;
+                        }
+                    case "Кассир":
+                        {
+                            type = "1";
+                            break;
+                        }
+                }
                 DataBase.Query(
                             new string[] { "@_type", "@_login", "@_pass" },
-                            new string[] { comboBoxType.SelectedItem.ToString(), textBoxAddLogin.Text, textBoxAddPassword.Text },
+                            new string[] { type, textBoxAddLogin.Text, textBoxAddPassword.Text },
                             "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`) VALUES (@_type, @_login, md5(@_pass));");
                 DataBase.SetLog(idText, 1, 2, "Создание пользователя,параметры:|тип записи:" + comboBoxType.SelectedItem.ToString() + "|логин:" + textBoxAddLogin.Text + "|");
                 flag = true;

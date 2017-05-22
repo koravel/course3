@@ -106,6 +106,9 @@
     <Compile Include="AdminWindows\DirectorPassWindow.xaml.cs">
       <DependentUpon>DirectorPassWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarningWindows\CheckConWindow.xaml.cs">
+      <DependentUpon>CheckConWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\ProductDrop.cs" />
     <Compile Include="AdminWindows\ProductDropWindow.xaml.cs">
       <DependentUpon>ProductDropWindow.xaml</DependentUpon>
@@ -220,6 +223,10 @@
       <DependentUpon>WindowCheckPrint.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminWindows\DirectorPassWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarningWindows\CheckConWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
