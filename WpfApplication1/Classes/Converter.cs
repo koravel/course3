@@ -31,6 +31,7 @@ namespace WpfApplication1
                 return "0";
             }
         }
+
         public static string CurrencyConvert(string value)
         {
             if(value != null)
@@ -44,6 +45,7 @@ namespace WpfApplication1
                 return "0";
             }
         }
+
         public static float CurrencyToFloatConvert(string value)
         {
             if (value != null)
@@ -56,6 +58,7 @@ namespace WpfApplication1
                 return 0;
             }
         }
+
         public static string FloatToCurrencyConvert(string value)
         {
             if (value != null)
@@ -68,11 +71,12 @@ namespace WpfApplication1
                 return "0";
             }
         }
+
         public static string DGCellToStringConvert(int row,int cloumn,DataGrid dataGrid)
         {
             var cellInfo = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[cloumn]);
             var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-            if(content.Text != null)
+            if(content != null)
             {
                 return content.Text;
             }

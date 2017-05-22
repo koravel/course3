@@ -27,12 +27,15 @@ namespace WpfApplication1
         List<WaybillList> waybillList = new List<WaybillList> { };
         List<string> valuesText = new List<string>(), values = new List<string>();
         private delegate List<T> GetTableDelegate<T>(string query, string[] values, string[] valuesText);
+        //private delegate List<T> GetSubTableDelegate<T>(string id);
         public AdminWindow(string id)
         {
             idText = id;
             InitializeComponent();
             DataBase.SetLog(idText, 1, 0, "Вход в систему...");
-            dataGridCheckOut.ItemsSource = DataBase.GetCheck();
+            List<Check> q = DataBase.GetCheck();
+            dataGridCheckOut.ItemsSource = q;
+            //GetSubTable<CheckList>(DataBase.GetCheckList, dataGridCheckListOut, dataGridCheckOut, totalPriceTextBlock, new string[] { "Общая цена:", "Общая цена:0" }, "@_curid", "SELECT C_SUM FROM `check` where C_ID=@_curid;",0,null,0);
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы чеков...");
             dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы скидок...");
@@ -47,6 +50,32 @@ namespace WpfApplication1
             valuesText.Clear();
             values.Clear();
         }
+
+        //private void GetSubTable<T>(GetSubTableDelegate<T> data,DataGrid subDataGrid,DataGrid dataGrid,TextBlock textBlock,string[] text,string sqlParam,string sqlQuery,int selectedIndex,string id,int mode)
+        //{
+        //    if (dataGrid.Items.IsEmpty == false)
+        //    {
+        //        dataGrid.SelectedIndex = selectedIndex;
+        //        if(mode == 0)
+        //        {
+        //            subDataGrid.ItemsSource = data(Converter.DGCellToStringConvert(0, 0, dataGrid));
+        //            id = Converter.DGCellToStringConvert(0, 0, dataGrid);
+        //        }
+        //        else
+        //        {
+        //            if(mode == 1)
+        //            {
+        //                subDataGrid.ItemsSource = data(id);
+        //            }
+        //        }
+        //        textBlock.Text = text[0] + DataBase.QueryRetCell(new string[] { sqlParam }, new string[] { id }, sqlQuery);
+        //    }
+        //    else
+        //    {
+        //        subDataGrid.ItemsSource = null;
+        //        textBlock.Text = text[1];
+        //    }
+        //}
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
         {
@@ -481,6 +510,7 @@ namespace WpfApplication1
                         MakeSearch(dataGridCheckOut, DataBase.GetCheck, new string[] { 
                             "SELECT DISTINCT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee`,check_list,product,product_actual_price WHERE `check`.`E_ID`=`employee`.`E_ID` AND `check`.C_ID=check_list.C_ID AND check_list.P_ID=product.P_ID AND check_list.P_ID=product_actual_price.P_ID ",
                             "SELECT `check`.C_ID,`check`.C_DATE,`check`.C_PAYTYPE,`employee`.E_NAME FROM `check`,`employee` WHERE `check`.`E_ID`=`employee`.`E_ID` " }, temp, flag);
+                        //q(0);
                         break;
                     }
                 case 1:
