@@ -1,0 +1,88 @@
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+C:\Users\User\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\MySql.Data.DLL
+D:\1\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+D:\1\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+D:\1\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+D:\1\WpfApplication1\WpfApplication1\bin\Debug\MySql.Data.DLL
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\Window1.baml
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\Window2.baml
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\Window1.g.cs
+D:\1\WpfApplication1\WpfApplication1\obj\Debug\Window2.g.cs
+G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+G:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\MySql.Data.DLL
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe.config
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.exe
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.pdb
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csprojResolveAssemblyReference.cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1_MarkupCompile.cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.g.resources
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.Properties.Resources.resources
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\WpfApplication1.csproj.GenerateResource.Cache
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.exe
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\WpfApplication1.pdb
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\bin\Debug\MySql.Data.DLL
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.baml
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.g.cs
+e:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\AdminWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\SellerWindows\SellerWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\ManagerWindows\ManagerWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlAddWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\UsersControlWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\LoginWindows\DBSettingsWindow.g.cs
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\Window1.baml
+F:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\Window1.g.cs
