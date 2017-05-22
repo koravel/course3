@@ -11,8 +11,8 @@ namespace WpfApplication1
         public int ID { set; get; }
         public string NAME { set; get; }
         public float PRICE { set; get; }
-        public string BDATE { set; get; }
-        public string EDATE { set; get; }
+        public DateTime BDATE { set; get; }
+        public DateTime EDATE { set; get; }
         public string TEXT { set; get; }
     }
 }

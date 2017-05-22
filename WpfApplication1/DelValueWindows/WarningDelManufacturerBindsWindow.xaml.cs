@@ -39,11 +39,18 @@ namespace WpfApplication1
 
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
-            string[] values = new string[1], valuesText = new string[1];
-            valuesText[0] = "@_curid";
-            values[0] = curId;
-            DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE M_ID=@_curid;");
-            DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE M_ID=@_curid;");
+            DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
+            DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `product` WHERE M_ID=@_curid;");
+            DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `discount` WHERE M_ID=@_curid;");
+            this.Close();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }

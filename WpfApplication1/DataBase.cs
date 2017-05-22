@@ -41,14 +41,13 @@ namespace WpfApplication1
 
         public static string UserAuthorization(string _userName, string _userPassword)
         {
-            string query = "SELECT U_TYPE FROM user WHERE U_NAME = @_userName AND U_PASS=@_userPassword";
 
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand(query, con);
+                    MySqlCommand com = new MySqlCommand("SELECT U_TYPE FROM user WHERE U_NAME = @_userName AND U_PASS=@_userPassword", con);
                     com.Parameters.AddWithValue("@_userName", _userName);
                     com.Parameters.AddWithValue("@_userPassword", _userPassword);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -84,59 +83,14 @@ namespace WpfApplication1
             return hash;
         }
 
-        public static void TableOutput(string _queryString, DataGrid _dataGridOut)
-        {
-            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-            {
-                try
-                {
-                    con.Open();
-                    MySqlCommand com = new MySqlCommand(_queryString, con);
-                    com.ExecuteNonQuery();
-
-                    MySqlDataAdapter da = new MySqlDataAdapter(_queryString, con);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    _dataGridOut.ItemsSource = dt.DefaultView;
-                    con.Close();
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                con.Close();
-            }
-        }
-
-        public static void ExecuteQuery(string _queryString)
-        {
-            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-            {
-                try
-                {
-                    con.Open();
-                    MySqlCommand com = new MySqlCommand(_queryString, con);
-                    com.ExecuteNonQuery();
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                con.Close();
-            }
-        }
-
         public static string CheckLogin(string _userName, string _userPassword)
         {
-            string queryString = @"SELECT U_ONLINE FROM `user` WHERE U_NAME=@_userName AND U_PASS=@_userPassword;";
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand(queryString, con);
+                    MySqlCommand com = new MySqlCommand("SELECT U_ONLINE FROM `user` WHERE U_NAME=@_userName AND U_PASS=@_userPassword;", con);
                     com.Parameters.AddWithValue("@_userName", _userName);
                     com.Parameters.AddWithValue("@_userPassword", _userPassword);
                     MySqlDataReader dr = com.ExecuteReader();
@@ -190,7 +144,7 @@ namespace WpfApplication1
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
                 try
-                {
+                { 
                     con.Open();
                     MySqlCommand com = new MySqlCommand(_queryString, con);
                     if (_changeParameters != null)
@@ -260,9 +214,9 @@ namespace WpfApplication1
 
         }
 
-        public static List<Row> QueryGetColumn(string _columnName,string _tableName)
+        public static List<string> QueryGetColumn(string _columnName,string _tableName)
         {
-            List<Row> rows = new List<Row>();
+            List<string> rows = new List<string>();
             using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
             {
                 try
@@ -273,10 +227,7 @@ namespace WpfApplication1
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
                     {
-                        rows.Add(new Row()
-                        {
-                            ROW = dr.GetString(_columnName),
-                        });
+                        rows.Add(dr.GetString(_columnName));
                     }
                     con.Close();
                     return rows;
@@ -378,7 +329,7 @@ namespace WpfApplication1
                 try
                 {
                     con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT product.P_NAME,check_list.CL_VALUE FROM `check_list`,`product`,`check` WHERE `check_list`.`P_ID`=`product`.`P_ID` AND check_list.C_ID=`check`.C_ID AND check_list.C_ID=@_curid;", con);
+                    MySqlCommand com = new MySqlCommand("SELECT CONCAT( product.P_NAME,\"(#\",product.P_ID,\")\") AS 'P_NAME',cl.CL_VALUE,product_actual_price.PAP_PRICE FROM check_list cl,product,`check`,product_actual_price WHERE cl.P_ID=product_actual_price.P_ID AND cl.P_ID=product.P_ID AND cl.C_ID=`check`.C_ID AND product_actual_price.PAP_DATE=(SELECT MAX(product_actual_price.PAP_DATE) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID) AND `check`.C_ID=@_curid;", con);
                     com.Parameters.AddWithValue("@_curid",_curid);
                     MySqlDataReader dr = com.ExecuteReader();
                     while (dr.Read())
@@ -386,7 +337,8 @@ namespace WpfApplication1
                         checklists.Add(new CheckList()
                         {
                             PRODUCT=dr.GetString("P_NAME"),
-                            VALUE = dr.GetInt32("CL_VALUE")
+                            VALUE = dr.GetInt32("CL_VALUE"),
+                            PRICE = dr.GetFloat("PAP_PRICE"),
                         });
                     }
                 }
@@ -414,11 +366,11 @@ namespace WpfApplication1
                         discounts.Add(new Discount()
                         {
                             ID = dr.GetInt32("D_ID"),
-                            NAME=dr.GetString("P_NAME"),
-                            PRICE=dr.GetFloat("D_PRICE"),
-                            BDATE=dr.GetString("D_BDATE"),
-                            EDATE=dr.GetString("D_EDATE"),
-                            TEXT=dr.GetString("D_TEXT")
+                            NAME = dr.GetString("P_NAME"),
+                            PRICE = dr.GetFloat("D_PRICE"),
+                            BDATE = dr.GetDateTime("D_BDATE"),
+                            EDATE = dr.GetDateTime("D_EDATE"),
+                            TEXT = dr.GetString("D_TEXT")
                         });
                     }
                 }
@@ -513,7 +465,7 @@ namespace WpfApplication1
                         productActualPrices.Add(new ProductActualPrice()
                         {
                             PRICE = dr.GetString("PAP_PRICE"),
-                            DATE = dr.GetString("PAP_DATE"),
+                            DATE = dr.GetDateTime("PAP_DATE"),
                            
                         });
                     }
@@ -542,7 +494,7 @@ namespace WpfApplication1
                         waybills.Add(new Waybill()
                         {
                             ID = dr.GetInt32("W_ID"),
-                            DATE = dr.GetString("W_DATE"),
+                            DATE = dr.GetDateTime("W_DATE"),
                             EMPLOYEE = dr.GetString("E_NAME"),
                             AGENT = dr.GetString("W_AGENT_NAME")
                         });
@@ -573,11 +525,11 @@ namespace WpfApplication1
                     {
                         waybillLists.Add(new WaybillList()
                         {
-                            PRODUCT=dr.GetString("P_NAME"),
-                            VALUE=dr.GetInt32("WL_VALUE"),
-                            TRADEPRICE=dr.GetFloat("WL_TRADE_PRICE"),
-                            BDATE=dr.GetString("WL_BDATE"),
-                            EDATE = dr.GetString("WL_EDATE")
+                            PRODUCT = dr.GetString("P_NAME"),
+                            VALUE = dr.GetInt32("WL_VALUE"),
+                            TRADEPRICE = dr.GetFloat("WL_TRADE_PRICE"),
+                            BDATE = dr.GetDateTime("WL_BDATE"),
+                            EDATE = dr.GetDateTime("WL_EDATE")
                         });
                     }
                 }
@@ -621,5 +573,50 @@ namespace WpfApplication1
             }
         }
 
+        public static List<NameIdList> GetNameIdList(string[] _values, string _queryString)
+        {
+            List<NameIdList> products = new List<NameIdList>();
+            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+            {
+                try
+                {
+                    con.Open();
+                    MySqlCommand com = new MySqlCommand(_queryString, con);
+                    MySqlDataReader dr = com.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        products.Add(new NameIdList()
+                        {
+                            ID = dr.GetInt32(_values[0]),
+                            NAME = dr.GetString(_values[1])
+                        });
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                con.Close();
+                return products;
+            }
+        }
+
+        //public static List<string> q()
+        //{
+        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+        //    {
+        //        try
+        //        {
+        //            con.Open();
+
+        //        }
+        //        catch(Exception e)
+        //        {
+        //            MessageBox.Show(e.Message);
+        //        }
+        //        con.Close();
+        //    }
+        //}
     }
 }

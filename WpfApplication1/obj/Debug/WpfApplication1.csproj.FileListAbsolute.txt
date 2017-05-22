@@ -104,3 +104,13 @@ E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\DelVal
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\DelValueWindows\WarningDelEmployeeBindsWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\DelValueWindows\WarningDelManufacturerBindsWindow.g.cs
 E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\DelValueWindows\WarningDelProductBindsWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\AdminWindows\ReportsWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.baml
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\DiscountEditWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\EmployeeEditWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\ManufacturerEditWindow.g.cs
+E:\TEX\КУРСАЧ(3 курс)\WpfApplication1\WpfApplication1\obj\Debug\EditValueWindows\ProductEditWindow.g.cs

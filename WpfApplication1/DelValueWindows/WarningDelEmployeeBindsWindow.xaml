@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.WarningDelEmployeeBindsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WarningDelBindsWindow" Height="161" Width="269">
+        Title="WarningDelBindsWindow" Height="161" Width="269" ResizeMode="NoResize" KeyDown="Window_KeyDown">
     <Grid x:Name="gridWarnWin">
         <Label x:Name="labelWarning" Content="Вы уверены, что хотите удалить все данные,&#xD;&#xA;связанные с этой записью(накладные,чеки)?" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="261"/>
         <Button x:Name="buttonDelBinds" Content="Да" HorizontalAlignment="Left" Margin="34,67,0,0" VerticalAlignment="Top" Width="75" Click="buttonDelBinds_Click"/>

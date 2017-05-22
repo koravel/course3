@@ -19,11 +19,6 @@ namespace WpfApplication1
         public EmployeeAddWindow()
         {
             InitializeComponent();
-            comboBoxPos.Items.Add("Кассир");
-            comboBoxPos.Items.Add("Уборщик");
-            comboBoxPos.Items.Add("Фармацевт");
-            comboBoxPos.Items.Add("Менеджер");
-            comboBoxPos.Items.Add("Администратор");
         }
 
         private void buttonBack_Click(object sender, RoutedEventArgs e)
@@ -77,17 +72,15 @@ namespace WpfApplication1
             }
             if(dataCorrect == 3)
             {
-                string[] value=new string[4];
-                value[0] = textBoxName.Text;
-                value[1] = textBoxTel.Text;
-                value[2] = selectedPosition.ToString();
-                value[3] = textBoxContract.Text;
-                string[] valueText=new string[4];
-                valueText[0] = "@_name";
-                valueText[1] = "@_tel";
-                valueText[2] = "@_pos";
-                valueText[3] = "@_contract";
-                DataBase.Query(valueText, value, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`)VALUES(@_name,@_tel,@_pos,@_contract);");
+                DataBase.Query(new string[] { "@_name", "@_tel", "@_pos", "@_contract" }, new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text }, "INSERT INTO `employee`(`E_NAME`,`E_TEL`,`E_POSITION`,`E_CONTRACT`)VALUES(@_name,@_tel,@_pos,@_contract);");
+                this.Close();
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
                 this.Close();
             }
         }

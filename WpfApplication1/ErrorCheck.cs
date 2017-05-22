@@ -76,30 +76,51 @@ namespace WpfApplication1
             bdate=_bdate.Split('.');
             string[] edate = new string[3];
             edate = _edate.Split('.');
-            if(Convert.ToInt32(bdate[2])<=Convert.ToInt32(edate[2]))
+            if(Convert.ToInt32(bdate[2]) < Convert.ToInt32(edate[2]))
             {
-                if(Convert.ToInt32(bdate[1])<=Convert.ToInt32(edate[1]))
+                return true;
+            }
+            else
+            {
+                if(Convert.ToInt32(bdate[2]) > Convert.ToInt32(edate[2]))
                 {
-                    if(Convert.ToInt32(bdate[0])<=Convert.ToInt32(edate[0]))
+                    MessageBox.Show("Начальная дата не может быть больше конечной!");
+                    return false;
+                }
+                else
+                {
+                    if(Convert.ToInt32(bdate[1]) < Convert.ToInt32(edate[1]))
                     {
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("Начальная дата не может быть больше конечной!");
-                        return false;
+                        if(Convert.ToInt32(bdate[1]) > Convert.ToInt32(edate[1]))
+                        {
+                            MessageBox.Show("Начальная дата не может быть больше конечной!");
+                            return false;
+                        }
+                        else
+                        {
+                            if(Convert.ToInt32(bdate[0]) < Convert.ToInt32(edate[0]))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                if(Convert.ToInt32(bdate[1]) > Convert.ToInt32(edate[1]))
+                                {
+                                    MessageBox.Show("Начальная дата не может быть больше конечной!");
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Начальная дата не может быть больше конечной!");
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Начальная дата не может быть больше конечной!");
-                return false;
             }
         }
     }

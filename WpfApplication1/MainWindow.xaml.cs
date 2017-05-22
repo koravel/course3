@@ -24,7 +24,7 @@ namespace WpfApplication1
             InitializeComponent();
         }
 
-        protected void Login_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -49,10 +49,9 @@ namespace WpfApplication1
 
                         if (onlineCheck == "offline")
                             {
-                                DataBase.Query(null,null,@"UPDATE `user` SET U_ONLINE='online' WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" +DataBase.computeMD5(PasswordField.Password)+ "';");
-                                this.Visibility = Visibility.Hidden;
-                                new AdminWindow(DataBase.QueryRetCell(null,null,@"SELECT U_ID FROM `user` WHERE U_NAME='" + LoginField.Text + "' AND U_PASS='" + DataBase.computeMD5(PasswordField.Password) + "';")).ShowDialog();
-                                this.Visibility = Visibility.Visible;
+                                DataBase.Query(new string[] { "@_login","@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "UPDATE `user` SET U_ONLINE='online' WHERE U_NAME=@_login AND U_PASS=@_pass;");
+                                new AdminWindow(DataBase.QueryRetCell(new string[] { "@_login","@_pass" }, new string[] { LoginField.Text, DataBase.computeMD5(PasswordField.Password) }, "SELECT U_ID FROM `user` WHERE U_NAME=@_login AND U_PASS=@_pass;")).Show();
+                                this.Close();
                             }
                             else
                             {
@@ -62,15 +61,14 @@ namespace WpfApplication1
                     }
                     else if(loginType == "Менеджер")
                     {
-                        this.Visibility = Visibility.Hidden;
-                        new ManagerWindow().ShowDialog();
-                        this.Visibility = Visibility.Visible;
+                        new ManagerWindow().Show();
+                        this.Close();
+
                     }
                     else if (loginType == "Кассир")
                     {
-                        this.Visibility = Visibility.Hidden;
-                        new SellerWindow().ShowDialog();
-                        this.Visibility = Visibility.Visible;
+                        new SellerWindow().Show();
+                        this.Close();
                     }
                     this.Close();
                 }

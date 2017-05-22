@@ -9,6 +9,6 @@ namespace WpfApplication1
     public class ProductActualPrice
     {
         public string PRICE { set; get; }
-        public string DATE { set; get; }
+        public DateTime DATE { set; get; }
     }
 }

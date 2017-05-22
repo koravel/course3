@@ -1,7 +1,7 @@
 ﻿<Window x:Class="WpfApplication1.UsersControlAddWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="UsersControlAddWindow" Height="230.421" Width="184">
+        Title="UsersControlAddWindow" Height="230.421" Width="184" ResizeMode="CanMinimize">
     <Grid>
         <TextBox x:Name="textBoxAddType" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="textBoxAddLogin" HorizontalAlignment="Left" Height="23" Margin="10,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

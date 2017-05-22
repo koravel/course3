@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace WpfApplication1
 {
-    public class Row
+    public class NameIdList
     {
-        public string ROW;
+        public int ID { set; get; }
+        public string NAME { set; get; }
     }
 }

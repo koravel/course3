@@ -29,10 +29,6 @@ namespace WpfApplication1
 
         private void UserDelete_Click(object sender, RoutedEventArgs e)
         {
-            string queryString = @"DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;";
-            string[] values=new string[2],valuesText=new string[2];
-            valuesText[0]="@_login";
-            valuesText[1]="@_password";
              try
             {
                 int indexTemp = dataGridUserOut.SelectedIndex;
@@ -40,11 +36,12 @@ namespace WpfApplication1
                 {
                     var cellInfo = new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[1]);
                     var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                    string[] values = new string[2];
                     values[0] = content.Text;
                     cellInfo=new DataGridCellInfo(dataGridUserOut.Items[indexTemp], dataGridUserOut.Columns[2]);
                     content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                     values[1]=content.Text;
-                    DataBase.Query(valuesText, values, queryString);
+                    DataBase.Query(new string[] { "@_login", "@_password" }, values, "DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;");
                 }
             }
             catch (Exception ex)

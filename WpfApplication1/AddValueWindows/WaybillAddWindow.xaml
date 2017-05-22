@@ -1,27 +1,79 @@
-﻿<Window x:Class="WpfApplication1.WaybillAddWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WaybillAddWindow" Height="175" Width="864">
+        xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Class="WpfApplication1.WaybillAddWindow"
+        Title="WaybillAddWindow" Height="175" Width="932" KeyDown="Window_KeyDown">
     <Grid>
-        <DatePicker x:Name="datePickerToday" HorizontalAlignment="Left" Margin="87,14,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBoxAgent" HorizontalAlignment="Left" Height="23" Margin="87,71,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Дата" HorizontalAlignment="Left" Margin="47,12,0,0" VerticalAlignment="Top"/>
-        <Label Content="Принял" HorizontalAlignment="Left" Margin="30,42,0,0" VerticalAlignment="Top"/>
-        <Label Content="Контрагент" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="bttonSave" Content="Сохранить" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top" Width="75" Click="bttonSave_Click"/>
-        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Left" Margin="132,113,0,0" VerticalAlignment="Top" Width="75" Click="buttonBack_Click"/>
-        <DataGrid x:Name="dataGridInfo" HorizontalAlignment="Left" Margin="212,0,-275,0" VerticalAlignment="Top" Height="145" Width="644" AutoGenerateColumns="False" IsReadOnly="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="323*"/>
+        </Grid.ColumnDefinitions>
+        <DatePicker x:Name="datePickerToday" Margin="87,14,3,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxAgent" Height="23" Margin="87,71,3,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Label Content="Дата" Margin="47,12,196,0" VerticalAlignment="Top"/>
+        <Label Content="Принял" Margin="30,42,196,0" VerticalAlignment="Top"/>
+        <Label Content="Контрагент" Margin="10,68,196,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonSave" Content="Сохранить" HorizontalAlignment="Right" Margin="0,0,116,10" VerticalAlignment="Bottom" Width="75" Click="buttonSave_Click"/>
+        <Button x:Name="buttonBack" Content="Назад" HorizontalAlignment="Right" Margin="0,0,3,10" Width="75" Click="buttonBack_Click" Height="22" VerticalAlignment="Bottom"/>
+        <DataGrid x:Name="dataGridInfo" Margin="2,0,0,0" CanUserAddRows="True" CanUserDeleteRows="True" Grid.Column="1" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код товара" Binding="{Binding ID}"/>
-                <DataGridTextColumn Header="Наименование" Binding="{Binding NAME}"/>
-                <DataGridTextColumn Header="Количество" Binding="{Binding VALUE}"/>
-                <DataGridTextColumn Header="Опт.цена" Binding="{Binding PRICE}"/>
-                <DataGridTextColumn Header="Дата поступления" Binding="{Binding BDATE}"/>
-                <DataGridTextColumn Header="Годен до" Binding="{Binding EDATE}"/>
-                <DataGridTextColumn Header="Оплата" Binding="{Binding PAYTYPE}"/>
+                <DataGridTemplateColumn Header="Код товара" x:Name="idColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Path= ID}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Наименование" x:Name="nameColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Text="{Binding Path= PRODUCT}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Количество" x:Name="valueColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Path= VALUE}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Опт.цена" x:Name="tpriceColumn" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Path= TRADEPRICE}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Дата поступления" x:Name="bdateColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path= BDATE, StringFormat=\{0:dd.MM.yy\}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path= BDATE, Mode=TwoWay,
+                  ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Годен до" x:Name="edateColumn">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path= EDATE, StringFormat=\{0:dd.MM.yy\}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=EDATE, Mode=TwoWay,
+                  ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                        </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <ComboBox x:Name="comboBoxEployees" HorizontalAlignment="Left" Margin="87,44,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="comboBoxEployees" Margin="87,44,3,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -55,19 +55,15 @@ namespace WpfApplication1
             }
             if(dataCorrect == 3)
             {
-                string[] value = new string[5];
-                value[0] = textBoxName.Text;
-                value[1] = textBoxCountry.Text;
-                value[2] = textBoxCity.Text;
-                value[3] = textBoxAddress.Text;
-                value[4] = textBoxTel.Text;
-                string[] valueText = new string[5];
-                valueText[0] = "@_name";
-                valueText[1] = "@_country";
-                valueText[2] = "@_city";
-                valueText[3] = "@_addr";
-                valueText[4] = "@_tel";
-                DataBase.Query(valueText, value, "INSERT INTO `manufacturer`(`M_NAME`,`M_COUNTRY`,`M_CITY`,`M_ADDR`,`M_TEL`)VALUES(@_name,@_country,@_city,@_addr,@_tel);");
+                DataBase.Query(new string[] { "@_name", "@_country", "@_city", "@_addr", "@_tel" }, new string[] { textBoxName.Text, textBoxCountry.Text, textBoxCity.Text, textBoxAddress.Text, textBoxTel.Text }, "INSERT INTO `manufacturer`(`M_NAME`,`M_COUNTRY`,`M_CITY`,`M_ADDR`,`M_TEL`)VALUES(@_name,@_country,@_city,@_addr,@_tel);");
+                this.Close();
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
                 this.Close();
             }
         }

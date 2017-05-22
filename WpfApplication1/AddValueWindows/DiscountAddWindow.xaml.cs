@@ -16,13 +16,13 @@ namespace WpfApplication1
 {
     public partial class DiscountAddWindow : Window
     {
+        List<NameIdList> products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" },"SELECT P_ID,P_NAME FROM product;");
         public DiscountAddWindow()
         {
             InitializeComponent();
-            List<Row> products=DataBase.QueryGetColumn("P_NAME","product");
-            for (int i = 0; i < products.Count; i++)
+            for (int i = 0; i < products.Count; i++ )
             {
-                comboBoxProduct.Items.Add(products[i].ROW);
+                comboBoxProduct.Items.Add(products[i].NAME + "(#"+products[i].ID+")");
             }
         }
 
@@ -34,8 +34,7 @@ namespace WpfApplication1
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             int dataCorrect = 0;
-            object selectedProduct = comboBoxProduct.SelectedItem;
-            if (selectedProduct == null)
+            if (comboBoxProduct.SelectedItem == null)
             {
                 MessageBox.Show("Выберите товар!");
             }
@@ -67,21 +66,20 @@ namespace WpfApplication1
             {
                 if(ErrorCheck.CheckBeginEndDate(datePickerBeginDate.Text,datePickerEndDate.Text))
                     {
-                        string[] values = new string[5];
-                        values[0] = selectedProduct.ToString();
-                        values[1] = textBoxPrice.Text;
-                        values[2] = datePickerBeginDate.Text;
-                        values[3] = datePickerEndDate.Text;
-                        values[4] = textBoxDescription.Text;
-                        string[] valuesText = new string[5];
-                        valuesText[0] = "@_product";
-                        valuesText[1] = "@_price";
-                        valuesText[2] = "@_bdate";
-                        valuesText[3] = "@_edate";
-                        valuesText[4] = "@_text";
-                        DataBase.Query(valuesText, values, "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES((SELECT `product`.`P_ID` FROM `product` WHERE `product`.`P_NAME`=@_product),@_price,@_bdate,@_edate,@_text)");
+                        DataBase.Query(
+                        new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text"},
+                        new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(),textBoxPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text },
+                        "INSERT INTO `discounts`(`P_ID`,`D_PRICE`,`D_BDATE`,`D_EDATE`,`D_TEXT`)VALUES(@_id,@_price,@_bdate,@_edate,@_text);");
                         this.Close();
                     }
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                this.Close();
             }
         }
     }

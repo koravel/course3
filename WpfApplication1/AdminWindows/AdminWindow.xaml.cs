@@ -23,10 +23,7 @@ namespace WpfApplication1
         public AdminWindow(string _idText)
         {
             InitializeComponent();
-            checkBoxDelAll.IsChecked = false;
             idText = _idText;
-            textBoxSearch.Visibility = Visibility.Hidden;
-            comboBoxSelectiveSearch.Visibility = Visibility.Hidden;
         }
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
@@ -46,7 +43,7 @@ namespace WpfApplication1
                         if (indexTemp != -1)
                         {
                             var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
-                            var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
+                            var content = (cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock);
                             dataGridCheckListOut.ItemsSource = DataBase.GetCheckList(content.Text);
                         }
                         break;
@@ -96,15 +93,13 @@ namespace WpfApplication1
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            DataBase.Query(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='" + idText + "';");
-            MainWindow openWindow = new MainWindow();
-            openWindow.Show();
             this.Close();
         }
 
         private void adminLogout_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DataBase.Query(null, null, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID='" + idText + "';");
+            DataBase.Query(new string[] { "@_id" }, new string[] { idText }, @"UPDATE `user` SET U_ONLINE='offline' WHERE U_ID=@_id;");
+            new MainWindow().Show();
         }
 
         private void dataGridCheckOut_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -115,6 +110,16 @@ namespace WpfApplication1
                 var cellInfo = new DataGridCellInfo(dataGridCheckOut.Items[indexTemp], dataGridCheckOut.Columns[0]);
                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
                 dataGridCheckListOut.ItemsSource = DataBase.GetCheckList(content.Text);
+                string totalPrice = DataBase.QueryRetCell(new string[] { "@_curid" }, new string[] { content.Text }, "SELECT (SELECT SUM(cl.CL_VALUE*product_actual_price.PAP_PRICE) FROM check_list cl,product_actual_price WHERE cl.C_ID=c.C_ID AND cl.P_ID=product_actual_price.P_ID AND product_actual_price.PAP_ID=(SELECT MAX(PAP_ID) FROM product_actual_price WHERE product_actual_price.P_ID=cl.P_ID)) FROM `check` c WHERE c.C_ID=@_curid;");
+                totalPriceTextBlock.Text = "Общая цена:";
+                if(totalPrice == null)
+                {
+                    totalPriceTextBlock.Text += "0";
+                }
+                else
+                {
+                    totalPriceTextBlock.Text += totalPrice;
+                }
             }
         }
 
@@ -135,12 +140,6 @@ namespace WpfApplication1
 
         private void tabItemProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //string[] currentDate = DateTime.Today.ToString().Split(' ');
-            //string[] currentSplit = currentDate[0].Split('.');
-            //string currentDateInvert = currentSplit[2] + '-' + currentSplit[1] + '-' + currentSplit[0];
-            //string[] value = new string[1]; value[0] = currentDateInvert;
-            //string[] valueText = new string[1]; valueText[0] = "@_date";
-            //string[] overdueProducts = DataBase.QueryRetRow(valueText,value,"SELECT P_ID FROM product_actual_price WHERE PAP_DATE<@_date;");
             dataGridProductOut.ItemsSource = DataBase.GetProduct();
         }
 
@@ -234,15 +233,13 @@ namespace WpfApplication1
             int selected = tabControlTables.SelectedIndex;
             switch (selected)
             {
-                case 0:
+                case 0: case 5:
                     {
                         MessageBox.Show("Удаление запрещено.");
                         break;
                     }
                 case 1:
                     {
-                        string[] values = new string[1], valuesText = new string[1];
-                        valuesText[0] = "@_curid";
                         try
                         {
                             int indexTemp = dataGridDiscountOut.SelectedIndex;
@@ -250,8 +247,7 @@ namespace WpfApplication1
                             {
                                 var cellInfo = new DataGridCellInfo(dataGridDiscountOut.Items[indexTemp], dataGridDiscountOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                                values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
+                                DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `discounts` WHERE D_ID=@_curid;");
                             }
                         }
                         catch (Exception ex)
@@ -262,8 +258,6 @@ namespace WpfApplication1
                     }
                 case 2:
                     {
-                        string[] values = new string[1], valuesText = new string[1];
-                        valuesText[0] = "@_curid";
                         try
                         {
                             int indexTemp = dataGridEmployeeOut.SelectedIndex;
@@ -271,21 +265,15 @@ namespace WpfApplication1
                             {
                                 var cellInfo = new DataGridCellInfo(dataGridEmployeeOut.Items[indexTemp], dataGridEmployeeOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                                values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `employee` WHERE E_ID=@_curid;");
-                                if (checkBoxDelAll.IsChecked == true)
+                                if(Properties.Settings.Default.DelBindingToEmployee == false)
                                 {
-                                    if(Properties.Settings.Default.DelBindingToEmployee == false)
-                                    {
-                                        new WarningDelEmployeeBindsWindow(content.Text).ShowDialog();
-                                    }
-                                    else
-                                    {
-                                        valuesText[0] = "@_curid";
-                                        values[0] = content.Text;
-                                        DataBase.Query(valuesText, values, "DELETE FROM `waybill` WHERE E_ID=@_curid;");
-                                        DataBase.Query(valuesText, values, "DELETE FROM `check` WHERE E_ID=@_curid;");
-                                    }
+                                    new WarningDelEmployeeBindsWindow(content.Text).ShowDialog();
+                                }
+                                else
+                                {
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `employee` WHERE E_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `waybill` WHERE E_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `check` WHERE E_ID=@_curid;");
                                 }
                             }
                         }
@@ -297,8 +285,6 @@ namespace WpfApplication1
                     }
                 case 3:
                     {
-                        string[] values = new string[1], valuesText = new string[1];
-                        valuesText[0] = "@_curid";
                         try
                         {
                             int indexTemp = dataGridManufacturersOut.SelectedIndex;
@@ -306,21 +292,15 @@ namespace WpfApplication1
                             {
                                 var cellInfo = new DataGridCellInfo(dataGridManufacturersOut.Items[indexTemp], dataGridManufacturersOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                                values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
-                                if (checkBoxDelAll.IsChecked == true)
+                                if (Properties.Settings.Default.DelBindingToManufacturer == false)
                                 {
-                                    if (Properties.Settings.Default.DelBindingToManufacturer == false)
-                                    {
-                                        new WarningDelManufacturerBindsWindow(content.Text).ShowDialog();
-                                    }
-                                    else
-                                    {
-                                        valuesText[0] = "@_curid";
-                                        values[0] = content.Text;
-                                        DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE M_ID=@_curid;");
-                                        DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE M_ID=@_curid;");
-                                    }
+                                    new WarningDelManufacturerBindsWindow(content.Text).ShowDialog();
+                                }
+                                else
+                                {
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `product` WHERE M_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `discount` WHERE M_ID=@_curid;");
                                 }
                             }
                         }
@@ -332,8 +312,6 @@ namespace WpfApplication1
                     }
                 case 4:
                     {
-                        string[] values = new string[1], valuesText = new string[1];
-                        valuesText[0] = "@_curid";
                         try
                         {
                             int indexTemp = dataGridProductOut.SelectedIndex;
@@ -341,21 +319,15 @@ namespace WpfApplication1
                             {
                                 var cellInfo = new DataGridCellInfo(dataGridProductOut.Items[indexTemp], dataGridProductOut.Columns[0]);
                                 var content = cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock;
-                                values[0] = content.Text;
-                                DataBase.Query(valuesText, values, "DELETE FROM `product` WHERE P_ID=@_curid;");
-                                if (checkBoxDelAll.IsChecked == true)
+                                if (Properties.Settings.Default.DelBindingToProduct == false)
                                 {
-                                    if (Properties.Settings.Default.DelBindingToProduct == false)
-                                    {
-                                        new WarningDelProductBindsWindow(content.Text).ShowDialog();
-                                    }
-                                    else
-                                    {
-                                        valuesText[0] = "@_curid";
-                                        values[0] = content.Text;
-                                        DataBase.Query(valuesText, values, "DELETE FROM `waybill` WHERE P_ID=@_curid;");
-                                        DataBase.Query(valuesText, values, "DELETE FROM `discount` WHERE P_ID=@_curid;");
-                                    }
+                                    new WarningDelProductBindsWindow(content.Text).ShowDialog();
+                                }
+                                else
+                                {
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `product` WHERE P_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `waybill` WHERE P_ID=@_curid;");
+                                    DataBase.Query(new string[] { "@_curid" }, new string[] { content.Text }, "DELETE FROM `discount` WHERE P_ID=@_curid;");
                                 }
                             }
                         }
@@ -365,17 +337,45 @@ namespace WpfApplication1
                         }
                         break;
                     }
-                case 5:
-                    {
-                        MessageBox.Show("Удаление запрещено.");
-                        break;
-                    }
             }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            int selected = tabControlTables.SelectedIndex;
+            switch(selected)
+            {
+                case 0: case 5:
+                    {
+                        MessageBox.Show("Изменение запрещено.");
+                        break;
+                    }
+                case 1:
+                    {
+                        new DiscountEditWindow().ShowDialog();
+                        break;
+                    }
+                case 2:
+                    {
+                        new EmployeeEditWindow().ShowDialog();
+                        break;
+                    }
+                case 3:
+                    {
+                        new ManufacturerEditWindow().ShowDialog();
+                        break;
+                    }
+                case 4:
+                    {
+                        new ProductEditWindow().ShowDialog();
+                        break;
+                    }
+            }
+        }
 
+        private void reportsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new ReportsWindow().ShowDialog();
         }
     }
 }

@@ -73,8 +73,24 @@
     <Compile Include="AddValueWindows\ProductAddWindow.xaml.cs">
       <DependentUpon>ProductAddWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter.cs" />
+    <Compile Include="EditValueWindows\DiscountEditWindow.xaml.cs">
+      <DependentUpon>DiscountEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditValueWindows\EmployeeEditWindow.xaml.cs">
+      <DependentUpon>EmployeeEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ErrorCheck.cs" />
-    <Compile Include="Row.cs" />
+    <Compile Include="AdminWindows\ReportsWindow.xaml.cs">
+      <DependentUpon>ReportsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditValueWindows\ManufacturerEditWindow.xaml.cs">
+      <DependentUpon>ManufacturerEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditValueWindows\ProductEditWindow.xaml.cs">
+      <DependentUpon>ProductEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\NameIdList.cs" />
     <Compile Include="Tables\Check.cs" />
     <Compile Include="DataBase.cs" />
     <Compile Include="AdminWindows\AdminWindow.xaml.cs">
@@ -119,11 +135,20 @@
     <Compile Include="DelValueWindows\WarningDelProductBindsWindow.xaml.cs">
       <DependentUpon>WarningDelProductBindsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tables\WaybillOutput.cs" />
     <Page Include="AddValueWindows\DiscountAddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddValueWindows\EmployeeAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditValueWindows\DiscountEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditValueWindows\EmployeeEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +173,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddValueWindows\ProductAddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminWindows\ReportsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditValueWindows\ManufacturerEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditValueWindows\ProductEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,6 +256,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

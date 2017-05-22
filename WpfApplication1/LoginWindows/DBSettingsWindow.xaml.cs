@@ -48,6 +48,7 @@ namespace WpfApplication1
                 Properties.Settings.Default.Login = textBox_Loign.Text;
                 Properties.Settings.Default.Password = textBox_Password.Text;
                 Properties.Settings.Default.Save();
+                this.Close();
             }
             catch(Exception ex)
             {
@@ -66,19 +67,21 @@ namespace WpfApplication1
 
         private void CheckCon_Click(object sender, RoutedEventArgs e)
         {
-            string[] database_settings=new string[4];
-            database_settings[0]=textBox_Adress.Text;
-            database_settings[1]=textbox_DBName.Text;
-            database_settings[2]=textBox_Loign.Text;
-            database_settings[3]=textBox_Password.Text;
-            bool flag=DataBase.ConCheck(database_settings);
-            if (flag == true)
+            if (DataBase.ConCheck(new string[4] { textBox_Adress.Text, textbox_DBName.Text, textBox_Loign.Text, textBox_Password.Text }) == true)
             {
                 MessageBox.Show("Соединение установлено.");
             }
             else
             {
                 MessageBox.Show("Соединение отсутствует.");
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
             }
         }
     }

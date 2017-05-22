@@ -8,7 +8,9 @@ namespace WpfApplication1
 {
     public class CheckList
     {
+
         public string PRODUCT { set; get; }
         public int VALUE { set; get; }
+        public float PRICE { set; get; }
     }
 }
