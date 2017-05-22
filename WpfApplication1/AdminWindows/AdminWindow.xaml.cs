@@ -31,6 +31,7 @@ namespace WpfApplication1
         {
             idText = id;
             InitializeComponent();
+            DataBase.SetLog(idText, 1, 0, "Вход в систему...");
             dataGridCheckOut.ItemsSource = DataBase.GetCheck();
             DataBase.SetLog(idText, 0, 0, "Заполнение таблицы чеков...");
             dataGridDiscountOut.ItemsSource = DataBase.GetDiscount();
@@ -49,7 +50,7 @@ namespace WpfApplication1
 
         private void UsersControl_Click(object sender, RoutedEventArgs e)
         {
-            new UsersControlWindow().ShowDialog();
+            new UsersControlWindow(idText).ShowDialog();
         }
 
         private void UpdateData_Click(object sender, RoutedEventArgs e)
@@ -110,6 +111,7 @@ namespace WpfApplication1
 
         private void adminLogout_Closing(object sender, CancelEventArgs e)
         {
+            DataBase.SetLog(idText, 1, 0, "Выход из системы...");
             new MainWindow().Show();
         }
 
@@ -283,7 +285,7 @@ namespace WpfApplication1
                                 string employeeId = Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut);
                                 if(Properties.Settings.Default.DelBindingToEmployee == false)
                                 {
-                                    new WarningDelEmployeeBindsWindow(employeeId).ShowDialog();
+                                    new WarningDelEmployeeBindsWindow(idText,employeeId).ShowDialog();
                                 }
                                 else
                                 {
@@ -307,7 +309,7 @@ namespace WpfApplication1
                                 string maufacturerId = Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut);
                                 if (Properties.Settings.Default.DelBindingToManufacturer == false)
                                 {
-                                    new WarningDelManufacturerBindsWindow(maufacturerId).ShowDialog();
+                                    new WarningDelManufacturerBindsWindow(idText,maufacturerId).ShowDialog();
                                 }
                                 else
                                 {
@@ -331,7 +333,7 @@ namespace WpfApplication1
                                 string productId = Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut);
                                 if (Properties.Settings.Default.DelBindingToProduct == false)
                                 {
-                                    new WarningDelProductBindsWindow(productId).ShowDialog();
+                                    new WarningDelProductBindsWindow(idText,productId).ShowDialog();
                                 }
                                 else
                                 {
@@ -363,7 +365,7 @@ namespace WpfApplication1
                     {
                         if (dataGridDiscountOut.SelectedIndex != -1)
                         {
-                            new DiscountEditWindow(Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut)).ShowDialog();
+                            new DiscountEditWindow(idText,Converter.DGCellToStringConvert(dataGridDiscountOut.SelectedIndex, 0, dataGridDiscountOut)).ShowDialog();
                         }
                         break;
                     }
@@ -371,7 +373,7 @@ namespace WpfApplication1
                     {
                         if (dataGridEmployeeOut.SelectedIndex != -1)
                         {
-                            new EmployeeEditWindow(Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut)).ShowDialog();
+                            new EmployeeEditWindow(idText, Converter.DGCellToStringConvert(dataGridEmployeeOut.SelectedIndex, 0, dataGridEmployeeOut)).ShowDialog();
                         }
                         break;
                     }
@@ -379,7 +381,7 @@ namespace WpfApplication1
                     {
                         if (dataGridManufacturersOut.SelectedIndex != -1)
                         {
-                            new ManufacturerEditWindow(Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut)).ShowDialog();
+                            new ManufacturerEditWindow(idText, Converter.DGCellToStringConvert(dataGridManufacturersOut.SelectedIndex, 0, dataGridManufacturersOut)).ShowDialog();
                         }
                         break;
                     }
@@ -387,7 +389,7 @@ namespace WpfApplication1
                     {
                         if (dataGridProductOut.SelectedIndex != -1)
                         {
-                            new ProductEditWindow(Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut)).ShowDialog();
+                            new ProductEditWindow(idText, Converter.DGCellToStringConvert(dataGridProductOut.SelectedIndex, 0, dataGridProductOut)).ShowDialog();
                         }
                         break;
                     }

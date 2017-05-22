@@ -16,14 +16,17 @@ namespace WpfApplication1
 {
     public partial class DiscountEditWindow : Window
     {
-        List<NameIdList> products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
-        string curId;
-        public DiscountEditWindow(string _curId)
+        List<NameIdList> products = new List<NameIdList>();
+        string curId,idText;
+        int selectNum,count = 0;
+        public DiscountEditWindow(string id,string _curId)
         {
             InitializeComponent();
+            ProductListUpdate();
             curId = _curId;
+            idText = id;
             string[] data = new string[5];
-            int selectNum = -1;
+            selectNum = -1;
             data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT discounts.P_ID,discounts.D_PRICE,discounts.D_BDATE,discounts.D_EDATE,discounts.D_TEXT FROM `discounts`,`product` WHERE `discounts`.`D_ID`=@curid AND discounts.P_ID=product.P_ID;");
             for (int i = 0; i < products.Count; i++)
             {
@@ -34,7 +37,8 @@ namespace WpfApplication1
                 }
             }
             comboBoxProduct.SelectedIndex = selectNum;
-            textBoxPrice.Text = data[1].Replace(",",".");
+            count = comboBoxProduct.Items.Count;
+            upDownPrice.Text = data[1].Replace(",", ".");
             datePickerBeginDate.Text = data[2];
             datePickerEndDate.Text = data[3];
             textBoxDescription.Text = data[4];
@@ -64,10 +68,6 @@ namespace WpfApplication1
             {
                 dataCorrect++;
             }
-            if (ErrorCheck.CheckPrice(textBoxPrice.Text))
-            {
-                dataCorrect++;
-            }
             if (datePickerBeginDate.Text == "")
             {
                 MessageBox.Show("Введите дату начала!");
@@ -84,17 +84,43 @@ namespace WpfApplication1
             {
                 dataCorrect++;
             }
-            if (dataCorrect == 4)
+            if (dataCorrect == 3)
             {
                 if (ErrorCheck.CheckBeginEndDate(datePickerBeginDate.Text, datePickerEndDate.Text))
                 {
                     DataBase.Query(
                     new string[] { "@_id", "@_price", "@_bdate", "@_edate", "@_text", "@_curid" },
-                    new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(), textBoxPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text, curId },
+                    new string[] { products[comboBoxProduct.SelectedIndex].ID.ToString(), upDownPrice.Text, Converter.DateConvert(datePickerBeginDate.Text), Converter.DateConvert(datePickerEndDate.Text), textBoxDescription.Text, curId },
                     "UPDATE discounts SET P_ID = @_id,D_PRICE = @_price,D_BDATE = @_bdate,D_EDATE = @_edate,D_TEXT = @_text WHERE D_ID = @_curid;");
+                    DataBase.SetLog(idText, 1, 1, "Изменение акции,параметры:|код:" + curId + "|");
                     this.Close();
                 }
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductAddWindow(idText).ShowDialog();
+            ProductListUpdate();
+            for (int i = 0; i < products.Count; i++)
+            {
+                comboBoxProduct.Items.Add(products[i].NAME + "(#" + products[i].ID + ")");
+            }
+            if (comboBoxProduct.Items.Count > count)
+            {
+                comboBoxProduct.SelectedIndex = comboBoxProduct.Items.Count - 1;
+            }
+            else
+            {
+                comboBoxProduct.SelectedIndex = selectNum;
+            }
+        }
+
+        private void ProductListUpdate()
+        {
+            products.Clear();
+            products = DataBase.GetNameIdList(new string[] { "P_ID", "P_NAME" }, "SELECT P_ID,P_NAME FROM product;");
+            comboBoxProduct.Items.Clear();
         }
     }
 }

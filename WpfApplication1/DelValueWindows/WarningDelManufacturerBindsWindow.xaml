@@ -6,7 +6,7 @@
         <Label Content="Вы уверены, что хотите удалить все данные,&#xA;связанные с этой записью(товары,скидки,&#xA;цены)?" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
         <Button x:Name="buttonDelBinds" Content="Да" HorizontalAlignment="Left" Margin="40,57,0,0" VerticalAlignment="Top" Width="75" Click="buttonDelBinds_Click"/>
         <Button x:Name="buttonNotDelBinds" Content="Нет" HorizontalAlignment="Left" Margin="149,57,0,0" VerticalAlignment="Top" Width="75" Click="buttonNotDelBinds_Click"/>
-        <CheckBox x:Name="checkBoxWarningSettings" Content="Больше не показывать это сообщение" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" IsChecked="False" Checked="checkBoxWarningSettings_Checked"/>
+        <CheckBox x:Name="checkBoxWarningSettings" Content="Больше не показывать это сообщение" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" IsChecked="False" Click="checkBoxWarningSettings_Click"/>
 
     </Grid>
 </Window>

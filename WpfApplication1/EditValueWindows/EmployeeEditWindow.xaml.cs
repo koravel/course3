@@ -16,11 +16,12 @@ namespace WpfApplication1
 {
     public partial class EmployeeEditWindow : Window
     {
-        string curId;
-        public EmployeeEditWindow(string _curId)
+        string curId,idText;
+        public EmployeeEditWindow(string id,string _curId)
         {
             InitializeComponent();
             curId = _curId;
+            idText = id;
             string[] data = new string[5];
             data = DataBase.QueryRetRow(new string[] { "@curid" }, new string[] { _curId }, "SELECT E_NAME,E_TEL,E_POSITION,E_CONTRACT,E_INN FROM employee where E_ID=@curid;");
             comboBoxPos.SelectedIndex = comboBoxPos.Items.IndexOf(data[2]);
@@ -29,10 +30,12 @@ namespace WpfApplication1
             textBoxContract.Text = data[3];
             textBoxEmployeeINN.Text = data[4];
         }
+
         private void buttonBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -40,6 +43,7 @@ namespace WpfApplication1
                 this.Close();
             }
         }
+
          private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
             int dataCorrect = 0;
@@ -88,8 +92,9 @@ namespace WpfApplication1
             {
                 DataBase.Query(
                     new string[] { "@_name", "@_tel", "@_pos", "@_contract", "@_curid","@_inn" },
-                    new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text, curId,textBoxEmployeeINN.Text },
+                    new string[] { textBoxName.Text, textBoxTel.Text, selectedPosition.ToString(), textBoxContract.Text, curId, textBoxEmployeeINN.Text },
                     "UPDATE employee SET E_NAME = @_name,E_TEL = @_tel,E_POSITION = @_pos,E_CONTRACT = @_contract,E_INN = @_inn WHERE E_ID = @_curid;");
+                DataBase.SetLog(idText, 1, 1, "Изменение работники,параметры:|код:" + curId + "|");
                 this.Close();
             }
         }

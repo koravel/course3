@@ -23,11 +23,15 @@ namespace WpfApplication1
         List<NameIdList> products = new List<NameIdList>();
         string[] tempMas;
         string idText;
+        int selIndexEmployee = -1, countEmployee = 0;
         public WaybillAddWindow(string id)
         {
             InitializeComponent();
             datePickerToday.Text = DateTime.Today.ToString();
             ProductListUpdate();
+            EmployeeListUpdate();
+            countEmployee = comboBoxEployees.Items.Count;
+            selIndexEmployee = comboBoxEployees.SelectedIndex;
             dataGridInfo.ItemsSource = list;
             idText = id;
         }
@@ -129,6 +133,15 @@ namespace WpfApplication1
             {
                 comboBoxEployees.Items.Add(employees[i].NAME + "(#" + employees[i].ID + ")");
             }
+            if (comboBoxEployees.Items.Count > countEmployee)
+            {
+                comboBoxEployees.SelectedIndex = comboBoxEployees.Items.Count;
+                countEmployee = comboBoxEployees.Items.Count;
+            }
+            else
+            {
+                comboBoxEployees.SelectedIndex = selIndexEmployee;
+            }
         }
 
         private void ProductListUpdate()
@@ -149,8 +162,9 @@ namespace WpfApplication1
             ProductListUpdate();
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            selIndexEmployee = comboBoxEployees.SelectedIndex;
             new EmployeeAddWindow(idText).ShowDialog();
             EmployeeListUpdate();
         }

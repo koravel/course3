@@ -186,32 +186,32 @@ namespace WpfApplication1
 
         }
 
-        public static List<string> QueryGetColumn(string _columnName,string _tableName)
-        {
-            List<string> rows = new List<string>();
-            using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
-            {
-                try
-                {
+        //public static List<string> QueryGetColumn(string _columnName,string _tableName)
+        //{
+        //    List<string> rows = new List<string>();
+        //    using (MySqlConnection con = new MySqlConnection(MSqlConB.ConnectionString))
+        //    {
+        //        try
+        //        {
 
-                    con.Open();
-                    MySqlCommand com = new MySqlCommand("SELECT "+_columnName+" FROM "+_tableName+";", con);
-                    MySqlDataReader dr = com.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        rows.Add(dr.GetString(_columnName));
-                    }
-                    con.Close();
-                    return rows;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
-                con.Close();
-                return null;
-            }
-        }
+        //            con.Open();
+        //            MySqlCommand com = new MySqlCommand("SELECT "+_columnName+" FROM "+_tableName+";", con);
+        //            MySqlDataReader dr = com.ExecuteReader();
+        //            while (dr.Read())
+        //            {
+        //                rows.Add(dr.GetString(_columnName));
+        //            }
+        //            con.Close();
+        //            return rows;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            MessageBox.Show(e.Message);
+        //        }
+        //        con.Close();
+        //        return null;
+        //    }
+        //}
 
         public static bool ConCheck(string[] database_settings)
         {

@@ -53,11 +53,7 @@ namespace WpfApplication1
             {
                 dataCorrect++;
             }
-            if (ErrorCheck.CheckPrice(textBoxPrice.Text))
-            {
-                dataCorrect++;
-            }
-            if(dataCorrect == 4)
+            if(dataCorrect == 3)
             {
                 string maxId = DataBase.QueryRetCell(null, null, "SELECT MAX(P_ID)+1 FROM product;");
                 DataBase.Query(
@@ -66,10 +62,10 @@ namespace WpfApplication1
                 "INSERT INTO `product`(`P_ID`,`P_NAME`,`M_ID`,`P_GROUP`,`P_PACK`,`P_MATERIAL`,`P_FORM`,`P_INSTR`)VALUES(@_id,@_name,@_manufacturer,@_group,@_pack,@_material,@_form,@_instr);");
                 DataBase.Query(
                 new string[] { "@_id", "@_price", "@_date" },
-                new string[] { maxId, textBoxPrice.Text, Converter.DateConvert(datePickerToday.Text) },
+                new string[] { maxId, upDownPrice.Text.Replace(',', '.'), Converter.DateConvert(datePickerToday.Text) },
                 "INSERT INTO `product_actual_price`(`P_ID`,`PAP_PRICE`,`PAP_DATE`)VALUES(@_id,@_price,@_date);");
                 DataBase.Query(new string[] { "@_id" }, new string[] { maxId }, "INSERT INTO product_quantity(P_ID)VALUES(@_id)");
-                DataBase.SetLog(idText, 1, 2, "Создание товара,параметры:|код:" + maxId + "|название:" + textBoxName.Text + "|производитель код:" + comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString() + "|цена:" + textBoxPrice.Text + "|");
+                DataBase.SetLog(idText, 1, 2, "Создание товара,параметры:|код:" + maxId + "|название:" + textBoxName.Text + "|производитель код:" + comboBoxValues[comboBoxManufacturer.SelectedIndex].ID.ToString() + "|цена:" + upDownPrice.Text + "|");
                 this.Close();
             }
 

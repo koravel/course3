@@ -17,16 +17,22 @@ namespace WpfApplication1
 
     public partial class UsersControlAddWindow : Window
     {
-        public UsersControlAddWindow()
+        string idText;
+        public UsersControlAddWindow(string id)
         {
             InitializeComponent();
+            idText = id;
         }
 
         private void AddToDB_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                DataBase.Query(new string[] { "@_type", "@_login", "@_pass" }, new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text }, "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`,`U_ONLINE`) VALUES (@_type, @_login, md5(@_pass), 'offline');");
+                DataBase.Query(
+                    new string[] { "@_type", "@_login", "@_pass" }, 
+                    new string[] { textBoxAddType.Text, textBoxAddLogin.Text, textBoxAddPassword.Text }, 
+                    "INSERT INTO `user` (`U_TYPE`,`U_NAME`,`U_PASS`,`U_ONLINE`) VALUES (@_type, @_login, md5(@_pass), 'offline');");
+                DataBase.SetLog(idText, 1, 2, "Создание пользователя,параметры:|тип записи:" + textBoxAddType.Text + "|логин:" + textBoxAddLogin.Text + "|");
             }
             catch(Exception ex)
             {

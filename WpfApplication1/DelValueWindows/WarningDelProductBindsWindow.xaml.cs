@@ -16,11 +16,12 @@ namespace WpfApplication1
 {
     public partial class WarningDelProductBindsWindow : Window
     {
-        string curId;
-        public WarningDelProductBindsWindow(string _curId)
+        string curId,idText;
+        public WarningDelProductBindsWindow(string id,string _curId)
         {
             InitializeComponent();
             curId = _curId;
+            idText = id;
         }
 
         private void buttonNotDelBinds_Click(object sender, RoutedEventArgs e)
@@ -31,10 +32,11 @@ namespace WpfApplication1
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `product` WHERE P_ID=@_curid;");
+            DataBase.SetLog(idText, 1, 3, "Удаление товара,параметры:|код:" + curId + "|");
             this.Close();
         }
 
-        private void checkBoxWarningSettings_Checked(object sender, RoutedEventArgs e)
+        private void checkBoxWarningSettings_Click(object sender, RoutedEventArgs e)
         {
             if(checkBoxWarningSettings.IsChecked == true)
             {

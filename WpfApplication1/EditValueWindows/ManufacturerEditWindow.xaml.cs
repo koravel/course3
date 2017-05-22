@@ -16,11 +16,12 @@ namespace WpfApplication1
 {
     public partial class ManufacturerEditWindow : Window
     {
-        string curId;
-        public ManufacturerEditWindow(string _curId)
+        string curId,idText;
+        public ManufacturerEditWindow(string id,string _curId)
         {
             InitializeComponent();
             curId = _curId;
+            idText = id;
             string[] data = new string[5];
             data = DataBase.QueryRetRow(new string[]{ "@curid" },new string[]{ _curId },"SELECT M_NAME,M_COUNTRY,M_CITY,M_ADDR,M_TEL FROM manufacturer WHERE M_ID=@curid;");
             textBoxName.Text = data[0];
@@ -68,6 +69,7 @@ namespace WpfApplication1
                     new string[] { "@_name", "@_country", "@_city", "@_addr", "@_tel", "@_curid" },
                     new string[] { textBoxName.Text, textBoxCountry.Text, textBoxCity.Text, textBoxAddress.Text, textBoxTel.Text, curId },
                     "UPDATE manufacturer SET M_NAME = @_name,M_COUNTRY = @_country,M_CITY = @_city,M_ADDR = @_addr,M_TEL = @_tel WHERE M_ID = @_curid;");
+                DataBase.SetLog(idText, 1, 1, "Изменение производителя,параметры:|код:" + curId + "|");
                 this.Close();
             }
         }

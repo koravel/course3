@@ -16,14 +16,15 @@ namespace WpfApplication1
 {
     public partial class WarningDelManufacturerBindsWindow : Window
     {
-        string curId;
-        public WarningDelManufacturerBindsWindow(string _curId)
+        string curId,idText;
+        public WarningDelManufacturerBindsWindow(string id,string _curId)
         {
             InitializeComponent();
             curId = _curId;
+            idText = id;
         }
 
-        private void checkBoxWarningSettings_Checked(object sender, RoutedEventArgs e)
+        private void checkBoxWarningSettings_Click(object sender, RoutedEventArgs e)
         {
             if (checkBoxWarningSettings.IsChecked == true)
             {
@@ -40,6 +41,7 @@ namespace WpfApplication1
         private void buttonDelBinds_Click(object sender, RoutedEventArgs e)
         {
             DataBase.Query(new string[] { "@_curid" }, new string[] { curId }, "DELETE FROM `manufacturer` WHERE M_ID=@_curid;");
+            DataBase.SetLog(idText, 1, 3, "Удаление производителя,параметры:|код:" + curId + "|");
             this.Close();
         }
 

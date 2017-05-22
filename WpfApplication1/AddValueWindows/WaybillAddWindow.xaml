@@ -91,7 +91,7 @@
         <ComboBox x:Name="comboBoxEployees" Margin="140,44,3,0" VerticalAlignment="Top" Height="22">
             <ComboBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Добавить нового..." Click="MenuItem_Click_1"/>
+                    <MenuItem Header="Добавить нового..." Click="MenuItem_Click"/>
                 </ContextMenu>
             </ComboBox.ContextMenu>
         </ComboBox>

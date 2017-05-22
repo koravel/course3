@@ -16,15 +16,18 @@ namespace WpfApplication1
 {
     public partial class UsersControlWindow : Window
     {
-        public UsersControlWindow()
+        string idText;
+        public UsersControlWindow(string id)
         {
             InitializeComponent();
             dataGridUserOut.ItemsSource = DataBase.GetUser();
+            DataBase.SetLog(id, 0, 0, "Заполнение таблицы пользователей...");
+            idText = id;
         }
 
         private void UserAdd_Click(object sender, RoutedEventArgs e)
         {
-            new UsersControlAddWindow().ShowDialog();            
+            new UsersControlAddWindow(idText).ShowDialog();            
         }
 
         private void UserDelete_Click(object sender, RoutedEventArgs e)
@@ -33,9 +36,11 @@ namespace WpfApplication1
             {
                 if (dataGridUserOut.SelectedIndex != -1)
                 {
+                    string login = Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 1, dataGridUserOut);
                     DataBase.Query(new string[] { "@_login", "@_password" }
-                        , new string[2] { Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 1, dataGridUserOut), Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 2, dataGridUserOut) }
+                        , new string[2] { login, Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 2, dataGridUserOut) }
                         , "DELETE FROM `user` WHERE U_NAME=@_login AND U_PASS=@_password;");
+                    DataBase.SetLog(idText, 1, 3, "Удаление пользователя,параметры:|логин:" + login + "|");
                 }
             }
             catch (Exception ex)
@@ -50,7 +55,7 @@ namespace WpfApplication1
             {
                 if (dataGridUserOut.SelectedIndex != -1)
                 {
-                    new UsersControlEditWindow(Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 0, dataGridUserOut)).ShowDialog();
+                    new UsersControlEditWindow(idText,Converter.DGCellToStringConvert(dataGridUserOut.SelectedIndex, 0, dataGridUserOut)).ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -67,6 +72,7 @@ namespace WpfApplication1
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             dataGridUserOut.ItemsSource = DataBase.GetUser();
+            DataBase.SetLog(idText, 1, 0, "Обновление таблицы пользователей...");
         }
 
     }
