@@ -1,0 +1,172 @@
+﻿create database if not exists `pharmacy_db`;
+
+use `pharmacy_db`;
+
+create table if not exists `pharmacy_db`.`manufacturer`(
+M_ID int(9)unsigned auto_increment not null comment 'Код производителя',
+M_NAME char(50)not null comment 'Название производителя',
+M_COUNTRY char(50)not null comment 'Страна производителя',
+M_CITY char(50) comment 'Грод производителя',
+M_ADDR char(50) comment 'Адрес производителя',
+M_TEL char(20) comment 'Телефон производителя',
+primary key (`M_ID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`product`(
+P_ID  int(9)unsigned auto_increment not null comment 'Код продукта',
+P_NAME char(50)not null  comment 'Имя продукта',
+M_ID int(9)unsigned not null comment 'Код производителя',
+P_GROUP enum('Без группы','Антисептики','Слабительные','Противовирусные','Антибакериальные','Отхаркивающие и рвотные','Антидепрессанты','Снотворные','Анальгетики',
+'Противогрибковые','Противопаразитные','Противовоспалительные','Противозачаточные','Противоалергические','Гастроэнтероголические','Противорвотные',
+'Противодиарейные','Ингибиторы','Бронхолитические','Муколитические','Противокашлевые','Иммуномодуляторы','Иммуноглобулины','Витаминные','Минеральные',
+'Поливитаминные','Питательные смеси','Жаропонижающие','Антианемические','Фитопрепараты','Средства для контрацепции','Сосудосуживающие',
+'Антиглаукомные','Офтальмологические','Проктологические','Урологические','Нефрологические','Дерматологические','Диагностические','Перевязочные',
+'Токсикологические','Антидоты','Гомеопатические','Эфирные масла','Средства личной гигиены','Косметические') not null comment 'Группа товара',
+P_PACK enum('Без упаковки','Ампула','Картонная коробка','Банка','Пакет','Полимерная','Баллон','Туба','Флакон','Бумага') not null comment 'Форма упаковки',
+P_MATERIAL enum('Неизвестно','Жидкость','Сироп','Таблетки','Капсулы','Шприц-тюбики','Порошок','Гранулы','Растительные волокна','Аэрозоль','Суспензия',
+'Мазь','Паста')not null comment 'Материал продукта',
+P_FORM enum('с рецептом','без рецепта', 'строгого учета')not null comment 'Форма отпуска',
+P_INSTR text default null comment 'Инструкция',
+`P_CODE` char(13) NOT NULL comment 'штрих-код',
+primary key(`P_ID`),
+foreign key (`M_ID`) references `pharmacy_db`.`manufacturer`(`M_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`employee`(
+E_ID int(9)unsigned not null auto_increment comment 'Код сотрудника',
+E_NAME char(50)not null comment 'ФИО',
+E_TEL char(15) comment 'Телефон',
+E_POSITION enum('Кассир','Уборщик','Менеджер','Администратор','Фармацевт')not null comment 'Должность',
+E_CONTRACT char(11) not null unique comment 'Номер контракта',
+E_INN int(9) unsigned not null unique,
+primary key (`E_ID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`waybill`(
+W_ID int(9)unsigned auto_increment not null comment 'Код накладной',
+W_DATE date comment 'Дата накладной',
+E_ID int(9)unsigned not null comment 'Код сотрудника',
+W_AGENT_NAME char(50) not null comment 'Имя контрагента',
+primary key (`W_ID`),
+foreign key (`E_ID`) references `pharmacy_db`.`employee`(`E_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+create table if not exists `pharmacy_db`.`waybill_list`(
+WL_ID int(9)unsigned auto_increment not null comment 'Код списка накладной',
+W_ID int(9)unsigned not null comment 'Код накладной',
+P_ID  int(9)unsigned not null comment 'Код продукта',
+WL_VALUE mediumint(5)unsigned not null comment 'Количество',
+WL_TRADE_PRICE float(7,2)unsigned not null comment 'Оптовая цена',
+WL_BDATE date not null comment 'Дата поступления товара',
+WL_EDATE date not null comment 'Срок реализации товара',
+primary key (`WL_ID`),
+foreign key (`P_ID`) references `pharmacy_db`.`product`(`P_ID`) on update cascade on delete cascade,
+foreign key (`W_ID`) references `pharmacy_db`.`waybill`(`W_ID`) on update cascade on delete cascade  
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`product_actual_price`(
+PAP_ID int(9)unsigned auto_increment not null comment 'Код актуальной цены',
+P_ID  int(9)unsigned not null comment 'Код продукта',
+PAP_PRICE float(7,2)unsigned not null comment 'Цена',
+PAP_DATE datetime not null default current_timestamp comment 'Дата актуальности',
+primary key (`PAP_ID`),
+foreign key (`P_ID`) references `pharmacy_db`.`product`(`P_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`discounts`(
+D_ID mediumint(6)unsigned auto_increment not null comment 'Код акции',
+P_ID  int(9)unsigned comment 'Код продукта',
+D_PRICE int(4)unsigned not null comment 'Скидка',
+D_BDATE date comment 'Начало акции',
+D_EDATE date comment 'Конец акции',
+D_TEXT text comment 'Описание',
+primary key (`D_ID`),
+foreign key (`P_ID`) references `pharmacy_db`.`product`(`P_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`check`(
+C_ID int(9)unsigned auto_increment not null comment 'Код операции',
+E_ID int(9)unsigned comment 'Код сотрудника',
+C_DATE datetime not null comment 'Дата операции',
+C_PAYTYPE enum('Наличные','Карточка') not null comment 'Тип оплаты',
+C_SUM FLOAT(7,2) UNSIGNED DEFAULT 0 comment 'Сумма чека',
+C_PREPAYMENT FLOAT(7,2) UNSIGNED default 0 comment 'Аванс',
+primary key (`C_ID`),
+foreign key (`E_ID`) references `pharmacy_db`.`employee`(`E_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`check_list`(
+CL_ID int(9)unsigned auto_increment not null comment 'Код списка', 
+C_ID int(9)unsigned not null comment 'Код операции',
+P_ID  int(9)unsigned not null comment 'Код продукта',
+CL_VALUE mediumint(5)unsigned not null comment 'Количество товара',
+primary key(`CL_ID`),
+foreign key (`C_ID`) references `pharmacy_db`.`check`(`C_ID`) on update cascade on delete cascade,
+foreign key (`P_ID`) references `pharmacy_db`.`product`(`P_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`user`(
+U_ID smallint(3)unsigned auto_increment not null comment 'Код пользователя',
+U_TYPE enum('Кассир','Директор','Администратор')not null unique comment 'Тип',
+U_NAME char(20) not null unique comment 'Логин',
+U_PASS char(32) not null unique comment 'Пароль',
+-- U_ONLINE enum('offline','online') not null comment 'Онлайн',
+primary key (`U_ID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`product_quantity`(
+PQ_ID int(9)unsigned auto_increment not null comment 'Код количества товара',
+P_ID int(9)unsigned comment 'Код продукта',
+PQ_IN mediumint(7)unsigned default 0 comment 'Пришло продукта',
+PQ_OUT mediumint(7)unsigned default 0 comment 'Продано продукта',
+primary key (PQ_ID),
+foreign key (`P_ID`) references `pharmacy_db`.`product`(`P_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`product_overdue`(
+PP_ID int(9)unsigned auto_increment not null comment 'Код просроченности',
+WL_ID int(9)unsigned comment 'Код списка накладной',
+PP_IS_OVERDUE enum('Не просрочено','Просрочено','Скоро истекает срок годности','N/A','Продано') default 'N/A' comment 'Просроченность',
+primary key (PP_ID),
+foreign key (`WL_ID`) references `pharmacy_db`.`waybill_list`(`WL_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table `pharmacy_db`.`product_sold`(
+PS_ID int(9)unsigned auto_increment not null comment 'Код количества проданных продуктов',
+WL_ID int(9)unsigned not null comment 'Код списка накладной',
+PS_COUNT int(5)unsigned default 0 comment 'Количество проданных продуктов',
+PS_UTIL INT(5) DEFAULT 0 comment 'Утилизировано',
+primary key (PS_ID),
+foreign key (`WL_ID`) references `pharmacy_db`.`waybill_list`(`WL_ID`) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`user_action`(
+UA_ID int(9)unsigned not null auto_increment comment 'Код действия',
+U_ID smallint(3)unsigned not null comment 'Код пользователя',
+UA_TYPE enum('Insert','Update','Delete','Select') not null comment 'Тип действия',
+UA_DATETIME datetime not null default current_timestamp comment 'Дата операции',
+UA_DESCRIPTION text not null comment 'Описание',
+primary key (UA_ID),
+foreign key (U_ID) references `pharmacy_db`.`user`(U_ID) on update cascade on delete cascade
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists `pharmacy_db`.`passwords`(
+PW_ID smallint(3)unsigned auto_increment not null comment 'Код',
+PW_PASS char(32) not null comment 'Пароль',
+PW_TYPE enum('1','2') not null unique comment 'Тип пароля',
+primary key (`PW_ID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP procedure IF EXISTS `insert_price`;
+
+DELIMITER $$
+USE `pharmacy_db`$$
+CREATE PROCEDURE `insert_price`(IN id INT(11),IN price FLOAT(5,2),IN dat DATE)
+BEGIN
+IF	(SELECT COUNT(P_ID) from product_actual_price WHERE DATE_ADD(PAP_DATE, INTERVAL 7 DAY)<=DATE(NOW()) AND P_ID=id)>0
+THEN INSERT INTO product_actual_price(P_ID,PAP_PRICE,PAP_DATE)VALUES(id,price,dat);
+END IF;
+END$$
+
+DELIMITER ;

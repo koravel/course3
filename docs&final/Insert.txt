@@ -1,0 +1,844 @@
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `manufacturer`
+--
+
+DROP TABLE IF EXISTS `manufacturer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `manufacturer` (
+  `M_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код производителя',
+  `M_NAME` char(50) NOT NULL COMMENT 'Название производителя',
+  `M_COUNTRY` char(50) NOT NULL COMMENT 'Страна производителя',
+  `M_CITY` char(50) DEFAULT NULL COMMENT 'Грод производителя',
+  `M_ADDR` char(50) DEFAULT NULL COMMENT 'Адрес производителя',
+  `M_TEL` char(20) DEFAULT NULL COMMENT 'Телефон производителя',
+  PRIMARY KEY (`M_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `manufacturer`
+--
+
+LOCK TABLES `manufacturer` WRITE;
+/*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
+INSERT INTO `manufacturer` VALUES (1,'Киевский витаминный завод','Украина','Киев','вул. Копилівська, 38','(044) 461-03-0'),(2,'Богащевский химико-фармацевтический завод','Украина','Киев','вул. Миру, 17','(044)2054110'),(3,'Ваш доктор','Украина','Киев','',''),(4,'Teva','Норвегия','','',''),(5,'Иммунолог','Украина','Винница','','(0432) 52-03-62'),(6,'AIM','Украина','Харьков','улица Харьковских дивизий, 20 А-5','(057) 716 40 71'),(7,'Новофарм биосинтез','Украина','Житомир','г. Новоград-Волынский, вул. Житомирская, 38','(04141) 2-05-59'),(8,'СПЕЦФАРМ ПЛЮС','Украина','Харьков','ул. Сомовская, 12-Б, ОФИС 1','(066) 191-53-52');
+/*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:15
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee` (
+  `E_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код сотрудника',
+  `E_NAME` char(50) NOT NULL COMMENT 'ФИО',
+  `E_TEL` char(15) DEFAULT NULL COMMENT 'Телефон',
+  `E_POSITION` enum('Кассир','Уборщик','Менеджер','Администратор','Фармацевт') NOT NULL COMMENT 'Должность',
+  `E_CONTRACT` char(11) NOT NULL COMMENT 'Номер контракта',
+  `E_INN` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`E_ID`),
+  UNIQUE KEY `E_CONTRACT` (`E_CONTRACT`),
+  UNIQUE KEY `E_INN` (`E_INN`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (1,'Пупкин Вася','468454','Кассир','1',0),(2,'Бабич Дмитрий','248785','Менеджер','2',1),(3,'Сыса Артем','8548945','Администратор','3',2),(4,'Громова Светлана','548456','Фармацевт','4',3),(5,'Цубера Светлана','48465','Фармацевт','8',4),(6,'Кравченко Никитка','184254','Уборщик','9',5),(7,'Солонцевой Дмитрий','96845','Менеджер','6',6),(8,'Елисеевич Артем','5483','Кассир','11',7);
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:15
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product` (
+  `P_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код продукта',
+  `P_NAME` char(50) NOT NULL COMMENT 'Имя продукта',
+  `M_ID` int(9) unsigned NOT NULL COMMENT 'Код производителя',
+  `P_GROUP` enum('Без группы','Антисептики','Слабительные','Противовирусные','Антибакериальные','Отхаркивающие и рвотные','Антидепрессанты','Снотворные','Анальгетики','Противогрибковые','Противопаразитные','Противовоспалительные','Противозачаточные','Противоалергические','Гастроэнтероголические','Противорвотные','Противодиарейные','Ингибиторы','Бронхолитические','Муколитические','Противокашлевые','Иммуномодуляторы','Иммуноглобулины','Витаминные','Минеральные','Поливитаминные','Питательные смеси','Жаропонижающие','Антианемические','Фитопрепараты','Средства для контрацепции','Сосудосуживающие','Антиглаукомные','Офтальмологические','Проктологические','Урологические','Нефрологические','Дерматологические','Диагностические','Перевязочные','Токсикологические','Антидоты','Гомеопатические','Эфирные масла','Средства личной гигиены','Косметические') NOT NULL COMMENT 'Группа товара',
+  `P_PACK` enum('Без упаковки','Ампула','Картонная коробка','Банка','Пакет','Полимерная','Баллон','Туба','Флакон','Бумага') NOT NULL COMMENT 'Форма упаковки',
+  `P_MATERIAL` enum('Неизвестно','Жидкость','Сироп','Таблетки','Капсулы','Шприц-тюбики','Порошок','Гранулы','Растительные волокна','Аэрозоль','Суспензия','Мазь','Паста') NOT NULL COMMENT 'Материал продукта',
+  `P_FORM` enum('с рецептом','без рецепта','строгого учета') NOT NULL COMMENT 'Форма отпуска',
+  `P_INSTR` text COMMENT 'Инструкция',
+  `P_CODE` char(13) NOT NULL COMMENT 'штрих-код',
+  PRIMARY KEY (`P_ID`),
+  KEY `M_ID` (`M_ID`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`M_ID`) REFERENCES `manufacturer` (`M_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'Амброксол-кв',1,'Муколитические','Картонная коробка','Таблетки','без рецепта','','742358965778'),(2,'Диуремид',1,'Анальгетики','Картонная коробка','Таблетки','с рецептом','','757635453454'),(3,'Имуноплюс',1,'Иммуномодуляторы','Картонная коробка','Таблетки','с рецептом','','457896855681'),(4,'Кетолак',1,'Противовоспалительные','Картонная коробка','Таблетки','без рецепта','','475128963547'),(5,'Новирин',1,'Противовирусные','Картонная коробка','Таблетки','с рецептом','','123698547852'),(6,'Петруша',1,'Средства личной гигиены','Картонная коробка','Гранулы','без рецепта','','958741587453'),(7,'Фарингтон',1,'Антисептики','Картонная коробка','Таблетки','с рецептом','','147859632541'),(8,'Ибупрофен',2,'Жаропонижающие','Картонная коробка','Таблетки','с рецептом','','741258963258'),(9,'Циклодол',2,'Антидепрессанты','Картонная коробка','Таблетки','с рецептом','','415789632510'),(10,'Цитрамон',2,'Противовоспалительные','Картонная коробка','Таблетки','без рецепта','','412576325198'),(11,'Амброксол 15',2,'Отхаркивающие и рвотные','Банка','Жидкость','без рецепта','','741258743695'),(12,'Налкром',3,'Противоалергические','Полимерная','Капсулы','с рецептом','','741258745365'),(13,'ОсваРен',3,'Нефрологические','Картонная коробка','Таблетки','с рецептом','','145782301500'),(14,'Ламикон',3,'Противогрибковые','Баллон','Суспензия','с рецептом','','142354785209'),(15,'Анастрозол Pharmachemie',4,'Противовоспалительные','Картонная коробка','Таблетки','с рецептом','','632514785299'),(16,'Микст-аллерген',5,'Противоалергические','Полимерная','Гранулы','с рецептом','','963201014050'),(17,'Бронхофит',6,'Отхаркивающие и рвотные','Картонная коробка','Порошок','без рецепта','','587412369852'),(18,'Гастрофит',6,'Гастроэнтероголические','Картонная коробка','Порошок','без рецепта','','102357004785'),(19,'Бронхофит',6,'Отхаркивающие и рвотные','Банка','Сироп','без рецепта','','123654789000'),(20,'Вундэхил',6,'Противовоспалительные','Картонная коробка','Шприц-тюбики','без рецепта','','321402100047'),(21,'Антигемморой',5,'Проктологические','Картонная коробка','Капсулы','с рецептом','','451236541200'),(22,'АМІНОКАПРОНОВА КИСЛОТА',7,'Противовоспалительные','Банка','Жидкость','с рецептом','','214785321456'),(23,'НАТРІЮ ХЛОРИД',7,'Без группы','Банка','Жидкость','без рецепта','','236547852140'),(24,'ГЛЮКОЗА',7,'Без группы','Банка','Жидкость','без рецепта','','147852145698'),(25,'Доктор мом',8,'Противокашлевые','Банка','Сироп','без рецепта','','654125740390'),(26,'Агиолакс',3,'Слабительные','Картонная коробка','Капсулы','без рецепта','','521478521002'),(27,'Бисакодил',5,'Слабительные','Картонная коробка','Капсулы','без рецепта','','321452330005'),(28,'Бензилбензоат',6,'Противопаразитные','Картонная коробка','Суспензия','без рецепта','','654125888880'),(29,'Вермокс',6,'Противопаразитные','Картонная коробка','Таблетки','с рецептом','','120000224787'),(30,'Абакавир',1,'Антибакериальные','Полимерная','Таблетки','строгого учета','','111440257896'),(31,'Абипим',7,'Антибакериальные','Флакон','Порошок','с рецептом','','478569852300'),(32,'Алзолам',6,'Снотворные','Картонная коробка','Таблетки','с рецептом','','412578523300'),(33,'Релаксон',7,'Снотворные','Картонная коробка','Таблетки','без рецепта','','111144587420'),(34,'Сибазон',2,'Снотворные','Картонная коробка','Суспензия','с рецептом','','414552368412'),(35,'Зоэли',3,'Противозачаточные','Картонная коробка','Таблетки','с рецептом','','745869965545'),(36,'Валидол',8,'Противорвотные','Картонная коробка','Сироп','без рецепта','','549495648948'),(37,'Вазелиновое масло',1,'Слабительные','Полимерная','Мазь','строгого учета','','749848985498'),(38,'Адреналин',3,'Бронхолитические','Картонная коробка','Порошок','строгого учета','','567576565676'),(39,'Адреналин',4,'Бронхолитические','Ампула','Жидкость','строгого учета','','4747474747477'),(40,'Габриглобин-IgG',5,'Иммуноглобулины','Картонная коробка','Неизвестно','строгого учета','','546421878789'),(41,'Витамин C',3,'Витаминные','Полимерная','Гранулы','без рецепта','','77777777777'),(42,'Актиферрин',4,'Минеральные','Картонная коробка','Порошок','без рецепта','','741253000558'),(43,'Альбумин',2,'Питательные смеси','Картонная коробка','Порошок','без рецепта','','454898974797'),(44,'Мальтофер',5,'Антианемические','Ампула','Жидкость','с рецептом','','741202369898'),(45,'Пектофит-антиалкоголь',7,'Фитопрепараты','Полимерная','Гранулы','без рецепта','','741020003658'),(46,'Галазолин',8,'Сосудосуживающие','Картонная коробка','Аэрозоль','с рецептом','','454545454545'),(47,'Аводарт',2,'Урологические','Картонная коробка','Капсулы','строгого учета','','324357678111'),(48,'Базирон АС',6,'Урологические','Картонная коробка','Неизвестно','с рецептом','','121212121111'),(49,'Бинт',3,'Перевязочные','Полимерная','Растительные волокна','без рецепта','','456723212244'),(50,'Вата',5,'Перевязочные','Полимерная','Растительные волокна','без рецепта','','333333333333'),(51,'Ушные палочки',3,'Средства личной гигиены','Картонная коробка','Неизвестно','без рецепта','','455544221118');
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:13
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `discounts`
+--
+
+DROP TABLE IF EXISTS `discounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `discounts` (
+  `D_ID` mediumint(6) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код акции',
+  `P_ID` int(9) unsigned DEFAULT NULL COMMENT 'Код продукта',
+  `D_PRICE` int(4) unsigned NOT NULL COMMENT 'Скидка',
+  `D_BDATE` date DEFAULT NULL COMMENT 'Начало акции',
+  `D_EDATE` date DEFAULT NULL COMMENT 'Конец акции',
+  `D_TEXT` text COMMENT 'Описание',
+  PRIMARY KEY (`D_ID`),
+  KEY `P_ID` (`P_ID`),
+  CONSTRAINT `discounts_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `discounts`
+--
+
+LOCK TABLES `discounts` WRITE;
+/*!40000 ALTER TABLE `discounts` DISABLE KEYS */;
+INSERT INTO `discounts` VALUES (1,1,5,'2016-05-10','2016-05-29',''),(2,49,1,'2014-05-14','2015-05-12',''),(3,15,2,'2016-05-29','2016-08-20',''),(4,3,4,'2015-10-13','2015-12-31','');
+/*!40000 ALTER TABLE `discounts` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:14
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `product_actual_price`
+--
+
+DROP TABLE IF EXISTS `product_actual_price`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_actual_price` (
+  `PAP_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код актуальной цены',
+  `P_ID` int(9) unsigned NOT NULL COMMENT 'Код продукта',
+  `PAP_PRICE` float(7,2) unsigned NOT NULL COMMENT 'Цена',
+  `PAP_DATE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата актуальности',
+  PRIMARY KEY (`PAP_ID`),
+  KEY `P_ID` (`P_ID`),
+  CONSTRAINT `product_actual_price_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_actual_price`
+--
+
+LOCK TABLES `product_actual_price` WRITE;
+/*!40000 ALTER TABLE `product_actual_price` DISABLE KEYS */;
+INSERT INTO `product_actual_price` VALUES (1,1,10.52,'2016-05-11 00:00:00'),(2,2,15.10,'2016-05-11 00:00:00'),(3,3,55.70,'2016-05-11 00:00:00'),(4,4,21.15,'2016-05-11 00:00:00'),(5,5,70.25,'2016-05-11 00:00:00'),(6,6,10.00,'2016-05-11 00:00:00'),(7,7,45.50,'2016-05-11 00:00:00'),(8,8,31.50,'2016-05-11 00:00:00'),(9,9,78.50,'2016-05-11 00:00:00'),(10,10,10.20,'2016-05-11 00:00:00'),(11,11,45.15,'2016-05-11 00:00:00'),(12,12,61.25,'2016-05-11 00:00:00'),(13,13,670.95,'2016-05-11 00:00:00'),(14,14,150.00,'2016-05-11 00:00:00'),(15,15,100.50,'2016-05-11 00:00:00'),(16,16,250.45,'2016-05-11 00:00:00'),(17,17,50.20,'2016-05-11 00:00:00'),(18,16,250.45,'2016-05-11 00:00:00'),(19,18,75.12,'2016-05-11 00:00:00'),(20,19,50.45,'2016-05-11 00:00:00'),(21,20,25.45,'2016-05-12 00:00:00'),(22,21,51.34,'2016-05-12 00:00:00'),(23,22,95.55,'2016-05-12 00:00:00'),(24,23,5.45,'2016-05-12 00:00:00'),(25,24,10.45,'2016-05-12 00:00:00'),(26,25,75.12,'2016-05-12 00:00:00'),(27,26,15.45,'2016-05-12 00:00:00'),(28,27,20.10,'2016-05-12 00:00:00'),(29,28,40.10,'2016-05-12 00:00:00'),(30,29,50.45,'2016-05-12 00:00:00'),(31,30,1500.50,'2016-05-12 00:00:00'),(32,31,150.55,'2016-05-12 00:00:00'),(33,32,155.47,'2016-05-12 00:00:00'),(34,33,12.10,'2016-05-12 00:00:00'),(35,34,75.12,'2016-05-12 00:00:00'),(36,35,80.20,'2016-05-12 00:00:00'),(37,36,4.50,'2016-05-12 00:00:00'),(38,37,75.45,'2016-05-12 00:00:00'),(39,38,45.12,'2016-05-12 00:00:00'),(40,39,75.50,'2016-05-12 00:00:00'),(41,40,5000.00,'2016-05-12 00:00:00'),(42,41,5.45,'2016-05-12 00:00:00'),(43,42,21.00,'2016-05-12 00:00:00'),(44,43,12.45,'2016-05-12 00:00:00'),(45,44,55.78,'2016-05-12 00:00:00'),(46,39,75.50,'2016-05-12 00:00:00'),(47,45,54.12,'2016-05-12 00:00:00'),(48,46,12.55,'2016-05-12 00:00:00'),(49,47,45.12,'2016-05-12 00:00:00'),(50,46,12.55,'2016-05-12 00:00:00'),(51,48,75.44,'2016-05-12 00:00:00'),(52,49,2.22,'2016-05-12 00:00:00'),(53,50,3.45,'2016-05-12 00:00:00'),(54,51,5.10,'2016-05-12 00:00:00');
+/*!40000 ALTER TABLE `product_actual_price` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:14
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `waybill`
+--
+
+DROP TABLE IF EXISTS `waybill`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `waybill` (
+  `W_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код накладной',
+  `W_DATE` date DEFAULT NULL COMMENT 'Дата накладной',
+  `E_ID` int(9) unsigned NOT NULL COMMENT 'Код сотрудника',
+  `W_AGENT_NAME` char(50) NOT NULL COMMENT 'Имя контрагента',
+  PRIMARY KEY (`W_ID`),
+  KEY `E_ID` (`E_ID`),
+  CONSTRAINT `waybill_ibfk_1` FOREIGN KEY (`E_ID`) REFERENCES `employee` (`E_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `waybill`
+--
+
+LOCK TABLES `waybill` WRITE;
+/*!40000 ALTER TABLE `waybill` DISABLE KEYS */;
+INSERT INTO `waybill` VALUES (1,'2016-05-12',1,'Иван Петров'),(2,'2016-05-12',6,'йцукенг П.О.'),(3,'2016-05-12',7,'фывап П.Д.'),(4,'2016-05-12',4,'Йцукен Г.Ш.'),(5,'2016-05-12',2,'аываыва А.А.'),(6,'2016-05-12',3,'46886'),(7,'2016-05-12',6,'цваццй У.У.'),(8,'2016-05-12',2,'454545');
+/*!40000 ALTER TABLE `waybill` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:15
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `waybill_list`
+--
+
+DROP TABLE IF EXISTS `waybill_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `waybill_list` (
+  `WL_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код списка накладной',
+  `W_ID` int(9) unsigned NOT NULL COMMENT 'Код накладной',
+  `P_ID` int(9) unsigned NOT NULL COMMENT 'Код продукта',
+  `WL_VALUE` mediumint(5) unsigned NOT NULL COMMENT 'Количество',
+  `WL_TRADE_PRICE` float(7,2) unsigned NOT NULL COMMENT 'Оптовая цена',
+  `WL_BDATE` date NOT NULL COMMENT 'Дата поступления товара',
+  `WL_EDATE` date NOT NULL COMMENT 'Срок реализации товара',
+  PRIMARY KEY (`WL_ID`),
+  KEY `P_ID` (`P_ID`),
+  KEY `W_ID` (`W_ID`),
+  CONSTRAINT `waybill_list_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `waybill_list_ibfk_2` FOREIGN KEY (`W_ID`) REFERENCES `waybill` (`W_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `waybill_list`
+--
+
+LOCK TABLES `waybill_list` WRITE;
+/*!40000 ALTER TABLE `waybill_list` DISABLE KEYS */;
+INSERT INTO `waybill_list` VALUES (1,1,4,75,45.12,'2016-05-12','2019-05-12'),(2,1,1,25,12.45,'2016-05-12','2018-05-12'),(3,1,2,41,7.25,'2016-05-12','2019-05-12'),(4,1,3,35,77.60,'2016-05-12','2017-05-12'),(5,1,5,250,4.20,'2016-05-12','2018-05-12'),(6,1,8,450,41.56,'2016-05-12','2017-05-12'),(7,1,9,41,74.41,'2016-05-12','2019-05-12'),(8,1,10,40,12.35,'2016-05-12','2017-05-12'),(9,1,9,75,5.20,'2016-05-12','2019-05-12'),(11,2,11,12,55.66,'2016-05-12','2019-05-12'),(12,2,12,21,77.20,'2016-05-12','2018-05-12'),(13,2,13,32,4.22,'2016-05-12','2017-05-12'),(14,2,14,23,4.56,'2016-05-12','2018-05-12'),(15,2,15,45,12.56,'2016-05-12','2018-05-12'),(16,2,16,54,177.89,'2016-05-12','2019-05-12'),(17,2,17,65,55.30,'2016-05-12','2019-05-12'),(18,2,18,56,42.50,'2016-05-12','2019-05-12'),(19,2,19,78,78.30,'2016-05-12','2017-05-12'),(20,2,20,98,12.30,'2016-05-12','2017-05-12'),(21,2,21,78,12.90,'2016-05-12','2018-05-12'),(22,2,15,99,41.00,'2016-05-12','2018-05-12'),(23,3,24,78,5.66,'2016-05-12','2017-05-12'),(24,3,25,45,66.50,'2016-05-12','2019-05-12'),(25,3,26,12,78.20,'2016-05-12','2018-05-12'),(26,3,27,96,4.12,'2016-05-12','2018-05-12'),(27,4,28,12,78.00,'2016-05-12','2017-05-12'),(28,4,29,12,45.23,'2016-05-12','2018-05-12'),(29,4,30,12,12.44,'2016-05-12','2018-05-12'),(30,4,31,56,56.30,'2016-05-12','2018-05-12'),(31,4,32,577,11.20,'2016-05-12','2017-05-12'),(32,5,33,123,5.66,'2016-05-12','2017-05-12'),(33,5,34,12,444.20,'2016-05-12','2017-05-12'),(34,5,35,21,56.70,'2016-05-12','2017-05-12'),(35,5,36,23,78.50,'2016-05-12','2019-05-12'),(36,5,37,78,44.50,'2016-05-12','2019-05-12'),(37,5,34,44,56.30,'2016-05-12','2019-05-12'),(38,5,39,11,111.20,'2016-05-12','2019-05-12'),(39,6,40,44,12.32,'2016-05-12','2019-05-12'),(40,6,41,55,23.31,'2016-05-12','2019-05-12'),(41,6,42,66,12.89,'2016-05-12','2019-05-12'),(42,6,43,11,783.99,'2016-05-12','2019-05-12'),(43,6,44,68,44.23,'2016-05-12','2018-05-12'),(44,6,45,22,12.55,'2016-05-12','2017-05-12'),(45,7,46,20,444.20,'2016-05-12','2019-05-12'),(46,7,47,1,12.30,'2016-05-12','2019-05-12'),(47,7,48,22,14.50,'2016-05-12','2019-05-12'),(48,7,49,560,2.30,'2016-05-12','2019-05-12'),(49,7,50,450,3.30,'2016-05-12','2019-05-12'),(50,7,51,120,4.30,'2016-05-12','2019-05-12'),(51,8,1,122,55.10,'2013-05-12','2015-05-12');
+/*!40000 ALTER TABLE `waybill_list` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:14
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `U_ID` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код пользователя',
+  `U_TYPE` enum('Кассир','Директор','Администратор') NOT NULL COMMENT 'Тип',
+  `U_NAME` char(20) NOT NULL COMMENT 'Логин',
+  `U_PASS` char(32) NOT NULL COMMENT 'Пароль',
+  PRIMARY KEY (`U_ID`),
+  UNIQUE KEY `U_TYPE` (`U_TYPE`),
+  UNIQUE KEY `U_NAME` (`U_NAME`),
+  UNIQUE KEY `U_PASS` (`U_PASS`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (3,'Директор','director','3d4e992d8d8a7d848724aa26ed7f4176'),(4,'Администратор','admin','21232f297a57a5a743894a0e4a801fc3'),(5,'Кассир','kas','d7b3bbbc0a472166030089695af7d5cb');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:15
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `user_action`
+--
+
+DROP TABLE IF EXISTS `user_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_action` (
+  `UA_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код действия',
+  `U_ID` smallint(3) unsigned NOT NULL COMMENT 'Код пользователя',
+  `UA_TYPE` enum('Insert','Update','Delete','Select') NOT NULL COMMENT 'Тип действия',
+  `UA_DATETIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата операции',
+  `UA_DESCRIPTION` text NOT NULL COMMENT 'Описание',
+  PRIMARY KEY (`UA_ID`),
+  KEY `U_ID` (`U_ID`),
+  CONSTRAINT `user_action_ibfk_1` FOREIGN KEY (`U_ID`) REFERENCES `user` (`U_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_action`
+--
+
+LOCK TABLES `user_action` WRITE;
+/*!40000 ALTER TABLE `user_action` DISABLE KEYS */;
+INSERT INTO `user_action` VALUES (7,4,'Select','2016-05-11 23:17:52','11.05.2016 23:17:52|User|--ID=[4]:Select{Вход в систему...}'),(8,4,'Select','2016-05-11 23:18:27','11.05.2016 23:18:27|User|--ID=[4]:Select{Выход из системы...}'),(9,3,'Select','2016-05-11 23:19:05','11.05.2016 23:19:05|User|--ID=[3]:Select{Вход в систему...}'),(10,3,'Select','2016-05-11 23:19:07','11.05.2016 23:19:07|User|--ID=[3]:Select{Выход из системы...}'),(11,4,'Select','2016-05-11 23:19:17','11.05.2016 23:19:17|User|--ID=[4]:Select{Вход в систему...}'),(12,4,'Insert','2016-05-11 23:22:38','11.05.2016 23:22:38|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Киевский витаминный завод|страна:Украина|адрес:вул. Копилівська, 38|}'),(13,4,'Insert','2016-05-11 23:25:02','11.05.2016 23:25:02|User|--ID=[4]:Insert{Создание товара,параметры:|код:1|название:Амброксол-кв|производитель код:1|цена:10,52|}'),(14,4,'Insert','2016-05-11 23:27:00','11.05.2016 23:27:00|User|--ID=[4]:Insert{Создание товара,параметры:|код:2|название:Диуремид|производитель код:1|цена:15,1|}'),(15,4,'Insert','2016-05-11 23:27:59','11.05.2016 23:27:59|User|--ID=[4]:Insert{Создание товара,параметры:|код:3|название:Имуноплюс|производитель код:1|цена:55,7|}'),(16,4,'Insert','2016-05-11 23:28:43','11.05.2016 23:28:43|User|--ID=[4]:Insert{Создание товара,параметры:|код:4|название:Кетолак|производитель код:1|цена:21,15|}'),(17,4,'Insert','2016-05-11 23:29:38','11.05.2016 23:29:38|User|--ID=[4]:Insert{Создание товара,параметры:|код:5|название:Новирин|производитель код:1|цена:70,25|}'),(18,4,'Insert','2016-05-11 23:30:13','11.05.2016 23:30:13|User|--ID=[4]:Insert{Создание товара,параметры:|код:6|название:Петруша|производитель код:1|цена:10|}'),(19,4,'Insert','2016-05-11 23:31:23','11.05.2016 23:31:23|User|--ID=[4]:Insert{Создание товара,параметры:|код:7|название:Фарингтон|производитель код:1|цена:45,5|}'),(20,4,'Insert','2016-05-11 23:33:48','11.05.2016 23:33:48|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Богащевский химико-фармацевтический завод|страна:Украина|адрес:вул. Миру, 17|}'),(21,4,'Insert','2016-05-11 23:35:20','11.05.2016 23:35:20|User|--ID=[4]:Insert{Создание товара,параметры:|код:8|название:Ибупрофен|производитель код:2|цена:31,5|}'),(22,4,'Insert','2016-05-11 23:36:58','11.05.2016 23:36:58|User|--ID=[4]:Insert{Создание товара,параметры:|код:9|название:Циклодол|производитель код:2|цена:78,5|}'),(23,4,'Insert','2016-05-11 23:37:36','11.05.2016 23:37:36|User|--ID=[4]:Insert{Создание товара,параметры:|код:10|название:Цитрамон|производитель код:2|цена:10,2|}'),(24,4,'Insert','2016-05-11 23:39:05','11.05.2016 23:39:05|User|--ID=[4]:Insert{Создание товара,параметры:|код:11|название:Амброксол 15|производитель код:2|цена:45,15|}'),(25,4,'Insert','2016-05-11 23:39:59','11.05.2016 23:39:59|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Ваш доктор|страна:Украина|адрес:|}'),(26,4,'Insert','2016-05-11 23:41:07','11.05.2016 23:41:07|User|--ID=[4]:Insert{Создание товара,параметры:|код:12|название:Налкром|производитель код:3|цена:61,25|}'),(27,4,'Insert','2016-05-11 23:42:24','11.05.2016 23:42:24|User|--ID=[4]:Insert{Создание товара,параметры:|код:13|название:ОсваРен|производитель код:3|цена:670,95|}'),(28,4,'Insert','2016-05-11 23:43:47','11.05.2016 23:43:47|User|--ID=[4]:Insert{Создание товара,параметры:|код:14|название:Ламикон|производитель код:3|цена:150|}'),(29,4,'Insert','2016-05-11 23:44:51','11.05.2016 23:44:51|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Teva|страна:Норвегия|адрес:|}'),(30,4,'Insert','2016-05-11 23:46:11','11.05.2016 23:46:11|User|--ID=[4]:Insert{Создание товара,параметры:|код:15|название:Анастрозол Pharmachemie|производитель код:4|цена:100,5|}'),(31,4,'Insert','2016-05-11 23:46:58','11.05.2016 23:46:58|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Иммунолог|страна:Украина|адрес:|}'),(32,4,'Insert','2016-05-11 23:50:04','11.05.2016 23:50:04|User|--ID=[4]:Insert{Создание товара,параметры:|код:16|название:Микст-аллерген|производитель код:5|цена:250,45|}'),(33,4,'Insert','2016-05-11 23:52:20','11.05.2016 23:52:20|User|--ID=[4]:Insert{Создание производителя,параметры:|название:AIM|страна:Украина|адрес:улица Харьковских ди|}'),(34,4,'Select','2016-05-11 23:52:22','11.05.2016 23:52:22|User|--ID=[4]:Select{Выход из системы...}'),(35,4,'Select','2016-05-11 23:55:29','11.05.2016 23:55:29|User|--ID=[4]:Select{Вход в систему...}'),(36,4,'Select','2016-05-11 23:55:29','11.05.2016 23:55:29|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(37,4,'Select','2016-05-11 23:55:29','11.05.2016 23:55:29|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(38,4,'Update','2016-05-11 23:55:47','11.05.2016 23:55:47|User|--ID=[4]:Update{Изменение производителя,параметры:|код:6|}'),(39,4,'Insert','2016-05-11 23:57:34','11.05.2016 23:57:34|User|--ID=[4]:Insert{Создание товара,параметры:|код:17|название:Бронхофит|производитель код:6|цена:50,2|}'),(40,4,'Update','2016-05-11 23:57:47','11.05.2016 23:57:47|User|--ID=[4]:Update{Изменение товара,параметры:|код:16|название:Микст-аллерген|группа:Противоалергические|}'),(41,4,'Insert','2016-05-11 23:57:47','11.05.2016 23:57:47|User|--ID=[4]:Insert{Создание цены товара,параметры:|код товара:16|дата изменения:2016-05-11|цена:2016-05-11|}'),(42,4,'Insert','2016-05-11 23:59:21','11.05.2016 23:59:21|User|--ID=[4]:Insert{Создание товара,параметры:|код:18|название:Гастрофит|производитель код:6|цена:75,12|}'),(43,4,'Insert','2016-05-12 00:00:25','12.05.2016 0:00:25|User|--ID=[4]:Insert{Создание товара,параметры:|код:19|название:Бронхофит|производитель код:6|цена:50,45|}'),(44,4,'Insert','2016-05-12 00:02:04','12.05.2016 0:02:04|User|--ID=[4]:Insert{Создание товара,параметры:|код:20|название:Вундэхил|производитель код:6|цена:25,45|}'),(45,4,'Insert','2016-05-12 00:04:02','12.05.2016 0:04:02|User|--ID=[4]:Insert{Создание товара,параметры:|код:21|название:Антигемморой|производитель код:5|цена:51,34|}'),(46,4,'Insert','2016-05-12 00:05:54','12.05.2016 0:05:54|User|--ID=[4]:Insert{Создание производителя,параметры:|название:Новофарм биосинтез|страна:Украина|адрес:г. Новоград-Волынский, вул. Житомирская, 38|}'),(47,4,'Insert','2016-05-12 00:07:57','12.05.2016 0:07:57|User|--ID=[4]:Insert{Создание товара,параметры:|код:22|название:АМІНОКАПРОНОВА КИСЛОТА|производитель код:7|цена:95,55|}'),(48,4,'Insert','2016-05-12 00:09:04','12.05.2016 0:09:04|User|--ID=[4]:Insert{Создание товара,параметры:|код:23|название:НАТРІЮ ХЛОРИД|производитель код:7|цена:5,45|}'),(49,4,'Insert','2016-05-12 00:09:37','12.05.2016 0:09:37|User|--ID=[4]:Insert{Создание товара,параметры:|код:24|название:ГЛЮКОЗА|производитель код:7|цена:10,45|}'),(50,4,'Insert','2016-05-12 00:12:15','12.05.2016 0:12:15|User|--ID=[4]:Insert{Создание производителя,параметры:|название:СПЕЦФАРМ ПЛЮС|страна:Украина|адрес:ул. Сомовская, 12-Б, ОФИС 1|}'),(51,4,'Insert','2016-05-12 00:14:15','12.05.2016 0:14:15|User|--ID=[4]:Insert{Создание товара,параметры:|код:25|название:Доктор мом|производитель код:8|цена:75,12|}'),(52,4,'Insert','2016-05-12 00:22:53','12.05.2016 0:22:53|User|--ID=[4]:Insert{Создание товара,параметры:|код:26|название:Агиолакс|производитель код:3|цена:15,45|}'),(53,4,'Insert','2016-05-12 00:26:30','12.05.2016 0:26:30|User|--ID=[4]:Insert{Создание товара,параметры:|код:27|название:Бисакодил|производитель код:5|цена:20,1|}'),(54,4,'Insert','2016-05-12 00:28:16','12.05.2016 0:28:16|User|--ID=[4]:Insert{Создание товара,параметры:|код:28|название:Бензилбензоат|производитель код:6|цена:40,1|}'),(55,4,'Insert','2016-05-12 00:29:14','12.05.2016 0:29:14|User|--ID=[4]:Insert{Создание товара,параметры:|код:29|название:Вермокс|производитель код:6|цена:50,45|}'),(56,4,'Insert','2016-05-12 00:31:24','12.05.2016 0:31:24|User|--ID=[4]:Insert{Создание товара,параметры:|код:30|название:Абакавир|производитель код:1|цена:1500,5|}'),(57,4,'Insert','2016-05-12 00:35:10','12.05.2016 0:35:10|User|--ID=[4]:Insert{Создание товара,параметры:|код:31|название:Абипим|производитель код:7|цена:150,55|}'),(58,4,'Insert','2016-05-12 00:38:08','12.05.2016 0:38:08|User|--ID=[4]:Insert{Создание товара,параметры:|код:32|название:Алзолам|производитель код:6|цена:155,47|}'),(59,4,'Insert','2016-05-12 00:39:23','12.05.2016 0:39:23|User|--ID=[4]:Insert{Создание товара,параметры:|код:33|название:Релаксон|производитель код:7|цена:12,1|}'),(60,4,'Insert','2016-05-12 00:40:14','12.05.2016 0:40:14|User|--ID=[4]:Insert{Создание товара,параметры:|код:34|название:Сибазон|производитель код:2|цена:75,12|}'),(61,4,'Insert','2016-05-12 01:07:25','12.05.2016 1:07:25|User|--ID=[4]:Insert{Создание товара,параметры:|код:35|название:Зоэли|производитель код:3|цена:80,2|}'),(62,4,'Insert','2016-05-12 01:10:43','12.05.2016 1:10:43|User|--ID=[4]:Insert{Создание товара,параметры:|код:36|название:Валидол|производитель код:8|цена:4,5|}'),(63,4,'Insert','2016-05-12 01:11:18','12.05.2016 1:11:18|User|--ID=[4]:Insert{Создание товара,параметры:|код:37|название:Вазелиновое масло|производитель код:1|цена:75,45|}'),(64,4,'Select','2016-05-12 01:17:50','12.05.2016 1:17:50|User|--ID=[4]:Select{Выход из системы...}'),(65,4,'Select','2016-05-12 01:19:32','12.05.2016 1:19:32|User|--ID=[4]:Select{Вход в систему...}'),(66,4,'Select','2016-05-12 01:19:33','12.05.2016 1:19:33|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(67,4,'Select','2016-05-12 01:19:33','12.05.2016 1:19:33|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(68,4,'Insert','2016-05-12 01:26:01','12.05.2016 1:26:01|User|--ID=[4]:Insert{Создание товара,параметры:|код:38|название:Адреналин|производитель код:3|цена:45,12|}'),(69,4,'Insert','2016-05-12 01:26:30','12.05.2016 1:26:30|User|--ID=[4]:Insert{Создание товара,параметры:|код:39|название:Адреналин|производитель код:4|цена:75,5|}'),(70,4,'Insert','2016-05-12 01:28:32','12.05.2016 1:28:32|User|--ID=[4]:Insert{Создание товара,параметры:|код:40|название:Габриглобин-IgG|производитель код:5|цена:5000|}'),(71,4,'Insert','2016-05-12 01:29:29','12.05.2016 1:29:29|User|--ID=[4]:Insert{Создание товара,параметры:|код:41|название:Витамин C|производитель код:3|цена:5,45|}'),(72,4,'Insert','2016-05-12 01:30:47','12.05.2016 1:30:47|User|--ID=[4]:Insert{Создание товара,параметры:|код:42|название:Актиферрин|производитель код:4|цена:21|}'),(73,4,'Insert','2016-05-12 01:32:38','12.05.2016 1:32:38|User|--ID=[4]:Insert{Создание товара,параметры:|код:43|название:Альбумин|производитель код:2|цена:12,45|}'),(74,4,'Insert','2016-05-12 01:34:03','12.05.2016 1:34:03|User|--ID=[4]:Insert{Создание товара,параметры:|код:44|название:Мальтофер|производитель код:5|цена:55,78|}'),(75,4,'Update','2016-05-12 01:34:34','12.05.2016 1:34:34|User|--ID=[4]:Update{Изменение товара,параметры:|код:39|название:Адреналин|группа:Бронхолитические|}'),(76,4,'Insert','2016-05-12 01:34:34','12.05.2016 1:34:34|User|--ID=[4]:Insert{Создание цены товара,параметры:|код товара:39|дата изменения:2016-05-12|цена:2016-05-12|}'),(77,4,'Select','2016-05-12 01:35:03','12.05.2016 1:35:03|User|--ID=[4]:Select{Выход из системы...}'),(78,4,'Select','2016-05-12 01:36:09','12.05.2016 1:36:09|User|--ID=[4]:Select{Вход в систему...}'),(79,4,'Select','2016-05-12 01:36:09','12.05.2016 1:36:09|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(80,4,'Select','2016-05-12 01:36:09','12.05.2016 1:36:09|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(81,4,'Insert','2016-05-12 01:37:06','12.05.2016 1:37:06|User|--ID=[4]:Insert{Создание товара,параметры:|код:45|название:Пектофит-антиалкоголь|производитель код:7|цена:54,12|}'),(82,4,'Insert','2016-05-12 01:39:17','12.05.2016 1:39:17|User|--ID=[4]:Insert{Создание товара,параметры:|код:46|название:Галазолин|производитель код:8|цена:12,55|}'),(83,4,'Insert','2016-05-12 01:41:08','12.05.2016 1:41:08|User|--ID=[4]:Insert{Создание товара,параметры:|код:47|название:Аводарт|производитель код:2|цена:45,12|}'),(84,4,'Update','2016-05-12 01:41:15','12.05.2016 1:41:15|User|--ID=[4]:Update{Изменение товара,параметры:|код:46|название:Галазолин|группа:Сосудосуживающие|}'),(85,4,'Insert','2016-05-12 01:41:15','12.05.2016 1:41:15|User|--ID=[4]:Insert{Создание цены товара,параметры:|код товара:46|дата изменения:2016-05-12|цена:2016-05-12|}'),(86,4,'Insert','2016-05-12 01:42:05','12.05.2016 1:42:05|User|--ID=[4]:Insert{Создание товара,параметры:|код:48|название:Базирон АС|производитель код:6|цена:75,44|}'),(87,4,'Insert','2016-05-12 01:42:48','12.05.2016 1:42:48|User|--ID=[4]:Insert{Создание товара,параметры:|код:49|название:Бинт|производитель код:3|цена:2,22|}'),(88,4,'Insert','2016-05-12 01:43:15','12.05.2016 1:43:15|User|--ID=[4]:Insert{Создание товара,параметры:|код:50|название:Вата|производитель код:5|цена:3,45|}'),(89,4,'Insert','2016-05-12 01:44:03','12.05.2016 1:44:03|User|--ID=[4]:Insert{Создание товара,параметры:|код:51|название:Ушные палочки|производитель код:3|цена:5,1|}'),(90,4,'Select','2016-05-12 01:46:08','12.05.2016 1:46:08|User|--ID=[4]:Select{Вход в систему...}'),(91,4,'Select','2016-05-12 01:46:08','12.05.2016 1:46:08|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(92,4,'Select','2016-05-12 01:46:09','12.05.2016 1:46:09|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(93,4,'Insert','2016-05-12 01:47:26','12.05.2016 1:47:26|User|--ID=[4]:Insert{Создание акции,параметры:|код товара:1|сроки:2016-05-10-2016-05-29|}'),(94,4,'Insert','2016-05-12 01:47:49','12.05.2016 1:47:49|User|--ID=[4]:Insert{Создание акции,параметры:|код товара:49|сроки:2014-05-14-2015-05-12|}'),(95,4,'Insert','2016-05-12 01:48:05','12.05.2016 1:48:05|User|--ID=[4]:Insert{Создание акции,параметры:|код товара:15|сроки:2016-05-29-2016-08-20|}'),(96,4,'Insert','2016-05-12 01:48:24','12.05.2016 1:48:24|User|--ID=[4]:Insert{Создание акции,параметры:|код товара:3|сроки:2015-10-13-2015-12-31|}'),(97,4,'Insert','2016-05-12 01:51:05','12.05.2016 1:51:05|User|--ID=[4]:Insert{Создание накладной,параметры:|код:1|дата:2016-05-12|}'),(98,4,'Insert','2016-05-12 01:57:29','12.05.2016 1:57:29|User|--ID=[4]:Insert{Создание накладной,параметры:|код:2|дата:2016-05-12|}'),(99,4,'Insert','2016-05-12 01:59:04','12.05.2016 1:59:04|User|--ID=[4]:Insert{Создание накладной,параметры:|код:3|дата:2016-05-12|}'),(100,4,'Insert','2016-05-12 02:00:27','12.05.2016 2:00:27|User|--ID=[4]:Insert{Создание накладной,параметры:|код:4|дата:2016-05-12|}'),(101,4,'Insert','2016-05-12 02:02:03','12.05.2016 2:02:03|User|--ID=[4]:Insert{Создание накладной,параметры:|код:5|дата:2016-05-12|}'),(102,4,'Insert','2016-05-12 02:04:01','12.05.2016 2:04:01|User|--ID=[4]:Insert{Создание накладной,параметры:|код:6|дата:2016-05-12|}'),(103,4,'Insert','2016-05-12 02:07:24','12.05.2016 2:07:24|User|--ID=[4]:Insert{Создание накладной,параметры:|код:7|дата:2016-05-12|}'),(104,4,'Insert','2016-05-12 02:08:44','12.05.2016 2:08:44|User|--ID=[4]:Insert{Создание накладной,параметры:|код:8|дата:2016-05-12|}'),(105,4,'Select','2016-05-12 02:09:07','12.05.2016 2:09:07|User|--ID=[4]:Select{Выход из системы...}'),(106,4,'Select','2016-05-12 02:10:26','12.05.2016 2:10:26|User|--ID=[4]:Select{Вход в систему...}'),(107,4,'Select','2016-05-12 02:10:26','12.05.2016 2:10:26|System|--ID=[4]:Select{Заполнение таблицы скидок...}'),(108,4,'Select','2016-05-12 02:10:26','12.05.2016 2:10:26|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(109,4,'Select','2016-05-12 02:10:27','12.05.2016 2:10:27|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(110,4,'Select','2016-05-12 02:10:27','12.05.2016 2:10:27|System|--ID=[4]:Select{Заполнение таблицы работников...}'),(111,4,'Select','2016-05-12 02:10:27','12.05.2016 2:10:27|System|--ID=[4]:Select{Заполнение таблицы накладных...}'),(112,4,'Select','2016-05-12 02:12:23','12.05.2016 2:12:23|User|--ID=[4]:Select{Выход из системы...}'),(113,4,'Select','2016-05-12 02:12:38','12.05.2016 2:12:38|User|--ID=[4]:Select{Вход в систему...}'),(114,4,'Select','2016-05-12 02:12:38','12.05.2016 2:12:38|System|--ID=[4]:Select{Заполнение таблицы скидок...}'),(115,4,'Select','2016-05-12 02:12:38','12.05.2016 2:12:38|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(116,4,'Select','2016-05-12 02:12:38','12.05.2016 2:12:38|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(117,4,'Select','2016-05-12 02:12:38','12.05.2016 2:12:38|System|--ID=[4]:Select{Заполнение таблицы работников...}'),(118,4,'Select','2016-05-12 02:12:39','12.05.2016 2:12:39|System|--ID=[4]:Select{Заполнение таблицы накладных...}'),(119,4,'Select','2016-05-12 02:12:40','12.05.2016 2:12:40|System|--ID=[4]:Select{Заполнение таблицы пользователей...}'),(120,4,'Insert','2016-05-12 02:12:48','12.05.2016 2:12:48|User|--ID=[4]:Insert{Создание пользователя,параметры:|тип записи:Кассир|логин:kas|}'),(121,4,'Select','2016-05-12 02:12:50','12.05.2016 2:12:50|User|--ID=[4]:Select{Выход из системы...}'),(122,5,'Select','2016-05-12 02:12:54','12.05.2016 2:12:54|User|--ID=[5]:Select{Вход в систему...}'),(123,5,'Select','2016-05-12 02:16:02','12.05.2016 2:16:02|User|--ID=[5]:Select{Выход из системы...}'),(124,4,'Select','2016-05-12 02:16:08','12.05.2016 2:16:08|User|--ID=[4]:Select{Вход в систему...}'),(125,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы чеков...}'),(126,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы скидок...}'),(127,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы производителей...}'),(128,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы товаров...}'),(129,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы работников...}'),(130,4,'Select','2016-05-12 02:16:09','12.05.2016 2:16:09|System|--ID=[4]:Select{Заполнение таблицы накладных...}'),(131,4,'Select','2016-05-12 02:16:30','12.05.2016 2:16:30|User|--ID=[4]:Select{Выход из системы...}');
+/*!40000 ALTER TABLE `user_action` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:14
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `product_quantity`
+--
+
+DROP TABLE IF EXISTS `product_quantity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_quantity` (
+  `PQ_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код количества товара',
+  `P_ID` int(9) unsigned DEFAULT NULL COMMENT 'Код продукта',
+  `PQ_IN` mediumint(7) unsigned DEFAULT '0' COMMENT 'Пришло продукта',
+  `PQ_OUT` mediumint(7) unsigned DEFAULT '0' COMMENT 'Продано продукта',
+  PRIMARY KEY (`PQ_ID`),
+  KEY `P_ID` (`P_ID`),
+  CONSTRAINT `product_quantity_ibfk_1` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_quantity`
+--
+
+LOCK TABLES `product_quantity` WRITE;
+/*!40000 ALTER TABLE `product_quantity` DISABLE KEYS */;
+INSERT INTO `product_quantity` VALUES (1,1,147,0),(2,2,41,0),(3,3,35,0),(4,4,75,0),(5,5,250,0),(6,6,0,0),(7,7,0,0),(8,8,450,0),(9,9,116,0),(10,10,160,0),(11,11,12,0),(12,12,21,0),(13,13,32,0),(14,14,23,0),(15,15,144,0),(16,16,54,0),(17,17,65,0),(18,18,56,0),(19,19,78,0),(20,20,98,0),(21,21,78,0),(22,22,0,0),(23,23,0,0),(24,24,78,0),(25,25,45,0),(26,26,12,0),(27,27,96,0),(28,28,12,0),(29,29,12,0),(30,30,12,0),(31,31,56,0),(32,32,577,0),(33,33,123,0),(34,34,56,0),(35,35,21,0),(36,36,23,0),(37,37,78,0),(38,38,0,0),(39,39,11,0),(40,40,44,0),(41,41,55,0),(42,42,66,0),(43,43,11,0),(44,44,68,0),(45,45,22,0),(46,46,20,0),(47,47,1,0),(48,48,22,0),(49,49,560,0),(50,50,450,0),(51,51,120,0);
+/*!40000 ALTER TABLE `product_quantity` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:14
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `product_overdue`
+--
+
+DROP TABLE IF EXISTS `product_overdue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_overdue` (
+  `PP_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код просроченности',
+  `WL_ID` int(9) unsigned DEFAULT NULL COMMENT 'Код списка накладной',
+  `PP_IS_OVERDUE` enum('Не просрочено','Просрочено','Скоро истекает срок годности','N/A','Продано') DEFAULT 'N/A' COMMENT 'Просроченность',
+  PRIMARY KEY (`PP_ID`),
+  KEY `WL_ID` (`WL_ID`),
+  CONSTRAINT `product_overdue_ibfk_1` FOREIGN KEY (`WL_ID`) REFERENCES `waybill_list` (`WL_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_overdue`
+--
+
+LOCK TABLES `product_overdue` WRITE;
+/*!40000 ALTER TABLE `product_overdue` DISABLE KEYS */;
+INSERT INTO `product_overdue` VALUES (1,1,'Не просрочено'),(2,2,'Не просрочено'),(3,3,'Не просрочено'),(4,4,'Не просрочено'),(5,5,'Не просрочено'),(6,6,'Не просрочено'),(7,7,'Не просрочено'),(8,8,'Не просрочено'),(9,9,'Не просрочено'),(11,11,'Не просрочено'),(12,12,'Не просрочено'),(13,13,'Не просрочено'),(14,14,'Не просрочено'),(15,15,'Не просрочено'),(16,16,'Не просрочено'),(17,17,'Не просрочено'),(18,18,'Не просрочено'),(19,19,'Не просрочено'),(20,20,'Не просрочено'),(21,21,'Не просрочено'),(22,22,'Не просрочено'),(23,23,'Не просрочено'),(24,24,'Не просрочено'),(25,25,'Не просрочено'),(26,26,'Не просрочено'),(27,27,'Не просрочено'),(28,28,'Не просрочено'),(29,29,'Не просрочено'),(30,30,'Не просрочено'),(31,31,'Не просрочено'),(32,32,'Не просрочено'),(33,33,'Не просрочено'),(34,34,'Не просрочено'),(35,35,'Не просрочено'),(36,36,'Не просрочено'),(37,37,'Не просрочено'),(38,38,'Не просрочено'),(39,39,'Не просрочено'),(40,40,'Не просрочено'),(41,41,'Не просрочено'),(42,42,'Не просрочено'),(43,43,'Не просрочено'),(44,44,'Не просрочено'),(45,45,'Не просрочено'),(46,46,'Не просрочено'),(47,47,'Не просрочено'),(48,48,'Не просрочено'),(49,49,'Не просрочено'),(50,50,'Не просрочено'),(51,51,'Просрочено');
+/*!40000 ALTER TABLE `product_overdue` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:13
+
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `product_sold`
+--
+
+DROP TABLE IF EXISTS `product_sold`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_sold` (
+  `PS_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код количества проданных продуктов',
+  `WL_ID` int(9) unsigned NOT NULL COMMENT 'Код списка накладной',
+  `PS_COUNT` int(5) unsigned DEFAULT '0' COMMENT 'Количество проданных продуктов',
+  `PS_UTIL` int(5) DEFAULT '0' COMMENT 'Утилизировано',
+  PRIMARY KEY (`PS_ID`),
+  KEY `WL_ID` (`WL_ID`),
+  CONSTRAINT `product_sold_ibfk_1` FOREIGN KEY (`WL_ID`) REFERENCES `waybill_list` (`WL_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_sold`
+--
+
+LOCK TABLES `product_sold` WRITE;
+/*!40000 ALTER TABLE `product_sold` DISABLE KEYS */;
+INSERT INTO `product_sold` VALUES (1,1,0,0),(2,2,16,0),(3,3,0,0),(4,4,5,0),(5,5,0,0),(6,6,0,0),(7,7,0,0),(8,8,0,0),(9,9,0,0),(11,11,0,0),(12,12,0,0),(13,13,0,0),(14,14,0,0),(15,15,0,0),(16,16,0,0),(17,17,0,0),(18,18,0,0),(19,19,0,0),(20,20,0,0),(21,21,0,0),(22,22,0,0),(23,23,4,0),(24,24,5,0),(25,25,0,0),(26,26,0,0),(27,27,0,0),(28,28,0,0),(29,29,0,0),(30,30,0,0),(31,31,0,0),(32,32,0,0),(33,33,0,0),(34,34,0,0),(35,35,0,0),(36,36,0,0),(37,37,0,0),(38,38,0,0),(39,39,0,0),(40,40,0,0),(41,41,0,0),(42,42,0,0),(43,43,0,0),(44,44,0,0),(45,45,0,0),(46,46,0,0),(47,47,0,0),(48,48,0,0),(49,49,0,0),(50,50,2,0),(51,51,0,0);
+/*!40000 ALTER TABLE `product_sold` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:15
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `passwords`
+--
+
+DROP TABLE IF EXISTS `passwords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `passwords` (
+  `PW_ID` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код',
+  `PW_PASS` char(32) NOT NULL COMMENT 'Пароль',
+  `PW_TYPE` enum('1','2') NOT NULL COMMENT 'Тип пароля',
+  PRIMARY KEY (`PW_ID`),
+  UNIQUE KEY `PW_TYPE` (`PW_TYPE`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passwords`
+--
+
+LOCK TABLES `passwords` WRITE;
+/*!40000 ALTER TABLE `passwords` DISABLE KEYS */;
+INSERT INTO `passwords` VALUES (3,'3d4e992d8d8a7d848724aa26ed7f4176','1'),(4,'e91e6348157868de9dd8b25c81aebfb9','2');
+/*!40000 ALTER TABLE `passwords` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:13
+
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `check`
+--
+
+DROP TABLE IF EXISTS `check`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `check` (
+  `C_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код операции',
+  `E_ID` int(9) unsigned DEFAULT NULL COMMENT 'Код сотрудника',
+  `C_DATE` datetime NOT NULL COMMENT 'Дата операции',
+  `C_PAYTYPE` enum('Наличные','Карточка') NOT NULL COMMENT 'Тип оплаты',
+  `C_SUM` float(7,2) unsigned DEFAULT '0.00' COMMENT 'Сумма чека',
+  `C_PREPAYMENT` float(7,2) unsigned DEFAULT '0.00' COMMENT 'Аванс',
+  PRIMARY KEY (`C_ID`),
+  KEY `E_ID` (`E_ID`),
+  CONSTRAINT `check_ibfk_1` FOREIGN KEY (`E_ID`) REFERENCES `employee` (`E_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `check`
+--
+
+LOCK TABLES `check` WRITE;
+/*!40000 ALTER TABLE `check` DISABLE KEYS */;
+INSERT INTO `check` VALUES (1,1,'2016-05-12 02:14:18','Наличные',495.65,500.00),(2,1,'2016-05-12 02:14:46','Наличные',278.55,300.00),(3,1,'2016-05-12 02:15:28','Наличные',10.20,11.00),(4,1,'2016-05-12 02:15:59','Наличные',81.80,90.00);
+/*!40000 ALTER TABLE `check` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:16
+-- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+--
+-- Host: localhost    Database: pharmacy_db
+-- ------------------------------------------------------
+-- Server version	5.7.11-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `check_list`
+--
+
+DROP TABLE IF EXISTS `check_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `check_list` (
+  `CL_ID` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Код списка',
+  `C_ID` int(9) unsigned NOT NULL COMMENT 'Код операции',
+  `P_ID` int(9) unsigned NOT NULL COMMENT 'Код продукта',
+  `CL_VALUE` mediumint(5) unsigned NOT NULL COMMENT 'Количество товара',
+  PRIMARY KEY (`CL_ID`),
+  KEY `C_ID` (`C_ID`),
+  KEY `P_ID` (`P_ID`),
+  CONSTRAINT `check_list_ibfk_1` FOREIGN KEY (`C_ID`) REFERENCES `check` (`C_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `check_list_ibfk_2` FOREIGN KEY (`P_ID`) REFERENCES `product` (`P_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `check_list`
+--
+
+LOCK TABLES `check_list` WRITE;
+/*!40000 ALTER TABLE `check_list` DISABLE KEYS */;
+INSERT INTO `check_list` VALUES (1,1,1,12),(2,1,25,5),(3,2,3,5),(4,3,51,2),(5,4,24,4),(6,4,1,4);
+/*!40000 ALTER TABLE `check_list` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-05-12  2:18:16
