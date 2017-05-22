@@ -7,8 +7,8 @@
         Title="WaybillAddWindow" Height="175" Width="932" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="139*"/>
-            <ColumnDefinition Width="323*"/>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <DatePicker x:Name="datePickerToday" Margin="87,14,3,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxAgent" Height="23" Margin="87,71,3,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
@@ -23,28 +23,28 @@
                 <DataGridTemplateColumn Header="Код товара" x:Name="idColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding ID}" />
+                            <TextBox Text="{Binding ID , Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" LostFocus="TextBox_LostFocus" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Наименование" x:Name="nameColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo}"/>
+                            <ComboBox x:Name="comboBoxProduct" ItemsSource="{Binding DataContext, ElementName=dataGridInfo, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Количество" x:Name="valueColumn">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <xctk:IntegerUpDown FormatString="" Value="0" Increment="1" Maximum="99999" Minimum="0" Text="{Binding VALUE}"/>
+                            <xctk:IntegerUpDown FormatString="" Value="0" Increment="1" Maximum="99999" Minimum="0" Text="{Binding VALUE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Опт.цена" x:Name="tpriceColumn" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <xctk:DecimalUpDown FormatString="C" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Text="{Binding TRADEPRICE}"/>
+                            <xctk:DecimalUpDown FormatString="C" Value="0.00" Increment=".01" Maximum="99999.99" Minimum="0.00" Text="{Binding TRADEPRICE, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

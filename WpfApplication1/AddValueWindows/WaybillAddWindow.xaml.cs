@@ -38,27 +38,44 @@ namespace WpfApplication1
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
         {
-            //string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
-            //DataBase.Query(
-            //new string[] { "@_id", "@_date", "@_employee", "@_agent" },
-            //new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
-            //"INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
-            List<WaybillOutput> productsOutput = new List<WaybillOutput>();
-            //foreach (var item in dataGridInfo.Items)
-            //{
-            //    System.Windows.MessageBox.Show(((WaybillOutput)item).ID);
-            //}
-            object item;
-            for (int i = 0; i < dataGridInfo.Items.Count-1; i++ )
+            bool flag = false;
+            if(comboBoxEployees.SelectedIndex != -1)
             {
-                item = dataGridInfo.Items[i];
-                System.Windows.MessageBox.Show(((WaybillOutput)item).ID);
+                flag = true;
             }
+            else
+            {
+                System.Windows.MessageBox.Show("Выберите принимающего!");
+            }
+            if(textBoxAgent.Text != "")
+            {
+                flag = true;
+            }
+            else
+            {
+                flag = false;
+                System.Windows.MessageBox.Show("Имя контрагента пусто!");
+            }
+            if(flag == true)
+            {
+                string lastId = DataBase.QueryRetCell(null, null, "SELECT MAX(W_ID)+1 FROM waybill;");
+                DataBase.Query(
+                new string[] { "@_id", "@_date", "@_employee", "@_agent" },
+                new string[] { lastId, Converter.DateConvert(datePickerToday.Text), employees[comboBoxEployees.SelectedIndex].ID.ToString(), textBoxAgent.Text },
+                "INSERT INTO `waybill`(W_ID,W_DATE,E_ID,W_AGENT_NAME)VALUES(@_id,@_date,@_employee,@_agent);");
+                List<WaybillOutput> productsOutput = new List<WaybillOutput>();
+                object item;
+                for (int i = 0; i < dataGridInfo.Items.Count - 1; i++)
+                {
+                    item = dataGridInfo.Items[i];
+                    System.Windows.MessageBox.Show(((WaybillOutput)item).ID + " " + ((WaybillOutput)item).TRADEPRICE);
+                }
                 //DataBase.Query(
                 //new string[] { },
                 //new string[] { },
                 //"INSERT INTO `waybill_list`()VALUES()");
                 this.Close();
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -68,6 +85,13 @@ namespace WpfApplication1
                 this.Close();
             }
         }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //dataGridInfo.Items[i].
+        }
+
+       
 
     }
 }
